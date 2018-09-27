@@ -1,0 +1,47 @@
+{% extends 'dashboard_layout_new.html' %}
+{{ super() }}
+{% block body %}
+<head>
+  <script src="https://cloud.tinymce.com/stable/tinymce.min.js"></script>
+  <script>tinymce.init({ selector:'textarea',branding:false });</script>
+</head>
+<div class="row">
+    <div class="col-sm-12">
+        <div class="card">
+            <div class="card-header">
+                <h5>Reply</h5>
+            </div>
+            <div class="card-body">
+                <div class="card-block">
+                    <form action="/replyEmail/{{ message_id }}" method="POST">
+                        <div class="row">
+                            <div class="col-12">
+                                <ul class="no-list-style">
+                                    <li class="mb-2">
+                                        <span class="text-bold-500 primary"><a><i class=" font-small-3"></i>To :</a></span>
+                                        <input type="hidden" value="{{ to_email_id }}" name="conv_to_email_id">
+                                        <span class="display-block"><input value="{{ to_email_id }}" disabled required type="text" class="form-control"> </span>
+                                    </li>
+                                    <li class="mb-2">
+                                        <span class="text-bold-500 primary"><a><i class=" font-small-3"></i>*Subject :</a></span>
+                                        <span class="display-block"><input value="{{ subject }}" required type="text" class="form-control" name="conv_subject" > </span>
+                                    </li>
+                                    <li class="mb-2">
+                                        <span class="text-bold-500 primary"><a><i class=" font-small-3"></i>Message:</a></span>
+                                        <span class="display-block"><textarea class="form-control" name="conv_message"></textarea> </span>
+                                    </li>
+
+                                    <li class="mb-2">
+                                        <button class="btn btn-primary" type="submit">Send</button>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+

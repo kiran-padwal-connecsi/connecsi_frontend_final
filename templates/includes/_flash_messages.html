@@ -1,0 +1,15 @@
+{% with messages = get_flashed_messages(with_categories=true) %}
+  {% if messages %}
+    <div id="alert" class="alert alert-{{ messages.0.0 }}" role="alert">
+      {% for category, message in messages %}
+        {{ message }} </br>
+      {% endfor %}
+    </div>
+  {% endif %}
+{% endwith %}
+
+<script>
+setTimeout(function() {
+    $('#alert').fadeOut('fast');
+}, 3000);
+</script>

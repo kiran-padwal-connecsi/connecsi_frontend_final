@@ -1,0 +1,41 @@
+{% extends 'dashboard_layout_new.html' %}
+{{ super() }}
+{% block body %}
+
+<div class="row">
+    <div class="col-sm-12">
+        <div class="card">
+            <div class="card-header">
+                <h5>Add Funds</h5>
+            </div>
+            <div class="card-body">
+                <div class="card-block">
+                    <form action="/saveFundsBrands" method="POST">
+                        <div class="row">
+                            <div class="col-12 col-md-6 col-lg-4">
+                                <ul class="no-list-style">
+                                    <li class="mb-2">
+                                        <span class="text-bold-500 primary"><a><i class="icon-present font-small-3"></i>*Amount:</a></span>
+                                        <span class="display-block overflow-hidden"><input required type="number" class="form-control" name="amount" > </span>
+                                    </li>
+                                    <li class="mb-2">
+                                        <span class="text-bold-500 primary"><a><i class="icon-present font-small-3"></i>*Description:</a></span>
+                                        <span class="display-block overflow-hidden"><textarea required class="form-control" name="description"></textarea> </span>
+                                    </li>
+
+                                    <li class="mb-2">
+                                        <button class="btn btn-primary" type="submit">Save</button>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+    {% endblock %}
+

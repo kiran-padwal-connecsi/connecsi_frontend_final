@@ -1,0 +1,106 @@
+{% extends 'dashboard_layout_new.html' %}
+{{ super() }}
+{% block body %}
+<div class="email-application">
+    <div class="content-overlay"></div>
+    <div class="row">
+        <div class="email-search-box w-100 bg-white p-2">
+            <div class="media">
+                <span class="email-app-sidebar-toggle ft-align-justify font-large-1 mr-2 d-xl-none"></span>
+                <div class="media-body">
+                    <input type="text" class="form-control round" placeholder="search for emails">
+                </div>
+            </div>
+        </div>
+        <div class="email-app-content-area w-100">
+            <div class="email-app-list-mails">
+                <div class="email-app-list">
+                    <div id="users-list">
+                        <div class="list-group">
+                            <div class="users-list-padding">
+                                {% for item in inbox['data'] %}
+                                <a id="message{{ item['message_id'] }}" class="list-group-item list-group-item-action no-border" href="/inbox/{{ item['message_id'] }}" >
+                                    <span class="media">
+                                        <span class="avatar avatar-md mr-2">
+                                            {% if item['img'] %}
+                                            <img class="media-object rounded-circle" src="static/app-assets/img/portrait/small/avatar-s-7.png" alt="Generic placeholder image">
+                                            {% else %}
+                                            <span class="media-object rounded-circle text-circle d-flex mr-2 justify-content-center align-items-center bg-blue">{{ item['first_name'][0] }}</span>
+                                            {% endif %}
+                                        </span>
+                                        <div class="media-body">
+                                            <h6 class="list-group-item-heading">{{ item['first_name'] }}
+                                                <span class="font-small-2 float-right">{{ item['date'] }}</span>
+                                            </h6>
+                                            <p class="list-group-item-text text-truncate">
+                                                <strong>{{ item['subject'] }}</strong>
+                                            </p>
+                                            <!--<span class="badge badge-warning badge-pill float-right">{{ length_conv }}</span>-->
+                                            <div class="list-group-item-text text-truncate">{{ item['message']|safe }}
+                                            </div>
+                                        </div>
+                                    </span>
+                                </a>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="email-app-mail-content">
+                <div class="email-app-mail-content-detail">
+                    <div class="email-app-options card-block">
+                        <div class="row d-md-none">
+                            <button class="btn btn-raised btn-primary ml-2 back-to-inbox">
+                                <i class="fa fa-angle-left"></i> Back to inbox</button>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-6 col-12">
+                            </div>
+                            <div class="col-sm-6 col-12 text-right">
+                            </div>
+                        </div>
+                    </div>
+                    <h3 class="list-group-item-heading">{{ conv_title }}</h3>
+                    {% for item in full_conv['data'] %}
+                    <div class="media-list">
+                        <div id="heading{{ item['collapse_id'] }}" class="card-header p-0">
+                            <a data-toggle="collapse" href="#{{ item['collapse_id'] }}" aria-expanded="true" aria-controls="{{ item['collapse_id'] }}" class="collapsed email-app-sender list-group-item list-group-item-action no-border bg-blue-grey bg-lighten-5">
+                                <span class="media">
+                                    <span class="avatar avatar-md mr-2">
+                                            {% if item['img'] %}
+                                            <img class="media-object rounded-circle" src="static/app-assets/img/portrait/small/avatar-s-7.png" alt="Generic placeholder image">
+                                            {% else %}
+                                            <span class="media-object rounded-circle text-circle d-flex mr-2 justify-content-center align-items-center bg-purple">{{ item['first_name'][0] }}</span>
+                                            {% endif %}
+                                        </span>
+                                    <div class="media-body">
+                                        <h6 class="list-group-item-heading">{{ item['first_name'] }}
+                                         {% if item['to_email_id'] == session['email_id'] %}
+                                        <span class="float-right text muted"><button onclick="location.href='/reply/{{ item['message_id'] }}/{{ item['from_email_id'] }}/{{ item['subject'] }}'" class="btn btn-sm btn-outline-secondary">reply</button></span>
+                                         {% endif %}
+                                        </h6>
+                                        <p class="list-group-item-text">{{ item['subject'] }}
+                                            <span class="float-right text muted">{{ item['date'] }}</span>
+                                        </p>
+                                    </div>
+                                </span>
+                            </a>
+                        </div>
+                        <div id="{{ item['collapse_id'] }}" role="tabpanel" aria-labelledby="heading{{ item['collapse_id'] }}" class="card-collapse collapse" aria-expanded="true">
+                            <div class="card-body">
+                                <div class="card-block">
+                                    {{ item['message']|safe }}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
