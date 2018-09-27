@@ -77,8 +77,9 @@
                                     <div class="media-body">
                                         <h6 class="list-group-item-heading">{{ item['first_name'] }}
                                          {% if item['to_email_id'] == session['email_id'] %}
-                                        <span class="float-right text muted"><button onclick="location.href='/reply/{{ item['message_id'] }}/{{ item['from_email_id'] }}/{{ item['subject'] }}'" class="btn btn-sm btn-outline-secondary">reply</button></span>
+                                        <span class="float-right text muted"><button onclick="location.href='/reply/{{ item['message_id'] }}/{{ item['from_email_id'] }}/{{ item['subject'] }}'" class="btn btn-sm btn-outline-secondary"><i class="fa fa-reply"></i></button></span>
                                          {% endif %}
+                                        <span class="float-right text muted"><button onclick="location.href='/reply/{{ item['message_id'] }}/{{ item['from_email_id'] }}/{{ item['subject'] }}'" class="btn btn-sm btn-outline-secondary"><i class="ft trash-t"></i></button></span>
                                         </h6>
                                         <p class="list-group-item-text">{{ item['subject'] }}
                                             <span class="float-right text muted">{{ item['date'] }}</span>
