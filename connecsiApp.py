@@ -332,8 +332,22 @@ def viewMyPayments():
 
 @connecsiApp.route('/addCampaign')
 @is_logged_in
-def add_Campaign():
+def addCampaign():
     return render_template('campaign/add_campaignForm.html')
+
+
+@connecsiApp.route('/viewCampaigns')
+@is_logged_in
+def viewCampaigns():
+    return render_template('campaign/viewCampaigns.html')
+
+
+@connecsiApp.route('/viewCampaignDetails')
+@is_logged_in
+def viewCampaignDetails():
+    return render_template('campaign/viewCampaignDetails.html')
+
+
 #
 #
 # @connecsiApp.route('/addCampaign')
