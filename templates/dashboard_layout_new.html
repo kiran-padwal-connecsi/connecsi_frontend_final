@@ -8,6 +8,11 @@
     <meta name="keywords" content="">
     <meta name="Kiran Padwal" content="Connecsi">
     <title>Dashboard</title>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+
+
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="apple-touch-icon" sizes="60x60" href="{{ url_for('static', filename='app-assets/img/ico/apple-icon-60.png') }}">
     <link rel="apple-touch-icon" sizes="76x76" href="{{ url_for('static', filename='app-assets/img/ico/apple-icon-76.png') }}">
     <link rel="apple-touch-icon" sizes="120x120" href="static/app-assets/img/ico/apple-icon-120.png">
@@ -120,6 +125,7 @@
 <!--<script src="//ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>-->
 <script>
     $( document ).ready(function() {
+
         $("#main-menu-navigation li a").on('click', function(){
         <!--$("#main-menu-navigation .active").removeClass('active');-->
         var href = $(this).attr('href');
@@ -149,11 +155,15 @@
          });
          // search button click event ends
 
+
+
+
      });
 </script>
 <script>
 function onLoad() {
     var selectedHref = localStorage.getItem('selectedHref');
+    <!--alert(selectedHref);-->
     <!--var nodeValue = $('a[href="/admin"]').parent("li").attr("class");-->
     $("a[href$='"+selectedHref+"']").closest("li").addClass('active');
     $("a[href$='"+selectedHref+"']").parents("li").addClass('open');

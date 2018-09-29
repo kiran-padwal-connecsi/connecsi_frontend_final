@@ -333,66 +333,111 @@ def viewMyPayments():
 @connecsiApp.route('/addCampaign')
 @is_logged_in
 def addCampaign():
-    return render_template('campaign/add_campaignForm.html')
+    url_regionCodes = base_url + 'Youtube/regionCodes'
+    regionCodes_json = ''
+    try:
+        regionCodes_response = requests.get(url=url_regionCodes)
+        regionCodes_json = regionCodes_response.json()
+        print(regionCodes_json)
+    except:pass
+    url_videoCat = base_url + 'Youtube/videoCategories'
+    try:
+        response_videoCat = requests.get(url=url_videoCat)
+        videoCat_json = response_videoCat.json()
+        print(videoCat_json)
+    except Exception as e:
+        print(e)
+    return render_template('campaign/add_campaignForm.html',regionCodes=regionCodes_json,videoCategories = videoCat_json)
 
 
 @connecsiApp.route('/viewCampaigns')
 @is_logged_in
 def viewCampaigns():
-    return render_template('campaign/viewCampaigns.html')
+    user_id=session['user_id']
+    view_campaign_data = ''
+    url_view_campaigns = base_url + 'Campaign/'+ str(user_id)
+    try:
+        view_campaigns_response = requests.get(url=url_view_campaigns)
+        view_campaign_data = view_campaigns_response.json()
+        print(view_campaign_data)
+        for item in view_campaign_data['data']:
+            print(item)
+            region_id_list = item['regions'].split(',')
+            region_name_list=[]
+            for region_id in region_id_list:
+                try:
+                    region_name_response=requests.get(url=base_url+'Youtube/regionCode/'+str(region_id))
+                    region_data = region_name_response.json()
+                    region_name=region_data['data'][0][1]
+                    region_name_list.append(region_name)
+                except:pass
+            item.update({'region_name_list': region_name_list})
+        print(view_campaign_data)
+        return render_template('campaign/viewCampaigns.html',view_campaign_data=view_campaign_data)
+
+    except Exception as e:
+        flash('Error is Getting Data From Backend Please try again Later')
+    return render_template('campaign/viewCampaigns.html',view_campaign_data=view_campaign_data)
 
 
-@connecsiApp.route('/viewCampaignDetails')
+@connecsiApp.route('/viewCampaignDetails/<string:campaign_id>',methods=['GET'])
 @is_logged_in
-def viewCampaignDetails():
+def viewCampaignDetails(campaign_id):
+
     return render_template('campaign/viewCampaignDetails.html')
 
 
-#
-#
-# @connecsiApp.route('/addCampaign')
-# @is_logged_in
-# def addCampaign():
-#     connecsiObj = ConnecsiModel()
-#     region_codes = connecsiObj.get__(table_name='youtube_region_codes',STAR='*')
-#     video_categories = connecsiObj.get__(table_name='youtube_video_categories', STAR='*')
-#     return render_template('campaign/addCampaignForm.html',region_codes=region_codes,video_categories=video_categories)
-#
-# @connecsiApp.route('/saveCampaign',methods=['POST'])
-# @is_logged_in
-# def saveCampaign():
-#     if request.method == 'POST':
-#         campaign_name = request.form.get('campaign_name')
-#         from_date = request.form.get('from_date')
-#         to_date = request.form.get('to_date')
-#         budget = request.form.get('budget')
-#         currency = request.form.get('currency')
-#         channels = request.form.getlist('channel')
-#         channels_string = ','.join(channels)
-#         regions = request.form.getlist('region')
-#         regions_string = ','.join(regions)
-#         min_lower = request.form.get('min_lower')
-#         max_upper = request.form.get('max_upper')
+@connecsiApp.route('/saveCampaign',methods=['POST'])
+@is_logged_in
+def saveCampaign():
+    if request.method == 'POST':
+        payload = request.form.to_dict()
+        print(payload)
+        channels = request.form.getlist('channels')
+        channels_string = ','.join(channels)
+        payload.update({'channels':channels_string})
+        regions = request.form.getlist('country')
+        regions_string = ','.join(regions)
+        payload.update({'regions':regions_string})
+
+
+        arrangements = request.form.getlist('arrangements')
+        arrangements_string = ','.join(arrangements)
+        payload.update({'arrangements': arrangements_string})
+
+        is_classified_post = request.form.get('is_classified_post')
+        print('is classified = ',is_classified_post)
+        try:
+            del payload['country']
+            del payload['is_classified_post']
+        except:pass
+        if is_classified_post == 'on':
+            payload.update({'is_classified_post':'TRUE'})
+        else:
+            payload.update({'is_classified_post':'FALSE'})
+        print(payload)
+        # exit()
 #
 #         files = request.form.getlist('files')
 #         # files = request.files.getlist("files")
 #         print(files)
 #
-#         video_cat = request.form.get('video_cat')
-#         target_url = request.form.get('target_url')
-#         campaign_description = request.form.get('campaign_description')
-#         arrangements = request.form.getlist('arrangements')
-#         arrangements_string=','.join(arrangements)
-#         kpis = request.form.get('kpis')
-#         user_id = session['user_id']
-#         data=[campaign_name,from_date,to_date,budget,currency,channels_string,
-#               regions_string,min_lower,max_upper,video_cat,target_url,campaign_description,arrangements_string,kpis,user_id]
-#         columns = ['campaign_name','from_date','to_date','budget','currency','channels','regions',
-#                    'min_lower_followers','max_upper_followers','video_cat_id','target_url','campaign_description','arrangements','kpis','user_id']
-#         connecsiObj = ConnecsiModel()
-#         connecsiObj.insert__(table_name='brands_campaigns',columns=columns,data=data)
-#         return ""
-#
+        user_id = session['user_id']
+        url = base_url + 'Campaign/' + str(user_id)
+        try:
+            response = requests.post(url=url, json=payload)
+            result_json = response.json()
+            print(result_json)
+            flash('saved Campaign', 'success')
+            return viewCampaigns()
+        except:
+            pass
+    else:
+        flash('Unauthorized', 'danger')
+
+
+
+
 @connecsiApp.route('/inbox/<string:message_id>',methods = ['GET'])
 @is_logged_in
 def inbox(message_id):
