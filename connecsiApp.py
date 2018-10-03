@@ -8,10 +8,84 @@ from flask import Flask, render_template, flash, redirect, url_for, session, req
 # from passlib.hash import sha256_crypt
 #from flask_oauthlib.client import OAuth
 import os
+from flask_dance.contrib.google import make_google_blueprint, google
+from flask_dance.contrib.twitter import make_twitter_blueprint, twitter
+
+os.environ['OAUTHLIB_INSECURE_TRANSPORT'] = '1'
+# os.environ['OAUTHLIB_RELAX_TOKEN_SCOPE'] = '1'
 
 connecsiApp = Flask(__name__)
 connecsiApp.secret_key = 'connecsiSecretKey'
 base_url = 'https://kiranpadwaltestconnecsi.pythonanywhere.com/api/'
+
+
+google_blueprint = make_google_blueprint(
+    client_id="413672402805-dvv0v7bft07iqhj2du2eqq59itbeqcv1.apps.googleusercontent.com",
+    client_secret="wNxRXqxGrz7inj2yE2nlgcyO",
+    scope=[
+        "https://www.googleapis.com/auth/plus.me",
+        "https://www.googleapis.com/auth/userinfo.email",
+    ],
+    redirect_to='google_login'
+
+)
+twitter_blueprint = make_twitter_blueprint(
+    api_key="lOhkeJRZhYXvkm0lYq1ZgTtYa",
+    api_secret="TbMKSZBbcqhnedjjqG66JuStxunBdKLelfjgxTW4UNJndbatJa",
+)
+connecsiApp.register_blueprint(google_blueprint, url_prefix="/login")
+connecsiApp.register_blueprint(twitter_blueprint, url_prefix="/login")
+
+
+
+@connecsiApp.route("/google_login")
+def google_login():
+    if not google.authorized:
+        print('i m here always')
+        return redirect(url_for("google.login"))
+    resp = google.get("/oauth2/v2/userinfo")
+    print(resp.json())
+    resp_json = resp.json()
+    # assert resp.ok, resp.text
+    if resp.ok:
+        user_id = resp_json['id']
+        print(user_id)
+        # exit()
+        if user_id:
+            flash("logged in", 'success')
+            session['logged_in'] = True
+            session['email_id'] = resp_json['email']
+            session['type'] = 'influencer'
+            session['user_id'] = user_id
+            print(session['user_id'])
+            return redirect(url_for('admin'))
+    else:return redirect(url_for('login'))
+
+@connecsiApp.route("/twitter_login")
+def twitter_login():
+    if not twitter.authorized:
+        return redirect(url_for("twitter.login"))
+    resp = twitter.get("account/settings.json")
+    print(resp.json())
+    exit()
+    resp_json = resp.json()
+    # assert resp.ok, resp.text
+    if resp.ok:
+        user_id = resp_json['id']
+        print(user_id)
+        # exit()
+        if user_id:
+            flash("logged in", 'success')
+            session['logged_in'] = True
+            session['email_id'] = resp_json['email']
+            session['type'] = 'influencer'
+            session['user_id'] = user_id
+            print(session['user_id'])
+            return redirect(url_for('admin'))
+    else:return redirect(url_for('login'))
+
+
+
 # oauth = OAuth(connecsiApp)
 
 # linkedin = oauth.remote_app(
@@ -49,6 +123,10 @@ def index():
     data.append(title)
     return render_template('user/login.html',data=data)
 
+
+@connecsiApp.route('/privacy_policy')
+def privacy_policy():
+    return render_template('user/privacy_policy.html')
 
 # @connecsiApp.route('/loginLinkedin')
 # def loginLinkedin():
@@ -374,7 +452,6 @@ def viewCampaigns():
             item.update({'region_name_list': region_name_list})
         print(view_campaign_data)
         return render_template('campaign/viewCampaigns.html',view_campaign_data=view_campaign_data)
-
     except Exception as e:
         flash('Error is Getting Data From Backend Please try again Later')
     return render_template('campaign/viewCampaigns.html',view_campaign_data=view_campaign_data)
@@ -383,8 +460,17 @@ def viewCampaigns():
 @connecsiApp.route('/viewCampaignDetails/<string:campaign_id>',methods=['GET'])
 @is_logged_in
 def viewCampaignDetails(campaign_id):
-
-    return render_template('campaign/viewCampaignDetails.html')
+    user_id = session['user_id']
+    view_campaign_details_data = ''
+    url_view_campaign_details = base_url + 'Campaign/'+str(campaign_id)+'/' + str(user_id)
+    try:
+        view_campaigns_response = requests.get(url=url_view_campaign_details)
+        view_campaign_details_data = view_campaigns_response.json()
+        print(view_campaign_details_data)
+        return render_template('campaign/viewCampaignDetails.html',view_campaign_details_data=view_campaign_details_data)
+    except Exception as e:
+        flash('Error is Getting Data From Backend Please try again Later')
+    return render_template('campaign/viewCampaignDetails.html',view_campaign_details_data=view_campaign_details_data)
 
 
 @connecsiApp.route('/saveCampaign',methods=['POST'])

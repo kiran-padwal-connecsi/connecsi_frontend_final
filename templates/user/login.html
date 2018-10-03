@@ -77,19 +77,26 @@
                 </div>
                 <br/>
                 <div class="form-field center-align">
-                    <button class="btn-small purple hoverable" type="submit" name="influencer">Login</button>
+                    <!--<button class="btn-small purple hoverable" type="submit" name="influencer">Login</button>-->
+
                 </div>
                 </form>
+
                 <br/>
-                <div class="center-align">
-                    <a class="btn-small red hoverable" href="/registerInfluencer">Sign up</a>
-                </div>
+                <button class="btn-small purple hoverable" onclick="login()" id="login">Login </button>
+                <!--<div class="center-align">-->
+                    <!--<a class="btn-small red hoverable" href="/registerInfluencer">Sign up</a>-->
+                <!--</div>-->
+                <br/>
+                <br/>
+                <p class="white-text">OR Sign In Via </p>
+                <br/>
+                <a href="/google_login" class="waves-effect waves-light"><img src="static/img/yt_logo_rgb_light.png" class="responsive-img" height="50" width="70"></a>
+                <a href="/twitter_login" class="waves-effect waves-light"><img src="static/img/Twitter_Social_Icon_Square_Color.png" class="responsive-img" height="40" width="50"></a>
             </div>
         </div>
     </div>
 </div>
-
-
 
 
 {% endblock %}
