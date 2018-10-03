@@ -32,6 +32,7 @@ google_blueprint = make_google_blueprint(
 twitter_blueprint = make_twitter_blueprint(
     api_key="lOhkeJRZhYXvkm0lYq1ZgTtYa",
     api_secret="TbMKSZBbcqhnedjjqG66JuStxunBdKLelfjgxTW4UNJndbatJa",
+    redirect_to='twitter_login'
 )
 connecsiApp.register_blueprint(google_blueprint, url_prefix="/login")
 connecsiApp.register_blueprint(twitter_blueprint, url_prefix="/login")
@@ -65,11 +66,15 @@ def google_login():
 def twitter_login():
     if not twitter.authorized:
         return redirect(url_for("twitter.login"))
-    resp = twitter.get("account/settings.json")
+    resp = twitter.get("account/verify_credentials.json?include_email=true")
+
     print(resp.json())
-    exit()
+    # exit()
     resp_json = resp.json()
+    # screen_name = resp_json['screen_name']
+    # user_data = twitter.get('users/show.json?screen_name=' +screen_name)
     # assert resp.ok, resp.text
+    # print(user_data.json())
     if resp.ok:
         user_id = resp_json['id']
         print(user_id)
@@ -80,7 +85,7 @@ def twitter_login():
             session['email_id'] = resp_json['email']
             session['type'] = 'influencer'
             session['user_id'] = user_id
-            print(session['user_id'])
+            # print(session['user_id'])
             return redirect(url_for('admin'))
     else:return redirect(url_for('login'))
 
