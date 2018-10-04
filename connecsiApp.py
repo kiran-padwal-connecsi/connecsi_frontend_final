@@ -648,6 +648,68 @@ def inbox(message_id):
     return render_template('email/inbox.html',inbox=inbox, full_conv = full_conv,conv_title=conv_title)
 
 
+@connecsiApp.route('/sent',methods = ['GET'])
+@is_logged_in
+def sent():
+    sent = ''
+    user_id = session['user_id']
+    type = session['type']
+    email_id = session['email_id']
+    url = base_url + 'Messages/' + str(user_id) + '/' + type
+    conv_url = base_url + 'Messages/conversations/sent/' + str(email_id)
+    try:
+        response = requests.get(url=url)
+        data = response.json()
+        # print('messages = ', data)
+        conv_resposne = requests.get(url=conv_url)
+        conv_data = conv_resposne.json()
+        # print('conv = ', conv_data)
+        ###################### get sent
+        sentList = []
+        for item in data['data']:
+            if item['from_email_id'] == email_id:
+                sentList.append(item)
+        # print(mylist)
+        for item in conv_data['data']:
+            if item['from_email_id'] == email_id:
+                sentList.append(item)
+
+        sent = {}
+        sent.update({'data': sentList})
+        # print('sent = ', sent)
+
+        collapse_id = 1
+        for item in sent['data']:
+            sent_user_id = item['user_id']
+            # print(sent_user_id)
+            sent_user_type = item['user_type']
+            first_name = ''
+            if sent_user_type == 'brand':
+                brand_details_url = base_url + '/Brand/' + str(sent_user_id)
+                brand_details_resposne = requests.get(url=brand_details_url)
+                brand_details_json = brand_details_resposne.json()
+                # print(brand_details_json)
+                first_name = brand_details_json['data']['first_name']
+            elif sent_user_type == 'influencer':
+                influencer_details_url = base_url + '/Influencer/' + str(sent_user_id)
+                influencer_details_resposne = requests.get(url=influencer_details_url)
+                influencer_details_json = influencer_details_resposne.json()
+                # print(influencer_details_json)
+                first_name = influencer_details_json['data']['first_name']
+            item.update({'first_name': first_name})
+            item.update({'collapse_id': collapse_id})
+            # print(item)
+            collapse_id += 1
+
+        for item in sent['data']:
+            print(item)
+
+        return render_template('email/sent.html', sent=sent)
+    except:
+        pass
+    return render_template('email/sent.html', sent=sent)
+
+
 @connecsiApp.route('/compose')
 @is_logged_in
 def compose():
