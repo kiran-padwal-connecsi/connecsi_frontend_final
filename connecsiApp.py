@@ -564,23 +564,23 @@ def inbox(message_id):
 
         for item in inbox['data']:
             inbox_user_id = item['user_id']
-            print(inbox_user_id)
+            # print(inbox_user_id)
             inbox_user_type = item['user_type']
             first_name = ''
             if inbox_user_type == 'brand':
                 brand_details_url = base_url+'/Brand/'+str(inbox_user_id)
                 brand_details_resposne = requests.get(url=brand_details_url)
                 brand_details_json = brand_details_resposne.json()
-                print(brand_details_json)
+                # print(brand_details_json)
                 first_name = brand_details_json['data']['first_name']
             elif inbox_user_type == 'influencer':
                 influencer_details_url = base_url + '/Influencer/' + str(inbox_user_id)
                 influencer_details_resposne = requests.get(url=influencer_details_url)
                 influencer_details_json = influencer_details_resposne.json()
-                print(influencer_details_json)
+                # print(influencer_details_json)
                 first_name = influencer_details_json['data']['first_name']
             item.update({'first_name': first_name})
-            print(item)
+            # print(item)
 
         # #######################################
 
@@ -617,35 +617,136 @@ def inbox(message_id):
         collapse_id = 1
         for item in full_conv['data']:
             full_conv_user_id = item['user_id']
-            print(full_conv_user_id)
+            # print(full_conv_user_id)
             full_conv_user_type = item['user_type']
             first_name = ''
             if full_conv_user_type == 'brand':
                 brand_details_url = base_url+'/Brand/'+str(full_conv_user_id)
                 brand_details_resposne = requests.get(url=brand_details_url)
                 brand_details_json = brand_details_resposne.json()
-                print(brand_details_json)
+                # print(brand_details_json)
                 first_name = brand_details_json['data']['first_name']
             elif full_conv_user_type == 'influencer':
                 influencer_details_url = base_url + '/Influencer/' + str(full_conv_user_id)
                 influencer_details_resposne = requests.get(url=influencer_details_url)
                 influencer_details_json = influencer_details_resposne.json()
-                print(influencer_details_json)
+                # print(influencer_details_json)
                 first_name = influencer_details_json['data']['first_name']
             item.update({'first_name': first_name})
             item.update({'collapse_id':collapse_id})
-            print(item)
+            # print(item)
             collapse_id+=1
+
 
         try:
             conv_title = full_conv['data'][0]['subject']
         except:pass
 
+################ remove deleted message from inbox and conv ##################
+        removed_deleted_messages_from_inbox = []
+        for item in inbox['data']:
+            try:
+                deleted_from_user_id_string = item['deleted_from_user_id']
+                deleted_from_user_id_list = deleted_from_user_id_string.split(',')
+                if str(user_id) not in deleted_from_user_id_list:
+                    removed_deleted_messages_from_inbox.append(item)
+            except:
+                pass
+        inbox.update({'data': removed_deleted_messages_from_inbox})
+        print('removed deleted', inbox)
+
+        removed_deleted_messages_from_conv = []
+        for item in full_conv['data']:
+            try:
+                deleted_from_user_id_string = item['deleted_from_user_id']
+                deleted_from_user_id_list = deleted_from_user_id_string.split(',')
+                if str(user_id) not in deleted_from_user_id_list:
+                    removed_deleted_messages_from_conv.append(item)
+            except:pass
+        full_conv.update({'data':removed_deleted_messages_from_conv})
+        print('removed deleted',full_conv)
+############################################################
         # ####################################
         return render_template('email/inbox.html', inbox = inbox, full_conv = full_conv, conv_title=conv_title)
     except:
         pass
     return render_template('email/inbox.html',inbox=inbox, full_conv = full_conv,conv_title=conv_title)
+
+
+
+@connecsiApp.route('/deleted',methods = ['GET'])
+@is_logged_in
+def deleted():
+    deleted_dict=''
+    user_id = session['user_id']
+    type = session['type']
+    email_id = session['email_id']
+    url = base_url + 'Messages/' + str(user_id) + '/'+ type
+    conv_url = base_url + 'Messages/conversations/'+ str(user_id)+'/'+type
+    try:
+        response = requests.get(url=url)
+        messages = response.json()
+        print('messages = ',messages)
+        conv_resposne = requests.get(url=conv_url)
+        conv_data = conv_resposne.json()
+        print('conv = ',conv_data)
+        ###################### get inbox
+        deleted_list=[]
+        for item in messages['data']:
+            if item['deleted'] == 'true':
+               deleted_list.append(item)
+        # print(mylist)
+        for item in conv_data['data']:
+            if item['deleted'] == 'true':
+               deleted_list.append(item)
+        deleted_dict = {}
+        deleted_dict.update({'data':deleted_list})
+        print('deleted dict = ',deleted_dict)
+        # exit()
+
+        # ########################### get conversations
+        collapse_id = 1
+        for item in deleted_dict['data']:
+            full_conv_user_id = item['user_id']
+            # print(full_conv_user_id)
+            full_conv_user_type = item['user_type']
+            first_name = ''
+            if full_conv_user_type == 'brand':
+                brand_details_url = base_url+'/Brand/'+str(full_conv_user_id)
+                brand_details_resposne = requests.get(url=brand_details_url)
+                brand_details_json = brand_details_resposne.json()
+                # print(brand_details_json)
+                first_name = brand_details_json['data']['first_name']
+            elif full_conv_user_type == 'influencer':
+                influencer_details_url = base_url + '/Influencer/' + str(full_conv_user_id)
+                influencer_details_resposne = requests.get(url=influencer_details_url)
+                influencer_details_json = influencer_details_resposne.json()
+                # print(influencer_details_json)
+                first_name = influencer_details_json['data']['first_name']
+            item.update({'first_name': first_name})
+            item.update({'collapse_id':collapse_id})
+            # print(item)
+            collapse_id+=1
+
+################ remove deleted message from inbox and conv ##################
+        removed_deleted_messages_from_conv = []
+        for item in deleted_dict['data']:
+            try:
+                deleted_from_user_id_string = item['deleted_from_user_id']
+                deleted_from_user_id_list = deleted_from_user_id_string.split(',')
+                if str(user_id) in deleted_from_user_id_list:
+                    removed_deleted_messages_from_conv.append(item)
+            except:pass
+        deleted_dict.update({'data':removed_deleted_messages_from_conv})
+        print('deleted messages',deleted_dict)
+############################################################
+        # ####################################
+        return render_template('email/deleted.html', deleted_dict = deleted_dict)
+    except:
+        pass
+    return render_template('email/deleted.html',deleted_dict = deleted_dict)
+
+
 
 
 @connecsiApp.route('/sent',methods = ['GET'])
@@ -701,13 +802,47 @@ def sent():
             # print(item)
             collapse_id += 1
 
+        removed_deleted_messages_from_sent = []
         for item in sent['data']:
-            print(item)
+            try:
+                deleted_from_user_id_string = item['deleted_from_user_id']
+                deleted_from_user_id_list = deleted_from_user_id_string.split(',')
+                if str(user_id) not in deleted_from_user_id_list:
+                    removed_deleted_messages_from_sent.append(item)
+            except:
+                pass
+        sent.update({'data': removed_deleted_messages_from_sent})
+        print('removed deleted', sent)
 
         return render_template('email/sent.html', sent=sent)
     except:
         pass
     return render_template('email/sent.html', sent=sent)
+
+
+
+
+@connecsiApp.route('/delete/<string:message_id>/<string:conv_id>/<string:user_id>', methods = ['GET'])
+@is_logged_in
+def delete(message_id,conv_id,user_id):
+    # print(message_id,conv_id)
+    conv_id = int(conv_id)
+    # print(type(conv_id))
+    print(user_id)
+    if conv_id != 0:
+        url_delete_msg_from_conv = base_url+'Messages/conversations/delete/'+str(message_id)+'/'+str(conv_id)+'/'+str(user_id)
+        print(url_delete_msg_from_conv)
+        response = requests.put(url=url_delete_msg_from_conv)
+        print(response.json())
+        flash('message moved to deleted', 'warning')
+        return redirect(url_for('admin'))
+    else:
+        url_delete_msg_from_messages = base_url+'Messages/delete/'+str(message_id)+'/'+str(user_id)
+        print(url_delete_msg_from_messages)
+        response = requests.put(url=url_delete_msg_from_messages)
+        print(response.json())
+        flash('message moved to deleted', 'warning')
+        return redirect(url_for('admin'))
 
 
 @connecsiApp.route('/compose')
@@ -770,6 +905,11 @@ def replyEmail(message_id):
         except:
             pass
         return render_template('email/compose.html')
+
+@connecsiApp.route('/influencerFavoritesList')
+@is_logged_in
+def influencerFavoritesList():
+    return render_template('partnerships/influencerFavoritesList.html')
 
 
         # @connecsiApp.route('/login/authorized')
