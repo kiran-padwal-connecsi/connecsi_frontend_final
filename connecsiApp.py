@@ -651,9 +651,10 @@ def inbox(message_id):
                 if str(user_id) not in deleted_from_user_id_list:
                     removed_deleted_messages_from_inbox.append(item)
             except:
+                removed_deleted_messages_from_inbox.append(item)
                 pass
         inbox.update({'data': removed_deleted_messages_from_inbox})
-        print('removed deleted', inbox)
+        print('removed deleted from inbox', inbox)
 
         removed_deleted_messages_from_conv = []
         for item in full_conv['data']:
@@ -662,9 +663,11 @@ def inbox(message_id):
                 deleted_from_user_id_list = deleted_from_user_id_string.split(',')
                 if str(user_id) not in deleted_from_user_id_list:
                     removed_deleted_messages_from_conv.append(item)
-            except:pass
+            except:
+                removed_deleted_messages_from_conv.append(item)
+                pass
         full_conv.update({'data':removed_deleted_messages_from_conv})
-        print('removed deleted',full_conv)
+        print('removed deleted from conv',full_conv)
 ############################################################
         # ####################################
         return render_template('email/inbox.html', inbox = inbox, full_conv = full_conv, conv_title=conv_title)
@@ -736,7 +739,9 @@ def deleted():
                 deleted_from_user_id_list = deleted_from_user_id_string.split(',')
                 if str(user_id) in deleted_from_user_id_list:
                     removed_deleted_messages_from_conv.append(item)
-            except:pass
+            except:
+                    removed_deleted_messages_from_conv.append(item)
+                    pass
         deleted_dict.update({'data':removed_deleted_messages_from_conv})
         print('deleted messages',deleted_dict)
 ############################################################
