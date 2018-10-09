@@ -176,8 +176,8 @@
                   <div class="row"  style="padding-left: 30%;">
                     <a href="/compose"><i class="fa fa-envelope" style="font-size:36px;color:blue;" data-toggle="tooltip" title="Message"></i></a>&nbsp;
                     <a href="#"><i class="fa fa-bullseye red"style="font-size:36px;" data-toggle="tooltip" title="Add To Campaign"></i></a>&nbsp;
-                    <a href="#"><i class="fa fa-eye cyan"style="font-size:36px;" data-toggle="tooltip" title="Add To Watchlist"></i></a>&nbsp;
-                    <a href="#"><i class="fa fa-star-o yellow"style="font-size:36px;" data-toggle="tooltip" title="Add To Favorites"></i></a>&nbsp;&nbsp;
+                    <!--<a href="#"><i class="fa fa-eye cyan"style="font-size:36px;" data-toggle="tooltip" title="Add To Watchlist"></i></a>&nbsp;-->
+                    <a href="/addToFavInfList/{{ item['channel_id'] }}"><i class="fa fa-star-o yellow"style="font-size:36px;" data-toggle="tooltip" title="Add To Favorites"></i></a>&nbsp;&nbsp;
                     <small>Other Channels</small>
                     {% if item['facebook_url'] %}
                     <a href="{{ item['facebook_url'] }}" target="_blank"><i class="fa fa-facebook-official"style="font-size:36px;color:blue;"></i></a>&nbsp;

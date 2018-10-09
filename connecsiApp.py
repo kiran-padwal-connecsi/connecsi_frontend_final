@@ -648,6 +648,7 @@ def inbox(message_id):
             try:
                 deleted_from_user_id_string = item['deleted_from_user_id']
                 deleted_from_user_id_list = deleted_from_user_id_string.split(',')
+                print('deleted user list from inbox',deleted_from_user_id_list)
                 if str(user_id) not in deleted_from_user_id_list:
                     removed_deleted_messages_from_inbox.append(item)
             except:
@@ -661,6 +662,7 @@ def inbox(message_id):
             try:
                 deleted_from_user_id_string = item['deleted_from_user_id']
                 deleted_from_user_id_list = deleted_from_user_id_string.split(',')
+                print('deleted user list from full conv', deleted_from_user_id_list)
                 if str(user_id) not in deleted_from_user_id_list:
                     removed_deleted_messages_from_conv.append(item)
             except:
@@ -685,7 +687,9 @@ def deleted():
     type = session['type']
     email_id = session['email_id']
     url = base_url + 'Messages/' + str(user_id) + '/'+ type
-    conv_url = base_url + 'Messages/conversations/'+ str(user_id)+'/'+type
+    conv_url = base_url + 'Messages/conversations/all/'+type
+    print(conv_url)
+    # conv_url = base_url + 'Messages/conversations/' + str(email_id)
     try:
         response = requests.get(url=url)
         messages = response.json()
@@ -693,6 +697,7 @@ def deleted():
         conv_resposne = requests.get(url=conv_url)
         conv_data = conv_resposne.json()
         print('conv = ',conv_data)
+        # exit()
         ###################### get inbox
         deleted_list=[]
         for item in messages['data']:
@@ -737,11 +742,13 @@ def deleted():
             try:
                 deleted_from_user_id_string = item['deleted_from_user_id']
                 deleted_from_user_id_list = deleted_from_user_id_string.split(',')
+                print('deleted user list', deleted_from_user_id_list)
                 if str(user_id) in deleted_from_user_id_list:
                     removed_deleted_messages_from_conv.append(item)
-            except:
-                    removed_deleted_messages_from_conv.append(item)
-                    pass
+            except Exception as e:
+                removed_deleted_messages_from_conv.append(item)
+                pass
+                print(e)
         deleted_dict.update({'data':removed_deleted_messages_from_conv})
         print('deleted messages',deleted_dict)
 ############################################################
@@ -910,6 +917,23 @@ def replyEmail(message_id):
         except:
             pass
         return render_template('email/compose.html')
+
+
+
+@connecsiApp.route('/addToFavInfList/<string:channel_id>',methods=['GET'])
+@is_logged_in
+def addToFavInfList(channel_id):
+    print(channel_id)
+    try:
+        url = base_url+'/Brand/addToFavList/'+channel_id
+        response = requests.post(url=url)
+        # data = response.json()
+        flash("Added to Favorites List", 'success')
+        return influencerFavoritesList()
+    except:
+        pass
+        flash("Could not be added to Favorites List", 'danger')
+        return influencerFavoritesList()
 
 @connecsiApp.route('/influencerFavoritesList')
 @is_logged_in
