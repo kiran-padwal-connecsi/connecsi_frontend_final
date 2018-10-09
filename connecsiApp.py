@@ -638,9 +638,7 @@ def inbox(message_id):
             collapse_id+=1
 
 
-        try:
-            conv_title = full_conv['data'][0]['subject']
-        except:pass
+
 
 ################ remove deleted message from inbox and conv ##################
         removed_deleted_messages_from_inbox = []
@@ -672,6 +670,9 @@ def inbox(message_id):
         print('removed deleted from conv',full_conv)
 ############################################################
         # ####################################
+        try:
+            conv_title = full_conv['data'][0]['subject']
+        except:pass
         return render_template('email/inbox.html', inbox = inbox, full_conv = full_conv, conv_title=conv_title)
     except:
         pass
