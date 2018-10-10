@@ -8,12 +8,12 @@
             <div class="card-body">
                 <div class="card-block">
                     <div>
-     <ul class="tabrow">
-   <li class="selected">Youtube</li>
-   <li>Facebook</li>
-   <li >Instagram</li>
-   <li>Twitter</li>
-</ul>
+                        <ul class="tabrow">
+                            <li class="selected">Youtube</li>
+                            <li>Facebook</li>
+                            <li >Instagram</li>
+                            <li>Twitter</li>
+                        </ul>
                     </div>
                     <div class="row" style="padding-top: 2%;">
                         <button type="button" style="background-color: purple; margin-left: 2%; color:white; border-radius: 10px; font-size:15px;">Export CSV</button>
@@ -29,47 +29,93 @@
                         <div class="row">
                             <div class="col-md-10">
                                 <b style="letter-spacing: 1px; margin-left: 10%;">Pew Dew Pie
-                                    <a href="#" class="fa fa-youtube"></a></b>
+                                    <a href="#" class="fa fa-youtube"></a>
+                                    <a href="#" class="fa fa-youtube"></a>
+                                    <a href="#" class="fa fa-youtube"></a>
+                                </b>
                                 <br />
                                 <div class="row">
-                                    <div class="col-md-2">Image</div>
+                                    <div class="col-md-2">Image
+                                        <br/>
+                                        <a href="#" data-toggle="modal" data-target="#myModal" data-backdrop="false"><i class="material-icons">add_alert</i></a>
+                                        <a href="#" class="fa fa-youtube"></a>
+                                        <a href="#" class="fa fa-youtube"></a></div>
                                     <div class="col-md-2" style="border-right:2px solid grey;"><b style="font-weight: 400; font-size:15px;">Total <br />Followers<br/><b style="color:blue; font-weight:400;">54 00 000</b> </b></div>
                                     <div class="col-md-2" style="border-right:2px solid grey;"><b style="font-weight: 400; font-size:15px;">Avg <br />Views/video<br/><b style="color:blue; font-weight:400;">200 000</b> </b></div>
                                     <div class="col-md-2" style="border-right:2px solid grey;"><b style="font-weight: 400; font-size:15px;">Avg <br />Likes/video<br/><b style="color:blue; font-weight:400;">64 000</b> </b></div>
                                     <div class="col-md-2" style="border-right:2px solid grey;"><b style="font-weight: 400; font-size:15px;">Avg <br />Comments<br />/video<br/><b style="color:blue; font-weight:400;">10 112</b> </b></div>
                                     <div class="col-md-2" style="border-right:2px solid grey;">graph</div>
-
+                                </div>
+                            </div>
+                            <div class="modal fade" id="myModal" role="dialog">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <p>Create Alerts</p>
+                                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <div class="form-group">
+                                                <label for="follow">Followers:</label>
+                                                <input type="text" class="form-control" id="follow" name="alert_followers">
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="likes">Likes:</label>
+                                                <input type="text" class="form-control" id="likes">
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="comments">Comments:</label>
+                                                <input type="text" class="form-control" id="comments">
+                                            </div>
+                                            <div class="form-group">
+                                                <label for=view>Views:</label>
+                                                <input type="text" class="form-control" id="view">
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-success" data-dismiss="modal">Save</button>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                             <div class="col-md-2">
-                                <div class="scroll">
-                                    <div style="padding-bottom: 10px;">
-                                    <b style="font-size:15px; background-color: lightgrey; padding-top:10px; padding-bottom: 10px; padding-left:30px; padding-right:55px;">Status</b></div>
-                                    <b style="font-weight:450;">Campaign 1<br/></b>
-                                    <b style="font-weight:400; color:orange;">Contacted</b><br/>
-                                    <hr>
-                                     <b style="font-weight:450;">Campaign 2<br/></b>
-                                    <b style="font-weight: 400; color:green;">Accepted
-                                    </b><br />
-                                    <hr>
-                                     <b style="font-weight:450;">Campaign 3<br/></b>
-                                    <b style="font-weight: 400; color:orange;">Contacted</b>
+                                <div class="col-md-1">
+                                    <div class="scroll">
+                                        <ul class="nav nav-tabs">
+                                            <li class="active"><a data-toggle="tab" href="#status">Status</a></li>
+                                            <li><a data-toggle="tab" href="#alert">Alert</a></li>
+                                        </ul>
 
-                                </div>
+                                        <div class="tab-content">
+                                            <div id="status" class="tab-pane fade in active">
+                                                <b style="font-weight:450;">Campaign 1<br/></b>
+                                                <b style="font-weight:400; color:orange;">Contacted</b><br/>
+                                                <hr>
+                                                <b style="font-weight:450;">Campaign 2<br/></b>
+                                                <b style="font-weight: 400; color:green;">Accepted
+                                                </b><br />
+                                                <hr>
+                                                <b style="font-weight:450;">Campaign 3<br/></b>
+                                                <b style="font-weight: 400; color:orange;">Contacted</b>
+                                            </div>
+                                            <div id="alert" class="tab-pane fade">
+                                                <b style="font-weight:450;">Followers<br/></b>
+                                                <b style="font-weight:400; color:red;">60 000 00</b><br/>
+                                                <hr>
+                                                <b style="font-weight:450;">Avg Likes/video<br/></b>
+                                                <b style="font-weight: 400; color:red;">80 000
+                                                </b><br />
+                                                <hr>
+                                                <b style="font-weight:450;">Avg Comments<br/></b>
+                                                <b style="font-weight: 400; color:red;">5 000</b>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="row" style="margin-left:20%;">
-                            <a href="#" class="fa fa-youtube"></a>
-                            <a href="#" class="fa fa-youtube"></a>
-                            <a href="#" class="fa fa-youtube"></a>
-                            <b style="letter-spacing: 1px;">Other Channels</b>
-                            <a href="#" class="fa fa-youtube"></a>
-                            <a href="#" class="fa fa-youtube"></a>
-                            <a href="#" class="fa fa-youtube"></a>
-                                </div>
                         </div>
                     </div>
-            </div>
+                </div>
             </div>
         </div>
     </div>

@@ -926,7 +926,8 @@ def replyEmail(message_id):
 def addToFavInfList(channel_id):
     print(channel_id)
     try:
-        url = base_url+'/Brand/addToFavList/'+channel_id
+        user_id = session['user_id']
+        url = base_url+'/Brand/addToFavList/'+channel_id+'/'+str(user_id)
         response = requests.post(url=url)
         # data = response.json()
         flash("Added to Favorites List", 'success')
@@ -939,6 +940,7 @@ def addToFavInfList(channel_id):
 @connecsiApp.route('/influencerFavoritesList')
 @is_logged_in
 def influencerFavoritesList():
+
     return render_template('partnerships/influencerFavoritesList.html')
 
 
