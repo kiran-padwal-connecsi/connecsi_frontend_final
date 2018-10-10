@@ -14,6 +14,7 @@ from flask_dance.contrib.twitter import make_twitter_blueprint, twitter
 os.environ['OAUTHLIB_INSECURE_TRANSPORT'] = '1'
 # os.environ['OAUTHLIB_RELAX_TOKEN_SCOPE'] = '1'
 
+
 connecsiApp = Flask(__name__)
 connecsiApp.secret_key = 'connecsiSecretKey'
 base_url = 'https://kiranpadwaltestconnecsi.pythonanywhere.com/api/'
@@ -921,7 +922,7 @@ def replyEmail(message_id):
 
 
 
-@connecsiApp.route('/addToFavInfList/<string:channel_id>',methods=['GET'])
+@connecsiApp.route('/addToFavInfList/<string:channel_id>',methods=['GET','POST'])
 @is_logged_in
 def addToFavInfList(channel_id):
     print(channel_id)
@@ -987,5 +988,5 @@ def influencerFavoritesList():
 # linkedin.pre_request = change_linkedin_query
 
 if __name__ == '__main__':
-    connecsiApp.secret_key = 'connecsiSecretKey'
-    connecsiApp.run(debug=True,host='localhost',port=8090,use_reloader=False)
+    # connecsiApp.secret_key = 'connecsiSecretKey'
+    connecsiApp.run(debug=False,host='localhost')
