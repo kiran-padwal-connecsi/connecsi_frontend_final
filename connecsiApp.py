@@ -988,4 +988,4 @@ def influencerFavoritesList():
 
 if __name__ == '__main__':
     connecsiApp.secret_key = 'connecsiSecretKey'
-    connecsiApp.run(debug=True,host='localhost',port=8090)
+    connecsiApp.run(debug=True,host='localhost',port=8090,use_reloader=False)
