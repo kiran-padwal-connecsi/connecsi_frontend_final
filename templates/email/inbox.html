@@ -30,13 +30,13 @@
                                         </span>
                                         <div class="media-body">
                                             <h6 class="list-group-item-heading">{{ item['first_name'] }}
-                                                <span class="font-small-2 float-right">{{ item['date'] }}</span>
+                                                <span class="font-small-2 float-right text-truncate" style="font-size:10px;">{{ item['date'] }}</span>
                                             </h6>
-                                            <p class="list-group-item-text text-truncate">
+                                            <p class="list-group-item-text text-truncate" style="font-size:10px;">
                                                 <strong>{{ item['subject'] }}</strong>
                                             </p>
                                             <!--<span class="badge badge-warning badge-pill float-right">{{ length_conv }}</span>-->
-                                            <div class="list-group-item-text text-truncate">{{ item['message']|safe }}
+                                            <div class="list-group-item-text text-truncate" style="font-size:10px;">{{ item['message']|safe }}
                                             </div>
                                         </div>
                                     </span>
