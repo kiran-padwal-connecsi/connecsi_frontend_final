@@ -13,6 +13,7 @@ from flask_dance.contrib.twitter import make_twitter_blueprint, twitter
 
 os.environ['OAUTHLIB_INSECURE_TRANSPORT'] = '1'
 # os.environ['OAUTHLIB_RELAX_TOKEN_SCOPE'] = '1'
+# os.environ['WERKZEUG_RUN_MAIN'] = 'true'
 
 
 connecsiApp = Flask(__name__)
@@ -941,8 +942,15 @@ def addToFavInfList(channel_id):
 @connecsiApp.route('/influencerFavoritesList')
 @is_logged_in
 def influencerFavoritesList():
-
-    return render_template('partnerships/influencerFavoritesList.html')
+    try:
+        user_id = session['user_id']
+        url = base_url+'/Brand/getInfluencerFavList/'+str(user_id)
+        response = requests.get(url=url)
+        data = response.json()
+        return render_template('partnerships/influencerFavoritesList.html',data=data)
+    except:
+        pass
+        return render_template('partnerships/influencerFavoritesList.html')
 
 
         # @connecsiApp.route('/login/authorized')
@@ -989,4 +997,4 @@ def influencerFavoritesList():
 
 if __name__ == '__main__':
     # connecsiApp.secret_key = 'connecsiSecretKey'
-    connecsiApp.run(debug=False,host='localhost')
+    connecsiApp.run(debug=True,host='localhost')

@@ -41,45 +41,40 @@
 <div class="row" style="justify-content: center">
   <div class="col-xl-12 col-lg-12  col-md-12 col-12">
     <div class="card">
-      <div class="card-body" style="padding: 12px">
+      <div class="card-body" style="padding: 1px">
         <form class="col s12" action="/searchInfluencers" method="POST">
           <div class="form-body">
-            <div class="row">
-              <div class="col-xl-4 col-lg-4 col-md-4 mb-1">
+            <div class="row" style="padding-top: 2%; margin-left: 25%;">
+              <div class="col-xl-4 col-lg-4 col-md-4 mb-1" >
+                <div class="form-group" >
+                  <select class="form-control" name="channel" style="height:35px; width:120px;">
+                    {% if form_filters['channel'] %}
+                    <option value="{{ form_filters['channel'] }}">{{ form_filters['channel'] }}</option>
+                    {% endif %}
+                    <option value="Youtube">Youtube</option>
+                    <option value="Twitter">Twitter</option>
+                    <option value="Facebook">Facebook</option>
+                    <option value="Instagram">Instagram</option>
+                  </select>
+                </div>
               </div>
-              <div class="col-xl-4 col-lg-4 col-md-4 mb-1">
-                <div class="form-group">
-                  <input class="form-control" id="string_word" name="string_word" type="text" placeholder="Search Category"
+              <div class="col-xl-8 col-lg-8 col-md-8 mb-2">
+                <div class="form-group" >
+                  <input class="form-control" id="string_word" name="string_word" type="text" placeholder="Enter Keywords" style="height:35px; width:190px;"
                          {% if form_filters['string_word'] %}
-                         value="{{ form_filters['string_word'] }}"
-                         {% endif %}
+                  value="{{ form_filters['string_word'] }}"
+                  {% endif %}
                   >
                 </div>
                 <!--{{ form_filters }}-->
               </div>
-              <div class="col-xl-4 col-lg-4 col-md-4 mb-1">
-              </div>
-              <div class="col-xl-4 col-lg-4 col-md-4 mb-1">
-                <div class="form-group">
-                  <label>Channel</label>
-                  <div class="form-group">
-                    <select class="form-control" name="channel">
-                      {% if form_filters['channel'] %}
-                      <option value="{{ form_filters['channel'] }}">{{ form_filters['channel'] }}</option>
-                      {% endif %}
-                      <option value="Youtube">Youtube</option>
-                      <option value="Twitter">Twitter</option>
-                      <option value="Facebook">Facebook</option>
-                      <option value="Instagram">Instagram</option>
-                    </select>
-                  </div>
-                </div>
-              </div>
-              <div class="col-xl-4 col-lg-4 col-md-4 mb-1">
-                <div class="form-group">
+            </div>
+            <div class="row" style="margin-left: 25%;">
+              <div class="col-xl-4 col-lg-4 col-md-4 mb-1" >
+                <div class="form-group" >
                   <label>Country</label>
                   <div class="form-group">
-                    <select class="form-control" name="country">
+                    <select class="form-control" name="country" style="height:35px; width:120px;">
                       {% if form_filters['country'] %}
                       <option value="{{ form_filters['country'] }}">{{ form_filters['country_name'] }}</option>
                       <option value=""></option>
@@ -94,12 +89,12 @@
                   </div>
                 </div>
               </div>
-              <div class="col-xl-4 col-lg-4 col-md-4 mb-1">
-                <div class="form-group">
+              <div class="col-xl-8 col-lg-8 col-md-8 mb-2">
+                <div class="form-group" >
                   <p>
                     <label>Followers range:</label>
                   </p>
-                  <div class="circle-filled slider-xs my-1" id="slider"></div>
+                  <div id="slider"  style="height:10px; width: 190px; border-radius: 55px;" ></div>
                 </div>
                 <div class="float-left">Min Followers : </div>
                 <div id="lower-value" ></div>
@@ -107,31 +102,22 @@
                 <div id="upper-value"></div>
                 <input type="hidden" name="min_lower" value="" id="min_lower">
                 <input type="hidden" name="max_upper" value="" id="max_upper">
+                <!--{{ form_filters }}-->
               </div>
-              <div class="col-xl-4 col-lg-4 col-md-4 mb-1">
-                <div class="form-group">
-                  <label>Sort Followers</label>
-                  <div class="form-group">
-                    <select class="form-control" name="sort_order">
-                      {% if form_filters['sort_order'] %}
-                      <option value="{{ form_filters['sort_order'] }}">{{ form_filters['sort_order'] }}</option>
-                      {% endif %}
-                      <option value="High To Low">High To Low</option>
-                      <option value="Low To High">Low To High</option>
-                    </select>
-                  </div>
-                </div>
+              <div class="col-xl-2 col-lg-2 col-md-2 mb-1">
               </div>
+            </div>
+            <div class="row">
               <div class="col-xl-4 col-lg-4 col-md-4 mb-1">
               </div>
               <div class="col-xl-4 col-lg-4 col-md-4 mb-1">
-              </div>
-              <div class="col-xl-4 col-lg-4 col-md-4 mb-1">
-                <div class="form-group spacing">
-                  <button id="btn-search-inf" type="submit" class="btn btn-raised btn-raised btn-primary customButton" name="search_inf">
-                    <i class="fa fa-search"></i> Search
+                <div class="form-group spacing" style="margin-left:20%;">
+                  <button id="btn-search-inf" type="submit" class="btn btn-raised btn-raised btn-primary customButton" name="search_inf" style="padding-right: 10px; padding-left: 10px; padding-top: 2.5px; padding-bottom: 2.5px;">
+                    Search <i class="fa fa-search"></i>
                   </button>
                 </div>
+              </div>
+              <div class="col-xl-4 col-lg-4 col-md-4 mb-1">
               </div>
             </div>
           </div>
@@ -141,64 +127,237 @@
   </div>
 </div>
 <div class="row">
-  <div class="col"><h4  class="text-center">Influencers on Youtube</h4></div>
-</div>
-{% for item in data['data'] %}
-<div class="row">
-  <div class="col-xl-12 col-lg-12 col-md-12 mb-1 col-12">
+  <div class="col-sm-12">
     <div class="card">
       <div class="card-body">
-        <div class="px-3 py-3">
-          <div class="media">
-            <div class="media-body text-left">
-                <div class="row">
-                  <div class="col-sm-2"><img src="{{ item['channel_img'] }}" height="150px" width="150px"></div>
-                  <div class="col-sm-6"><a href="https://www.youtube.com/channel/{{ item['channel_id'] }}" target="_blank">{{ item['title'] }}</a> &nbsp;<i class="fa fa-youtube-play font-medium-3 red"></i>
-                    <br>
-                    <br>
-                    <div class="container">
-                      <div class="row">
-                        <div class="col-sm-3 text-truncate" style="border-right: 1px solid #ccc;"><small>Total Followers</small><br>
-                          {{ item['subscriberCount_gained'] }}
-                        </div>
-                        <div class="col-sm-3 text-truncate" style="border-right: 1px solid #ccc;"><small>Avg Views/video</small><br>
-                          {{ (item['total_100video_views']/100)|int }}</div>
-                        <div class="col-sm-3 text-truncate" style="border-right: 1px solid #ccc;"><small>Avg Likes/video</small><br>
-                          {{ (item['total_100video_likes']/100)|int }}</div>
-                        <div class="col-sm-3 text-truncate" style="border-right: 1px solid #ccc;"><small>Avg Comments/video</small><br>
-                          {{ (item['total_100video_comments']/100)|int }}</div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="col-sm-2"><br>Followers Graph</div>
-                </div>
-                <div class="container">
-                  <div class="row"  style="padding-left: 30%;">
-                    <a href="/compose"><i class="fa fa-envelope" style="font-size:36px;color:blue;" data-toggle="tooltip" title="Message"></i></a>&nbsp;
-                    <a href="#"><i class="fa fa-bullseye red"style="font-size:36px;" data-toggle="tooltip" title="Add To Campaign"></i></a>&nbsp;
-                    <!--<a href="#"><i class="fa fa-eye cyan"style="font-size:36px;" data-toggle="tooltip" title="Add To Watchlist"></i></a>&nbsp;-->
-                    <a href="/addToFavInfList/{{ item['channel_id'] }}"><i class="fa fa-star-o yellow"style="font-size:36px;" data-toggle="tooltip" title="Add To Favorites"></i></a>&nbsp;&nbsp;
-                    <small>Other Channels</small>
-                    {% if item['facebook_url'] %}
-                    <a href="{{ item['facebook_url'] }}" target="_blank"><i class="fa fa-facebook-official"style="font-size:36px;color:blue;"></i></a>&nbsp;
-                    {% endif %}
-                    {% if item['insta_url'] %}
-                    <a href="{{ item['insta_url'] }}" target="_blank"><i class="fa fa-instagram" style="font-size:36px;color:red;"></i></a>&nbsp;
-                    {% endif %}
-                    {% if item['twitter_url'] %}
-                    <a href="{{ item['twitter_url'] }}" target="_blank"><i class="fa fa-twitter"style="font-size:36px;color:cyan;"></i></a>&nbsp;
-                    {% endif %}
-                  </div>
-                </div>
+        <div class="card-block">
+          <div class="row" style="margin-left: 2%;">
+            <div class="col-xl-4 col-lg-4 col-md-4 mb-1">
+              <button type="button" style="background-color: purple; margin-left: 2%; color:white; border-radius: 10px; font-size:15px;">Export CSV</button>
             </div>
+            <div class="col-xl-4 col-lg-4 col-md-4 mb-1"><h4  class="text-center">Influencers on Youtube</h4>
+            </div>
+            <div class="col-xl-4 col-lg-4 col-md-4 mb-1" >
+              <div class="form-group">
+                <div class="form-group" style="margin-left:12%;">
+                  <select class="form-control" name="sort_order" placeholder="Sort" style="width:140px;">
+                    {% if form_filters['sort_order'] %}
+                    <option value="{{ form_filters['sort_order'] }}">{{ form_filters['sort_order'] }}</option>
+                    {% endif %}
+                    <option value="High To Low">High To Low</option>
+                    <option value="Low To High">Low To High</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+          </div>
+          <hr>
+          <div class="container">
+            {% for item in data['data'] %}
+            <div class="row">
+              <div class="">
+                <table cellspacing="1">
+                  <tr>
+                    <td rowspan="4" style="padding-right: 10px;">
+                      <a href="/compose" target="_blank" class="fa fa-envelope" data-toggle="tooltip" title="Message" style="font-size:20px;"></a>
+                      <br>
+                      <a href="#" target="_blank" class="fa fa-bullseye red" data-toggle="tooltip" title="Add To Campaign" style="font-size:20px;"></a>
+                      <br>
+                      <a href="/addToFavInfList/{{ item['channel_id'] }}" target="_blank" class="fa fa-star-o yellow"  data-toggle="tooltip" title="Add To Favorites" style="font-size:20px;"></a>
+                    </td>
+                    <td rowspan="4">
+                      <img src="{{ item['channel_img'] }}" height="155px" width="155px">
+                    </td>
+                    <td colspan="2" style="border-right: solid 1px #E1DEDD;">
+                      <table width="400px" cellpadding="1">
+                        <tr>
+                          <td colspan="2"><b style="font-size:15px;"><a href="https://www.youtube.com/channel/{{ item['channel_id'] }}" target="_blank">{{ item['title'] }}</a></b> <i class="fa fa-youtube-play font-medium-3 red"></i></td>
+                        </tr>
+                        <tr>
+                          <td style="text-align:center;border-right: solid 1px #E1DEDD; border-bottom:solid 1px #E1DEDD; border-top:solid 1px #E1DEDD; font-size:14px;">
+                            <b>{{ item['subscriberCount_gained'] }}</b>
+                            <br>
+                            Total followers
+                          </td>
+                          <td style="text-align:center;border-bottom:solid 1px #E1DEDD; border-top:solid 1px #E1DEDD;  font-size:14px;">
+                            <b>{{ (item['total_100video_likes']/100)|int }}</b>
+                            <br>
+                            Avg Likes/ video
+                          </td>
+                        </tr>
+                        <tr>
+                          <td style="text-align:center;border-right: solid 1px #E1DEDD; border-bottom:solid 1px #E1DEDD;  font-size:14px;">
+                            <b>{{ (item['total_100video_views']/100)|int }}</b>
+                            <br>
+                            Avg Views/ video
+                          </td>
+                          <td style="text-align:center;font-size:14px;">
+                            <b>{{ (item['total_100video_comments']/100)|int }}</b>
+                            <br>
+                            Avg Comments/ video
+                          </td>
+                        </tr>
+                        <tr><td colspan="2">
+                          <b style="font-size:12px">Other Channels</b> &emsp;
+                          {% if item['facebook_url'] %}
+                          <a href="{{ item['facebook_url'] }}" target="_blank" class="fa fa-facebook-official blue" style="font-size:20px;"></a>&emsp;
+                          {% endif %}
+                          {% if item['insta_url'] %}
+                          <a href="{{ item['insta_url'] }}" target="_blank" class="fa fa-instagram pink" style="font-size:20px;"></a>&emsp;
+                          {% endif %}
+                          {% if item['twitter_url'] %}
+                          <a href="{{ item['twitter_url'] }}" target="_blank" class="fa fa-twitter cyan" style="font-size:20px;"></a>&emsp;
+                          {% endif %}
+                        </td></tr>
+                      </table>
+                    </td>
+                    <td rowspan="4" width="400" style="border-right: solid 1px #E1DEDD;" >
+                      <div style="height:150px; width:200px;">
+                        <canvas id="lineChart" height="300px" width="400px"></canvas>
+                      </div></td>
+                    <td rowspan="4">
+                      <div class="scroll">
+                        <ul class="nav nav-tabs">
+                          <li><a data-toggle="tab" href="#status">Status</a></li>&nbsp;
+                          <li><a data-toggle="tab" href="#alert">Alert</a></li>
+                        </ul>
+
+                        <div class="tab-content">
+                          <div id="status" class="tab-pane fade in active">
+                            <b style="font-weight:450;">Campaign 1<br/></b>
+                            <b style="font-weight:400; color:orange;">Contacted</b><br/>
+                            <hr>
+                            <b style="font-weight:450;">Campaign 2<br/></b>
+                            <b style="font-weight: 400; color:green;">Accepted
+                            </b><br />
+                            <hr>
+                            <b style="font-weight:450;">Campaign 3<br/></b>
+                            <b style="font-weight: 400; color:orange;">Contacted</b>
+                          </div>
+                          <div id="alert" class="tab-pane fade">
+                            <b style="font-weight:450;">Followers<br/></b>
+                            <b style="font-weight:400; color:red;">60 000 00</b><br/>
+                            <hr>
+                            <b style="font-weight:450;">Avg Likes/video<br/></b>
+                            <b style="font-weight: 400; color:red;">80 000
+                            </b><br />
+                            <hr>
+                            <b style="font-weight:450;">Avg Comments<br/></b>
+                            <b style="font-weight: 400; color:red;">5 000</b>
+                          </div>
+                        </div>
+                      </div>
+                    </td>
+                  </tr>
+                </table>
+              </div>
+            </div>
+            <hr>
+            {% endfor %}
           </div>
         </div>
       </div>
     </div>
   </div>
 </div>
-{% endfor %}
-
+<style>
+    div.scroll {
+        height: 150px;
+        width: 150px;
+        overflow-y: auto;
+    }
+    .tabrow {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        line-height: 24px;
+    }
+    .tabrow li {
+        padding: 0 10px;
+        border: 1px solid #AAA;
+        background: #ECECEC;
+        display: inline-block;
+    }
+</style>
+<style>
+    /* width */
+    ::-webkit-scrollbar {
+        width: 10px;
+    }
+    /* Track */
+    ::-webkit-scrollbar-track {
+        background: #f1f1f1;
+    }
+    /* Handle */
+    ::-webkit-scrollbar-thumb {
+        background: #888;
+    }
+    /* Handle on hover */
+    ::-webkit-scrollbar-thumb:hover {
+        background: #555;
+    }
+</style>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.1.3/Chart.min.js"></script>
+<script src="js/main.js"></script>
+<script>
+    const CHART = document.getElementById("lineChart");
+    let lineChart = new Chart(CHART, {
+        type: 'line',
+        data: {
+            labels: ["0", "1", "2", "3", "4", "5", "6"],
+            datasets: [
+                {
+                    label: "Youtube",
+                    fill: true,
+                    lineTension: 0.1,
+                    borderColor: "rgba(75,192,192,1)",
+                    borderCapStyle: 'butt',
+                    borderDash: [],
+                    borderDashOffset: 0.0,
+                    borderJoinStyle: 'miter',
+                    pointBorderColor: "rgba(75,192,192,1)",
+                    pointBackgroundColor: "#fff",
+                    pointBorderWidth: 1,
+                    pointHoverRadius: 5,
+                    pointHoverBackgroundColor: "rgba(75,192,192,1)",
+                    pointHoverBorderColor: "rgba(220,220,220,1)",
+                    pointHoverBorderWidth: 2,
+                    pointRadius: 1,
+                    pointHitRadius: 10,
+                    data: [65, 59, 80, 81, 56, 55, 40, 50],
+                },         {
+                    label: "Twitter",
+                    fill: true,
+                    backgroundColor: "rgba(75,75,192,0.4)",
+                    borderColor: "rgba(75,72,192,1)",
+                    borderCapStyle: 'butt',
+                    borderDash: [],
+                    borderDashOffset: 0.0,
+                    borderJoinStyle: 'miter',
+                    pointBorderColor: "rgba(75,72,192,1)",
+                    pointBackgroundColor: "#fff",
+                    pointBorderWidth: 1,
+                    pointHoverRadius: 5,
+                    pointHoverBackgroundColor: "rgba(75,72,192,1)",
+                    pointHoverBorderColor: "rgba(220,220,220,1)",
+                    pointHoverBorderWidth: 2,
+                    pointRadius: 1,
+                    pointHitRadius: 10,
+                    data: [100, 20, 60, 20, 80, 55, 90],
+                }
+            ]
+        },
+        options: {
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        beginAtZero: true
+                    }
+                }]
+            }
+        }
+    });
+</script>
 <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.devbridge-autocomplete/1.2.24/jquery.autocomplete.min.js"></script>
 <script>
@@ -258,4 +417,13 @@ $( document ).ready(function() {
 
 });
 </script>
+<style>
+    .noUi-handle{
+        border: 10px solid #D9D9D9;
+    border-radius: 3px;
+    background: #FFF;
+    cursor: default;
+    box-shadow: inset 0 0 1px #FFF;
+    }
+</style>
 {% endblock %}
