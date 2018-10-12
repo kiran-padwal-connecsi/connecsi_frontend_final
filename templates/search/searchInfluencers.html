@@ -151,7 +151,7 @@
               </div>
             </div>
           </div>
-          <hr>
+
           <div class="container">
             {% for item in data['data'] %}
             <div class="row">
@@ -418,12 +418,21 @@ $( document ).ready(function() {
 });
 </script>
 <style>
-    .noUi-handle{
-        border: 10px solid #D9D9D9;
-    border-radius: 3px;
-    background: #FFF;
-    cursor: default;
-    box-shadow: inset 0 0 1px #FFF;
+    .noUi-handle-custom{
+        border-radius:100px;
+        margin-bottom:15%;
     }
+    .noUi-target {
+    padding: 0 0px;
+}
+.noUi-handle:before,
+.noUi-handle:after {
+    width: 17px;
+    content: none;
+    position: absolute;
+    top: 0;
+    height: 100%;
+    display: block;
+}
 </style>
 {% endblock %}

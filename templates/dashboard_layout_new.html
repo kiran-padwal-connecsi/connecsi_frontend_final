@@ -97,6 +97,11 @@
 <!--<script type="text/javascript" src="http://materializecss.com/extras/noUiSlider/nouislider.js"></script>-->
 <script>
     $( document ).ready(function() {
+        $(".noUi-handle").css("background-color", "white");
+        $(".noUi-handle").css("height", "20px");
+        $(".noUi-handle").css("width", "20px");
+        $(".noUi-handle").css('background-image', 'none');
+
         $("#btn-search-inf").click(function(){
              var min_lower = $(".noUi-handle-lower").text();
              var max_upper = $(".noUi-handle-upper").text();
