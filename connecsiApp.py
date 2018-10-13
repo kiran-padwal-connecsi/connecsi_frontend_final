@@ -350,6 +350,11 @@ def searchInfluencers():
                 response = requests.post(url, json=payload)
                 print(response.json())
                 data = response.json()
+                linechart_id=1
+                for item in data['data']:
+                    item.update({'linechart_id':linechart_id})
+                    print(item)
+                    linechart_id+=1
                 # print(data)
                 # search = False
                 # q = request.args.get('page')

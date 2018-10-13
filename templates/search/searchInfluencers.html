@@ -121,7 +121,7 @@
               </div>
             </div>
           </div>
-        </form>
+
       </div>
     </div>
   </div>
@@ -151,7 +151,7 @@
               </div>
             </div>
           </div>
-
+</form>
           <div class="container">
             {% for item in data['data'] %}
             <div class="row">
@@ -165,7 +165,7 @@
                       <br>
                       <a href="/addToFavInfList/{{ item['channel_id'] }}"  class="fa fa-star-o yellow"  data-toggle="tooltip" title="Add To Favorites" style="font-size:20px;"></a>
                     </td>
-                    <td rowspan="4">
+                    <td rowspan="4" style="border: solid 1px #E1DEDD;">
                       <img src="{{ item['channel_img'] }}" height="155px" width="155px">
                     </td>
                     <td colspan="2" style="border-right: solid 1px #E1DEDD;">
@@ -212,8 +212,8 @@
                       </table>
                     </td>
                     <td rowspan="4" width="400" style="border-right: solid 1px #E1DEDD;" >
-                      <div style="height:150px; width:200px;">
-                        <canvas id="lineChart" height="300px" width="400px"></canvas>
+                      <div>
+                        <canvas id="lineChart{{ item['linechart_id'] }}" height="150px" width="250px"></canvas>
                       </div></td>
                     <td rowspan="4">
                       <div class="scroll">
@@ -301,8 +301,9 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.1.3/Chart.min.js"></script>
 <script src="js/main.js"></script>
 <script>
-    const CHART = document.getElementById("lineChart");
-    let lineChart = new Chart(CHART, {
+    {% for item in data['data'] %}
+    const CHART{{ item['linechart_id'] }} = document.getElementById("lineChart{{ item['linechart_id'] }}");
+    let lineChart{{ item['linechart_id'] }} = new Chart(CHART{{ item['linechart_id'] }}, {
         type: 'line',
         data: {
             labels: ["0", "1", "2", "3", "4", "5", "6"],
@@ -310,8 +311,9 @@
                 {
                     label: "Youtube",
                     fill: true,
+                    backgroundColor: "red",
                     lineTension: 0.1,
-                    borderColor: "rgba(75,192,192,1)",
+                    borderColor: "red",
                     borderCapStyle: 'butt',
                     borderDash: [],
                     borderDashOffset: 0.0,
@@ -329,8 +331,8 @@
                 },         {
                     label: "Twitter",
                     fill: true,
-                    backgroundColor: "rgba(75,75,192,0.4)",
-                    borderColor: "rgba(75,72,192,1)",
+                    backgroundColor: "cyan",
+                    borderColor: "cyan",
                     borderCapStyle: 'butt',
                     borderDash: [],
                     borderDashOffset: 0.0,
@@ -358,6 +360,7 @@
             }
         }
     });
+    {% endfor %}
 </script>
 <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.devbridge-autocomplete/1.2.24/jquery.autocomplete.min.js"></script>
