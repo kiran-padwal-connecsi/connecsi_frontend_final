@@ -279,6 +279,7 @@ def updateProfile():
             response = requests.put(url=url,json=payload)
             result_json = response.json()
             # return redirect(url_for('/profileView'))
+            flash('Successfully Updated Profile Data','success')
             return profileView()
         except:pass
 

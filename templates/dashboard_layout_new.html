@@ -43,6 +43,12 @@
 
     <!--plugins.js - Some Specific JS codes for Plugin Settings-->
   <!--<script src="https://code.jquery.com/jquery-1.12.4.js"></script>-->
+    <style>
+        .disabledbutton {
+            pointer-events: none;
+            opacity: 0.4;
+        }
+    </style>
 </head>
 
 <body data-col="2-columns" class=" 2-columns " onload="onLoad()">
@@ -97,6 +103,9 @@
 <!--<script type="text/javascript" src="http://materializecss.com/extras/noUiSlider/nouislider.js"></script>-->
 <script>
     $( document ).ready(function() {
+
+        $("#team-members").addClass("disabledbutton");
+
         $(".noUi-handle").css("background-color", "white");
         $(".noUi-handle").css("height", "20px");
         $(".noUi-handle").css("width", "20px");
@@ -179,7 +188,6 @@ function onLoad() {
     $("a[href$='"+selectedMessageHref+"']").addClass('bg-blue-grey bg-lighten-5');
 }
 </script>
-
 
 </body>
 </html>

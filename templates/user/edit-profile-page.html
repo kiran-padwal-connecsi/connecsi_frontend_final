@@ -23,10 +23,10 @@
                         </div>
                         <div class="col-xl-4 col-lg-4 col-md-4 mb-1">
                             <p class="grey font-small-3" style="font-size:20px;">Social Media Accounts:</p>
-                            <a href="#" target="_blank" class="fa fa-facebook grey" title="facebook" style="font-size:40px; padding-right:10px;"></a>
-                            <a href="#" target="_blank" class="fa fa-twitter grey" title="twitter" style="font-size:40px; padding-right:10px;"></a>
-                            <a href="#" target="_blank" class="fa fa-instagram grey " title="instagram" style="font-size:40px; padding-right:10px;"></a>
-                            <a href="#" target="_blank" class="fa fa-youtube grey" title="youtube" style="font-size:40px;"></a>
+                            <a href="{{ data['data']['facebook_url'] }}" target="_blank" class="fa fa-facebook grey" title="facebook" style="font-size:40px; padding-right:10px;"></a>
+                            <a href="{{ data['data']['twitter_url'] }}" target="_blank" class="fa fa-twitter grey" title="twitter" style="font-size:40px; padding-right:10px;"></a>
+                            <a href="{{ data['data']['insta_url'] }}" target="_blank" class="fa fa-instagram grey " title="instagram" style="font-size:40px; padding-right:10px;"></a>
+                            <a href="{{ data['data']['youtube_url'] }}" target="_blank" class="fa fa-youtube grey" title="youtube" style="font-size:40px;"></a>
                             <a href="#" target="_blank" class="fa fa-plus grey" title="plus" style="font-size:40px;"></a>
                         </div>
                     </div>
@@ -78,15 +78,15 @@
                                             <input type="text" name="phone" id="phone" class="form-control" value="{{data['data']['phone']}}" placeholder="Phone" style="width:400px;"> </a>
                                     </div>
                                     <!--<div class="row" style="margin-bottom: 5px;">-->
-                                        <!--<span class="display-block overflow-hidden">-->
-                                            <!--<label for="password">*Password</label>-->
-                                            <!--<input type="text" id="password" required name="password" class="form-control" value="" style="width:400px;"> </span>-->
+                                    <!--<span class="display-block overflow-hidden">-->
+                                    <!--<label for="password">*Password</label>-->
+                                    <!--<input type="text" id="password" required name="password" class="form-control" value="" style="width:400px;"> </span>-->
                                     <!--</div>-->
-                                    <!--<div class="row" style="margin-bottom: 5px;">-->
-                                        <!--<span class="display-block overflow-hidden">-->
-                                            <!--<label for="cpassword">*Confirm Password</label>-->
-                                            <!--<input type="text" id="cpassword" required name="password" class="form-control" value="" style="width:400px;">  </span>-->
-                                    <!--</div>-->
+                                    <div class="row" style="margin-bottom: 5px;">
+                                        <span class="display-block overflow-hidden">
+                                        <button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#change_pass_modal">Change Password</button>
+                                        </span>
+                                    </div>
                                 </div>
                             </div>
                             <hr>
@@ -113,13 +113,6 @@
                                             <label for="business_sector">*Business Sector:</label>
                                             <input type="text" id="business_sector" required name="business_sector" class="form-control" value="{{data['data']['business_sector']}}" placeholder="Business Sector" style="width:400px;"> </span>
                                     </div>
-                                </div>
-                                <div class="col-xl-6 col-lg-6 col-md-6 mb-1">
-                                    <div class="row" style="margin-bottom: 5px;">
-                                        <a class="display-block overflow-hidden">
-                                            <label for="url">URL:</label>
-                                            <input type="url" id="url" required name="url" class="form-control" value="{{data['data']['url']}}" placeholder="Title" style="width:400px;"> </a>
-                                    </div>
                                     <div class="row" style="margin-bottom: 5px;">
                                         <span class="display-block overflow-hidden">
                                             <label for="no_of_employees">*No. of Employees:</label>
@@ -131,56 +124,86 @@
                                             <input type="text" id="monthly_budget" name="monthly_budget" class="form-control"  value="{{data['data']['monthly_budget']}}" style="width:400px;">  </span>
                                     </div>
                                 </div>
+                                <div class="col-xl-6 col-lg-6 col-md-6 mb-1">
+                                    <div class="row" style="margin-bottom: 5px;">
+                                        <a class="display-block overflow-hidden">
+                                            <label for="url">URL:</label>
+                                            <input type="url" id="url" required name="url" class="form-control" value="{{data['data']['url']}}" placeholder="Title" style="width:400px;"> </a>
+                                    </div>
+
+                                    <div class="row" style="margin-bottom: 5px;">
+                                        <span class="display-block overflow-hidden">
+                                            <label for="facebook_url">Facebook Url:</label>
+                                            <input type="url" id="facebook_url" name="facebook_url" class="form-control"  value="{{data['data']['facebook_url']}}" style="width:400px;">  </span>
+                                    </div>
+                                    <div class="row" style="margin-bottom: 5px;">
+                                        <span class="display-block overflow-hidden">
+                                            <label for="twitter_url">Twitter Url:</label>
+                                            <input type="url" id="twitter_url" name="twitter_url" class="form-control"  value="{{data['data']['twitter_url']}}" style="width:400px;">  </span>
+                                    </div>
+                                    <div class="row" style="margin-bottom: 5px;">
+                                        <span class="display-block overflow-hidden">
+                                            <label for="insta_url">Instragram Url:</label>
+                                            <input type="url" id="insta_url" name="insta_url" class="form-control"  value="{{data['data']['insta_url']}}" style="width:400px;">  </span>
+                                    </div>
+                                    <div class="row" style="margin-bottom: 5px;">
+                                        <span class="display-block overflow-hidden">
+                                            <label for="youtube_url">Youtube Url:</label>
+                                            <input type="url" id="youtube_url" name="youtube_url" class="form-control"  value="{{data['data']['youtube_url']}}" style="width:400px;">  </span>
+                                    </div>
+                                </div>
                             </div>
                             <hr>
-                            <div class="row" style="margin:2%;">
-                                <b>Team Members(3) : </b>
-                            </div>
-                            <div class="row" style="margin-left:2%;">
-                                <div class="table-responsive">
-                                    <table class="table table-striped">
-                                        <thead>
-                                        <tr>
-                                            <th scope="col"></th>
-                                            <th scope="col">Name:</th>
-                                            <th scope="col">Position:</th>
-                                            <th scope="col">Role:</th>
-                                            <th scope="col"></th>
-                                        </tr>
-                                        </thead>
-                                        <tbody>
-                                        <tr>
-                                            <td><img src="static/app-assets/img/portrait/avatars/avatar-08.png" class="rounded-circle img-border gradient-summer width-50" alt="Card image"></td>
-                                            <td>Mohit Kumar</td>
-                                            <td>CEO</td>
-                                            <td>Admin</td>
-                                            <td>
-                                                <a href="#" target="_blank" class="fa fa-wrench grey" title="settings" style="font-size:20px; padding-right:10px;"></a>
-                                                <a href="#" target="_blank" class="fa fa-times-circle-o red" title="cross" style="font-size:20px; padding-right:10px;"></a>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td><img src="static/app-assets/img/portrait/avatars/avatar-08.png" class="rounded-circle img-border gradient-summer width-50" alt="Card image"></td>
-                                            <td>Abhinav</td>
-                                            <td>Lead Developer</td>
-                                            <td>Moderator</td>
-                                            <td>
-                                                <a href="#" target="_blank" class="fa fa-wrench grey" title="settings" style="font-size:20px; padding-right:10px;"></a>
-                                                <a href="#" target="_blank" class="fa fa-times-circle-o red" title="cross" style="font-size:20px; padding-right:10px;"></a>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td><img src="static/app-assets/img/portrait/avatars/avatar-08.png" class="rounded-circle img-border gradient-summer width-50" alt="Card image"></td>
-                                            <td>Sandeep</td>
-                                            <td>Marketing Head</td>
-                                            <td>Moderator</td>
-                                            <td>
-                                                <a href="#" target="_blank" class="fa fa-wrench grey" title="settings" style="font-size:20px; padding-right:10px;"></a>
-                                                <a href="#" target="_blank" class="fa fa-times-circle-o red" title="cross" style="font-size:20px; padding-right:10px;"></a>
-                                            </td>
-                                        </tr>
-                                        </tbody>
-                                    </table>
+                            <div id="team-members" data-tooltip="true" title="This Section is under Developement">
+                                <div class="row" style="margin:2%;">
+                                    <b>Team Members(3) : </b>
+                                </div>
+                                <div class="row" style="margin-left:2%;">
+                                    <div class="table-responsive">
+                                        <table class="table table-striped">
+                                            <thead>
+                                            <tr>
+                                                <th scope="col"></th>
+                                                <th scope="col">Name:</th>
+                                                <th scope="col">Position:</th>
+                                                <th scope="col">Role:</th>
+                                                <th scope="col"></th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            <tr>
+                                                <td><img src="static/app-assets/img/portrait/avatars/avatar-08.png" class="rounded-circle img-border gradient-summer width-50" alt="Card image"></td>
+                                                <td>Mohit Kumar</td>
+                                                <td>CEO</td>
+                                                <td>Admin</td>
+                                                <td>
+                                                    <a href="#" target="_blank" class="fa fa-wrench grey" title="settings" style="font-size:20px; padding-right:10px;"></a>
+                                                    <a href="#" target="_blank" class="fa fa-times-circle-o red" title="cross" style="font-size:20px; padding-right:10px;"></a>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td><img src="static/app-assets/img/portrait/avatars/avatar-08.png" class="rounded-circle img-border gradient-summer width-50" alt="Card image"></td>
+                                                <td>Abhinav</td>
+                                                <td>Lead Developer</td>
+                                                <td>Moderator</td>
+                                                <td>
+                                                    <a href="#" target="_blank" class="fa fa-wrench grey" title="settings" style="font-size:20px; padding-right:10px;"></a>
+                                                    <a href="#" target="_blank" class="fa fa-times-circle-o red" title="cross" style="font-size:20px; padding-right:10px;"></a>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td><img src="static/app-assets/img/portrait/avatars/avatar-08.png" class="rounded-circle img-border gradient-summer width-50" alt="Card image"></td>
+                                                <td>Sandeep</td>
+                                                <td>Marketing Head</td>
+                                                <td>Moderator</td>
+                                                <td>
+                                                    <a href="#" target="_blank" class="fa fa-wrench grey" title="settings" style="font-size:20px; padding-right:10px;"></a>
+                                                    <a href="#" target="_blank" class="fa fa-times-circle-o red" title="cross" style="font-size:20px; padding-right:10px;"></a>
+                                                </td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
                                 </div>
                             </div>
                             <button type="submit" class="btn btn-success" style="margin-left:45%; padding-left:15px; padding-right:15px;">Save</button>
@@ -191,5 +214,27 @@
         </div>
     </form>
 </section>
+<!-- Change passowrd Modal -->
+<div class="modal fade" id="change_pass_modal" role="dialog" data-backdrop="false">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <b class="modal-title">Change Password</b>
+                <button  type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <form name="change_password_form" id="change_password_form" action="/changePassword">
+                <div class="modal-body">
+                    <input class="form-control" required type="text" name="old_password" id="old_password" placeholder="Old Password"><br>
+                    <input class="form-control" required type="text" name="new_password" id="new_password" placeholder="New Password"><br>
+                    <input class="form-control" required type="text" name="con_new_password" id="con_new_password" placeholder="Confirm New Password">
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-default" >Save</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
 
 {% endblock %}
