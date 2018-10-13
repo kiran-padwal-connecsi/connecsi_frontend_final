@@ -10,6 +10,8 @@ from flask import Flask, render_template, flash, redirect, url_for, session, req
 import os
 from flask_dance.contrib.google import make_google_blueprint, google
 from flask_dance.contrib.twitter import make_twitter_blueprint, twitter
+# from flask_paginate import Pagination, get_page_parameter
+
 
 os.environ['OAUTHLIB_INSECURE_TRANSPORT'] = '1'
 # os.environ['OAUTHLIB_RELAX_TOKEN_SCOPE'] = '1'
@@ -348,16 +350,27 @@ def searchInfluencers():
                 response = requests.post(url, json=payload)
                 print(response.json())
                 data = response.json()
+                # print(data)
+                # search = False
+                # q = request.args.get('page')
+                # if q:
+                #     search = True
+                # page = request.args.get(get_page_parameter(), type=int, default=1)
+                # pagination = Pagination(page=page, total=len(data['data']), search=search,
+                #                         record_name='Influencers',per_page=5)
+                # print(data)
                 return render_template('search/searchInfluencers.html', regionCodes=regionCodes_json,
                                        lookup_string=lookup_string, form_filters=form_filters,data=data)
             except Exception as e:
                 print(e)
-            return render_template('search/searchInfluencers.html', regionCodes=regionCodes_json,
-                                   lookup_string=lookup_string,form_filters=form_filters)
+            # print('i m hee')
+                return render_template('search/searchInfluencers.html', regionCodes=regionCodes_json,
+                                   lookup_string=lookup_string,form_filters=form_filters,data='',pagination='')
 
     else:
+        # print('i m here last')
         return render_template('search/searchInfluencers.html', regionCodes=regionCodes_json,
-                               lookup_string=lookup_string,form_filters=form_filters,data='')
+                               lookup_string=lookup_string,form_filters=form_filters,data='',pagination='')
 
 
 
