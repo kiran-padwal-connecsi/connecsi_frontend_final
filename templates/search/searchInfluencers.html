@@ -156,17 +156,17 @@
             {% for item in data['data'] %}
             <div class="row">
               <div class="">
-                <table cellspacing="1">
+                <table cellspacing="1" border="solid 1px #E1DEDD;">
                   <tr>
-                    <td rowspan="4" style="padding-right: 10px;">
+                    <td rowspan="4" style="padding-right: 10px; border-left:solid 2px white;">
                       <a href="/compose" class="fa fa-envelope" data-toggle="tooltip" title="Message" style="font-size:20px;"></a>
                       <br>
                       <a href="#" class="fa fa-bullseye red" data-toggle="tooltip" title="Add To Campaign" style="font-size:20px;"></a>
                       <br>
                       <a href="/addToFavInfList/{{ item['channel_id'] }}"  class="fa fa-star-o yellow"  data-toggle="tooltip" title="Add To Favorites" style="font-size:20px;"></a>
                     </td>
-                    <td rowspan="4" style="border: solid 1px #E1DEDD;">
-                      <img src="{{ item['channel_img'] }}" height="155px" width="155px">
+                    <td rowspan="4">
+                      <img src="{{ item['channel_img'] }}" height="150px" width="155px">
                     </td>
                     <td colspan="2" style="border-right: solid 1px #E1DEDD;">
                       <table width="400px" cellpadding="1">
@@ -215,7 +215,7 @@
                       <div>
                         <canvas id="lineChart{{ item['linechart_id'] }}" height="150px" width="250px"></canvas>
                       </div></td>
-                    <td rowspan="4">
+                    <td rowspan="4" style="border-right:solid 2px white;">
                       <div class="scroll">
                         <ul class="nav nav-tabs">
                           <li><a data-toggle="tab" href="#status">Status</a></li>&nbsp;
@@ -252,7 +252,7 @@
                 </table>
               </div>
             </div>
-            <hr>
+            <br>
             {% endfor %}
             <div id="pagination"></div>
           </div>

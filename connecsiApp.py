@@ -283,6 +283,24 @@ def updateProfile():
             return profileView()
         except:pass
 
+@connecsiApp.route('/changePassword',methods=['POST'])
+@is_logged_in
+def changePassword():
+    user_id=session['user_id']
+    if request.method == 'POST':
+        url = base_url+ 'Brand/changePassword/'+str(user_id)
+        payload = request.form.to_dict()
+        # print(payload)
+        del payload['con_new_password']
+        # print(payload)
+        try:
+            response = requests.put(url=url,json=payload)
+            result_json = response.json()
+            # return redirect(url_for('/profileView'))
+            flash('Password Updated','success')
+            return profileView()
+        except:pass
+
 
 @connecsiApp.route('/searchInfluencers',methods=['POST','GET'])
 @is_logged_in
@@ -657,10 +675,6 @@ def inbox(message_id):
             item.update({'collapse_id':collapse_id})
             # print(item)
             collapse_id+=1
-
-
-
-
 ################ remove deleted message from inbox and conv ##################
         removed_deleted_messages_from_inbox = []
         for item in inbox['data']:
