@@ -10,14 +10,17 @@
                 <div class="card-body">
                     <div class="row" style="margin:2%;">
                         <div class="col-xl-2 col-lg-2 col-md-2 mb-1">
-                            <img src="static/app-assets/img/portrait/avatars/avatar-08.png" class="rounded-circle img-border gradient-summer width-150" alt="Card image">
+                            <img id="blah" src="static/app-assets/img/portrait/avatars/avatar-08.png" class="rounded-circle img-border gradient-summer width-150" alt="Card image">
                         </div>
                         <div class="col-xl-6 col-lg-6 col-md-6 mb-1">
+                            <form name="avtar_form" method="POST" action="/uploadProfilePic">
                             <div class="row" style="padding-top:10%;">
-                                Image :<div class="file-field input-field">
-                                <div class="btn" >
-                                    <input type="file"  name="files">
-                                </div>
+                                <div class="file-field input-field">
+                                <form id="form1" runat="server">
+                                    <input type='file' id="imgInp" style="display:block;"/>
+                                    <input id="save_profile_pic" type="submit" class="btn btn-sm primary" value="Save" style="display:none;">
+                                    <!--<img id="blah" src="#" alt="your image" />-->
+                                </form>
                             </div>
                             </div>
                         </div>
@@ -247,6 +250,15 @@
                 <!--M.toast({html: 'Password Doesnt Match.'})-->
                 alert("Password Doesnt Match")
                 return false;
+            }
+        }
+        function readURL(input) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+                reader.onload = function(e) {
+                $('#blah').attr('src', e.target.result);
+                }
+                reader.readAsDataURL(input.files[0]);
             }
         }
 </script>

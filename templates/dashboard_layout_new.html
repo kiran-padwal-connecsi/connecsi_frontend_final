@@ -104,6 +104,14 @@
 <script>
     $( document ).ready(function() {
 
+
+        $("#imgInp").change(function() {
+            readURL(this);
+            $("#imgInp").css("display","none");
+            $("#save_profile_pic").css("display","block");
+
+        });
+
         $("#team-members").addClass("disabledbutton");
 
         $(".noUi-handle").css("background-color", "white");
