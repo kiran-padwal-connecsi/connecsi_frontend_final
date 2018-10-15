@@ -38,24 +38,24 @@
             </ul>
             <div id="brand" class="card-content">
                 <form method="POST" action="/login">
-                <div class="form-field">
-                    <input type="email" id="email" name="email" class="validate" required placeholder="Email" style="border-radius:7px; height:35px;">
-                </div>
-                <br/>
-                <div class="form-field">
-                    <input type="password" id="password" name="password" class="validate" required placeholder="Password" style="border-radius:7px; height:35px;">
-                </div>
-                <br>
-                <div class="form-field">
-                    <label>
-                    <input type="checkbox" class="filled-in"/>
-                    <span>Remember me</span>
-                </label>
-                </div>
+                    <div class="form-field">
+                        <input type="email" id="email" name="email" class="validate" required placeholder="Email" style="border-radius:7px; height:35px;">
+                    </div>
+                    <br/>
+                    <div class="form-field">
+                        <input type="password" id="password" name="password" class="validate" required placeholder="Password" style="border-radius:7px; height:35px;">
+                    </div>
                     <br>
-                <div class="form-field center-align">
-                    <button class="btn-small purple hoverable" type="submit" name="brand" style="width:250px; border-radius:7px; color:#F7DC6F; background-color: #C39BD3; font-weight: 500; ">Log In</button>
-                </div>
+                    <div class="form-field">
+                        <label>
+                            <input type="checkbox" class="filled-in"/>
+                            <span>Remember me</span>
+                        </label>
+                    </div>
+                    <br>
+                    <div class="form-field center-align">
+                        <button class="btn-small purple hoverable" type="submit" name="brand" style="width:250px; border-radius:7px; color:#F7DC6F; background-color: #C39BD3; font-weight: 500; ">Log In</button>
+                    </div>
                 </form>
                 <br/>
                 <div class="divider"></div>
@@ -68,36 +68,38 @@
             </div>
             <div id="influencer" class="card-content">
                 <form method="POST" action="/login">
-                <div class="form-field">
-                    <input type="text" id="inf_email_id" class="validate" required placeholder="Username" style="border-radius:7px; height:35px;">
-                </div>
-                <br/>
-                <div class="form-field">
-                    <input type="password" id="inf_password" class="validate" required placeholder="Password" style="border-radius:7px; height:35px;">
-                </div>
-                <br/>
-                <div class="form-field center-align">
-                    <!--<button class="btn-small purple hoverable" type="submit" name="influencer">Login</button>-->
+                    <div class="form-field">
+                        <input type="text" id="inf_email_id" class="validate" required placeholder="Username" style="border-radius:7px; height:35px;">
+                    </div>
+                    <br/>
+                    <div class="form-field">
+                        <input type="password" id="inf_password" class="validate" required placeholder="Password" style="border-radius:7px; height:35px;">
+                    </div>
+                    <br/>
+                    <div class="form-field center-align">
+                        <!--<button class="btn-small purple hoverable" type="submit" name="influencer">Login</button>-->
 
-                </div>
+                    </div>
                 </form>
 
                 <br/>
                 <div class="center-align">
-                <button class="btn-small purple hoverable" onclick="login()" id="login" style="color:#F7DC6F; background-color: #C39BD3; width:250px; font-weight: 500; border-radius:7px; ">Log In </button>
-                <!--<div class="center-align">-->
+                    <button class="btn-small purple hoverable" onclick="login()" id="login" style="color:#F7DC6F; background-color: #C39BD3; width:250px; font-weight: 500; border-radius:7px; ">Log In </button>
+                    <!--<div class="center-align">-->
                     <!--<a class="btn-small red hoverable" href="/registerInfluencer">Sign up</a>-->
-                <!--</div>-->
-                <br/>
+                    <!--</div>-->
+                    <br/>
                     <br />
                     <hr>
-                <br/>
-                <div class="white-text center-align">Or Sign in via</div>
-                <br/>
-                <a href="/google_login" class="waves-effect waves-light"><img src="static/img/yt_logo_rgb_light.png" class="responsive-img" height="50" width="70"></a>
-                <a href="/twitter_login" class="waves-effect waves-light"><img src="static/img/Twitter_Social_Icon_Square_Color.png" class="responsive-img" height="20" width="30"></a>
-            </div>
+                    <br/>
+                    <div class="white-text center-align">Or Sign in via</div>
+                    <br/>
+                    <!--<a href="/google_login" class="waves-effect waves-light"><img src="static/img/yt_logo_rgb_light.png" class="responsive-img" height="50" width="70"></a>-->
+                    <!--<a href="/twitter_login" class="waves-effect waves-light"><img src="static/img/Twitter_Social_Icon_Square_Color.png" class="responsive-img" height="20" width="30"></a>-->
+                    <a href="/google_login" class="waves-effect waves-light"><img src="static/img/youtube2.png" class="responsive-img" height="55" width="45"></a>
+                    <a href="/twitter_login" class="waves-effect waves-light"><img src="static/img/twitter8.png" class="responsive-img" height="50" width="40"></a>
                 </div>
+            </div>
         </div>
     </div>
 </div>
