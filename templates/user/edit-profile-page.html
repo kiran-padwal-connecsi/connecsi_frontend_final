@@ -10,19 +10,23 @@
                 <div class="card-body">
                     <div class="row" style="margin:2%;">
                         <div class="col-xl-2 col-lg-2 col-md-2 mb-1">
-                            <img id="blah" src="static/app-assets/img/portrait/avatars/avatar-08.png" class="rounded-circle img-border gradient-summer width-150" alt="Card image">
+                            {% if data['data']['profile_pic'] %}
+                            <img id="profile_pic" src="static/img/{{ data['data']['profile_pic'] }}" class="rounded-circle img-border gradient-summer width-150" alt="Card image">
+                            {% else %}
+                            <img id="profile_pic" src="static/app-assets/img/portrait/avatars/avatar-08.png" class="rounded-circle img-border gradient-summer width-150" alt="Card image">
+                            {% endif %}
                         </div>
                         <div class="col-xl-6 col-lg-6 col-md-6 mb-1">
-                            <form name="avtar_form" method="POST" action="/uploadProfilePic">
+                            <form name="avtar_form" method="POST" action="/uploadProfilePic" enctype=multipart/form-data>
                             <div class="row" style="padding-top:10%;">
                                 <div class="file-field input-field">
-                                <form id="form1" runat="server">
-                                    <input type='file' id="imgInp" style="display:block;"/><br>
+                                <!--<form id="form1" runat="server">-->
+                                    <input type='file' id="profile_pic_fileinp" name="profile_pic" style="display:block;"/><br>
                                     <button id="save_profile_pic" type="submit" class="btn btn-sm btn-info" style="display:none;">Save</button>
                                     <!--<img id="blah" src="#" alt="your image" />-->
-                                </form>
+                                </div>
                             </div>
-                            </div>
+                            </form>
                         </div>
                         <div class="col-xl-4 col-lg-4 col-md-4 mb-1">
                             <p class="grey font-small-3" style="font-size:20px;">Social Media Accounts:</p>
@@ -256,7 +260,7 @@
             if (input.files && input.files[0]) {
                 var reader = new FileReader();
                 reader.onload = function(e) {
-                $('#blah').attr('src', e.target.result);
+                $('#profile_pic').attr('src', e.target.result);
                 }
                 reader.readAsDataURL(input.files[0]);
             }

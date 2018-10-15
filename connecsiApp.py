@@ -2,6 +2,7 @@ import datetime
 from functools import wraps
 import json
 
+
 import requests
 from flask import Flask, render_template, flash, redirect, url_for, session, request, logging,jsonify
 # from model.ConnecsiModel import ConnecsiModel
@@ -11,7 +12,7 @@ import os
 from flask_dance.contrib.google import make_google_blueprint, google
 from flask_dance.contrib.twitter import make_twitter_blueprint, twitter
 # from flask_paginate import Pagination, get_page_parameter
-
+from flask_uploads import UploadSet, configure_uploads, IMAGES
 
 os.environ['OAUTHLIB_INSECURE_TRANSPORT'] = '1'
 # os.environ['OAUTHLIB_RELAX_TOKEN_SCOPE'] = '1'
@@ -41,7 +42,9 @@ twitter_blueprint = make_twitter_blueprint(
 connecsiApp.register_blueprint(google_blueprint, url_prefix="/login")
 connecsiApp.register_blueprint(twitter_blueprint, url_prefix="/login")
 
-
+photos = UploadSet('photos', IMAGES)
+connecsiApp.config['UPLOADED_PHOTOS_DEST'] = 'static/img'
+configure_uploads(connecsiApp, photos)
 
 @connecsiApp.route("/google_login")
 def google_login():
@@ -282,6 +285,27 @@ def updateProfile():
             flash('Successfully Updated Profile Data','success')
             return profileView()
         except:pass
+
+
+@connecsiApp.route('/uploadProfilePic',methods=['GET','POST'])
+@is_logged_in
+def uploadProfilePic():
+    user_id = session['user_id']
+    if request.method == 'POST' and 'profile_pic' in request.files:
+        filename = photos.save(request.files['profile_pic'])
+        url = base_url + 'Brand/updateProfilePic/' + str(user_id)
+        payload = {}
+        payload.update({'profile_pic':filename})
+        print(payload)
+        try:
+            response = requests.put(url=url, json=payload)
+            result_json = response.json()
+            # return redirect(url_for('/profileView'))
+            flash('Successfully Updated Profile Pic', 'success')
+            return editProfile()
+        except:
+            pass
+
 
 @connecsiApp.route('/changePassword',methods=['POST'])
 @is_logged_in
