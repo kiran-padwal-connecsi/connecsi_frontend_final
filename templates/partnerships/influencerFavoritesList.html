@@ -94,12 +94,12 @@
                                         <td rowspan="4" style="border-right:solid 2px white;">
                                             <div class="scroll">
                                                 <ul class="nav nav-tabs" style="background-color:#DFDEDE  ;">
-                                                    <li style="margin-left:3%; "><a data-toggle="tab" href="#status" style="color:black;">Status<i class="fa fa-bullseye red"></i></a></li>&nbsp;&ensp;
-                                                    <li><a data-toggle="tab" href="#alert" style="color:black;">Alert<i class="fa fa-bell black"></i></a></li>
+                                                    <li style="margin-left:3%; "><a data-toggle="tab" href="#status{{ item['channel_id'] }}" style="color:black;">Status<i class="fa fa-bullseye red"></i></a></li>&nbsp;&ensp;
+                                                    <li><a data-toggle="tab" href="#alert{{ item['channel_id'] }}" style="color:black;">Alert<i class="fa fa-bell black"></i></a></li>
                                                 </ul>
 
                                                 <div class="tab-content">
-                                                    <div id="status" class="tab-pane fade in active">
+                                                    <div id="status{{ item['channel_id'] }}" class="tab-pane fade in active">
                                                         <b style="font-weight:450;">Campaign 1<br/></b>
                                                         <b style="font-weight:400; color:orange;">Contacted</b><br/>
                                                         <hr>
@@ -110,16 +110,20 @@
                                                         <b style="font-weight:450;">Campaign 3<br/></b>
                                                         <b style="font-weight: 400; color:orange;">Contacted</b>
                                                     </div>
-                                                    <div id="alert" class="tab-pane fade">
+                                                    <div id="alert{{ item['channel_id'] }}" class="tab-pane fade">
                                                         <b style="font-weight:450;">Followers<br/></b>
-                                                        <b style="font-weight:400; color:red;">60 000 00</b><br/>
+                                                        <b style="font-weight:400; color:red;">{{ item['alert_followers'] }}</b><br/>
+                                                        <hr>
+                                                        <b style="font-weight:450;">Avg Views/video<br/></b>
+                                                        <b style="font-weight: 400; color:red;">{{ item['alert_views'] }}
+                                                        </b><br />
                                                         <hr>
                                                         <b style="font-weight:450;">Avg Likes/video<br/></b>
-                                                        <b style="font-weight: 400; color:red;">80 000
+                                                        <b style="font-weight: 400; color:red;">{{ item['alert_likes'] }}
                                                         </b><br />
                                                         <hr>
                                                         <b style="font-weight:450;">Avg Comments<br/></b>
-                                                        <b style="font-weight: 400; color:red;">5 000</b>
+                                                        <b style="font-weight: 400; color:red;">{{ item['alert_comments'] }}</b>
                                                     </div>
                                                 </div>
                                             </div>
