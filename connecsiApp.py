@@ -1005,10 +1005,35 @@ def influencerFavoritesList():
         url = base_url+'/Brand/getInfluencerFavList/'+str(user_id)
         response = requests.get(url=url)
         data = response.json()
+        linechart_id = 1
+        for item in data['data']:
+            item.update({'linechart_id': linechart_id})
+            print(item)
+            linechart_id += 1
         return render_template('partnerships/influencerFavoritesList.html',data=data)
     except:
         pass
         return render_template('partnerships/influencerFavoritesList.html')
+
+@connecsiApp.route('/createAlerts', methods=['POST'])
+@is_logged_in
+def createAlerts():
+    user_id=session['user_id']
+    if request.method == 'POST':
+        payload = request.form.to_dict()
+        print(payload)
+        try:
+            url = base_url + '/Brand/createInfluencerAlerts/'+str(user_id)
+            response = requests.put(url=url,json=payload)
+            # data = response.json()
+            flash("Created Alerts for Favorite Influencer", 'success')
+            return influencerFavoritesList()
+        except:
+            pass
+            flash("Error in Creating Alerts", 'danger')
+            return influencerFavoritesList()
+
+
 
 
         # @connecsiApp.route('/login/authorized')
