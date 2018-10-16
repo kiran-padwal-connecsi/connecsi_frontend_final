@@ -1033,6 +1033,15 @@ def createAlerts():
             flash("Error in Creating Alerts", 'danger')
             return influencerFavoritesList()
 
+@connecsiApp.route('/viewAllClassifiedAds')
+@is_logged_in
+def viewAllClassifiedAds():
+    return render_template('classifiedAds/view_all_classifiedAds.html')
+
+@connecsiApp.route('/viewClassifiedDetails')
+@is_logged_in
+def viewClassifiedDetails():
+    return render_template('classifiedAds/viewClassifiedDetails.html')
 
 
 

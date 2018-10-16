@@ -1,0 +1,98 @@
+{% extends 'dashboard_layout_new.html' %}
+{{ super() }}
+{% block body %}
+
+
+<div class="row" style="justify-content: center">
+    <div class="col-xl-12 col-lg-12  col-md-12 col-12">
+        <div class="card">
+            <div class="card-body" style="padding: 1%;">
+                <div>
+                    <button type="button">Search Classified Ads</button>
+                    <button type="button">My Classified Ads</button>
+                    <a href="#" class="fa fa-bullseye red" data-toggle="tooltip" title="Add To Campaign" style="font-size:35px;"><i class="fa fa-plus-circle green" style="font-size:20px; position:relative; top:5px; left:-8px;"></i>
+                    </a>
+                </div>
+                <div class="row" style="padding-top:1%;">
+                    <div class="col-xl-6 col-lg-6 col-md-6 mb-2">
+                        <div class="table-responsive">
+                        <table cellpadding="5"  style="border:1px black solid;">
+                            <tbody>
+                            <tr>
+                                <td rowspan="5"><img src="static/app-assets/img/portrait/avatars/avatar-08.png" height="150px" width="155px"></td>
+                                <td colspan="3" style="font-size:18px;">New Mobile Launch</td>
+                            </tr>
+                            <tr>
+                                <td><button type="button" style="font-size:10px;">Electronics &emsp;<i class="fa fa-times" ></i></button></td>
+                                <td><button type="button" style="font-size:10px;">Technology&emsp;<i class="fa fa-times"></i></button></td>
+                                <td><button type="button" style="font-size:10px;">Mobile&emsp;<i class="fa fa-times"></i></button></td>
+                            </tr>
+                            <tr>
+                                <td ><b style="font-size:15px;">Channels</b></td>
+                                <td><b style="font-size:15px;">Followers</b></td>
+                                <td><b style="font-size:15px;">Budget</b></td>
+                            </tr>
+                            <tr>
+                                <td><a href="#" target="_blank" class="fa fa-instagram pink" style="font-size:20px;"></a>
+                                    <a href="#" target="_blank" class="fa fa-youtube red" style="font-size:20px;"></a></td>
+                                <td style="font-size:12px;">20 000 - <br>
+                                    200 000
+                                </td>
+                                <td style="font-size:12px;">
+                                    $25000
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="3">
+                                    <button type="button"  style="font-size:12px; margin-left:35%; background-color:#7CE85F  ; color:white;"><a href="/viewClassifiedDetails">Details</a></button>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                        </div>
+                    </div>
+                    <div class="col-xl-6 col-lg-6 col-md-6 mb-2">
+                        <div class="table-responsive">
+                        <table cellpadding="5"  style="border:1px black solid;">
+                            <tbody>
+                            <tr>
+                                <td rowspan="5"><img src="static/app-assets/img/portrait/avatars/avatar-08.png" height="150px" width="155px"></td>
+                                <td colspan="3" style="font-size:18px;">New Mobile Launch</td>
+                            </tr>
+                            <tr>
+                                <td><button type="button" style="font-size:10px;">Electronics &emsp;<i class="fa fa-times" ></i></button></td>
+                                <td><button type="button" style="font-size:10px;">Technology&emsp;<i class="fa fa-times"></i></button></td>
+                                <td><button type="button" style="font-size:10px;">Mobile&emsp;<i class="fa fa-times"></i></button></td>
+                            </tr>
+                            <tr>
+                                <td ><b style="font-size:15px;">Channels</b></td>
+                                <td><b style="font-size:15px;">Followers</b></td>
+                                <td><b style="font-size:15px;">Budget</b></td>
+                            </tr>
+                            <tr>
+                                <td><a href="#" target="_blank" class="fa fa-instagram pink" style="font-size:20px;"></a>
+                                    <a href="#" target="_blank" class="fa fa-youtube red" style="font-size:20px;"></a></td>
+                                <td style="font-size:12px;">20 000 - <br>
+                                    200 000
+                                </td>
+                                <td style="font-size:12px;">
+                                    $25000
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="3">
+                                    <button type="button" style="font-size:12px; margin-left:35%; background-color:#7CE85F; color:white;"><a href="/viewClassifiedDetails">Details</a></button>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,81 @@
+{% extends 'dashboard_layout_new.html' %}
+{{ super() }}
+{% block body %}
+
+<div class="row" style="justify-content: center">
+    <div class="col-xl-12 col-lg-12  col-md-12 col-12">
+        <div class="card">
+            <div class="card-body" style="padding: 1%;">
+                <div class="row" style="margin-left:1%;">
+                    <a href="/viewAllClassifiedAds">Back To List</a>
+                </div>
+                <div class="row" style="margin:2%; margin-left:35%; font-size:25px;">
+                    New Mobile Launch
+                </div>
+                <div class="row" style="margin:1%;">
+                    <div class="col-xl-3 col-lg-3 col-md-3 mb-1">
+                        <img src="static/app-assets/img/portrait/avatars/avatar-08.png" height="450px" width="155px">
+                    </div>
+                    <div class="col-xl-9 col-lg-9 col-md-9 mb-1">
+                        Interested in:
+                        <table style="margin-top:5%;" cellpadding="10" cellspacing="15">
+                            <tr>
+                                <td><b style="font-size:16px;">Channels</b> <br>
+                                    <a href="#" target="_blank" class="fa fa-facebook-official blue" style="font-size:20px;"></a>
+                                    <a href="#" target="_blank" class="fa fa-instagram pink" style="font-size:20px;"></a>
+                                </td>
+                                <td><b style="font-size:16px;">Countries</b> <br>
+                                    Aust, USA
+                                </td>
+                                <td>
+                                    <b style="font-size:16px;">Period</b> <br>
+                                    4 Mar18 - 31 Mar18
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><b style="font-size:16px;">Followers</b> <br>
+                                    2500
+                                </td>
+                                <td><b style="font-size:16px;">Budget</b> <br>
+                                    $2500
+                                </td>
+                                <td>
+                                    <b style="font-size:16px;">KPI</b> <br>
+                                    Revenue
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td><b style="font-size:16px;">Category</b> <br>
+                                    <button type="button" style="font-size:10px;">Technology</button>
+                                    <button type="button" style="font-size:10px;">Mobile</button>
+
+                                </td>
+                                <td><b style="font-size:16px;">Target URL</b> <br>
+                                    <i class="fa fa-link"></i>
+                                </td>
+                                <td>
+                                    <b style="font-size:16px;">Content Type</b> <br>
+                                    <button type="button" style="font-size:10px;">Review</button>
+                                    <button type="button" style="font-size:10px;">Giveaway</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="3" rowspan="10" style="border-radius:2px; border: 1px #929591   solid;">
+                                    <b style="margin-left:30%;">Description</b> <br>
+                                    Detailed Description in here<br>
+                            Detailed Description in here<br>
+                            Detailed Description in here<br>
+                            Detailed Description in here<br>
+                            Detailed Description in here<br>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
