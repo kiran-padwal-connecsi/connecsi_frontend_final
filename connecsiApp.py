@@ -19,6 +19,8 @@ os.environ['OAUTHLIB_INSECURE_TRANSPORT'] = '1'
 # os.environ['WERKZEUG_RUN_MAIN'] = 'true'
 
 
+
+
 connecsiApp = Flask(__name__)
 connecsiApp.secret_key = 'connecsiSecretKey'
 base_url = 'https://kiranpadwaltestconnecsi.pythonanywhere.com/api/'
@@ -980,22 +982,36 @@ def replyEmail(message_id):
         return render_template('email/compose.html')
 
 
+@connecsiApp.route('/test')
+@is_logged_in
+def test():
+    return render_template('testRequest.html')
 
-@connecsiApp.route('/addToFavInfList/<string:channel_id>',methods=['GET','POST'])
+
+@connecsiApp.route('/addToFavInfList/<string:channel_id>',methods=['GET'])
 @is_logged_in
 def addToFavInfList(channel_id):
-    print(channel_id)
-    try:
-        user_id = session['user_id']
-        url = base_url+'/Brand/addToFavList/'+channel_id+'/'+str(user_id)
-        response = requests.post(url=url)
-        # data = response.json()
-        flash("Added to Favorites List", 'success')
+    addToFavInfList.counter += 1
+    # print(addToFavInfList.counter)
+    if addToFavInfList.counter==1:
+        try:
+            print(channel_id)
+            user_id = session['user_id']
+            # print('user_id=',user_id)
+            url = base_url+'/Brand/addToFavList/'+channel_id+'/'+str(user_id)
+            response = requests.post(url=url)
+            # data = response.json()
+            flash("Added to Favorites List", 'success')
+            return influencerFavoritesList()
+        except:
+            pass
+            flash("Could not be added to Favorites List", 'danger')
+            return influencerFavoritesList()
+    else:
+        addToFavInfList.counter = 0
         return influencerFavoritesList()
-    except:
-        pass
-        flash("Could not be added to Favorites List", 'danger')
-        return influencerFavoritesList()
+addToFavInfList.counter=0
+
 
 @connecsiApp.route('/influencerFavoritesList')
 @is_logged_in
