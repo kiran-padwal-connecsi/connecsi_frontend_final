@@ -145,17 +145,27 @@
 <div class="modal fade" id="create_alert_modal" role="dialog" data-backdrop="false">
     <div class="modal-dialog modal-sm">
         <div class="modal-content">
-            <div class="modal-header">
+            <div class="modal-header alert-primary">
                 <b class="modal-title">Create Alert</b>
                 <button  type="button" class="close" data-dismiss="modal">&times;</button>
             </div>
             <form name="create_alert_form" id="create_alert_form" action="/createAlerts" method="POST">
                 <div class="modal-body">
-                    <input  class="form-control" type="text" value="" name="channel_id" id="channel_id"><br>
-                    <input class="form-control"  type="number" value="" name="alert_followers" id="total_followers" placeholder="Total Followers"><br>
-                    <input class="form-control"  type="number" value="" name="alert_views" id="total_views" placeholder="Total Views"><br>
-                    <input class="form-control"  type="number" value="" name="alert_likes" id="total_likes" placeholder="Total Likes"><br>
-                    <input class="form-control"  type="number" value="" name="alert_comments" id="total_comments" placeholder="Total Comments"><br>
+                            <span class="display-block overflow-hidden">
+                            <!--<label for="channel_id">Channel ID:</label>-->
+                        <input  class="form-control" type="hidden" value="" name="channel_id" id="channel_id"></span>
+                    <span class="display-block overflow-hidden">
+                            <label for="total_followers">Total Followers:</label>
+        <input class="form-control"  type="number" value="" name="alert_followers" id="total_followers" placeholder="Total Followers"></span><br>
+                    <span class="display-block overflow-hidden">
+                            <label for="total_views">Total Views:</label>
+        <input class="form-control"  type="number" value="" name="alert_views" id="total_views" placeholder="Total Views"></span><br>
+                    <span class="display-block overflow-hidden">
+                            <label for="total_likes">Total Likes:</label>
+        <input class="form-control"  type="number" value="" name="alert_likes" id="total_likes" placeholder="Total Likes"></span><br>
+                    <span class="display-block overflow-hidden">
+                            <label for="total_comments">Total Comments:</label>
+        <input class="form-control"  type="number" value="" name="alert_comments" id="total_comments" placeholder="Total Comments"></span><br>
                 </div>
                 <div class="modal-footer">
                     <button type="submit" class="btn btn-default">Save</button>

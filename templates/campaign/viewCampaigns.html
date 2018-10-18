@@ -47,8 +47,13 @@
                         {{ region_name }},
                         {% endfor %}
                     </td>
-                    <td>{{ item['no_of_influencers'] }}<a href="#"><i class="material-icons">person_add</i></a></td>
-                    <td>{{ item['budget'] }}</td>
+                    <td>{{ item['no_of_influencers'] }}
+                        <span class="float-right text muted">
+                                <a onclick="searchInfluencers('{{ item['campaign_name'] }}','{{ item['campaign_id'] }}','{{ item['channels'] }}','{{ item['video_cat_name'] }}','{{ item['min_lower_followers'] }}','{{ item['max_upper_followers'] }}','{{ item['regions'] }}')" class="fa fa-user-plus black" data-toggle="modal" data-target="#create_alert_modal" data-tooltip="true" title="Add Influencer" style="font-size:20px;"></a>
+                                <!--<button class="btn btn-sm btn-outline-secondary fa fa-user-plus"></button>-->
+                        </span>
+                    </td>
+                    <td>{{ item['budget'] }} {{ item['currency'] }}</td>
                     <td>Coming Soon</td>
                 </tr>
                 {% endfor %}
@@ -57,5 +62,90 @@
         </div>
     </div>
 </div>
+
+
+<!-- Create alert Modal form-->
+<div class="modal fade" id="create_alert_modal" role="dialog" data-backdrop="false">
+    <div class="modal-dialog modal-lg" role="document" >
+        <div class="modal-content">
+            <div class="modal-header">
+                <b class="modal-title">Search Influencer</b>
+                <button  type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <form action="/searchInfluencers" method="POST" name="form_search" id="form_search">
+                <div class="modal-body">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-md-6 col-sm-6 col-xs-6">
+                                <div class="form-group">
+                                    <label for="campaign_name">Campaign Name</label>
+                                    <input  class="form-control"  readonly="readonly" type="text" value=""  id="campaign_name">
+                                </div>
+                                <input  class="form-control" type="hidden" value=""  id="campaign_id">
+                                <div class="form-group">
+                                    <label for="channel">Channel</label>
+                                    <select class="form-control" name="channel" style="height:35px; width:120px;">
+                                        <option value="Youtube">Youtube</option>
+                                        <option value="Twitter">Twitter</option>
+                                        <!--<option value="Facebook">Facebook</option>-->
+                                        <!--<option value="Instagram">Instagram</option>-->
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="min_lower">Min Followers</label>
+                                    <input class="form-control"  type="number" value="" name="min_lower" id="min_lower" >
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-sm-6 col-xs-6">
+                                <div class="form-group">
+                                    <label for="string_word">Category</label>
+                                    <input class="form-control" readonly="readonly" type="text" value="" name="string_word" id="string_word">
+                                </div>
+                                <div class="form-group">
+                                    <label for="country">Country</label>
+                                    <input class="form-control" readonly="readonly" type="text" value="" name="country" id="country">
+                                </div>
+                                <div class="form-group">
+                                    <label for="max_upper">Max Followers</label>
+                                    <input class="form-control"  type="number" value="" name="max_upper" id="max_upper" >
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button name="search_inf" type="submit" class="btn btn-default">Search</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<script>
+function searchInfluencers(campaign_name,campaign_id,channel,string_word,min_lower,max_upper,country) {
+    <!--alert(channel_id);-->
+    $("#campaign_name").val(campaign_name);
+    $("#campaign_id").val(campaign_id);
+    <!--$("#channel").val(channel);-->
+    $("#string_word").val(string_word);
+    $("#min_lower").val(min_lower);
+    $("#max_upper").val(max_upper);
+    $("#country").val('US');
+}
+
+</script>
+<style>
+    <!--.modal-body{-->
+    <!--max-height: calc(100vh - 212px);-->
+    <!--overflow-y: auto;-->
+<!--}-->
+.modal {
+  height:auto;
+  overflow:auto;
+  <!--position:relative;-->
+}
+<!--.modal {-->
+  <!--overflow-y:auto;-->
+<!--}-->
+</style>
 
 {% endblock %}

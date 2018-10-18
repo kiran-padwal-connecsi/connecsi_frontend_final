@@ -100,6 +100,8 @@ def twitter_login():
 
 
 
+
+
 # oauth = OAuth(connecsiApp)
 
 # linkedin = oauth.remote_app(
@@ -359,7 +361,7 @@ def searchInfluencers():
     if request.method=='POST':
         if 'search_inf' in request.form:
             string_word = request.form.get('string_word')
-            print(string_word)
+            print('string word =',string_word)
             # exit()
             category = string_word.replace('and','&')
             print(category)
@@ -520,6 +522,11 @@ def viewCampaigns():
                     region_name=region_data['data'][0][1]
                     region_name_list.append(region_name)
                 except:pass
+            cat_response=requests.get(url=base_url+'Youtube/videoCategories/'+str(item['video_cat_id']))
+            # print(cat_response.json())
+            cat_json_data=cat_response.json()
+            video_cat_name=cat_json_data['data'][0]['video_cat_name']
+            item.update({'video_cat_name':video_cat_name})
             item.update({'region_name_list': region_name_list})
         print(view_campaign_data)
         return render_template('campaign/viewCampaigns.html',view_campaign_data=view_campaign_data)
@@ -527,6 +534,7 @@ def viewCampaigns():
         flash('Error is Getting Data From Backend Please try again Later')
     return render_template('campaign/viewCampaigns.html',view_campaign_data=view_campaign_data)
 
+# viewCampaigns.counter=0
 
 @connecsiApp.route('/viewCampaignDetails/<string:campaign_id>',methods=['GET'])
 @is_logged_in
@@ -593,7 +601,10 @@ def saveCampaign():
         flash('Unauthorized', 'danger')
 
 
-
+@connecsiApp.route('/calenderView')
+@is_logged_in
+def calendarView():
+    return render_template('campaign/calenderView.html')
 
 @connecsiApp.route('/inbox/<string:message_id>',methods = ['GET'])
 @is_logged_in
@@ -1059,7 +1070,17 @@ def viewAllClassifiedAds():
 def viewClassifiedDetails():
     return render_template('classifiedAds/viewClassifiedDetails.html')
 
+############################################## influencer Section###########################################################
 
+@connecsiApp.route('/inf_profile')
+@is_logged_in
+def inf_profile():
+    return render_template('user/inf_profile.html')
+
+@connecsiApp.route('/inf_editProfile')
+@is_logged_in
+def inf_editProfile():
+    return render_template('user/inf_editProfile.html')
 
         # @connecsiApp.route('/login/authorized')
 # def authorized():

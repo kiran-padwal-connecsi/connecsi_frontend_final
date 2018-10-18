@@ -41,6 +41,7 @@
     <!-- BEGIN Page Level CSS-->
     <!-- END Page Level CSS-->
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='app-assets/noUiSlider.11.1.0/nouislider.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='Jquery-Pagination/css/pagination.css') }}">
     <!--<link href="https://materializecss.com/extras/noUiSlider/nouislider.css" type="text/css" rel="stylesheet" media="screen,projection">-->
 
     <!--plugins.js - Some Specific JS codes for Plugin Settings-->
@@ -50,6 +51,24 @@
             pointer-events: none;
             opacity: 0.4;
         }
+        .noUi-handle-custom{
+        border-radius:100px;
+        margin-bottom:15%;
+    }
+    .noUi-target {
+    padding: 0 0px;
+}
+.noUi-handle:before,
+.noUi-handle:after {
+
+    width: 17px;
+    content: none;
+    position: absolute;
+    top: 0;
+    height: 100%;
+    display: block;
+}
+
     </style>
 </head>
 
@@ -103,9 +122,20 @@
 <!-- Toast Notification -->
 <script src="{{ url_for('static', filename='app-assets/noUiSlider.11.1.0/nouislider.js') }}" type="text/javascript"></script>
 <script src="{{ url_for('static', filename='app-assets/js/inbox.js') }}" type="text/javascript"></script>
+
+<script src="{{ url_for('static', filename='Jquery-Pagination/js/pagination.js') }}"></script>
+
 <!--<script type="text/javascript" src="http://materializecss.com/extras/noUiSlider/nouislider.js"></script>-->
 <script>
     $( document ).ready(function() {
+
+   $("#tab").pagination({
+   items: 10,
+   contents: 'contents',
+   previous: 'Previous',
+   next: 'Next',
+   position: 'bottom'
+   });
 
         //avtar-img preview start
         $("#profile_pic_fileinp").change(function() {
@@ -188,13 +218,13 @@
 </script>
 <script>
 function onLoad() {
-    var selectedHref = localStorage.getItem('selectedHref');
+    <!--var selectedHref = localStorage.getItem('selectedHref');-->
     <!--alert(selectedHref);-->
     <!--var nodeValue = $('a[href="/admin"]').parent("li").attr("class");-->
-    $("a[href$='"+selectedHref+"']").closest("li").addClass('active');
-    $("a[href$='"+selectedHref+"']").parents("li").addClass('open');
+    <!--$("a[href$='"+selectedHref+"']").closest("li").addClass('active');-->
+    <!--$("a[href$='"+selectedHref+"']").parents("li").addClass('open');-->
     <!--alert("Page is loaded");-->
-    <!--$('.nav-item a').filter(function(){return this.href==location.href}).parent().addClass('active').siblings().removeClass('active');-->
+    $('.nav-item a').filter(function(){return this.href==location.href}).parent().addClass('active').siblings().removeClass('active').parents("li").addClass('open');
 
     var selectedMessageHref = localStorage.getItem('messageHref');
     $("a[href$='"+selectedMessageHref+"']").addClass('bg-blue-grey bg-lighten-5');

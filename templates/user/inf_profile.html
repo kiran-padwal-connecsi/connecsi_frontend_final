@@ -1,0 +1,154 @@
+{% extends 'dashboard_layout_new.html' %}
+{{ super() }}
+{% block body %}
+
+<!--Basic User Details Starts-->
+<section id="user-profile">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="card">
+                <div class="card-body">
+                    <div class="row" style="margin:2%;">
+                        <div class="col-xl-2 col-lg-2 col-md-2 mb-1">
+                            {% if data['data']['profile_pic'] %}
+                            <img id="profile_pic" src="static/img/{{ data['data']['profile_pic'] }}" class="rounded-circle img-border gradient-summer width-150" alt="Card image">
+                            {% else %}
+                            <img id="profile_pic" src="static/app-assets/img/portrait/avatars/avatar-08.png" class="rounded-circle img-border gradient-summer width-150" alt="Card image">
+                            {% endif %}
+                        </div>
+                        <div class="col-xl-4 col-lg-4 col-md-4 mb-1">
+                            <span class="font-medium-2 text-uppercase">{{data['data']['first_name'] }} {{data['data']['last_name'] }}</span>
+                            <div class="grey font-small-3" style="font-size:20px;">{{data['data']['role'] }}</div>
+                            <div class="grey font-small-3" style="font-size:20px;">Subscription Type : Basic</div>
+                            <button class="btn btn-sm" type="button" data-toggle="tooltip" title="Feature Coming Soon" style="background-color: purple; margin-left: 2%; color:white;font-size:15px;">Upgrade Here</button>
+                        </div>
+                        <div class="col-xl-6 col-lg-6 col-md-6 mb-1">
+                            <p class="grey font-small-3" style="font-size:20px;">Accounts:</p>
+                            <a href="{{ data['data']['facebook_url'] }}" target="_blank" class="fa fa-facebook grey" title="facebook" style="font-size:40px; padding-right:10px;"></a>
+                            <a href="{{ data['data']['twitter_url'] }}" target="_blank" class="fa fa-twitter grey" title="twitter" style="font-size:40px; padding-right:10px;"></a>
+                            <a href="{{ data['data']['insta_url'] }}" target="_blank" class="fa fa-instagram grey " title="instagram" style="font-size:40px; padding-right:10px;"></a>
+                            <a href="{{ data['data']['youtube_url'] }}" target="_blank" class="fa fa-youtube grey" title="youtube" style="font-size:40px;"></a>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!--Basic User Details Ends-->
+
+<!--About section starts-->
+<section id="about">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="card">
+                <div class="card-body">
+                    <div class="card-block">
+                        <div class="row" style="margin:2%;">
+                            <div class="col-xl-6 col-lg-6 col-md-6 mb-6">
+                                <div class="row" style="margin-bottom: 5px;">
+                                    <b style="font-weight:450;">Username:</b> &nbsp;
+                                    <span class="display-block overflow-hidden">{{data['data']['first_name'] }} {{data['data']['last_name'] }} </span>
+                                </div>
+                                <div class="row" style="margin-bottom: 5px;">
+                                    <b style="font-weight:450;">Firm:</b> &nbsp;
+                                    <span class="display-block overflow-hidden">{% if data['data']['role'] == '' %}
+                                                                                    Admin
+                                                                                    {% else %}
+                                                                                    {{ data['data']['role'] }}
+                                                                                    {% endif %} </span>
+                                </div>
+                                <div class="row" style="margin-bottom: 5px;">
+                                    <b style="font-weight:450;">Email:</b> &nbsp;
+                                    <span class="display-block overflow-hidden">
+                               {% if data['data']['phone'] == '' %}
+                                            NA
+                                            {% else %}
+                                            {{ data['data']['phone'] }}
+                                            {% endif %}
+                           </span>
+                                </div>
+                                <div class="row" style="margin-bottom: 5px;">
+                                    <b style="font-weight:450;">Telephone:</b> &nbsp;
+                                    <span class="display-block overflow-hidden">{{data['data']['email_id'] }}</span>
+                                </div>
+                                <div class="row" style="margin-bottom: 5px;">
+                                    <b style="font-weight:450;">City:</b> &nbsp;
+                                    <span class="display-block overflow-hidden">{% if data['data']['country'] == '' %}
+                                                                                    NA
+                                                                                    {% else %}
+                                                                                    {{ data['data']['country'] }}
+                                                                                    {% endif %} </span>
+                                </div>
+
+                                <div class="row" style="margin-bottom: 5px;">
+                                    <b style="font-weight:450;">Accounts:</b> &nbsp;
+                                    <span class="display-block overflow-hidden">{% if data['data']['country'] == '' %}
+                                                                                    NA
+                                                                                    {% else %}
+                                                                                    {{ data['data']['country'] }}
+                                                                                    {% endif %} </span>
+                                </div>
+                            </div>
+                            <div class="col-xl-6 col-lg-6 col-md-6 mb-1">
+                                <div class="row" style="margin-bottom: 5px;">
+                                    <b style="font-weight:450;">Balance:</b> &nbsp;
+                                    <span class="display-block overflow-hidden">{% if data['data']['business_sector'] == '' %}
+                                                                                    NA
+                                                                                    {% else %}
+                                                                                    {{ data['data']['business_sector'] }}
+                                                                                    {% endif %} </span>
+                                </div>
+                                <div class="row" style="margin-bottom: 5px;">
+                                    <b style="font-weight:450;">Category:</b> &nbsp;
+                                    <span class="display-block overflow-hidden">{%  if data['data']['url'] == '' %}
+                                            NA
+                                            {% else %}
+                                            {{ data['data']['url'] }}
+                                            {% endif %}</span>
+                                </div>
+                                <div class="row" style="margin-bottom: 5px;">
+                                    <b style="font-weight:450;">Website:</b> &nbsp;
+                                    <span class="display-block overflow-hidden">
+                               {% if data['data']['no_of_employees'] == '' %}
+                                            NA
+                                            {% else %}
+                                            {{ data['data']['no_of_employees'] }}
+                                            {% endif %}
+                           </span>
+                                </div>
+                                <div class="row" style="margin-bottom: 5px;">
+                                    <b style="font-weight:450;">Country:</b> &nbsp;
+                                    <span class="display-block overflow-hidden">{% if data['data']['city'] == '' %}
+                                                                                    NA
+                                                                                    {% else %}
+                                                                                    {{ data['data']['city'] }}
+                                                                                    {% endif %}</span>
+                                </div>
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="row" style="margin:2%;">
+                            <b>Team Members(2) : </b>
+                        </div>
+                        <div class="row" style="margin:2%">
+                            <div class="col-xl-2 col-lg-2 col-md-2 mb-1">
+                                <img src="static/app-assets/img/portrait/avatars/avatar-08.png" class="rounded-circle img-border gradient-summer width-100" alt="Card image">
+                            </div>
+                            <div class="col-xl-2 col-lg-2 col-md-2 mb-1">
+                                <img src="static/app-assets/img/portrait/avatars/avatar-08.png" class="rounded-circle img-border gradient-summer width-100" alt="Card image">
+                            </div>
+                            <div class="col-xl-2 col-lg-2 col-md-2 mb-1">
+                                <img src="static/app-assets/img/portrait/avatars/avatar-08.png" class="rounded-circle img-border gradient-summer width-100" alt="Card image">
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</section>
+{% endblock %}
