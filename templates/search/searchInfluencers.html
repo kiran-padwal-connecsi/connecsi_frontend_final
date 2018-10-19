@@ -178,6 +178,8 @@
                       </a>
                       <br>
                       <a href="/addToFavInfList/{{ item['channel_id'] }}"  class="fa fa-star-o yellow"  data-toggle="tooltip" title="Add To Favorites" style="font-size:25px;"><i class="fa fa-plus-circle green" style="font-size:10px; position:relative; top:1px; left:-10px;"></i></a>
+                      <br>
+                      <a onclick="createAlert('{{ item['channel_id'] }}','{{ item['subscriberCount_gained'] }}','{{ (item['total_100video_views']/100)|int }}','{{ (item['total_100video_likes']/100)|int }}','{{ (item['total_100video_comments']/100)|int }}')" class="fa fa-bell black" data-toggle="modal" data-target="#create_alert_modal" data-tooltip="true" title="Create Alerts" style="font-size:25px;"><i class="fa fa-plus-circle green" style="font-size:10px; position:relative; top:1px; left:-10px;"></i></a>
                     </td>
                     <td rowspan="4">
                       <img src="{{ item['channel_img'] }}" height="150px" width="155px">
@@ -232,12 +234,12 @@
                     <td rowspan="4" style="border-right:solid 2px white;">
                       <div class="scroll">
                         <ul class="nav nav-tabs" style="background-color:#DFDEDE  ;">
-                          <li style="margin-left:3%; "><a data-toggle="tab" href="#status" style="color:black;">Status<i class="fa fa-bullseye red"></i></a></li>&nbsp;&ensp;
-                          <li><a data-toggle="tab" href="#alert" style="color:black;">Alert<i class="fa fa-bell black"></i></a></li>
+                          <li style="margin-left:3%; "><a data-toggle="tab" href="#status{{ item['channel_id'] }}" style="color:black;">Status<i class="fa fa-bullseye red"></i></a></li>&nbsp;&ensp;
+                          <li><a data-toggle="tab" href="#alert{{ item['channel_id'] }}" style="color:black;">Alert<i class="fa fa-bell black"></i></a></li>
                         </ul>
 
                         <div class="tab-content">
-                          <div id="status" class="tab-pane fade in active">
+                          <div id="status{{ item['channel_id'] }}" class="tab-pane fade show active">
                             <b style="font-weight:450;">Campaign 1<br/></b>
                             <b style="font-weight:400; color:orange;">Contacted</b><br/>
                             <hr>
@@ -248,7 +250,7 @@
                             <b style="font-weight:450;">Campaign 3<br/></b>
                             <b style="font-weight: 400; color:orange;">Contacted</b>
                           </div>
-                          <div id="alert" class="tab-pane fade">
+                          <div id="alert{{ item['channel_id'] }}" class="tab-pane fade">
                             <b style="font-weight:450;">Followers<br/></b>
                             <b style="font-weight:400; color:red;">60 000 00</b><br/>
                             <hr>
@@ -457,6 +459,48 @@ $( document ).ready(function() {
 
 </style>
 
-
+<!-- Create alert Modal form-->
+<div class="modal fade" id="create_alert_modal" role="dialog" data-backdrop="false">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header alert-primary">
+                <b class="modal-title">Create Alert</b>
+                <button  type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <form name="create_alert_form" id="create_alert_form" action="/createAlerts" method="POST">
+                <div class="modal-body">
+                            <span class="display-block overflow-hidden">
+                            <!--<label for="channel_id">Channel ID:</label>-->
+                        <input  class="form-control" type="hidden" value="" name="channel_id" id="channel_id"></span>
+                    <span class="display-block overflow-hidden">
+                            <label for="total_followers">Total Followers:</label>
+        <input class="form-control"  type="number" value="" name="alert_followers" id="total_followers" placeholder="Total Followers"></span><br>
+                    <span class="display-block overflow-hidden">
+                            <label for="total_views">Total Views:</label>
+        <input class="form-control"  type="number" value="" name="alert_views" id="total_views" placeholder="Total Views"></span><br>
+                    <span class="display-block overflow-hidden">
+                            <label for="total_likes">Total Likes:</label>
+        <input class="form-control"  type="number" value="" name="alert_likes" id="total_likes" placeholder="Total Likes"></span><br>
+                    <span class="display-block overflow-hidden">
+                            <label for="total_comments">Total Comments:</label>
+        <input class="form-control"  type="number" value="" name="alert_comments" id="total_comments" placeholder="Total Comments"></span><br>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-default">Save</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<script>
+function createAlert(channel_id,followers,views,likes,comments) {
+    <!--alert(channel_id);-->
+    $("#channel_id").val(channel_id);
+    $("#total_followers").val(followers);
+    $("#total_views").val(views);
+    $("#total_likes").val(likes);
+    $("#total_comments").val(comments);
+}
+</script>
 
 {% endblock %}
