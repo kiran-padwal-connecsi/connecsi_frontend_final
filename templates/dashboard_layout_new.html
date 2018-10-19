@@ -212,7 +212,7 @@
          // search button click event ends
 
         $('[data-toggle="tooltip"]').tooltip();
-
+        $('.nav-item a').filter(function(){return this.href==location.href}).parent().addClass('active').siblings().removeClass('active').parents("li").addClass('open');
 
      });
 </script>
@@ -224,7 +224,7 @@ function onLoad() {
     <!--$("a[href$='"+selectedHref+"']").closest("li").addClass('active');-->
     <!--$("a[href$='"+selectedHref+"']").parents("li").addClass('open');-->
     <!--alert("Page is loaded");-->
-    $('.nav-item a').filter(function(){return this.href==location.href}).parent().addClass('active').siblings().removeClass('active').parents("li").addClass('open');
+
 
     var selectedMessageHref = localStorage.getItem('messageHref');
     $("a[href$='"+selectedMessageHref+"']").addClass('bg-blue-grey bg-lighten-5');

@@ -146,7 +146,11 @@
         <div class="card-block">
           <div class="row" style="margin-left: 2%;">
             <div class="col-xl-4 col-lg-4 col-md-4 mb-1">
-              <button type="button" style="background-color: purple; margin-left: 2%; color:white; border-radius: 10px; font-size:15px;">Export CSV</button>
+              {% if data['data'] %}
+              <button type="button"  style="background-color: purple; margin-left: 2%; color:white; border-radius: 10px; font-size:15px;">Export CSV</button>
+              {% else %}
+              <!--<button type="button"  style="background-color: purple; margin-left: 2%; color:white; border-radius: 10px; font-size:15px;">Export CSV</button>-->
+              {% endif %}
             </div>
             <div class="col-xl-4 col-lg-4 col-md-4 mb-1"><h4  class="text-center">Influencers on Youtube</h4>
             </div>
