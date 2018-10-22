@@ -178,12 +178,19 @@
                     <td rowspan="3" style="border-left:solid 1px white;">
                       <a href="/compose" class="fa fa-envelope" data-toggle="tooltip" title="Message" style="position: relative; z-index: 1; font-size:25px;"></a>
                       <br>
-                      <a href="#" class="fa fa-bullseye red" data-toggle="tooltip" title="Add To Campaign" style="font-size:25px;"><i class="fa fa-plus-circle green" style="font-size:10px; position:relative; top:5px; left:-8px;"></i>
-                      </a>
+                      {% if form_filters['campaign_id'] %}
+                      <a href="/addToCampaign/{{  form_filters['campaign_id'] }}" class="fa fa-bullseye red" data-toggle="tooltip" title="Add To Campaign" style="font-size:25px;"><i class="fa fa-plus-circle green" style="font-size:10px; position:relative; top:5px; left:-8px;"></i></a>
+                      {% else %}
+                      <span data-toggle="modal" data-target="#campaignList">
+                      <a onclick="campaignList('{{ item['channel_id'] }}')"  class="fa fa-bullseye red" data-toggle="tooltip" title="Add To Campaign" style="font-size:25px;"><i class="fa fa-plus-circle green" style="font-size:10px; position:relative; top:5px; left:-8px;"></i></a>
+                      </span>
+                      {% endif %}
                       <br>
                       <a href="/addToFavInfList/{{ item['channel_id'] }}"  class="fa fa-star-o yellow"  data-toggle="tooltip" title="Add To Favorites" style="font-size:25px;"><i class="fa fa-plus-circle green" style="font-size:10px; position:relative; top:1px; left:-10px;"></i></a>
                       <br>
-                      <a onclick="createAlert('{{ item['channel_id'] }}','{{ item['subscriberCount_gained'] }}','{{ (item['total_100video_views']/100)|int }}','{{ (item['total_100video_likes']/100)|int }}','{{ (item['total_100video_comments']/100)|int }}')" class="fa fa-bell black" data-toggle="modal" data-target="#create_alert_modal" data-tooltip="true" title="Create Alerts" style="font-size:25px;"><i class="fa fa-plus-circle green" style="font-size:10px; position:relative; top:1px; left:-10px;"></i></a>
+                      <span data-toggle="modal" data-target="#create_alert_modal">
+                      <a onclick="createAlert('{{ item['channel_id'] }}','{{ item['subscriberCount_gained'] }}','{{ (item['total_100video_views']/100)|int }}','{{ (item['total_100video_likes']/100)|int }}','{{ (item['total_100video_comments']/100)|int }}')" class="fa fa-bell black"  data-toggle="tooltip" title="Create Alerts" style="font-size:25px;"><i class="fa fa-plus-circle green" style="font-size:10px; position:relative; top:1px; left:-10px;"></i></a>
+                      </span>
                     </td>
                     <td rowspan="4">
                       <img src="{{ item['channel_img'] }}" height="150px" width="155px">
@@ -465,36 +472,108 @@ $( document ).ready(function() {
 
 <!-- Create alert Modal form-->
 <div class="modal fade" id="create_alert_modal" role="dialog" data-backdrop="false">
-    <div class="modal-dialog modal-sm">
-        <div class="modal-content">
-            <div class="modal-header alert-primary">
-                <b class="modal-title">Create Alert</b>
-                <button  type="button" class="close" data-dismiss="modal">&times;</button>
-            </div>
-            <form name="create_alert_form" id="create_alert_form" action="/createAlerts" method="POST">
-                <div class="modal-body">
+  <div class="modal-dialog modal-sm">
+    <div class="modal-content">
+      <div class="modal-header alert-primary">
+        <b class="modal-title">Create Alert</b>
+        <button  type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+      <form name="create_alert_form" id="create_alert_form" action="/createAlerts" method="POST">
+        <div class="modal-body">
                             <span class="display-block overflow-hidden">
                             <!--<label for="channel_id">Channel ID:</label>-->
                         <input  class="form-control" type="hidden" value="" name="channel_id" id="channel_id"></span>
-                    <span class="display-block overflow-hidden">
+          <span class="display-block overflow-hidden">
                             <label for="total_followers">Total Followers:</label>
         <input class="form-control"  type="number" value="" name="alert_followers" id="total_followers" placeholder="Total Followers"></span><br>
-                    <span class="display-block overflow-hidden">
+          <span class="display-block overflow-hidden">
                             <label for="total_views">Total Views:</label>
         <input class="form-control"  type="number" value="" name="alert_views" id="total_views" placeholder="Total Views"></span><br>
-                    <span class="display-block overflow-hidden">
+          <span class="display-block overflow-hidden">
                             <label for="total_likes">Total Likes:</label>
         <input class="form-control"  type="number" value="" name="alert_likes" id="total_likes" placeholder="Total Likes"></span><br>
-                    <span class="display-block overflow-hidden">
+          <span class="display-block overflow-hidden">
                             <label for="total_comments">Total Comments:</label>
         <input class="form-control"  type="number" value="" name="alert_comments" id="total_comments" placeholder="Total Comments"></span><br>
-                </div>
-                <div class="modal-footer">
-                    <button type="submit" class="btn btn-default">Save</button>
-                </div>
-            </form>
         </div>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-default">Save</button>
+        </div>
+      </form>
     </div>
+  </div>
+</div>
+<!-- Campaign List Modal-->
+<div class="modal fade" id="campaignList" role="dialog" data-backdrop="false">
+  <div class="modal-dialog modal-xl">
+    <div class="modal-content">
+      <div class="modal-header alert-primary">
+        <b class="modal-title">Campaign List</b>
+        <button  type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+      <form name="create_alert_form" id="add_influencer_to_campaign" action="/addInfToCampaignList" method="POST">
+        <div class="modal-body">
+          <div class="table-responsive" style="background-color: white;">
+            <table class="table table-striped">
+              <thead>
+              <tr>
+                <th scope="col"><b style="font-weight: 500; font-size:16px;">Select</b></th>
+                <th scope="col"><b style="font-weight: 500; font-size:16px;">Campaign</b></th>
+                <th scope="col"><b style="font-weight: 500; font-size:16px;">Status</b></th>
+                <th scope="col"><b style="font-weight: 500; font-size:16px;">Period</b></th>
+                <th scope="col"><b style="font-weight: 500; font-size:16px;">Channels</b></th>
+                <th scope="col"><b style="font-weight: 500; font-size:16px;">Countries</b></th>
+                <th scope="col"><b style="font-weight: 500; font-size:16px;">Influencers</b></th>
+                <th scope="col"><b style="font-weight: 500; font-size:16px;">Budget</b></th>
+                <th scope="col"><b style="font-weight: 500; font-size:16px;">ROI</b></th>
+              </tr>
+              </thead>
+              <tbody>
+              {% for item in view_campaign_data['data'] %}
+              <tr>
+                <td><input class="form-control" type="checkbox" id="{{ item['campaign_id'] }}"></td>
+                <td><a href="/viewCampaignDetails/{{ item['campaign_id'] }}">{{ item['campaign_name'] }}</a></td>
+                <td>Cell</td>
+                <td>{{ item['from_date'] }}- {{ item['to_date'] }}</td>
+                <td>
+                  {% set channels = item['channels'].split(',') %}
+                  {% for channel in channels %}
+                  {% if channel == 'youtube' %}
+                  <a href="#" class="fa fa-youtube red"></a>
+                  {% elif channel == 'facebook' %}
+                  <a href="#" class="fa fa-facebook blue"></a>
+                  {% elif channel == 'twitter' %}
+                  <a href="#" class="fa fa-twitter"></a>
+                  {% elif channel == 'instagram' %}
+                  <a href="#" class="fa fa-instagram pink"></a>
+                  {% endif %}
+                  {% endfor %}
+                </td>
+                <td>
+                  {% for region_name in item['region_name_list'] %}
+                  {{ region_name }},
+                  {% endfor %}
+                </td>
+                <td>{{ item['no_of_influencers'] }}
+                  <span class="float-right text muted">
+                                <!--<a onclick="searchInfluencers('{{ item['campaign_name'] }}','{{ item['campaign_id'] }}','{{ item['channels'] }}','{{ item['video_cat_name'] }}','{{ item['min_lower_followers'] }}','{{ item['max_upper_followers'] }}','{{ item['regions'] }}')" class="fa fa-user-plus black" data-toggle="modal" data-target="#create_alert_modal" data-tooltip="true" title="Add Influencer" style="font-size:20px;"></a>-->
+                    <!--<button class="btn btn-sm btn-outline-secondary fa fa-user-plus"></button>-->
+                        </span>
+                </td>
+                <td>{{ item['budget'] }} {{ item['currency'] }}</td>
+                <td>Coming Soon</td>
+              </tr>
+              {% endfor %}
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-default">Save</button>
+        </div>
+      </form>
+    </div>
+  </div>
 </div>
 <script>
 function createAlert(channel_id,followers,views,likes,comments) {
@@ -506,5 +585,18 @@ function createAlert(channel_id,followers,views,likes,comments) {
     $("#total_comments").val(comments);
 }
 </script>
-
+<!--<script>-->
+<!--$(document).ready(function(){-->
+<!--var clicked;-->
+<!--$(".favorite").click(function(){-->
+<!--clicked = $(this).attr("name");-->
+<!--$.ajax({-->
+<!--type : 'POST',-->
+<!--url : "{{url_for('test')}}",-->
+<!--contentType: 'application/json;charset=UTF-8',-->
+<!--data : {'data':clicked}-->
+<!--});-->
+<!--});-->
+<!--});-->
+<!--</script>-->
 {% endblock %}
