@@ -142,10 +142,18 @@
                 <div class="form-group" style="margin-left:12%;">
                   <select class="form-control" name="sort_order" placeholder="Sort" style="width:140px;">
                     {% if form_filters['sort_order'] %}
-                    <option value="{{ form_filters['sort_order'] }}">{{ form_filters['sort_order'] }}</option>
+                    {% set var_order = form_filters['sort_order'] %}
+                      <option value="{{ form_filters['sort_order'] }}">{{ form_filters['sort_order'] }}</option>
+
+                        {% if 'High To Low' == var_order %}
+                          <option value="Low To High">Low To High</option>
+                        {% elif 'Low To High' == var_order %}
+                          <option value="High To Low">High To Low</option>
+                        {% endif %}
+                    {% else %}
+                      <option value="High To Low">High To Low</option>
+                      <option value="Low To High">Low To High</option>
                     {% endif %}
-                    <option value="High To Low">High To Low</option>
-                    <option value="Low To High">Low To High</option>
                   </select>
                 </div>
               </div>
