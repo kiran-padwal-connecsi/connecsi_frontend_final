@@ -1,7 +1,7 @@
 import datetime
 from functools import wraps
 import json
-
+import time
 
 import requests
 from flask import Flask, render_template, flash, redirect, url_for, session, request, logging,jsonify
@@ -592,6 +592,16 @@ def viewCampaigns():
                 video_cat_name=cat_json_data['data'][0]['video_cat_name']
                 item.update({'video_cat_name':video_cat_name})
                 item.update({'region_name_list': region_name_list})
+                try:
+                    string_from_date= datetime.datetime.strptime(item['from_date'], '%Y-%m-%d')
+                    string_from_date=string_from_date.strftime('%Y-%b-%d')
+                    string_to_date = datetime.datetime.strptime(item['to_date'], '%Y-%m-%d')
+                    string_to_date = string_to_date.strftime('%Y-%b-%d')
+                    item.update({'from_date':string_from_date})
+                    item.update({'to_date': string_to_date})
+                except Exception as e:
+                    print(e)
+
             print('campaign data',view_campaign_data)
             viewCampaigns.counter = 0
             return render_template('campaign/viewCampaigns.html',view_campaign_data=view_campaign_data),view_campaign_data

@@ -31,15 +31,15 @@
                     <td>
                         {% set channels = item['channels'].split(',') %}
                         {% for channel in channels %}
-                            {% if channel == 'youtube' %}
-                              <a href="#" class="fa fa-youtube red"></a>
-                            {% elif channel == 'facebook' %}
-                              <a href="#" class="fa fa-facebook blue"></a>
-                            {% elif channel == 'twitter' %}
-                              <a href="#" class="fa fa-twitter"></a>
-                            {% elif channel == 'instagram' %}
-                              <a href="#" class="fa fa-instagram pink"></a>
-                            {% endif %}
+                        {% if channel == 'youtube' %}
+                        <a href="#" class="fa fa-youtube fa-lg red"></a>
+                        {% elif channel == 'facebook' %}
+                        <a href="#" class="fa fa-facebook fa-lg blue"></a>
+                        {% elif channel == 'twitter' %}
+                        <a href="#" class="fa fa-twitter fa-lg"></a>
+                        {% elif channel == 'instagram' %}
+                        <a href="#" class="fa fa-instagram fa-lg pink"></a>
+                        {% endif %}
                         {% endfor %}
                     </td>
                     <td>
@@ -50,7 +50,7 @@
                     <td>{{ item['no_of_influencers'] }}
                         <span class="float-right text muted">
                                 <a onclick="searchInfluencers('{{ item['campaign_name'] }}','{{ item['campaign_id'] }}','{{ item['channels'] }}','{{ item['video_cat_name'] }}','{{ item['min_lower_followers'] }}','{{ item['max_upper_followers'] }}','{{ item['regions'] }}')" class="fa fa-user-plus black" data-toggle="modal" data-target="#create_alert_modal" data-tooltip="true" title="Add Influencer" style="font-size:20px;"></a>
-                                <!--<button class="btn btn-sm btn-outline-secondary fa fa-user-plus"></button>-->
+                            <!--<button class="btn btn-sm btn-outline-secondary fa fa-user-plus"></button>-->
                         </span>
                     </td>
                     <td>{{ item['budget'] }} {{ item['currency'] }}</td>

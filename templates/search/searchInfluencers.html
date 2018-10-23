@@ -40,84 +40,95 @@
     </style>
 
 </head>
-<div id="accordion">
-  <div class="card"  >
-    <div class="card-body" style="padding: 1px; ">
-      <form class="col s12" action="/searchInfluencers" method="POST" name="form_search" id="form_search">
-        <div class="form-body">
-          <div class="row" style="padding-top: 2%;">
-            <div class="col-xl-3 col-lg-3 col-md-3 mb-1" style="margin-top:3%;">
-              <div class="form-group" >
-                <select class="form-control" name="channel" style="height:35px;">
-                  {% if form_filters['channel'] %}
-                  <option value="{{ form_filters['channel'] }}">{{ form_filters['channel'] }}</option>
-                  {% endif %}
-                  <option value="Youtube">Youtube</option>
-                  <option value="Twitter">Twitter</option>
-                  <option value="Facebook">Facebook</option>
-                  <option value="Instagram">Instagram</option>
-                </select>
-              </div>
-            </div>
-            <div class="col-xl-3 col-lg-3 col-md-3 mb-1" style="margin-top:3%;">
-              <div class="form-group" >
-                <input class="form-control" id="string_word" name="string_word" type="text" placeholder="Enter Keywords"style="height:35px;"
-                       {% if form_filters['string_word'] %}
-                value="{{ form_filters['string_word'] }}"
-                {% endif %}
-                >
-              </div>
-              <!--{{ form_filters }}-->
-            </div>
-            <div class="col-xl-3 col-lg-3 col-md-3 mb-1" >
-              <div class="form-group" >
-                <label>Country</label>
-                <div class="form-group">
-                  <select class="form-control" name="country" style="height:35px;">
-                    {% if form_filters['country'] %}
-                    <option value="{{ form_filters['country'] }}">{{ form_filters['country_name'] }}</option>
-                    <option value=""></option>
-                    {% else %}
-                    <option value=""></option>
-                    {% endif %}
+<div class="sticky-top" id="accordion">
+  <div class="card" >
+    <div id="influencerSearchPanel"  data-parent="#accordion">
+      <div class="card-body" >
+        <div class="row" style="justify-content: center">
+          <div class="col-xl-12 col-lg-12  col-md-12 col-12">
+            <div class="card"  >
+              <div class="card-body" style="padding: 1px;">
+                <form class="col s12" action="/searchInfluencers" method="POST" name="form_search" id="form_search">
+                  <div class="form-body">
+                    <div class="row" style="padding-top: 2%;">
+                      <div class="col-xl-2 col-lg-2 col-md-2 mb-1" style="margin-top:33px; padding-left:2%;">
+                        <div class="form-group" >
+                          <select class="form-control" name="channel" style="height:35px;">
+                            {% if form_filters['channel'] %}
+                            <option value="{{ form_filters['channel'] }}">{{ form_filters['channel'] }}</option>
+                            {% endif %}
+                            <option value="Youtube">Youtube</option>
+                            <option value="Twitter">Twitter</option>
+                            <option value="Facebook">Facebook</option>
+                            <option value="Instagram">Instagram</option>
+                          </select>
+                        </div>
+                      </div>
+                      <div class="col-xl-3 col-lg-3 col-md-3 mb-1" style="margin-top:33px;">
+                        <div class="form-group" >
+                          <input class="form-control" id="string_word" name="string_word" type="text" placeholder="Enter Keywords"style="height:35px;"
+                                 {% if form_filters['string_word'] %}
+                          value="{{ form_filters['string_word'] }}"
+                          {% endif %}
+                          >
+                        </div>
+                        <!--{{ form_filters }}-->
+                      </div>
+                      <div class="col-xl-2 col-lg-2 col-md-2 mb-1" >
+                        <div class="form-group" >
+                          <label>Country</label>
+                          <div class="form-group">
+                            <select class="form-control" name="country" style="height:35px;">
+                              {% if form_filters['country'] %}
+                              <option value="{{ form_filters['country'] }}">{{ form_filters['country_name'] }}</option>
+                              <option value=""></option>
+                              {% else %}
+                              <option value=""></option>
+                              {% endif %}
 
-                    {% for item in regionCodes['data'] %}
-                    <option value="{{ item['region_code'] }}">{{ item['country_name'] }}</option>
-                    {% endfor %}
-                  </select>
-                </div>
+                              {% for item in regionCodes['data'] %}
+                              <option value="{{ item['region_code'] }}">{{ item['country_name'] }}</option>
+                              {% endfor %}
+                            </select>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-xl-5 col-lg-5 col-md-5 mb-1" style="padding-right:8%;">
+                        <div class="form-group" >
+                          <p>
+                            <label>Followers range:</label>
+                          </p>
+                          <div id="slider"  style="height:10px;" ></div>
+                        </div>
+                        <div class="row" style="margin-left:3%;">
+                          <div class="col-3.5" id="lower-value" style="border:1px solid black; padding-left:1px; padding-right:2px;" ></div>
+                          <div class="col-5"></div>
+                          <div class="col-3.5" id="upper-value" style="border:1px solid black; padding-right:2px; padding-left:2px; margin-left:20%;"></div>
+                        </div>
+                        <input type="hidden" name="min_lower" value="" id="min_lower">
+                        <input type="hidden" name="max_upper" value="" id="max_upper">
+                        <!--{{ form_filters }}-->
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-xl-4 col-lg-4 col-md-4 mb-1">
+                      </div>
+                      <div class="col-xl-4 col-lg-4 col-md-4 mb-1">
+                        <div class="form-group spacing" style="margin-left:20%;">
+                          <button id="btn-search-inf" type="submit" class="btn btn-raised btn-raised btn-primary customButton" name="search_inf" style="padding-right: 10px; padding-left: 10px; padding-top: 2.5px; padding-bottom: 2.5px;">
+                            Search <i class="fa fa-search"></i>
+                          </button>
+                        </div>
+                      </div>
+                      <div class="col-xl-4 col-lg-4 col-md-4 mb-1">
+                      </div>
+                    </div>
+                  </div>
               </div>
-            </div>
-            <div class="col-xl-3 col-lg-3 col-md-3 mb-1">
-              <div class="form-group" >
-                <p>
-                  <label>Followers range:</label>
-                </p>
-                <div id="slider"  style="height:10px; width: 190px; border-radius: 55px;" ></div>
-              </div>
-              <div class="row" style="margin-left:3%;">
-                <div class="col-2.5" id="lower-value" style="column-width:50px; border:1px solid black; padding-left:2px; padding-right:1px; margin-left:2%;"></div>
-                <div class="col-2.5" id="upper-value" style="column-width:50px; border:1px solid black; padding-right:2px; padding-left:2px; margin-left:12%;"></div>
-              </div>
-              <input type="hidden" name="min_lower" value="" id="min_lower">
-              <input type="hidden" name="max_upper" value="" id="max_upper">
-              <!--{{ form_filters }}-->
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-xl-4 col-lg-4 col-md-4 mb-1">
-            </div>
-            <div class="col-xl-4 col-lg-4 col-md-4 mb-1">
-              <div class="form-group spacing" style="margin-left:20%;">
-                <button id="btn-search-inf" type="submit" class="btn btn-raised btn-raised btn-primary customButton" name="search_inf" style="padding-right: 10px; padding-left: 10px; padding-top: 2.5px; padding-bottom: 2.5px;">
-                  Search <i class="fa fa-search"></i>
-                </button>
-              </div>
-            </div>
-            <div class="col-xl-4 col-lg-4 col-md-4 mb-1">
             </div>
           </div>
         </div>
+      </div>
     </div>
   </div>
 </div>
