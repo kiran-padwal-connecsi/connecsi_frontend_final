@@ -364,6 +364,7 @@ def searchInfluencers():
         country_name=''
         view_campaign_data=''
         data=''
+        favInfList_data=''
         try:
             response_regionCodes = requests.get(url=url_regionCodes)
             regionCodes_json = response_regionCodes.json()
@@ -388,6 +389,14 @@ def searchInfluencers():
             print(e)
             pass
 
+        try:
+            template, favInfList_data = influencerFavoritesList()
+        except Exception as e:
+            print(e)
+            pass
+        # print('fav list = ',favInfList_data['data'])
+        # for item in favInfList_data['data']:
+        #     print(item['channel_id'])
         if request.method=='POST':
             if 'search_inf' in request.form:
                 string_word = request.form.get('string_word')
@@ -446,12 +455,14 @@ def searchInfluencers():
 
                     # print(campaignsList)
                     return render_template('search/searchInfluencers.html', regionCodes=regionCodes_json,
-                                           lookup_string=lookup_string, form_filters=form_filters,data=data,view_campaign_data=view_campaign_data)
+                                           lookup_string=lookup_string, form_filters=form_filters,data=data,view_campaign_data=view_campaign_data
+                                           ,favInfList_data=favInfList_data)
                 except Exception as e:
                     print(e)
                     print('i m hee')
                     return render_template('search/searchInfluencers.html', regionCodes=regionCodes_json,
-                                       lookup_string=lookup_string,form_filters=form_filters,data='',pagination='',view_campaign_data=view_campaign_data)
+                                       lookup_string=lookup_string,form_filters=form_filters,data='',pagination='',view_campaign_data=view_campaign_data
+                                           ,favInfList_data=favInfList_data)
         else:
             print('i m here last')
             try:
@@ -474,7 +485,8 @@ def searchInfluencers():
             except:
                 pass
             return render_template('search/searchInfluencers.html', regionCodes=regionCodes_json,
-                                   lookup_string=lookup_string,form_filters=form_filters,data=data,pagination='',view_campaign_data=view_campaign_data)
+                                   lookup_string=lookup_string,form_filters=form_filters,data=data,pagination='',view_campaign_data=view_campaign_data,
+                                   favInfList_data=favInfList_data)
     else:
         searchInfluencers.counter=0
         return ''
@@ -1106,6 +1118,7 @@ addToFavInfList.counter=0
 @connecsiApp.route('/influencerFavoritesList')
 @is_logged_in
 def influencerFavoritesList():
+    data=''
     try:
         user_id = session['user_id']
         url = base_url+'/Brand/getInfluencerFavList/'+str(user_id)
@@ -1116,10 +1129,10 @@ def influencerFavoritesList():
             item.update({'linechart_id': linechart_id})
             print(item)
             linechart_id += 1
-        return render_template('partnerships/influencerFavoritesList.html',data=data)
+        return render_template('partnerships/influencerFavoritesList.html',data=data),data
     except:
         pass
-        return render_template('partnerships/influencerFavoritesList.html')
+        return render_template('partnerships/influencerFavoritesList.html'),data
 
 @connecsiApp.route('/createAlerts', methods=['POST'])
 @is_logged_in

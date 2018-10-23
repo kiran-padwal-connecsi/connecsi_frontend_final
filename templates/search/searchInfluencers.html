@@ -152,13 +152,12 @@
               <div class="form-group">
                 <div class="form-group" style="margin-left:12%;">
                   <select class="form-control" name="sort_order" placeholder="Sort" style="width:140px;">
+                    <option value=""></option>
                     {% if form_filters['sort_order'] %}
-                    {% set var_order = form_filters['sort_order'] %}
-                    <option value="{{ form_filters['sort_order'] }}">{{ form_filters['sort_order'] }}</option>
-
-                    {% if 'High To Low' == var_order %}
+                    <option value="{{ form_filters['sort_order'] }}" disabled>{{ form_filters['sort_order'] }}</option>
+                    {% if form_filters['sort_order'] == "High To Low" %}
                     <option value="Low To High">Low To High</option>
-                    {% elif 'Low To High' == var_order %}
+                    {% elif form_filters['sort_order'] == "Low To High" %}
                     <option value="High To Low">High To Low</option>
                     {% endif %}
                     {% else %}
@@ -188,7 +187,11 @@
                       </span>
                       {% endif %}
                       <br>
-                      <a href="/addToFavInfList/{{ item['channel_id'] }}"  class="fa fa-star-o yellow"  data-toggle="tooltip" title="Add To Favorites" style="font-size:25px;"><i class="fa fa-plus-circle green" style="font-size:10px; position:relative; top:1px; left:-10px;"></i></a>
+                        {% if item['channel_id'] in favInfList_data['data']|map(attribute="channel_id") %}
+                          <a href="#"  class="fa fa-star yellow"  data-toggle="tooltip" title="Already In Your Favorites List" style="font-size:25px;"></a>
+                        {% else %}
+                          <a href="/addToFavInfList/{{ item['channel_id'] }}"  class="fa fa-star-o yellow"  data-toggle="tooltip" title="Add To Favorites" style="font-size:25px;"><i class="fa fa-plus-circle green" style="font-size:10px; position:relative; top:1px; left:-10px;"></i></a>
+                        {% endif %}
                       <br>
                       <span data-toggle="modal" data-target="#create_alert_modal">
                       <a onclick="createAlert('{{ item['channel_id'] }}','{{ item['subscriberCount_gained'] }}','{{ (item['total_100video_views']/100)|int }}','{{ (item['total_100video_likes']/100)|int }}','{{ (item['total_100video_comments']/100)|int }}')" class="fa fa-bell black"  data-toggle="tooltip" title="Create Alerts" style="font-size:25px;"><i class="fa fa-plus-circle green" style="font-size:10px; position:relative; top:1px; left:-10px;"></i></a>

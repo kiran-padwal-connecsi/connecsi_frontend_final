@@ -24,11 +24,26 @@
                         </div>
                         <div class="col-xl-6 col-lg-6 col-md-6 mb-1">
                             <p class="grey font-small-3" style="font-size:20px;">Accounts:</p>
-                            <a href="{{ data['data']['facebook_url'] }}" target="_blank" class="fa fa-facebook grey" title="facebook" style="font-size:40px; padding-right:10px;"></a>
-                            <a href="{{ data['data']['twitter_url'] }}" target="_blank" class="fa fa-twitter grey" title="twitter" style="font-size:40px; padding-right:10px;"></a>
-                            <a href="{{ data['data']['insta_url'] }}" target="_blank" class="fa fa-instagram grey " title="instagram" style="font-size:40px; padding-right:10px;"></a>
-                            <a href="{{ data['data']['youtube_url'] }}" target="_blank" class="fa fa-youtube grey" title="youtube" style="font-size:40px;"></a>
-
+                            {% if data['data']['facebook_url'] %}
+                            <a href="{{ data['data']['facebook_url'] }}" target="_blank" class="fa fa-facebook " title="facebook" style="font-size: 40px;color:#3B5998 ;padding: 10px;"></a>
+                            {% else %}
+                            <a href="#" class="fa fa-facebook grey" title="facebook" style="font-size:40px; padding-right:10px;"></a>
+                            {% endif %}
+                            {% if data['data']['twitter_url'] %}
+                            <a href="{{ data['data']['twitter_url'] }}" target="_blank" class="fa fa-twitter" title="twitter" style="font-size:40px; color:#55ACEE padding-right:10px;"></a>
+                            {% else %}
+                            <a href="#"  class="fa fa-twitter grey" title="twitter" style="font-size:40px; padding-right:10px;"></a>
+                            {% endif %}
+                            {% if data['data']['insta_url'] %}
+                            <a href="{{ data['data']['insta_url'] }}" target="_blank" class="fa fa-instagram" title="instagram" style="color:#d6249f; font-size:40px; padding-right:10px;"></a>
+                            {% else %}
+                            <a href="#"  class="fa fa-instagram grey " title="instagram" style="font-size:40px; padding-right:10px;"></a>
+                            {% endif %}
+                            {% if data['data']['youtube_url'] %}
+                            <a href="{{ data['data']['youtube_url'] }}" target="_blank" class="fa fa-youtube" title="youtube" style="color:#bb0000 ;font-size:40px;"></a>
+                            {% else %}
+                            <a href="#"  class="fa fa-youtube grey" title="youtube" style="font-size:40px;"></a>
+                            {% endif %}
                         </div>
                     </div>
                 </div>
