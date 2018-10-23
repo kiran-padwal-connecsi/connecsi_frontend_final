@@ -169,6 +169,22 @@ def saveBrand():
             result = result_json['response']
             # exit()
             if result == 1:
+                payload1 = {
+                  "from_email_id": "business@connecsi.com",
+                  "to_email_id": request.form.get('email'),
+                  "date": datetime.datetime.now().strftime("%A, %d. %B %Y %I:%M%p"),
+                  "subject": "Welcome To Connecsi",
+                  "message": "Hello User welcome to Connecsi"
+                }
+                user_id = 4
+                type = 'brand'
+                url = base_url + 'Messages/sentWelcomeEmail/' + str(user_id) + '/' + type
+                try:
+                    response = requests.post(url=url, json=payload1)
+                    data = response.json()
+                    print('email sent')
+                except:
+                    pass
                 flash("Brand Details Successfully Registered", 'success')
                 title = 'Connesi App Login Panel'
                 return render_template('user/login.html', title=title)
@@ -347,6 +363,7 @@ def searchInfluencers():
         form_filters=''
         country_name=''
         view_campaign_data=''
+        data=''
         try:
             response_regionCodes = requests.get(url=url_regionCodes)
             regionCodes_json = response_regionCodes.json()
@@ -365,6 +382,11 @@ def searchInfluencers():
             # print(cat['video_cat_name'])
             lookup_string += ''.join(',' + cat['video_cat_name'])
         lookup_string = lookup_string.replace('&', 'and')
+        try:
+            template, view_campaign_data = viewCampaigns()
+        except Exception as e:
+            print(e)
+            pass
 
         if request.method=='POST':
             if 'search_inf' in request.form:
@@ -399,11 +421,7 @@ def searchInfluencers():
                 payload.update({'min_lower':payload.get('min_lower')})
                 payload.update({'max_upper':payload.get('max_upper')})
                 print(payload)
-                try:
-                    template, view_campaign_data = viewCampaigns()
-                except Exception as e:
-                    print(e)
-                    pass
+
                 try:
                     channel = request.form.get('channel')
                     url = base_url+'Youtube/searchChannels/'+channel
@@ -436,8 +454,27 @@ def searchInfluencers():
                                        lookup_string=lookup_string,form_filters=form_filters,data='',pagination='',view_campaign_data=view_campaign_data)
         else:
             print('i m here last')
+            try:
+                payload = {
+                    "category_id": "",
+                    "country": "",
+                    "min_lower": 0,
+                    "max_upper": 1000000,
+                    "sort_order": "High To Low"
+                }
+                url = base_url + 'Youtube/searchChannels/Youtube'
+                response = requests.post(url, json=payload)
+                print(response.json())
+                data = response.json()
+                linechart_id = 1
+                for item in data['data']:
+                    item.update({'linechart_id': linechart_id})
+                    print(item)
+                    linechart_id += 1
+            except:
+                pass
             return render_template('search/searchInfluencers.html', regionCodes=regionCodes_json,
-                                   lookup_string=lookup_string,form_filters=form_filters,data='',pagination='',view_campaign_data=view_campaign_data)
+                                   lookup_string=lookup_string,form_filters=form_filters,data=data,pagination='',view_campaign_data=view_campaign_data)
     else:
         searchInfluencers.counter=0
         return ''
@@ -529,7 +566,7 @@ addCampaign.counter=0
 @is_logged_in
 def viewCampaigns():
     viewCampaigns.counter+=1
-    print(viewCampaigns.counter)
+    print('view campaigns function',viewCampaigns.counter)
     if viewCampaigns.counter==1:
         user_id=session['user_id']
         view_campaign_data = ''
@@ -555,7 +592,8 @@ def viewCampaigns():
                 video_cat_name=cat_json_data['data'][0]['video_cat_name']
                 item.update({'video_cat_name':video_cat_name})
                 item.update({'region_name_list': region_name_list})
-            print(view_campaign_data)
+            print('campaign data',view_campaign_data)
+            viewCampaigns.counter = 0
             return render_template('campaign/viewCampaigns.html',view_campaign_data=view_campaign_data),view_campaign_data
         except Exception as e:
             flash('Error is Getting Data From Backend Please try again Later')

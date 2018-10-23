@@ -62,6 +62,11 @@
                         </div>
                     </div>
                     <!--<h3 class="list-group-item-heading">{{ conv_title }}</h3>-->
+                    {% if deleted_dict['data'] %}
+                    {{ 'Deleted' }}
+                    {% else %}
+                    {{ 'Nothing To Show...' }}
+                    {% endif %}
                     {% for item in deleted_dict['data'] %}
                     <div class="media-list">
                         <div id="heading{{ item['collapse_id'] }}" class="card-header p-0">

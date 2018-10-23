@@ -35,106 +35,89 @@
 .autocomplete-selected{
   background-color:#F0F0F0;
 }
+
+
     </style>
 
 </head>
 <div id="accordion">
-  <div class="card">
-    <div class="card-header">
-      <a class="card-link" data-toggle="collapse" href="#influencerSearchPanel">
-        Search Influencer Panel
-      </a>
-    </div>
-    <div id="influencerSearchPanel" class="collapse hide" data-parent="#accordion">
-      <div class="card-body">
-        <div class="row" style="justify-content: center">
-          <div class="col-xl-12 col-lg-12  col-md-12 col-12">
-            <div class="card">
-              <div class="card-body" style="padding: 1px">
-                <form class="col s12" action="/searchInfluencers" method="POST" name="form_search" id="form_search">
-                  <div class="form-body">
-                    <div class="row" style="padding-top: 2%; margin-left: 25%;">
-                      <div class="col-xl-4 col-lg-4 col-md-4 mb-1" >
-                        <div class="form-group" >
-                          <select class="form-control" name="channel" style="height:35px; width:120px;">
-                            {% if form_filters['channel'] %}
-                            <option value="{{ form_filters['channel'] }}">{{ form_filters['channel'] }}</option>
-                            {% endif %}
-                            <option value="Youtube">Youtube</option>
-                            <option value="Twitter">Twitter</option>
-                            <option value="Facebook">Facebook</option>
-                            <option value="Instagram">Instagram</option>
-                          </select>
-                        </div>
-                      </div>
-                      <div class="col-xl-8 col-lg-8 col-md-8 mb-2">
-                        <div class="form-group" >
-                          <input class="form-control" id="string_word" name="string_word" type="text" placeholder="Enter Keywords" style="height:35px; width:190px;"
-                                 {% if form_filters['string_word'] %}
-                          value="{{ form_filters['string_word'] }}"
-                          {% endif %}
-                          >
-                        </div>
-                        <!--{{ form_filters }}-->
-                      </div>
-                    </div>
-                    <div class="row" style="margin-left: 25%;">
-                      <div class="col-xl-4 col-lg-4 col-md-4 mb-1" >
-                        <div class="form-group" >
-                          <label>Country</label>
-                          <div class="form-group">
-                            <select class="form-control" name="country" style="height:35px; width:120px;">
-                              {% if form_filters['country'] %}
-                              <option value="{{ form_filters['country'] }}">{{ form_filters['country_name'] }}</option>
-                              <option value=""></option>
-                              {% else %}
-                              <option value=""></option>
-                              {% endif %}
-
-                              {% for item in regionCodes['data'] %}
-                              <option value="{{ item['region_code'] }}">{{ item['country_name'] }}</option>
-                              {% endfor %}
-                            </select>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="col-xl-8 col-lg-8 col-md-8 mb-2">
-                        <div class="form-group" >
-                          <p>
-                            <label>Followers range:</label>
-                          </p>
-                          <div id="slider"  style="height:10px; width: 190px; border-radius: 55px;" ></div>
-                        </div>
-                        <div class="float-left">Min Followers : </div>
-                        <div id="lower-value" ></div>
-                        <div class="float-left">Max Followers : </div>
-                        <div id="upper-value"></div>
-                        <input type="hidden" name="min_lower" value="" id="min_lower">
-                        <input type="hidden" name="max_upper" value="" id="max_upper">
-                        <!--{{ form_filters }}-->
-                      </div>
-                      <div class="col-xl-2 col-lg-2 col-md-2 mb-1">
-                      </div>
-                    </div>
-                    <div class="row">
-                      <div class="col-xl-4 col-lg-4 col-md-4 mb-1">
-                      </div>
-                      <div class="col-xl-4 col-lg-4 col-md-4 mb-1">
-                        <div class="form-group spacing" style="margin-left:20%;">
-                          <button id="btn-search-inf" type="submit" class="btn btn-raised btn-raised btn-primary customButton" name="search_inf" style="padding-right: 10px; padding-left: 10px; padding-top: 2.5px; padding-bottom: 2.5px;">
-                            Search <i class="fa fa-search"></i>
-                          </button>
-                        </div>
-                      </div>
-                      <div class="col-xl-4 col-lg-4 col-md-4 mb-1">
-                      </div>
-                    </div>
-                  </div>
+  <div class="card"  >
+    <div class="card-body" style="padding: 1px; ">
+      <form class="col s12" action="/searchInfluencers" method="POST" name="form_search" id="form_search">
+        <div class="form-body">
+          <div class="row" style="padding-top: 2%;">
+            <div class="col-xl-3 col-lg-3 col-md-3 mb-1" style="margin-top:3%;">
+              <div class="form-group" >
+                <select class="form-control" name="channel" style="height:35px;">
+                  {% if form_filters['channel'] %}
+                  <option value="{{ form_filters['channel'] }}">{{ form_filters['channel'] }}</option>
+                  {% endif %}
+                  <option value="Youtube">Youtube</option>
+                  <option value="Twitter">Twitter</option>
+                  <option value="Facebook">Facebook</option>
+                  <option value="Instagram">Instagram</option>
+                </select>
               </div>
+            </div>
+            <div class="col-xl-3 col-lg-3 col-md-3 mb-1" style="margin-top:3%;">
+              <div class="form-group" >
+                <input class="form-control" id="string_word" name="string_word" type="text" placeholder="Enter Keywords"style="height:35px;"
+                       {% if form_filters['string_word'] %}
+                value="{{ form_filters['string_word'] }}"
+                {% endif %}
+                >
+              </div>
+              <!--{{ form_filters }}-->
+            </div>
+            <div class="col-xl-3 col-lg-3 col-md-3 mb-1" >
+              <div class="form-group" >
+                <label>Country</label>
+                <div class="form-group">
+                  <select class="form-control" name="country" style="height:35px;">
+                    {% if form_filters['country'] %}
+                    <option value="{{ form_filters['country'] }}">{{ form_filters['country_name'] }}</option>
+                    <option value=""></option>
+                    {% else %}
+                    <option value=""></option>
+                    {% endif %}
+
+                    {% for item in regionCodes['data'] %}
+                    <option value="{{ item['region_code'] }}">{{ item['country_name'] }}</option>
+                    {% endfor %}
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div class="col-xl-3 col-lg-3 col-md-3 mb-1">
+              <div class="form-group" >
+                <p>
+                  <label>Followers range:</label>
+                </p>
+                <div id="slider"  style="height:10px; width: 190px; border-radius: 55px;" ></div>
+              </div>
+              <div class="row" style="margin-left:3%;">
+                <div class="col-2.5" id="lower-value" style="column-width:50px; border:1px solid black; padding-left:2px; padding-right:1px; margin-left:2%;"></div>
+                <div class="col-2.5" id="upper-value" style="column-width:50px; border:1px solid black; padding-right:2px; padding-left:2px; margin-left:12%;"></div>
+              </div>
+              <input type="hidden" name="min_lower" value="" id="min_lower">
+              <input type="hidden" name="max_upper" value="" id="max_upper">
+              <!--{{ form_filters }}-->
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-xl-4 col-lg-4 col-md-4 mb-1">
+            </div>
+            <div class="col-xl-4 col-lg-4 col-md-4 mb-1">
+              <div class="form-group spacing" style="margin-left:20%;">
+                <button id="btn-search-inf" type="submit" class="btn btn-raised btn-raised btn-primary customButton" name="search_inf" style="padding-right: 10px; padding-left: 10px; padding-top: 2.5px; padding-bottom: 2.5px;">
+                  Search <i class="fa fa-search"></i>
+                </button>
+              </div>
+            </div>
+            <div class="col-xl-4 col-lg-4 col-md-4 mb-1">
             </div>
           </div>
         </div>
-      </div>
     </div>
   </div>
 </div>
@@ -253,22 +236,22 @@
                           <div id="status{{ item['channel_id'] }}" class="tab-pane fade show active">
                             <b style="font-weight:450;">Campaign 1<br/></b>
                             <b style="font-weight:400; color:orange;">Contacted</b><br/>
-                            <hr>
+                            <hr style="height: 0px; margin:0px;">
                             <b style="font-weight:450;">Campaign 2<br/></b>
                             <b style="font-weight: 400; color:green;">Accepted
                             </b><br />
-                            <hr>
+                            <hr style="height: 0px; margin:0px;">
                             <b style="font-weight:450;">Campaign 3<br/></b>
                             <b style="font-weight: 400; color:orange;">Contacted</b>
                           </div>
                           <div id="alert{{ item['channel_id'] }}" class="tab-pane fade">
                             <b style="font-weight:450;">Followers<br/></b>
                             <b style="font-weight:400; color:red;">60 000 00</b><br/>
-                            <hr>
+                            <hr style="height: 0px; margin:0px;">
                             <b style="font-weight:450;">Avg Likes/video<br/></b>
                             <b style="font-weight: 400; color:red;">80 000
                             </b><br />
-                            <hr>
+                            <hr style="height: 0px; margin:0px;">
                             <b style="font-weight:450;">Avg Comments<br/></b>
                             <b style="font-weight: 400; color:red;">5 000</b>
                           </div>
@@ -583,6 +566,20 @@ function createAlert(channel_id,followers,views,likes,comments) {
     $("#total_views").val(views);
     $("#total_likes").val(likes);
     $("#total_comments").val(comments);
+}
+</script>
+<script>
+window.onscroll = function() {myFunction()};
+
+var header = document.getElementById("myHeader");
+var sticky = header.offsetTop;
+
+function myFunction() {
+  if (window.pageYOffset > sticky) {
+    header.classList.add("sticky");
+  } else {
+    header.classList.remove("sticky");
+  }
 }
 </script>
 <!--<script>-->
