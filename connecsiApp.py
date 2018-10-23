@@ -596,7 +596,7 @@ def viewCampaigns():
             viewCampaigns.counter = 0
             return render_template('campaign/viewCampaigns.html',view_campaign_data=view_campaign_data),view_campaign_data
         except Exception as e:
-            flash('Error is Getting Data From Backend Please try again Later')
+            flash(e,'warning')
         viewCampaigns.counter = 0
         return render_template('campaign/viewCampaigns.html',view_campaign_data=view_campaign_data),view_campaign_data
     else:
