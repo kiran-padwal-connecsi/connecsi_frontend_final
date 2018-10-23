@@ -143,16 +143,16 @@
                   <select class="form-control" name="sort_order" placeholder="Sort" style="width:140px;">
                     {% if form_filters['sort_order'] %}
                     {% set var_order = form_filters['sort_order'] %}
-                      <option value="{{ form_filters['sort_order'] }}">{{ form_filters['sort_order'] }}</option>
+                    <option value="{{ form_filters['sort_order'] }}">{{ form_filters['sort_order'] }}</option>
 
-                        {% if 'High To Low' == var_order %}
-                          <option value="Low To High">Low To High</option>
-                        {% elif 'Low To High' == var_order %}
-                          <option value="High To Low">High To Low</option>
-                        {% endif %}
+                    {% if 'High To Low' == var_order %}
+                    <option value="Low To High">Low To High</option>
+                    {% elif 'Low To High' == var_order %}
+                    <option value="High To Low">High To Low</option>
+                    {% endif %}
                     {% else %}
-                      <option value="High To Low">High To Low</option>
-                      <option value="Low To High">Low To High</option>
+                    <option value="High To Low">High To Low</option>
+                    <option value="Low To High">Low To High</option>
                     {% endif %}
                   </select>
                 </div>
@@ -243,25 +243,29 @@
                         <div class="tab-content">
                           <div id="status{{ item['channel_id'] }}" class="tab-pane fade show active">
                             <b style="font-weight:450;">Campaign 1<br/></b>
-                            <b style="font-weight:400; color:orange;">Contacted</b><br/>
-                            <hr style="height: 0px; margin:0px;">
+                            <b style="font-weight:400; color:orange;">Contacted</b>
+                            <hr style="height:0px; margin:auto;">
                             <b style="font-weight:450;">Campaign 2<br/></b>
                             <b style="font-weight: 400; color:green;">Accepted
-                            </b><br />
-                            <hr style="height: 0px; margin:0px;">
+                            </b>
+                            <hr style="height:0px; margin:auto;">
                             <b style="font-weight:450;">Campaign 3<br/></b>
                             <b style="font-weight: 400; color:orange;">Contacted</b>
                           </div>
                           <div id="alert{{ item['channel_id'] }}" class="tab-pane fade">
                             <b style="font-weight:450;">Followers<br/></b>
-                            <b style="font-weight:400; color:red;">60 000 00</b><br/>
-                            <hr style="height: 0px; margin:0px;">
+                            <b style="font-weight:400; color:red;">{{ item['alert_followers'] }}</b>
+                            <hr style="height:0px; margin:auto;">
+                            <b style="font-weight:450;">Avg Views/video<br/></b>
+                            <b style="font-weight: 400; color:red;">{{ item['alert_views'] }}
+                            </b>
+                            <hr style="height:0px; margin:auto;">
                             <b style="font-weight:450;">Avg Likes/video<br/></b>
-                            <b style="font-weight: 400; color:red;">80 000
-                            </b><br />
-                            <hr style="height: 0px; margin:0px;">
+                            <b style="font-weight: 400; color:red;">{{ item['alert_likes'] }}
+                            </b>
+                            <hr style="height:0px; margin:auto;">
                             <b style="font-weight:450;">Avg Comments<br/></b>
-                            <b style="font-weight: 400; color:red;">5 000</b>
+                            <b style="font-weight: 400; color:red;">{{ item['alert_comments'] }}</b>
                           </div>
                         </div>
                       </div>
