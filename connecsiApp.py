@@ -176,7 +176,7 @@ def saveBrand():
                   "subject": "Welcome To Connecsi",
                   "message": "Hello User welcome to Connecsi"
                 }
-                user_id = 4
+                user_id = 1
                 type = 'brand'
                 url = base_url + 'Messages/sentWelcomeEmail/' + str(user_id) + '/' + type
                 try:
