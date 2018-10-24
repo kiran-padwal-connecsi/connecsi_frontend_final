@@ -172,7 +172,8 @@
           </form>
           <div class="container contents" id="wrapper">
             {% for item in data['data'] %}
-            <div class="row ">
+            <div class="lazy">
+            <div class="row">
               <div>
                 <table cellspacing="1" border="solid 1px #E1DEDD;">
                   <tr>
@@ -287,6 +288,7 @@
                   </tr>
                 </table>
               </div>
+            </div>
             </div>
             <br>
             {% endfor %}
@@ -595,18 +597,18 @@ function createAlert(channel_id,followers,views,likes,comments) {
 }
 </script>
 <script>
-window.onscroll = function() {myFunction()};
+<!--window.onscroll = function() {myFunction()};-->
 
-var header = document.getElementById("myHeader");
-var sticky = header.offsetTop;
+<!--var header = document.getElementById("myHeader");-->
+<!--var sticky = header.offsetTop;-->
 
-function myFunction() {
-  if (window.pageYOffset > sticky) {
-    header.classList.add("sticky");
-  } else {
-    header.classList.remove("sticky");
-  }
-}
+<!--function myFunction() {-->
+  <!--if (window.pageYOffset > sticky) {-->
+    <!--header.classList.add("sticky");-->
+  <!--} else {-->
+    <!--header.classList.remove("sticky");-->
+  <!--}-->
+<!--}-->
 </script>
 <!--<script>-->
 <!--$(document).ready(function(){-->
@@ -622,4 +624,16 @@ function myFunction() {
 <!--});-->
 <!--});-->
 <!--</script>-->
+<script>
+  $(document).ready(function () {
+        <!--alert('lazy');-->
+        $(window).lazyScript({
+        selectorClass: 'lazy',
+        callback: jQuery.noop,
+        threshold: 0,
+        scrollInterval: 500
+        });
+        });
+
+</script>
 {% endblock %}

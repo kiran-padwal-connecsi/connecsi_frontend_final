@@ -124,18 +124,20 @@
 <script src="{{ url_for('static', filename='app-assets/js/inbox.js') }}" type="text/javascript"></script>
 
 <script src="{{ url_for('static', filename='Jquery-Pagination/js/pagination.js') }}"></script>
+<script src="{{ url_for('static', filename='jquery-lazyloading/jquery.lazyscript.js') }}"></script>
+
 
 <!--<script type="text/javascript" src="http://materializecss.com/extras/noUiSlider/nouislider.js"></script>-->
 <script>
     $( document ).ready(function() {
 
-       $("#tab").pagination({
-           items: 30,
-           contents: 'contents',
-           previous: 'Previous',
-           next: 'Next',
-           position: 'bottom'
-       });
+       <!--$("#tab").pagination({-->
+           <!--items: 30,-->
+           <!--contents: 'contents',-->
+           <!--previous: 'Previous',-->
+           <!--next: 'Next',-->
+           <!--position: 'bottom'-->
+       <!--});-->
 
         //avtar-img preview start
         $("#profile_pic_fileinp").change(function() {
@@ -215,6 +217,11 @@
         $('.nav-item a').filter(function(){return this.href==location.href}).parent().addClass('active').siblings().removeClass('active').parents("li").addClass('open');
 
      });
+</script>
+<script>
+
+
+
 </script>
 <script>
 function onLoad() {
