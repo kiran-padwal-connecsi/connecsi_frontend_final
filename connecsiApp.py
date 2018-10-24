@@ -468,7 +468,7 @@ def searchInfluencers():
             try:
                 payload = {
                     "category_id": "",
-                    "country": "",
+                    "country": "US",
                     "min_lower": 0,
                     "max_upper": 1000000,
                     "sort_order": "High To Low"
