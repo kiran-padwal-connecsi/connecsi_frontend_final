@@ -40,7 +40,7 @@
     </style>
 
 </head>
-<div class="sticky-top" id="accordion">
+<div class="sticky-bottom" id="accordion">
   <div class="card" >
     <div id="influencerSearchPanel"  data-parent="#accordion">
       <div class="card-body" >
@@ -141,7 +141,7 @@
           <div class="row" style="margin-left: 2%;">
             <div class="col-xl-4 col-lg-4 col-md-4 mb-1">
               {% if data['data'] %}
-              <button type="button"  style="background-color: purple; margin-left: 2%; color:white; border-radius: 10px; font-size:15px;">Export CSV</button>
+              <button type="button" data-toggle="tooltip" title="Feature Comming Soon..." style="background-color: purple; margin-left: 2%; color:white; border-radius: 10px; font-size:15px;">Export CSV</button>
               {% else %}
               <!--<button type="button"  style="background-color: purple; margin-left: 2%; color:white; border-radius: 10px; font-size:15px;">Export CSV</button>-->
               {% endif %}
@@ -342,14 +342,14 @@
     let lineChart{{ item['linechart_id'] }} = new Chart(CHART{{ item['linechart_id'] }}, {
         type: 'line',
         data: {
-            labels: ["0", "1", "2", "3", "4", "5", "6"],
+            labels: ["May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov"],
             datasets: [
                 {
                     label: "Youtube",
                     fill: true,
-                    backgroundColor: "rgb(255, 0, 0,0.2)",
+                    backgroundColor: "rgb(255, 0, 0,0.1)",
                     lineTension: 0.1,
-                    borderColor: "red",
+                    borderColor: "rgb(255, 0, 0,0.5)",
                     borderCapStyle: 'butt',
                     borderDash: [],
                     borderDashOffset: 0.0,
@@ -367,8 +367,8 @@
                 },         {
                     label: "Twitter",
                     fill: true,
-                    backgroundColor: "rgb(0, 255, 255,0.2)",
-                    borderColor: "cyan",
+                    backgroundColor: "rgb(0, 255, 255,0.1)",
+                    borderColor: "rgb(0, 255, 255,0.5)",
                     borderCapStyle: 'butt',
                     borderDash: [],
                     borderDashOffset: 0.0,
