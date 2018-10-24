@@ -627,13 +627,18 @@ function createAlert(channel_id,followers,views,likes,comments) {
 <script>
   $(document).ready(function () {
         <!--alert('lazy');-->
+        <!--$(".lazy").hide();-->
+        <!--$(".lazy").addClass("loader");-->
         $(window).lazyScript({
         selectorClass: 'lazy',
         callback: jQuery.noop,
         threshold: 0,
         scrollInterval: 500
         });
-        });
+
+
+   });
+
 
 </script>
 {% endblock %}
