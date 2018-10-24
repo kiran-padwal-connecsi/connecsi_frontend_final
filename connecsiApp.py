@@ -1104,7 +1104,8 @@ def addToFavInfList(channel_id):
             response = requests.post(url=url)
             # data = response.json()
             flash("Added to Favorites List", 'success')
-            return influencerFavoritesList()
+            return searchInfluencers()
+            # return ''
         except:
             pass
             flash("Could not be added to Favorites List", 'danger')
