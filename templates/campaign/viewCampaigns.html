@@ -14,7 +14,8 @@
                 <tr>
                     <th scope="col"><b style="font-weight: 500; font-size:16px;">Campaign</b></th>
                     <th scope="col"><b style="font-weight: 500; font-size:16px;">Status</b></th>
-                    <th scope="col"><b style="font-weight: 500; font-size:16px;">Period</b></th>
+                    <th scope="col"><b style="font-weight: 500; font-size:16px;">Start</b></th>
+                    <th scope="col"><b style="font-weight: 500; font-size:16px;">End</b></th>
                     <th scope="col"><b style="font-weight: 500; font-size:16px;">Channels</b></th>
                     <th scope="col"><b style="font-weight: 500; font-size:16px;">Countries</b></th>
                     <th scope="col"><b style="font-weight: 500; font-size:16px;">Influencers</b></th>
@@ -27,7 +28,8 @@
                 <tr>
                     <td><a href="/viewCampaignDetails/{{ item['campaign_id'] }}">{{ item['campaign_name'] }}</a></td>
                     <td>Cell</td>
-                    <td>{{ item['from_date'] }}- {{ item['to_date'] }}</td>
+                    <td>{{ item['from_date'] }}</td>
+                    <td>{{ item['to_date'] }}</td>
                     <td>
                         {% set channels = item['channels'].split(',') %}
                         {% for channel in channels %}

@@ -1,27 +1,226 @@
 {% extends 'dashboard_layout_new.html' %}
 {{ super() }}
 {% block body %}
-<div class="row">
-    <div class="card-body">
-        <div class="card-block">
-            <div class="row">
-                <div class="col-12">
-                    <div class="form-group">
-                        <!-- Single Button Dropdown -->
-                        <div class="btn-group mr-1 mb-1">
-                            <button type="button" class="gradient-mint btn shadow-z-4 btn-min-width dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">Search</button>
-                            <div class="dropdown-menu">
-                                <a class="dropdown-item" href="/searchInfluencers">Influencers</a>
-                                <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="#">Classified Ads</a>
+<style>
+    .quotes {display: none;}
+    .quotes1 {display: none;}
+    .quotes2 {display: none;}
+    .quotes3 {display: none;}
+</style>
+<div class="card">
+    <div class="card-body" >
+        <div class="row" style="justify-content: center; margin:2%;">
+            <div class="col-xl-12 col-lg-12  col-md-12 col-12">
+                <div class="row">
+                    <div class="card-body">
+                        <div class="card-block">
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="form-group" style="text-align:center;">
+                                        <!-- Single Button Dropdown -->
+                                        <div class="btn-group mr-1 mb-1">
+                                            <button type="button" class="btn btn-min-width dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true" style="background-color:#77C4CD  ">Search</button>
+                                            <div class="dropdown-menu">
+                                                <a class="dropdown-item" href="/searchInfluencers">Influencers</a>
+                                                <div class="dropdown-divider"></div>
+                                                <a class="dropdown-item" href="#">Classified Ads</a>
+                                            </div>
+                                        </div>
+                                        <div class="btn-group mr-1 mb-1">
+                                            <button type="button" class="btn btn-min-width dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true" style="background-color:#F13C8B  ;">Create</button>
+                                            <div class="dropdown-menu">
+                                                <a class="dropdown-item" href="#">Campaigns</a>
+                                                <div class="dropdown-divider"></div>
+                                                <a class="dropdown-item" href="#">Classified Ads</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                        <div class="btn-group mr-1 mb-1">
-                            <button type="button" class="gradient-mint btn shadow-z-4 btn-min-width dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">Create</button>
-                            <div class="dropdown-menu">
-                                <a class="dropdown-item" href="#">Campaigns</a>
-                                <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="#">Classified Ads</a>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xl-3 col-lg-6 col-md-6 col-12">
+                        <div class="card shadow" style="background-color:#88EAED  ;padding-top:30px; padding-bottom:50px;">
+                            <div class="card-body">
+                                <div class="card-block pt-2 pb-0">
+                                    <div class="media">
+                                        <div class="media-body white text-center quotes" style="padding:top:30px;">
+                                            <span style="font-size:30px; ">5</span>
+                                            <br>
+                                            <Span>Active Campaigns</Span>
+                                        </div>
+                                        <div class="media-body white text-center quotes" style="padding:top:30px;">
+                                            <span style="font-size:30px; ">10</span>
+                                            <br>
+                                            <Span>New Campaigns</Span>
+                                        </div>
+                                        <div class="media-body white text-center quotes" style="padding:top:30px;">
+                                            <span style="font-size:30px; ">4</span>
+                                            <br>
+                                            <Span>Completed Campaigns</Span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-3 col-lg-6 col-md-6 col-12">
+                        <div class="card shadow" style="background-color:#F49347    ;padding-top:30px; padding-bottom:50px;">
+                            <div class="card-body">
+                                <div class="card-block pt-2 pb-0">
+                                    <div class="media">
+                                        <div class="media-body white text-center quotes1" style="padding:top:30px;">
+                                            <span style="font-size:30px; ">25</span>
+                                            <br>
+                                            <Span>Active Partners</Span>
+                                        </div>
+                                        <div class="media-body white text-center quotes1" style="padding:top:30px;">
+                                            <span style="font-size:30px; ">50</span>
+                                            <br>
+                                            <Span>Favorites</Span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-3 col-lg-6 col-md-6 col-12">
+                        <div class="card shadow" style="background-color:#4CD63B   ;padding-top:30px; padding-bottom:50px;">
+                            <div class="card-body">
+                                <div class="card-block pt-2 pb-0">
+                                    <div class="media">
+                                        <div class="media-body white text-center quotes2" style="padding:top:30px;">
+                                            <span style="font-size:30px; ">$ 12 000</span>
+                                            <br>
+                                            <Span>Spent this Month</Span>
+                                        </div>
+                                        <div class="media-body white text-center quotes2" style="padding:top:30px;">
+                                            <span style="font-size:30px; ">$ 4 000</span>
+                                            <br>
+                                            <Span>Budget in Hand</Span>
+                                        </div>
+                                        <div class="media-body white text-center quotes2" style="padding:top:30px;">
+                                            <span style="font-size:30px; ">$ 25 000</span>
+                                            <br>
+                                            <Span>Total Budget</Span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-3 col-lg-6 col-md-6 col-12">
+                        <div class="card shadow" style="background-color:#F571A5    ;padding-top:30px; padding-bottom:50px;">
+                            <div class="card-body">
+                                <div class="card-block pt-2 pb-0">
+                                    <div class="media">
+                                        <div class="media-body white text-center quotes3" style="padding:top:30px;">
+                                            <span style="font-size:30px; ">$ 20 000</span>
+                                            <br>
+                                            <Span>Revenue</Span>
+                                        </div>
+                                        <div class="media-body white text-center quotes3" style="padding:top:30px;">
+                                            <span style="font-size:30px; ">4000</span>
+                                            <br>
+                                            <Span>New Users</Span>
+                                        </div>
+                                        <div class="media-body white text-center quotes3" style="padding:top:30px;">
+                                            <span style="font-size:30px; ">5000</span>
+                                            <br>
+                                            <Span>New Followers</Span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <br>
+                <div class="row">
+                    <div class="col-xl-6 col-lg-6 col-md-6 mb-1">
+                        <div class="table-responsive shadow-sm">
+                            <table class="table" style="height:500px;" cellspacing="0">
+                                <tbody>
+                                <tr>
+                                    <td colspan="4" style="background-color:#EC8D96 ; color:white; text-align:center;">Top 10 Influencers </td>
+                                </tr>
+                                <tr style="background-color:#EC8D96 ; color:white;">
+                                    <td scope="col"></td>
+                                    <td scope="col">Influencers</td>
+                                    <td scope="col">Channels</td>
+                                    <td scope="col">Engagemnets</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">1</th>
+                                    <td><img src="static/app-assets/img/portrait/avatars/avatar-08.png" class="rounded-circle img-border gradient-summer" height="42" width="42" alt="Card image">Pew Dew Pie </td>
+                                    <td><a href="#" class="fa fa-youtube red"></a></td>
+                                    <td>25%</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">2</th>
+                                    <td><img src="static/app-assets/img/portrait/avatars/avatar-08.png" class="rounded-circle img-border gradient-summer" height="42" width="42" alt="Card image">T Series </td>
+                                    <td><a href="#" class="fa fa-youtube"></a></td>
+                                    <td>23%</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">3</th>
+                                    <td><img src="static/app-assets/img/portrait/avatars/avatar-08.png" class="rounded-circle img-border gradient-summer" height="42" width="42" alt="Card image">Pew Dew Pie </td>
+                                    <td><a href="#" class="fa fa-twitter blue"></a></td>
+                                    <td>14%</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">4</th>
+                                    <td><img src="static/app-assets/img/portrait/avatars/avatar-08.png" class="rounded-circle img-border gradient-summer" height="42" width="42" alt="Card image">Pew De2 </td>
+                                    <td><a href="#" class="fa fa-youtube red"></a></td>
+                                    <td>13%</td>
+                                </tr> <tr>
+                                    <th scope="row">5</th>
+                                    <td><img src="static/app-assets/img/portrait/avatars/avatar-08.png" class="rounded-circle img-border gradient-summer" height="42" width="42" alt="Card image">Pew Dew Pie </td>
+                                    <td><a href="#" class="fa fa-youtube red"></a></td>
+                                    <td>12.5%</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">6</th>
+                                    <td><img src="static/app-assets/img/portrait/avatars/avatar-08.png" class="rounded-circle img-border gradient-summer" height="42" width="42" alt="Card image">Dew Pie </td>
+                                    <td><a href="#" class="fa fa-facebook blue"></a></td>
+                                    <td>12%</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">7</th>
+                                    <td><img src="static/app-assets/img/portrait/avatars/avatar-08.png" class="rounded-circle img-border gradient-summer" height="42" width="42" alt="Card image">Pew Pie </td>
+                                    <td><a href="#" class="fa fa-youtube red"></a></td>
+                                    <td>11%</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">8</th>
+                                    <td><img src="static/app-assets/img/portrait/avatars/avatar-08.png" class="rounded-circle img-border gradient-summer" height="42" width="42" alt="Card image">Tseries</td>
+                                    <td><a href="#" class="fa fa-youtube red"></a></td>
+                                    <td>9%</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">9</th>
+                                    <td><img src="static/app-assets/img/portrait/avatars/avatar-08.png" class="rounded-circle img-border gradient-summer" height="42" width="42" alt="Card image">Pew Pie </td>
+                                    <td><a href="#" class="fa fa-youtube red"></a></td>
+                                    <td>8%</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">10</th>
+                                    <td><img src="static/app-assets/img/portrait/avatars/avatar-08.png" class="rounded-circle img-border gradient-summer" height="42" width="42" alt="Card image">Pew Dew Pie </td>
+                                    <td><a href="#" class="fa fa-youtube red"></a></td>
+                                    <td>5%</td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="col-xl-6 col-lg-6 col-md-6 mb-1">
+                        <div class="col-md-12 d-flex justify-content-center align-items-center white" style="background-color: #4a90e2;margin-bottom:0%;">
+                            Campaigns By Channels
+                        </div>
+                        <div class="card">
+                            <div id="chart" class="ct-chart shadow ct-major-tenth" style="height:400px;">
                             </div>
                         </div>
                     </div>
@@ -30,86 +229,105 @@
         </div>
     </div>
 </div>
-<div class="row">
-    <div class="col-xl-3 col-lg-6 col-md-6 col-12">
-        <div class="card gradient-blackberry">
-            <div class="card-body">
-                <div class="card-block pt-2 pb-0">
-                    <div class="media">
-                        <div class="media-body white text-left">
-                            <h3 class="font-large-1 mb-0">$2156</h3>
-                            <span>Total Tax</span>
-                        </div>
-                        <div class="media-right white text-right">
-                            <i class="icon-pie-chart font-large-1"></i>
-                        </div>
-                    </div>
-                </div>
-                <div id="Widget-line-chart" class="height-75 WidgetlineChart WidgetlineChartshadow mb-2">
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="col-xl-3 col-lg-6 col-md-6 col-12">
-        <div class="card gradient-ibiza-sunset">
-            <div class="card-body">
-                <div class="card-block pt-2 pb-0">
-                    <div class="media">
-                        <div class="media-body white text-left">
-                            <h3 class="font-large-1 mb-0">$1567</h3>
-                            <span>Total Cost</span>
-                        </div>
-                        <div class="media-right white text-right">
-                            <i class="icon-bulb font-large-1"></i>
-                        </div>
-                    </div>
-                </div>
-                <div id="Widget-line-chart1" class="height-75 WidgetlineChart WidgetlineChartshadow mb-2">
-                </div>
 
-            </div>
-        </div>
-    </div>
 
-    <div class="col-xl-3 col-lg-6 col-md-6 col-12">
-        <div class="card gradient-green-tea">
-            <div class="card-body">
-                <div class="card-block pt-2 pb-0">
-                    <div class="media">
-                        <div class="media-body white text-left">
-                            <h3 class="font-large-1 mb-0">$4566</h3>
-                            <span>Total Sales</span>
-                        </div>
-                        <div class="media-right white text-right">
-                            <i class="icon-graph font-large-1"></i>
-                        </div>
-                    </div>
-                </div>
-                <div id="Widget-line-chart2" class="height-75 WidgetlineChart WidgetlineChartshadow mb-2">
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="col-xl-3 col-lg-6 col-md-6 col-12">
-        <div class="card gradient-pomegranate">
-            <div class="card-body">
-                <div class="card-block pt-2 pb-0">
-                    <div class="media">
-                        <div class="media-body white text-left">
-                            <h3 class="font-large-1 mb-0">$8695</h3>
-                            <span>Total Earning</span>
-                        </div>
-                        <div class="media-right white text-right">
-                            <i class="icon-wallet font-large-1"></i>
-                        </div>
-                    </div>
-                </div>
-                <div id="Widget-line-chart3" class="height-75 WidgetlineChart WidgetlineChartshadow mb-2">
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
+<script src="//cdn.jsdelivr.net/chartist.js/latest/chartist.min.js"></script>
+<link href="//cdn.jsdelivr.net/chartist.js/latest/chartist.min.css" rel="stylesheet" type="text/css" />
+
+<script>
+    var chart = new Chartist.Pie('#chart', {
+  series: [20, 10, 30, 40]
+}, {
+  donut: true,
+  donutWidth: 50,
+  startAngle: 270,
+  total: 200,
+  showLabel: true
+});
+
+chart.on('draw', function() {
+
+  var chartEl = $('.ct-chart-donut');
+  chartEl.removeAttr('style');
+  chartEl.height(chartEl.height() / 1);
+
+});
+</script>
+<script>
+    (function() {
+
+    var quotes = $(".quotes");
+    var quoteIndex = -1;
+
+    function showNextQuote() {
+        ++quoteIndex;
+        quotes.eq(quoteIndex % quotes.length)
+            .fadeIn(2000)
+            .delay(2000)
+            .fadeOut(2000, showNextQuote);
+    }
+
+    showNextQuote();
+
+})();
+
+</script>
+<script>
+    (function() {
+
+    var quotes = $(".quotes1");
+    var quoteIndex = -1;
+
+    function showNextQuote() {
+        ++quoteIndex;
+        quotes.eq(quoteIndex % quotes.length)
+            .fadeIn(2000)
+            .delay(2000)
+            .fadeOut(2000, showNextQuote);
+    }
+
+    showNextQuote();
+
+})();
+
+</script>
+<script>
+    (function() {
+
+    var quotes = $(".quotes2");
+    var quoteIndex = -1;
+
+    function showNextQuote() {
+        ++quoteIndex;
+        quotes.eq(quoteIndex % quotes.length)
+            .fadeIn(2000)
+            .delay(2000)
+            .fadeOut(2000, showNextQuote);
+    }
+
+    showNextQuote();
+
+})();
+
+</script>
+<script>
+    (function() {
+
+    var quotes = $(".quotes3");
+    var quoteIndex = -1;
+
+    function showNextQuote() {
+        ++quoteIndex;
+        quotes.eq(quoteIndex % quotes.length)
+            .fadeIn(2000)
+            .delay(2000)
+            .fadeOut(2000, showNextQuote);
+    }
+
+    showNextQuote();
+
+})();
+
+</script>
 <!--Statistics cards Ends-->
 {% endblock %}
-

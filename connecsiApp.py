@@ -468,7 +468,7 @@ def searchInfluencers():
             try:
                 payload = {
                     "category_id": "",
-                    "country": "US",
+                    "country": "PL",
                     "min_lower": 0,
                     "max_upper": 1000000,
                     "sort_order": "High To Low"
@@ -606,9 +606,9 @@ def viewCampaigns():
                 item.update({'region_name_list': region_name_list})
                 try:
                     string_from_date= datetime.datetime.strptime(item['from_date'], '%Y-%m-%d')
-                    string_from_date=string_from_date.strftime('%Y-%b-%d')
+                    string_from_date=string_from_date.strftime('%d-%b-%y')
                     string_to_date = datetime.datetime.strptime(item['to_date'], '%Y-%m-%d')
-                    string_to_date = string_to_date.strftime('%Y-%b-%d')
+                    string_to_date = string_to_date.strftime('%d-%b-%y')
                     item.update({'from_date':string_from_date})
                     item.update({'to_date': string_to_date})
                 except Exception as e:
