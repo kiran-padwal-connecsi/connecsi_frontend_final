@@ -421,6 +421,7 @@ def searchInfluencers():
                 except Exception as e:
                     print(e)
                 form_filters.update({'country_name':country_name})
+                print('last filters = ',form_filters)
                 payload = request.form.to_dict()
 
                 del payload['string_word']
@@ -436,7 +437,7 @@ def searchInfluencers():
                     url = base_url+'Youtube/searchChannels/'+channel
                     # print(url)
                     response = requests.post(url, json=payload)
-                    print(response.json())
+                    # print(response.json())
                     data = response.json()
                     linechart_id=1
                     for item in data['data']:
@@ -467,10 +468,10 @@ def searchInfluencers():
             print('i m here last')
             try:
                 payload = {
-                    "category_id": "",
+                    "category_id": "20",
                     "country": "PL",
                     "min_lower": 0,
-                    "max_upper": 1000000,
+                    "max_upper": 30000,
                     "sort_order": "High To Low"
                 }
                 url = base_url + 'Youtube/searchChannels/Youtube'
@@ -482,6 +483,7 @@ def searchInfluencers():
                     item.update({'linechart_id': linechart_id})
                     print(item)
                     linechart_id += 1
+                form_filters = {'channel': 'Youtube', 'string_word': 'Gaming', 'country': 'PL', 'min_lower': '0', 'max_upper': '30000', 'search_inf': '', 'sort_order': 'High To Low', 'country_name': 'Poland'}
             except:
                 pass
             return render_template('search/searchInfluencers.html', regionCodes=regionCodes_json,
