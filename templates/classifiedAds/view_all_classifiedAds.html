@@ -14,82 +14,52 @@
                     </a>
                 </div>
                 <div class="row" style="padding-top:1%;">
+                    {% for item in all_classified_data['data'] %}
                     <div class="col-xl-6 col-lg-6 col-md-6 mb-2">
-                        <div class="table-responsive">
-                        <table cellpadding="5"  style="border:1px black solid;">
-                            <tbody>
-                            <tr>
-                                <td rowspan="5"><img src="static/app-assets/img/portrait/avatars/avatar-08.png" height="150px" width="155px"></td>
-                                <td colspan="3" style="font-size:18px;">New Mobile Launch</td>
-                            </tr>
-                            <tr>
-                                <td><button type="button" style="font-size:10px;">Electronics &emsp;<i class="fa fa-times" ></i></button></td>
-                                <td><button type="button" style="font-size:10px;">Technology&emsp;<i class="fa fa-times"></i></button></td>
-                                <td><button type="button" style="font-size:10px;">Mobile&emsp;<i class="fa fa-times"></i></button></td>
-                            </tr>
-                            <tr>
-                                <td ><b style="font-size:15px;">Channels</b></td>
-                                <td><b style="font-size:15px;">Followers</b></td>
-                                <td><b style="font-size:15px;">Budget</b></td>
-                            </tr>
-                            <tr>
-                                <td><a href="#" target="_blank" class="fa fa-instagram pink" style="font-size:20px;"></a>
-                                    <a href="#" target="_blank" class="fa fa-youtube red" style="font-size:20px;"></a></td>
-                                <td style="font-size:12px;">20 000 - <br>
-                                    200 000
-                                </td>
-                                <td style="font-size:12px;">
-                                    $25000
-                                </td>
-                            </tr>
-                            <tr>
-                                <td colspan="3">
-                                    <button type="button"  style="font-size:12px; margin-left:35%; background-color:#7CE85F  ; color:white;"><a href="/viewClassifiedDetails">Details</a></button>
-                                </td>
-                            </tr>
-                            </tbody>
-                        </table>
+                        <div class="table-responsive shadow-sm" style="border:1px solid grey;">
+                            <table cellpadding="5">
+                                <tbody>
+                                <tr>
+                                    <td rowspan="5"><img src="static/app-assets/img/portrait/avatars/avatar-08.png" height="150px" width="155px"></td>
+                                    <td colspan="3" style="font-size:18px;">{{ item['classified_name'] }}</td>
+                                </tr>
+                                <tr>
+                                    <td><button type="button" class="btn-sm btn-primary" style="font-size:10px;">{{ item['video_cat_name'] }} &emsp;<i class="fa fa-times" ></i></button></td>
+                                </tr>
+                                <tr>
+                                    <td><b style="font-size:12px;">Channels</b></td>
+                                    <td><b style="font-size:12px;">Followers</b></td>
+                                    <td><b style="font-size:12px;">Budget</b></td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        {% set channels = item['channels'].split(',') %}
+                                        {% for channel in channels %}
+                                        {% if channel == 'youtube' %}
+                                        <a href="#" class="fa fa-youtube fa-lg red"></a>
+                                        {% elif channel == 'facebook' %}
+                                        <a href="#" class="fa fa-facebook fa-lg blue"></a>
+                                        {% elif channel == 'twitter' %}
+                                        <a href="#" class="fa fa-twitter fa-lg"></a>
+                                        {% elif channel == 'instagram' %}
+                                        <a href="#" class="fa fa-instagram fa-lg pink"></a>
+                                        {% endif %}
+                                        {% endfor %}
+                                    </td>
+                                    <td style="font-size:12px;">{{ item['min_lower_followers'] }} - {{ item['max_upper_followers'] }}</td>
+                                    <td style="font-size:12px;">{{ item['budget'] }}</td>
+                                </tr>
+                                <tr>
+                                    <td colspan="4">
+                                        <a href="/viewClassifiedDetails" type="button" class="btn-sm btn-primary" style="font-size:12px; margin-left:35%;">Details</a>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
                         </div>
                     </div>
-                    <div class="col-xl-6 col-lg-6 col-md-6 mb-2">
-                        <div class="table-responsive">
-                        <table cellpadding="5"  style="border:1px black solid;">
-                            <tbody>
-                            <tr>
-                                <td rowspan="5"><img src="static/app-assets/img/portrait/avatars/avatar-08.png" height="150px" width="155px"></td>
-                                <td colspan="3" style="font-size:18px;">New Mobile Launch</td>
-                            </tr>
-                            <tr>
-                                <td><button type="button" style="font-size:10px;">Electronics &emsp;<i class="fa fa-times" ></i></button></td>
-                                <td><button type="button" style="font-size:10px;">Technology&emsp;<i class="fa fa-times"></i></button></td>
-                                <td><button type="button" style="font-size:10px;">Mobile&emsp;<i class="fa fa-times"></i></button></td>
-                            </tr>
-                            <tr>
-                                <td ><b style="font-size:15px;">Channels</b></td>
-                                <td><b style="font-size:15px;">Followers</b></td>
-                                <td><b style="font-size:15px;">Budget</b></td>
-                            </tr>
-                            <tr>
-                                <td><a href="#" target="_blank" class="fa fa-instagram pink" style="font-size:20px;"></a>
-                                    <a href="#" target="_blank" class="fa fa-youtube red" style="font-size:20px;"></a></td>
-                                <td style="font-size:12px;">20 000 - <br>
-                                    200 000
-                                </td>
-                                <td style="font-size:12px;">
-                                    $25000
-                                </td>
-                            </tr>
-                            <tr>
-                                <td colspan="3">
-                                    <button type="button" style="font-size:12px; margin-left:35%; background-color:#7CE85F; color:white;"><a href="/viewClassifiedDetails">Details</a></button>
-                                </td>
-                            </tr>
-                            </tbody>
-                        </table>
-                        </div>
-                    </div>
+                    {% endfor %}
                 </div>
-
             </div>
         </div>
     </div>

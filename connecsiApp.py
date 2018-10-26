@@ -14,6 +14,7 @@ from flask_dance.contrib.twitter import make_twitter_blueprint, twitter
 # from flask_paginate import Pagination, get_page_parameter
 from flask_uploads import UploadSet, configure_uploads, IMAGES
 
+
 os.environ['OAUTHLIB_INSECURE_TRANSPORT'] = '1'
 # os.environ['OAUTHLIB_RELAX_TOKEN_SCOPE'] = '1'
 # os.environ['WERKZEUG_RUN_MAIN'] = 'true'
@@ -1245,10 +1246,25 @@ def saveClassified():
         flash('Unauthorized', 'danger')
 
 
-@connecsiApp.route('/viewAllClassifiedAds')
+@connecsiApp.route('/viewAllClassifiedAds',methods=['GET','POST'])
 @is_logged_in
 def viewAllClassifiedAds():
-    return render_template('classifiedAds/view_all_classifiedAds.html')
+    viewAllClassifiedAds.counter+=1
+    all_classified_data=''
+    print('view classified function',viewAllClassifiedAds.counter)
+    if viewAllClassifiedAds.counter==1:
+        user_id=session['user_id']
+        from templates.classifiedAds.classified import Classified
+        classifiedObj = Classified(user_id=user_id)
+        all_classified_data = classifiedObj.get_all_classifieds()
+        # exit()
+        viewAllClassifiedAds.counter = 0
+        return render_template('classifiedAds/view_all_classifiedAds.html',all_classified_data=all_classified_data)
+    else:
+        viewAllClassifiedAds.counter=0
+        return render_template('classifiedAds/view_all_classifiedAds.html',all_classified_data=all_classified_data)
+viewAllClassifiedAds.counter=0
+
 
 @connecsiApp.route('/viewClassifiedDetails')
 @is_logged_in
