@@ -485,7 +485,7 @@ $( document ).ready(function() {
 </style>
 
 <!-- Create alert Modal form-->
-<div class="modal fade" id="create_alert_modal" role="dialog" data-backdrop="false">
+<div class="modal fade" id="create_alert_modal" role="dialog"  data-backdrop="static">
   <div class="modal-dialog modal-sm">
     <div class="modal-content">
       <div class="modal-header alert-primary">
@@ -639,6 +639,12 @@ function createAlert(channel_id,followers,views,likes,comments) {
         scrollInterval: 500
         });
 
+
+<!--$('#create_alert_modal').on('shown', function () {-->
+    <!--$('body').on('wheel.modal mousewheel.modal', function () {return false;});-->
+<!--}).on('hidden', function () {-->
+    <!--$('body').off('wheel.modal mousewheel.modal');-->
+<!--});-->
 
    });
 

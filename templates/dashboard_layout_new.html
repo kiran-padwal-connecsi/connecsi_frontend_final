@@ -76,6 +76,17 @@
     height: 100%;
     display: block;
 }
+.modal-backdrop {
+  display: none !important;
+}
+body.modal-open {
+    // block scroll for mobile;
+    // causes underlying page to jump to top;
+    // prevents scrolling on all screens
+    overflow: auto;
+    position: fixed;
+    overflow-y: scroll !important;
+}
 
     </style>
 </head>
