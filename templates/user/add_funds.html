@@ -16,8 +16,17 @@
                                 <ul class="no-list-style">
                                     <li class="mb-2">
                                         <span class="text-bold-500 primary"><a><i class="icon-present font-small-3"></i>*Amount:</a></span>
-                                        <span class="display-block overflow-hidden"><input required type="number" class="form-control" name="amount" > </span>
+
+                                            <select name="currency" id="currency" style="border-radius:5px;">
+                                                <option value="USD">USD</option>
+                                                <option value="EUR">EUR</option>
+                                                <option value="GBP">GBP</option>
+                                                <option value="INR">INR</option>
+                                            </select>
+                                            <span class="display-block overflow-hidden" style="margin-left:3%;"><input required type="number" class="form-control" name="amount" > </span>
+
                                     </li>
+
                                     <li class="mb-2">
                                         <span class="text-bold-500 primary"><a><i class="icon-present font-small-3"></i>*Description:</a></span>
                                         <span class="display-block overflow-hidden"><textarea required class="form-control" name="description"></textarea> </span>
@@ -37,5 +46,5 @@
 </div>
 
 
-    {% endblock %}
+{% endblock %}
 

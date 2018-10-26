@@ -252,36 +252,36 @@
                       <td rowspan="4" style="border-right:solid 2px white;">
                         <div class="scroll">
                           <ul class="nav nav-tabs" style="background-color:#DFDEDE  ;">
-                            <li style="margin-left:3%; "><a data-toggle="tab" href="#status{{ item['channel_id'] }}" style="color:black;">Status<i class="fa fa-bullseye red"></i></a></li>&nbsp;&ensp;
-                            <li><a data-toggle="tab" href="#alert{{ item['channel_id'] }}" style="color:black;">Alert<i class="fa fa-bell black"></i></a></li>
+                            <li style="margin-left:3%; font-size:15px; font-weight:bold; "><a data-toggle="tab" href="#status{{ item['channel_id'] }}" style="color:black;">Status<i class="fa fa-bullseye red"></i></a></li>&nbsp;&ensp;
+                            <li style="font-size:15px; font-weight:bold; "><a data-toggle="tab" href="#alert{{ item['channel_id'] }}" style="color:black;">Alert<i class="fa fa-bell black"></i></a></li>
                           </ul>
 
                           <div class="tab-content">
                             <div id="status{{ item['channel_id'] }}" class="tab-pane fade show active">
-                              <b style="font-weight:450;">Campaign 1<br/></b>
-                              <b style="font-weight:400; color:orange;">Contacted</b>
+                              <b style="font-weight:450; font-size:15px;">Campaign 1<br/></b>
+                              <b style="font-weight:400; color:orange; font-size:15px;">Contacted</b>
                               <hr style="height:0px; margin:auto;">
-                              <b style="font-weight:450;">Campaign 2<br/></b>
-                              <b style="font-weight: 400; color:green;">Accepted
+                              <b style="font-weight:450; font-size:15px;">Campaign 2<br/></b>
+                              <b style="font-weight: 400; color:green; font-size:15px;">Accepted
                               </b>
                               <hr style="height:0px; margin:auto;">
-                              <b style="font-weight:450;">Campaign 3<br/></b>
-                              <b style="font-weight: 400; color:orange;">Contacted</b>
+                              <b style="font-weight:450; font-size:15px;">Campaign 3<br/></b>
+                              <b style="font-weight: 400; color:orange; font-size:15px;">Contacted</b>
                             </div>
                             <div id="alert{{ item['channel_id'] }}" class="tab-pane fade">
-                              <b style="font-weight:450;">Followers<br/></b>
-                              <b style="font-weight:400; color:red;">{{ item['alert_followers'] }}</b>
+                              <b style="font-weight:450; font-size:15px;">Followers<br/></b>
+                              <b style="font-weight:400;font-size:15px; color:red;">{{ item['alert_followers'] }}</b>
                               <hr style="height:0px; margin:auto;">
-                              <b style="font-weight:450;">Avg Views/video<br/></b>
-                              <b style="font-weight: 400; color:red;">{{ item['alert_views'] }}
+                              <b style="font-weight:450; font-size:15px;">Avg Views/video<br/></b>
+                              <b style="font-weight: 400; color:red; font-size:15px;">{{ item['alert_views'] }}
                               </b>
                               <hr style="height:0px; margin:auto;">
-                              <b style="font-weight:450;">Avg Likes/video<br/></b>
-                              <b style="font-weight: 400; color:red;">{{ item['alert_likes'] }}
+                              <b style="font-weight:450; font-size:15px;">Avg Likes/video<br/></b>
+                              <b style="font-weight: 400; color:red; font-size:15px;">{{ item['alert_likes'] }}
                               </b>
                               <hr style="height:0px; margin:auto;">
-                              <b style="font-weight:450;">Avg Comments<br/></b>
-                              <b style="font-weight: 400; color:red;">{{ item['alert_comments'] }}</b>
+                              <b style="font-weight:450; font-size:15px;">Avg Comments<br/></b>
+                              <b style="font-weight: 400; color:red; font-size:15px;">{{ item['alert_comments'] }}</b>
                             </div>
                           </div>
                         </div>
@@ -346,48 +346,50 @@
         type: 'line',
         data: {
             labels: ["May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov"],
-            datasets: [
-                {
-                    label: "Youtube",
-                    fill: true,
-                    backgroundColor: "rgb(255, 0, 0,0.1)",
-                    lineTension: 0.1,
-                    borderColor: "rgb(255, 0, 0,0.5)",
-                    borderCapStyle: 'butt',
-                    borderDash: [],
-                    borderDashOffset: 0.0,
-                    borderJoinStyle: 'miter',
-                    pointBorderColor: "rgba(75,192,192,1)",
-                    pointBackgroundColor: "#fff",
-                    pointBorderWidth: 1,
-                    pointHoverRadius: 5,
-                    pointHoverBackgroundColor: "rgba(75,192,192,1)",
-                    pointHoverBorderColor: "rgba(220,220,220,1)",
-                    pointHoverBorderWidth: 2,
-                    pointRadius: 1,
-                    pointHitRadius: 10,
-                    data: [65, 59, 80, 81, 56, 55, 40, 50],
-                },         {
-                    label: "Twitter",
-                    fill: true,
-                    backgroundColor: "rgb(0, 255, 255,0.1)",
-                    borderColor: "rgb(0, 255, 255,0.5)",
-                    borderCapStyle: 'butt',
-                    borderDash: [],
-                    borderDashOffset: 0.0,
-                    borderJoinStyle: 'miter',
-                    pointBorderColor: "rgba(75,72,192,1)",
-                    pointBackgroundColor: "#fff",
-                    pointBorderWidth: 1,
-                    pointHoverRadius: 5,
-                    pointHoverBackgroundColor: "rgba(75,72,192,1)",
-                    pointHoverBorderColor: "rgba(220,220,220,1)",
-                    pointHoverBorderWidth: 2,
-                    pointRadius: 1,
-                    pointHitRadius: 10,
-                    data: [100, 20, 60, 20, 80, 55, 90],
-                }
-            ]
+            datasets:[
+            {
+                label: "Youtube",
+                fill: true,
+                backgroundColor: "rgb(255, 0, 0,0.1)",
+                lineTension: 0.1,
+                borderColor: "rgb(255, 0, 0,0.5)",
+                borderCapStyle: 'butt',
+                borderDash: [],
+                borderWidth:1,
+                borderDashOffset: 0.0,
+                borderJoinStyle: 'miter',
+                pointBorderColor: "rgba(75,192,192,1)",
+                pointBackgroundColor: "#fff",
+                pointBorderWidth: 0.3,
+                pointHoverRadius: 2,
+                pointHoverBackgroundColor: "rgba(75,192,192,1)",
+                pointHoverBorderColor: "rgba(220,220,220,1)",
+                pointHoverBorderWidth: 1,
+                pointRadius: 1,
+                pointHitRadius: 10,
+                data: [65, 59, 80, 81, 56, 55, 40, 50],
+            },         {
+                label: "Twitter",
+                fill: true,
+                backgroundColor: "rgb(0, 255, 255,0.1)",
+                borderColor: "rgb(0, 255, 255,0.5)",
+                borderCapStyle: 'butt',
+                borderDash: [],
+                borderDashOffset: 0.0,
+                borderWidth: 1,
+                borderJoinStyle: 'miter',
+                pointBorderColor: "rgba(75,72,192,1)",
+                pointBackgroundColor: "#fff",
+                pointBorderWidth: 0.3,
+                pointHoverRadius: 2,
+                pointHoverBackgroundColor: "rgba(75,72,192,1)",
+                pointHoverBorderColor: "rgba(220,220,220,1)",
+                pointHoverBorderWidth: 1,
+                pointRadius: 1,
+                pointHitRadius: 10,
+                data: [100, 20, 60, 20, 80, 55, 90],
+            }
+        ]
         },
         options: {
             scales: {
