@@ -19,9 +19,9 @@
                             <div class="row">
                                 <div class="col-sm-6 col-md-6" >
                                     <div class="row">
-                                        <div class="col-sm-4"><label for="campaign_name">Campaign Name:</label><input  id="campaign_name" type="text" class="form-control" name="campaign_name"></div>
-                                        <div class="col-sm-4"><label for="from_date">From:</label><input  id="from_date" type="date" class="form-control" name="from_date"></div>
-                                        <div class="col-sm-4"><label for="to_date">To:</label><input  id="to_date" type="date" class="form-control" name="to_date"></div>
+                                        <div class="col-sm-4"><label for="campaign_name">Campaign Name:</label><input  id="campaign_name" type="text" class="form-control" name="campaign_name" required></div>
+                                        <div class="col-sm-4"><label for="from_date">From:</label><input  id="from_date" type="date" class="form-control" name="from_date" required></div>
+                                        <div class="col-sm-4"><label for="to_date">To:</label><input  id="to_date" type="date" class="form-control" name="to_date" required></div>
                                     </div>
                                     <br>
                                     <div class="row">
@@ -34,14 +34,14 @@
                                             </select>
                                         </div>
                                         <div class="col-sm-5">
-                                            <span class="text-bold-500 primary"><input type="number" class="form-control" name="budget" placeholder="Budget">
+                                            <span class="text-bold-500 primary"><input type="number" class="form-control" name="budget" placeholder="Budget" required>
                                             </span>
                                         </div>
                                         <div class="col-sm-4">
                                             <span class="text-bold-500 primary">
                                                 <div class="form-group">
                                                     <!--<label for="channels">Channels</label>-->
-                                                    <select class="form-control" id="channels" name="channels" multiple="multiple">
+                                                    <select class="form-control" id="channels" name="channels" multiple="multiple" required>
                                                         <option value="" disabled selected>Channels</option>
                                                         <option value="youtube">Youtube</option>
                                                         <option value="twitter">Twitter</option>
@@ -74,7 +74,7 @@
                                             <span class="text-bold-500 primary">
                                                 <div class="form-group">
                                                     <label for="country" class="text-bold-500 primary">Country</label>
-                                                    <select class="form-control" name="country" id="country" multiple>
+                                                    <select class="form-control" name="country" id="country" multiple required>
                                                         {% for item in regionCodes['data'] %}
                                                         <option value="{{ item['region_code'] }}">{{ item['country_name'] }}</option>
                                                         {% endfor %}
@@ -104,20 +104,20 @@
                                     <span class="text-bold-500 primary">
                                         <div class="form-group">
                                             <label for="videoCategories">Categories</label>
-                                            <select class="form-control" name="video_cat">
+                                            <select class="form-control" name="video_cat" required>
                                                 {% for item in videoCategories['data'] %}
                                                 <option value="{{ item['video_cat_id'] }}">{{ item['video_cat_name'] }}</option>
                                                 {% endfor %}
                                             </select>
                                         </div>
                                     </span>
-                                    <span class="text-bold-500 primary"> <input type="url" class="form-control" name="target_url" placeholder="Target URL"></span>
+                                    <span class="text-bold-500 primary"> <input type="url" class="form-control" name="target_url" placeholder="Target URL" required></span>
                                 </div>
                                 <div class="col-sm-6 col-md-6">
-                                    <label for="campaign_name">Description:</label><textarea class="form-control" rows="9" id="descritpion" name="campaign_description"></textarea>
+                                    <label for="campaign_name">Description:</label><textarea class="form-control" rows="9" id="descritpion" name="campaign_description" required></textarea>
                                     <br>
                                     <span class="text-bold-500 primary">
-                                        <select multiple id="arrangements" name="arrangements" class="form-control">
+                                        <select multiple id="arrangements" name="arrangements" class="form-control" required>
                                             <option value="" disabled selected>Arrangements / Content Type</option>
                                             <option value="Review">Review</option>
                                             <option value="Unboxing / Gameplay">Unboxing / Gameplay</option>
@@ -132,7 +132,7 @@
                                     </span>
                                     <br>
                                     <span class="text-bold-500 primary">
-                                        <select name="kpis" id="kpis" class="form-control">
+                                        <select name="kpis" id="kpis" class="form-control" required>
                                             <option disabled selected>KPIs</option>
                                             <option value="No of Clicks">No of Clicks</option>
                                             <option value="New Users">New Users</option>
