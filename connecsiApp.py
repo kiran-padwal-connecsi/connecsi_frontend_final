@@ -1175,6 +1175,12 @@ def viewAllClassifiedAds():
 def viewClassifiedDetails():
     return render_template('classifiedAds/viewClassifiedDetails.html')
 
+@connecsiApp.route('/reports')
+@is_logged_in
+def reports():
+    return render_template('reports/reports.html')
+
+
 ############################################## influencer Section###########################################################
 
 @connecsiApp.route('/inf_profile')
