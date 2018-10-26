@@ -2,7 +2,7 @@ import datetime
 from functools import wraps
 import json
 import time
-
+#
 import requests
 from flask import Flask, render_template, flash, redirect, url_for, session, request, logging,jsonify
 # from model.ConnecsiModel import ConnecsiModel
@@ -1127,11 +1127,14 @@ def influencerFavoritesList():
         url = base_url+'/Brand/getInfluencerFavList/'+str(user_id)
         response = requests.get(url=url)
         data = response.json()
+        # data = data.encode("utf-16")
+        data = u'\u0105\u015B\u0107'.encode('UTF-8')
         linechart_id = 1
         for item in data['data']:
             item.update({'linechart_id': linechart_id})
-            print(item)
+            # print(item)
             linechart_id += 1
+
         return render_template('partnerships/influencerFavoritesList.html',data=data),data
     except:
         pass
