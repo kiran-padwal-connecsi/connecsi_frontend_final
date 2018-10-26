@@ -1,0 +1,211 @@
+{% extends 'dashboard_layout_new.html' %}
+{{ super() }}
+{% block body %}
+
+
+
+<div class="row">
+    <div class="col-sm-12">
+        <div class="card">
+            <div class="row">
+                <div class="col-12">
+                    <div class="card-header">Create New Classified Ad</div>
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="card-block">
+                    <form class="form" name="classified_form" id="classified_form" method="POST" action="saveClassified">
+                        <div class="container-fluid">
+                            <div class="row">
+                                <div class="col-sm-6 col-md-6" >
+                                    <div class="row">
+                                        <div class="col-sm-4"><label for="campaign_name">Ad Name:</label><input  id="classified_name" type="text" class="form-control" name="campaign_name"></div>
+                                        <div class="col-sm-4"><label for="from_date">From:</label><input  id="from_date" type="date" class="form-control" name="from_date"></div>
+                                        <div class="col-sm-4"><label for="to_date">To:</label><input  id="to_date" type="date" class="form-control" name="to_date"></div>
+                                    </div>
+                                    <br>
+                                    <div class="row">
+                                        <div class="col-sm-3">
+                                            <select class="form-control" name="currency" id="currency">
+                                                <option value="USD">USD</option>
+                                                <option value="EUR">EUR</option>
+                                                <option value="GBP">GBP</option>
+                                                <option value="INR">INR</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-sm-5">
+                                            <span class="text-bold-500 primary"><input type="number" class="form-control" name="budget" placeholder="Budget">
+                                            </span>
+                                        </div>
+                                        <div class="col-sm-4">
+                                            <span class="text-bold-500 primary">
+                                                <div class="form-group">
+                                                    <!--<label for="channels">Channels</label>-->
+                                                    <select class="form-control" id="channels" name="channels" multiple="multiple">
+                                                        <option value="" disabled selected>Channels</option>
+                                                        <option value="youtube">Youtube</option>
+                                                        <option value="twitter">Twitter</option>
+                                                        <option value="instagram">Instagram</option>
+                                                        <option value="facebook">Facebook</option>
+                                                    </select>
+                                                </div>
+                                            </span>
+                                        </div>
+                                        <br>
+                                        <div class="row">
+                                            <Div class="col-sm-6">
+                                                <div class="container">
+                                                    <div class="form-group">
+                                                        <input  type="file" id="filecount" multiple="multiple" max="10">
+                                                    </div>
+                                                </div>
+                                                <script>
+                                                    $('#filecount').filestyle({
+                                                        input : false,
+                                                        buttonName : 'btn-danger',
+                                                        iconName : 'glyphicon glyphicon-folder-close'
+                                                    });
+                                                </script>
+                                            </Div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-sm-4">
+                                            <span class="text-bold-500 primary">
+                                                <div class="form-group">
+                                                    <label for="country" class="text-bold-500 primary">Country</label>
+                                                    <select class="form-control" name="country" id="country" multiple>
+                                                        {% for item in regionCodes['data'] %}
+                                                        <option value="{{ item['region_code'] }}">{{ item['country_name'] }}</option>
+                                                        {% endfor %}
+                                                     </select>
+                                                </div>
+                                            </span>
+                                        </div>
+                                        <div class="col-sm-8">
+                                            <span class="text-bold-500 primary">
+                                                <div class="form-field col s7">
+                                                    <div class="form-group">
+                                                      <p>
+                                                        <label>Followers range:</label>
+                                                      </p>
+                                                      <div id="add_campaign_followers_slider" style="height:10px; width: 190px; border-radius: 55px;" ></div>
+                                                    </div>
+                                                    <div class="float-left">Min Followers : </div>
+                                                    <div id="lower-value" ></div>
+                                                    <div class="float-left">Max Followers : </div>
+                                                    <div id="upper-value"></div>
+                                                    <input type="hidden" name="min_lower" value="" id="min_lower">
+                                                    <input type="hidden" name="max_upper" value="" id="max_upper">
+                                                </div>
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <span class="text-bold-500 primary">
+                                        <div class="form-group">
+                                            <label for="videoCategories">Categories</label>
+                                            <select class="form-control" name="video_cat">
+                                                {% for item in videoCategories['data'] %}
+                                                <option value="{{ item['video_cat_id'] }}">{{ item['video_cat_name'] }}</option>
+                                                {% endfor %}
+                                            </select>
+                                        </div>
+                                    </span>
+                                    <span class="text-bold-500 primary"> <input type="url" class="form-control" name="target_url" placeholder="Target URL"></span>
+                                </div>
+                                <div class="col-sm-6 col-md-6">
+                                    <label for="campaign_name">Description:</label><textarea class="form-control" rows="9" id="descritpion" name="classified_description"></textarea>
+                                    <br>
+                                    <span class="text-bold-500 primary">
+                                        <select multiple id="arrangements" name="arrangements" class="form-control">
+                                            <option value="" disabled selected>Arrangements / Content Type</option>
+                                            <option value="Review">Review</option>
+                                            <option value="Unboxing / Gameplay">Unboxing / Gameplay</option>
+                                            <option value="Shout out/Mention">Shout out/Mention</option>
+                                            <option value="giveaway">giveaway</option>
+                                            <option value='Video Intro/Outro'>video Intro/Outro</option>
+                                            <option value="Tutorial">Tutorial</option>
+                                            <option value="Banner placement / URL placement">Banner placement / URL placement</option>
+                                            <option value="Sponsorship">Sponsorship</option>
+                                            <option value="Other (Explain in description)">Other (Explain in description)</option>
+                                        </select>
+                                    </span>
+                                    <br>
+                                    <span class="text-bold-500 primary">
+                                        <select name="kpis" id="kpis" class="form-control">
+                                            <option disabled selected>KPIs</option>
+                                            <option value="No of Clicks">No of Clicks</option>
+                                            <option value="New Users">New Users</option>
+                                            <option value="Revenue Generated">Revenue Generated</option>
+                                        </select>
+                                    </span>
+                                </div>
+                            </div>
+                            <!--<div class="form-check">-->
+                                <!--<input type="checkbox" class="form-check-input" id="classifiedAds" name="is_classified_post">-->
+                                <!--<label class="form-check-label" for="classifiedAds">Post as Classified Ads</label>-->
+                            <!--</div>--><br>
+                            <button type="submit" id="saveclassified" class="btn btn-success"  style="margin-left: 45%">Save</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+$( document ).ready(function() {
+
+        // range slider starts
+        var nonLinearSlider = document.getElementById('add_campaign_followers_slider');
+        noUiSlider.create(nonLinearSlider, {
+	        connect: true,
+	        behaviour: 'tap',
+            start: [0,10000000],
+
+	        behaviour: 'tap-drag',
+	        tooltips: false,
+
+	        range: {
+		    // Starting at 500, step the value by 500,
+		    // until 4000 is reached. From there, step by 1000.
+		    'min': [ 0 ],
+		    <!--'10%': [ 500, 500 ],-->
+		    <!--'50%': [ 4000, 1000 ],-->
+		    'max': [ 1000000 ]
+	        },
+	        format: {
+                from: function(value) {
+                    return parseInt(value);
+                },
+            to: function(value) {
+                return parseInt(value);
+                }
+            }
+
+        });
+        var nodes = [
+	        document.getElementById('lower-value'), // 0
+	        document.getElementById('upper-value')  // 1
+        ];
+        // Display the slider value and how far the handle moved
+        // from the left edge of the slider.
+        nonLinearSlider.noUiSlider.on('update', function ( values, handle, unencoded, isTap, positions ) {
+	        nodes[handle].innerHTML = values[handle];
+        });
+        // range slider ends
+
+        //campaign save button click event
+        $("#saveclassified").click(function(){
+             var min_lower = $("#lower-value").text();
+             var max_upper = $("#upper-value").text();
+             <!--alert(min_lower);-->
+             <!--alert(max_upper);-->
+             $("#min_lower").val(min_lower);
+             $("#max_upper").val(max_upper);
+         });
+         // search button click event ends
+
+});
+</script>
+{% endblock %}

@@ -625,11 +625,11 @@ def viewCampaigns():
 
             print('campaign data',view_campaign_data)
             viewCampaigns.counter = 0
-            return render_template('campaign/viewCampaigns.html',view_campaign_data=view_campaign_data)
+            return render_template('campaign/viewCampaigns.html',view_campaign_data=view_campaign_data),view_campaign_data
         except Exception as e:
             flash('Data loaded','success')
         viewCampaigns.counter = 0
-        return render_template('campaign/viewCampaigns.html',view_campaign_data=view_campaign_data)
+        return render_template('campaign/viewCampaigns.html',view_campaign_data=view_campaign_data),view_campaign_data
     else:
          viewCampaigns.counter=0
          return ''
@@ -1154,16 +1154,96 @@ def createAlerts():
     if request.method == 'POST':
         payload = request.form.to_dict()
         print(payload)
+        # exit()
         try:
             url = base_url + '/Brand/createInfluencerAlerts/'+str(user_id)
             response = requests.put(url=url,json=payload)
             # data = response.json()
             flash("Created Alerts for Favorite Influencer", 'success')
-            return influencerFavoritesList()
+            return searchInfluencers()
         except:
             pass
             flash("Error in Creating Alerts", 'danger')
-            return influencerFavoritesList()
+            return searchInfluencers()
+
+@connecsiApp.route('/addClassified')
+@is_logged_in
+def addClassified():
+    addClassified.counter+=1
+    if addClassified.counter==1:
+        url_regionCodes = base_url + 'Youtube/regionCodes'
+        regionCodes_json = ''
+        try:
+            regionCodes_response = requests.get(url=url_regionCodes)
+            regionCodes_json = regionCodes_response.json()
+            print(regionCodes_json)
+        except:pass
+        url_videoCat = base_url + 'Youtube/videoCategories'
+        videoCat_json=''
+        try:
+            response_videoCat = requests.get(url=url_videoCat)
+            videoCat_json = response_videoCat.json()
+            print(videoCat_json)
+        except Exception as e:
+            print(e)
+        return render_template('classifiedAds/add_classifiedForm.html',regionCodes=regionCodes_json,videoCategories = videoCat_json)
+    else:
+        addClassified.counter=0
+        return ''
+addClassified.counter=0
+
+
+@connecsiApp.route('/saveClassified',methods=['POST'])
+@is_logged_in
+def saveClassified():
+    if request.method == 'POST':
+        payload = request.form.to_dict()
+        print(payload)
+        # exit()
+        channels = request.form.getlist('channels')
+        channels_string = ','.join(channels)
+        payload.update({'channels':channels_string})
+        regions = request.form.getlist('country')
+        regions_string = ','.join(regions)
+        payload.update({'regions':regions_string})
+        arrangements = request.form.getlist('arrangements')
+        arrangements_string = ','.join(arrangements)
+        payload.update({'arrangements': arrangements_string})
+
+        # is_classified_post = request.form.get('is_classified_post')
+        # print('is classified = ',is_classified_post)
+        try:
+            del payload['country']
+            # del payload['is_classified_post']
+        except:pass
+        # if is_classified_post == 'on':
+        #     payload.update({'is_classified_post':'TRUE'})
+        # else:
+        #     payload.update({'is_classified_post':'FALSE'})
+        print(payload)
+        # exit()
+#
+#         files = request.form.getlist('files')
+#         # files = request.files.getlist("files")
+#         print(files)
+#
+        user_id = session['user_id']
+        url = base_url + 'Classified/' + str(user_id)
+        print(url)
+        try:
+            response = requests.post(url=url, json=payload)
+            result_json = response.json()
+            print(result_json)
+            flash('saved Classified', 'success')
+            return viewAllClassifiedAds()
+        except Exception as e:
+            print(e)
+            flash('Classified didnt saved Please try again later','danger')
+            return addClassified()
+
+    else:
+        flash('Unauthorized', 'danger')
+
 
 @connecsiApp.route('/viewAllClassifiedAds')
 @is_logged_in
