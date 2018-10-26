@@ -625,11 +625,11 @@ def viewCampaigns():
 
             print('campaign data',view_campaign_data)
             viewCampaigns.counter = 0
-            return render_template('campaign/viewCampaigns.html',view_campaign_data=view_campaign_data),view_campaign_data
+            return render_template('campaign/viewCampaigns.html',view_campaign_data=view_campaign_data)
         except Exception as e:
             flash('Data loaded','success')
         viewCampaigns.counter = 0
-        return render_template('campaign/viewCampaigns.html',view_campaign_data=view_campaign_data),view_campaign_data
+        return render_template('campaign/viewCampaigns.html',view_campaign_data=view_campaign_data)
     else:
          viewCampaigns.counter=0
          return ''
@@ -658,6 +658,7 @@ def saveCampaign():
     if request.method == 'POST':
         payload = request.form.to_dict()
         print(payload)
+        # exit()
         channels = request.form.getlist('channels')
         channels_string = ','.join(channels)
         payload.update({'channels':channels_string})
@@ -689,13 +690,16 @@ def saveCampaign():
 #
         user_id = session['user_id']
         url = base_url + 'Campaign/' + str(user_id)
+        print(url)
         try:
             response = requests.post(url=url, json=payload)
             result_json = response.json()
             print(result_json)
             flash('saved Campaign', 'success')
             return viewCampaigns()
-        except:
+        except Exception as e:
+            print(e)
+            flash('campaign didnt saved Please try again later','danger')
             pass
     else:
         flash('Unauthorized', 'danger')
