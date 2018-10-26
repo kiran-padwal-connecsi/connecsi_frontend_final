@@ -390,7 +390,14 @@ def searchInfluencers():
             pass
 
         try:
-            template, favInfList_data = influencerFavoritesList()
+            user_id = session['user_id']
+            url = base_url + '/Brand/getInfluencerFavList/' + str(user_id)
+            response = requests.get(url=url)
+            favInfList_data = response.json()
+            linechart_id = 1
+            for item in favInfList_data['data']:
+                item.update({'linechart_id': linechart_id})
+                linechart_id += 1
         except Exception as e:
             print(e)
             pass
@@ -1121,24 +1128,20 @@ addToFavInfList.counter=0
 @connecsiApp.route('/influencerFavoritesList')
 @is_logged_in
 def influencerFavoritesList():
-    data=''
     try:
         user_id = session['user_id']
         url = base_url+'/Brand/getInfluencerFavList/'+str(user_id)
         response = requests.get(url=url)
         data = response.json()
-        # data = data.encode("utf-16")
-        data = u'\u0105\u015B\u0107'.encode('UTF-8')
         linechart_id = 1
         for item in data['data']:
             item.update({'linechart_id': linechart_id})
-            # print(item)
             linechart_id += 1
 
-        return render_template('partnerships/influencerFavoritesList.html',data=data),data
+        return render_template('partnerships/influencerFavoritesList.html',data=data)
     except:
         pass
-        return render_template('partnerships/influencerFavoritesList.html'),data
+        return render_template('partnerships/influencerFavoritesList.html')
 
 @connecsiApp.route('/createAlerts', methods=['POST'])
 @is_logged_in
