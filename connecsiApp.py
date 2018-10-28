@@ -1213,20 +1213,23 @@ def saveClassified():
 @connecsiApp.route('/viewAllClassifiedAds',methods=['GET','POST'])
 @is_logged_in
 def viewAllClassifiedAds():
-    all_classified_data=''
     user_id=session['user_id']
     from templates.classifiedAds.classified import Classified
     classifiedObj = Classified(user_id=user_id)
     all_classified_data = classifiedObj.get_all_classifieds()
-    # exit()
-    viewAllClassifiedAds.counter = 0
     return render_template('classifiedAds/view_all_classifiedAds.html',all_classified_data=all_classified_data)
 
 
-@connecsiApp.route('/viewClassifiedDetails')
+@connecsiApp.route('/viewClassifiedDetails/<string:classified_id>')
 @is_logged_in
-def viewClassifiedDetails():
-    return render_template('classifiedAds/viewClassifiedDetails.html')
+def viewClassifiedDetails(classified_id):
+    user_id=session['user_id']
+    from templates.classifiedAds.classified import Classified
+    classifiedObj = Classified(user_id=user_id,classified_id=classified_id)
+    classified_details = classifiedObj.get_classified_details()
+    print(classified_details)
+    return render_template('classifiedAds/viewClassifiedDetails.html',classified_details=classified_details)
+
 
 @connecsiApp.route('/reports')
 @is_logged_in

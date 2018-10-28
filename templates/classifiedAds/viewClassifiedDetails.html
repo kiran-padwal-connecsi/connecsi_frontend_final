@@ -19,20 +19,93 @@
                 <div class="row" style="margin-left:1%;">
                     <a href="/viewAllClassifiedAds">Back To List</a>
                 </div>
+                {% for item in classified_details['data'] %}
                 <div class="row" style="margin:2%; margin-left:35%; font-size:25px;">
-                    New Mobile Launch
+                    {{ item['classified_name'] }}
                 </div>
                 <div class="row" style="margin:1%;">
                     <div class="col-xl-5 col-lg-5 col-md-5 mb-1">
                         <img id="mainImage" style="border:3px solid grey"
-                             src="static/app-assets/img/portrait/avatars/avatar-08.png" height="400px" width="340x"/>
+                             src="static/app-assets/img/portrait/avatars/avatar-08.png" height="300px" width="340x"/>
                         <br />
                         <div id="divId" onclick="changeImageOnClick(event)">
                             <img class="imgStyle" src="static/app-assets/img/portrait/avatars/avatar-08.png" />
                             <img class="imgStyle" src="static/app-assets/img/portrait/avatars/avatar-08.png" />
                             <img class="imgStyle" src="static/app-assets/img/portrait/avatars/avatar-08.png "/>
                         </div>
-                        <script type="text/javascript">
+                        <button type="button" style="font-size:12px; margin-left:35%; margin-top:2%; background-color:#7CE85F; color:white;"><a href="#">Reply</a></button>
+                    </div>
+                    <div class="col-xl-7 col-lg-7 col-md-7 mb-1">
+                        Interested in:
+                        <table style="margin-top:5%;" cellpadding="10" cellspacing="15">
+                            <tr>
+                                <td><b style="font-size:16px;">Channels</b> <br>
+                                    {% set channels = item['channels'].split(',') %}
+                                        {% for channel in channels %}
+                                        {% if channel == 'youtube' %}
+                                        <a href="#" class="fa fa-youtube fa-lg red"></a>
+                                        {% elif channel == 'facebook' %}
+                                        <a href="#" class="fa fa-facebook fa-lg blue"></a>
+                                        {% elif channel == 'twitter' %}
+                                        <a href="#" class="fa fa-twitter fa-lg"></a>
+                                        {% elif channel == 'instagram' %}
+                                        <a href="#" class="fa fa-instagram fa-lg pink"></a>
+                                        {% endif %}
+                                        {% endfor %}
+                                </td>
+                                <td><b style="font-size:16px;">Countries</b> <br>
+                                    {% for region_name in item['region_name_list'] %}
+                                        {{ region_name }},
+                                    {% endfor %}
+                                </td>
+                                <td>
+                                    <b style="font-size:16px;">Period</b> <br>
+                                    {{ item['from_date'] }} - {{ item['to_date'] }}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><b style="font-size:16px;">Followers</b> <br>
+                                    {{ item['min_lower_followers'] }} - {{ item['max_upper_followers'] }}
+                                </td>
+                                <td><b style="font-size:16px;">Budget</b> <br>
+                                    {{ item['currency'] }} {{ item['budget'] }}
+                                </td>
+                                <td>
+                                    <b style="font-size:16px;">KPI</b> <br>
+                                    {{ item['kpis'] }}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><b style="font-size:16px;">Category</b> <br>
+                                    <button type="button" style="font-size:10px;">{{ item['video_cat_name'] }}</button>
+                                </td>
+                                <td><b style="font-size:16px;">Target URL</b> <br>
+                                    <i class="fa fa-link"></i><a href="{{ item['target_url'] }}" target="_blank">Target Url</a>
+                                </td>
+                                <td>
+                                    <b style="font-size:16px;">Content Type</b> <br>
+                                    {% set arrangements = item['arrangements'].split(',') %}
+                                        {% for content_type in arrangements %}
+                                    <button type="button" style="font-size:10px;">{{ content_type }}</button>
+                                    {% endfor %}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="3" rowspan="10" style="border-radius:2px; border: 1px #929591   solid;">
+                                    <b style="margin-left:30%;">Description</b><br>
+                                    {{ item['classified_description'] }}
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
 
         var images = document.getElementById("divId")
                              .getElementsByTagName("img");
@@ -62,69 +135,4 @@
             }
         }
     </script>
-<button type="button" style="font-size:12px; margin-left:35%; margin-top:2%; background-color:#7CE85F; color:white;"><a href="#">Reply</a></button>
-
-                    </div>
-                    <div class="col-xl-7 col-lg-7 col-md-7 mb-1">
-                        Interested in:
-                        <table style="margin-top:5%;" cellpadding="10" cellspacing="15">
-                            <tr>
-                                <td><b style="font-size:16px;">Channels</b> <br>
-                                    <a href="#" target="_blank" class="fa fa-facebook-official blue" style="font-size:20px;"></a>
-                                    <a href="#" target="_blank" class="fa fa-instagram pink" style="font-size:20px;"></a>
-                                </td>
-                                <td><b style="font-size:16px;">Countries</b> <br>
-                                    Aust, USA
-                                </td>
-                                <td>
-                                    <b style="font-size:16px;">Period</b> <br>
-                                    4 Mar18 - 31 Mar18
-                                </td>
-                            </tr>
-                            <tr>
-                                <td><b style="font-size:16px;">Followers</b> <br>
-                                    2500
-                                </td>
-                                <td><b style="font-size:16px;">Budget</b> <br>
-                                    $2500
-                                </td>
-                                <td>
-                                    <b style="font-size:16px;">KPI</b> <br>
-                                    Revenue
-                                </td>
-                            </tr>
-
-                            <tr>
-                                <td><b style="font-size:16px;">Category</b> <br>
-                                    <button type="button" style="font-size:10px;">Technology</button>
-                                    <button type="button" style="font-size:10px;">Mobile</button>
-
-                                </td>
-                                <td><b style="font-size:16px;">Target URL</b> <br>
-                                    <i class="fa fa-link"></i>
-                                </td>
-                                <td>
-                                    <b style="font-size:16px;">Content Type</b> <br>
-                                    <button type="button" style="font-size:10px;">Review</button>
-                                    <button type="button" style="font-size:10px;">Giveaway</button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td colspan="3" rowspan="10" style="border-radius:2px; border: 1px #929591   solid;">
-                                    <b style="margin-left:30%;">Description</b> <br>
-                                    Detailed Description in here<br>
-                                    Detailed Description in here<br>
-                                    Detailed Description in here<br>
-                                    Detailed Description in here<br>
-                                    Detailed Description in here<br>
-                                </td>
-                            </tr>
-                        </table>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
 {% endblock %}
