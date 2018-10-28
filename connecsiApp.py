@@ -15,6 +15,7 @@ from flask_dance.contrib.twitter import make_twitter_blueprint, twitter
 from flask_uploads import UploadSet, configure_uploads, IMAGES
 
 
+
 os.environ['OAUTHLIB_INSECURE_TRANSPORT'] = '1'
 # os.environ['OAUTHLIB_RELAX_TOKEN_SCOPE'] = '1'
 # os.environ['WERKZEUG_RUN_MAIN'] = 'true'
@@ -254,27 +255,22 @@ def admin():
 @connecsiApp.route('/profileView')
 @is_logged_in
 def profileView():
-    profileView.counter+=1
-    if profileView.counter==1:
-        title='Profile View'
-        type = session['type']
-        user_id = session['user_id']
-        if type == 'brand':
-            url = base_url + 'Brand/'+str(user_id)
-            try:
-                response = requests.get(url)
-                # print(response.json())
-                data_json = response.json()
-                print(data_json)
-                return render_template('user/user-profile-page.html', data=data_json, title=title)
-            except Exception as e:
-                print(e)
-        else:
-            table_name = 'users_inf'
+    title='Profile View'
+    type = session['type']
+    user_id = session['user_id']
+    if type == 'brand':
+        url = base_url + 'Brand/'+str(user_id)
+        try:
+            response = requests.get(url)
+            # print(response.json())
+            data_json = response.json()
+            print(data_json)
+            return render_template('user/user-profile-page.html', data=data_json, title=title)
+        except Exception as e:
+            print(e)
     else:
-        profileView.counter=0
-        return ''
-profileView.counter=0
+        table_name = 'users_inf'
+
 
 
 @connecsiApp.route('/editProfile')
@@ -356,124 +352,120 @@ def changePassword():
 @connecsiApp.route('/searchInfluencers',methods=['POST','GET'])
 @is_logged_in
 def searchInfluencers():
-    searchInfluencers.counter+=1
-    if searchInfluencers.counter==1:
-        url_regionCodes = base_url + 'Youtube/regionCodes'
-        regionCodes_json=''
-        videoCat_json=''
-        form_filters=''
-        country_name=''
-        view_campaign_data=''
-        data=''
-        favInfList_data=''
-        try:
-            response_regionCodes = requests.get(url=url_regionCodes)
-            regionCodes_json = response_regionCodes.json()
-            # print(regionCodes_json['data'])
-        except Exception as e:
-            print(e)
-        url_videoCat = base_url + 'Youtube/videoCategories'
-        try:
-            response_videoCat = requests.get(url=url_videoCat)
-            videoCat_json = response_videoCat.json()
-            # print(videoCat_json['data'])
-        except Exception as e:
-            print(e)
-        lookup_string = ''
-        for cat in videoCat_json['data']:
-            # print(cat['video_cat_name'])
-            lookup_string += ''.join(',' + cat['video_cat_name'])
-        lookup_string = lookup_string.replace('&', 'and')
-        try:
-            template, view_campaign_data = viewCampaigns()
-        except Exception as e:
-            print(e)
-            pass
+    user_id = session['user_id']
+    url_regionCodes = base_url + 'Youtube/regionCodes'
+    regionCodes_json=''
+    videoCat_json=''
+    form_filters=''
+    country_name=''
+    view_campaign_data=''
+    data=''
+    favInfList_data=''
+    try:
+        response_regionCodes = requests.get(url=url_regionCodes)
+        regionCodes_json = response_regionCodes.json()
+        # print(regionCodes_json['data'])
+    except Exception as e:
+        print(e)
 
-        try:
-            user_id = session['user_id']
-            url = base_url + '/Brand/getInfluencerFavList/' + str(user_id)
-            response = requests.get(url=url)
-            favInfList_data = response.json()
-            linechart_id = 1
-            for item in favInfList_data['data']:
-                item.update({'linechart_id': linechart_id})
-                linechart_id += 1
-        except Exception as e:
-            print(e)
-            pass
-        # print('fav list = ',favInfList_data['data'])
-        # for item in favInfList_data['data']:
-        #     print(item['channel_id'])
-        if request.method=='POST':
-            if 'search_inf' in request.form:
-                string_word = request.form.get('string_word')
-                print('string word =',string_word)
-                # exit()
-                category = string_word.replace('and','&')
-                print(category)
-                category_id=''
-                for cat in videoCat_json['data']:
-                    # print(cat['video_cat_name'])
-                    if cat['video_cat_name'] == category:
-                        print("category id = ",cat['video_cat_id'])
-                        category_id = cat['video_cat_id']
-                form_filters = request.form.to_dict()
-                print('post form filters =',form_filters)
-                url_country_name = base_url + 'Youtube/regionCode/'+form_filters['country']
-                try:
-                    response_country_name = requests.get(url=url_country_name)
-                    country_name_json = response_country_name.json()
-                    print(country_name_json['data'][0][1])
-                    country_name = country_name_json['data'][0][1]
-                except Exception as e:
-                    print(e)
-                form_filters.update({'country_name':country_name})
-                print('last filters = ',form_filters)
-                payload = request.form.to_dict()
+    url_videoCat = base_url + 'Youtube/videoCategories'
+    try:
+        response_videoCat = requests.get(url=url_videoCat)
+        videoCat_json = response_videoCat.json()
+    except Exception as e:
+        print(e)
 
-                del payload['string_word']
-                del payload['search_inf']
-                del payload['channel']
-                payload.update({'category_id': str(category_id)})
-                payload.update({'min_lower':payload.get('min_lower')})
-                payload.update({'max_upper':payload.get('max_upper')})
-                print(payload)
+    lookup_string = ''
+    for cat in videoCat_json['data']:
+        lookup_string += ''.join(',' + cat['video_cat_name'])
+    lookup_string = lookup_string.replace('&', 'and')
+    print('i m n search')
+    from templates.campaign.campaign import Campaign
+    campaignObj = Campaign(user_id=user_id)
+    view_campaign_data = campaignObj.get_all_campaigns()
+    print('i m n search')
+    try:
+        url = base_url + '/Brand/getInfluencerFavList/' + str(user_id)
+        response = requests.get(url=url)
+        favInfList_data = response.json()
+        linechart_id = 1
+        for item in favInfList_data['data']:
+            item.update({'linechart_id': linechart_id})
+            linechart_id += 1
+    except Exception as e:
+        print(e)
+        pass
+    print('i m n search before post method')
+    if request.method=='POST':
+        print('i m inside post')
+        if 'search_inf' in request.form:
+            string_word = request.form.get('string_word')
+            print('string word =',string_word)
+            # exit()
+            category = string_word.replace('and','&')
+            print(category)
+            category_id=''
+            for cat in videoCat_json['data']:
+                # print(cat['video_cat_name'])
+                if cat['video_cat_name'] == category:
+                    print("category id = ",cat['video_cat_id'])
+                    category_id = cat['video_cat_id']
+            form_filters = request.form.to_dict()
+            print('post form filters =',form_filters)
+            url_country_name = base_url + 'Youtube/regionCode/'+form_filters['country']
+            try:
+                response_country_name = requests.get(url=url_country_name)
+                country_name_json = response_country_name.json()
+                print(country_name_json['data'][0][1])
+                country_name = country_name_json['data'][0][1]
+            except Exception as e:
+                print(e)
+            form_filters.update({'country_name':country_name})
+            print('last filters = ',form_filters)
+            payload = request.form.to_dict()
 
-                try:
-                    channel = request.form.get('channel')
-                    url = base_url+'Youtube/searchChannels/'+channel
-                    # print(url)
-                    response = requests.post(url, json=payload)
-                    # print(response.json())
-                    data = response.json()
-                    linechart_id=1
-                    for item in data['data']:
-                        item.update({'linechart_id':linechart_id})
-                        print(item)
-                        linechart_id+=1
-                    # print(data)
-                    # search = False
-                    # q = request.args.get('page')
-                    # if q:
-                    #     search = True
-                    # page = request.args.get(get_page_parameter(), type=int, default=1)
-                    # pagination = Pagination(page=page, total=len(data['data']), search=search,
-                    #                         record_name='Influencers',per_page=5)
-                    # print(data)
+            del payload['string_word']
+            del payload['search_inf']
+            del payload['channel']
+            payload.update({'category_id': str(category_id)})
+            payload.update({'min_lower':payload.get('min_lower')})
+            payload.update({'max_upper':payload.get('max_upper')})
+            print(payload)
 
-                    # print(campaignsList)
-                    return render_template('search/searchInfluencers.html', regionCodes=regionCodes_json,
-                                           lookup_string=lookup_string, form_filters=form_filters,data=data,view_campaign_data=view_campaign_data
-                                           ,favInfList_data=favInfList_data)
-                except Exception as e:
-                    print(e)
-                    print('i m hee')
-                    return render_template('search/searchInfluencers.html', regionCodes=regionCodes_json,
-                                       lookup_string=lookup_string,form_filters=form_filters,data='',pagination='',view_campaign_data=view_campaign_data
-                                           ,favInfList_data=favInfList_data)
+            try:
+                channel = request.form.get('channel')
+                url = base_url+'Youtube/searchChannels/'+channel
+                # print(url)
+                response = requests.post(url, json=payload)
+                # print(response.json())
+                data = response.json()
+                linechart_id=1
+                for item in data['data']:
+                    item.update({'linechart_id':linechart_id})
+                    print(item)
+                    linechart_id+=1
+                # print(data)
+                # search = False
+                # q = request.args.get('page')
+                # if q:
+                #     search = True
+                # page = request.args.get(get_page_parameter(), type=int, default=1)
+                # pagination = Pagination(page=page, total=len(data['data']), search=search,
+                #                         record_name='Influencers',per_page=5)
+                # print(data)
+
+                # print(campaignsList)
+                return render_template('search/searchInfluencers.html', regionCodes=regionCodes_json,
+                                       lookup_string=lookup_string, form_filters=form_filters,data=data,view_campaign_data=view_campaign_data
+                                       ,favInfList_data=favInfList_data)
+            except Exception as e:
+                print(e)
+                print('i m hee')
+                return render_template('search/searchInfluencers.html', regionCodes=regionCodes_json,
+                                   lookup_string=lookup_string,form_filters=form_filters,data='',pagination='',view_campaign_data=view_campaign_data
+                                       ,favInfList_data=favInfList_data)
         else:
-            print('i m here last')
+            print('i m disguise')
             try:
                 payload = {
                     "category_id": "20",
@@ -489,18 +481,45 @@ def searchInfluencers():
                 linechart_id = 1
                 for item in data['data']:
                     item.update({'linechart_id': linechart_id})
-                    print(item)
+                    # print(item)
                     linechart_id += 1
-                form_filters = {'channel': 'Youtube', 'string_word': 'Gaming', 'country': 'PL', 'min_lower': '0', 'max_upper': '30000', 'search_inf': '', 'sort_order': 'High To Low', 'country_name': 'Poland'}
+                form_filters = {'channel': 'Youtube', 'string_word': 'Gaming', 'country': 'PL', 'min_lower': '0',
+                                'max_upper': '30000', 'search_inf': '', 'sort_order': 'High To Low',
+                                'country_name': 'Poland'}
             except:
                 pass
+
             return render_template('search/searchInfluencers.html', regionCodes=regionCodes_json,
-                                   lookup_string=lookup_string,form_filters=form_filters,data=data,pagination='',view_campaign_data=view_campaign_data,
+                                   lookup_string=lookup_string, form_filters=form_filters, data=data, pagination='',
+                                   view_campaign_data=view_campaign_data,
                                    favInfList_data=favInfList_data)
+
     else:
-        searchInfluencers.counter=0
-        return ''
-searchInfluencers.counter=0
+        print('i m here last')
+        try:
+            payload = {
+                "category_id": "20",
+                "country": "PL",
+                "min_lower": 0,
+                "max_upper": 30000,
+                "sort_order": "High To Low"
+            }
+            url = base_url + 'Youtube/searchChannels/Youtube'
+            response = requests.post(url, json=payload)
+            print(response.json())
+            data = response.json()
+            linechart_id = 1
+            for item in data['data']:
+                item.update({'linechart_id': linechart_id})
+                # print(item)
+                linechart_id += 1
+            form_filters = {'channel': 'Youtube', 'string_word': 'Gaming', 'country': 'PL', 'min_lower': '0', 'max_upper': '30000', 'search_inf': '', 'sort_order': 'High To Low', 'country_name': 'Poland'}
+        except:
+            pass
+
+        return render_template('search/searchInfluencers.html', regionCodes=regionCodes_json,
+                               lookup_string=lookup_string,form_filters=form_filters,data=data,pagination='',view_campaign_data=view_campaign_data,
+                               favInfList_data=favInfList_data)
 
 
 #
@@ -560,81 +579,34 @@ def viewMyPayments():
 @connecsiApp.route('/addCampaign')
 @is_logged_in
 def addCampaign():
-    addCampaign.counter+=1
-    if addCampaign.counter==1:
-        url_regionCodes = base_url + 'Youtube/regionCodes'
-        regionCodes_json = ''
-        try:
-            regionCodes_response = requests.get(url=url_regionCodes)
-            regionCodes_json = regionCodes_response.json()
-            print(regionCodes_json)
-        except:pass
-        url_videoCat = base_url + 'Youtube/videoCategories'
-        videoCat_json=''
-        try:
-            response_videoCat = requests.get(url=url_videoCat)
-            videoCat_json = response_videoCat.json()
-            print(videoCat_json)
-        except Exception as e:
-            print(e)
-        return render_template('campaign/add_campaignForm.html',regionCodes=regionCodes_json,videoCategories = videoCat_json)
-    else:
-        addCampaign.counter=0
-        return ''
-addCampaign.counter=0
+    url_regionCodes = base_url + 'Youtube/regionCodes'
+    regionCodes_json = ''
+    try:
+        regionCodes_response = requests.get(url=url_regionCodes)
+        regionCodes_json = regionCodes_response.json()
+        print(regionCodes_json)
+    except:pass
+    url_videoCat = base_url + 'Youtube/videoCategories'
+    videoCat_json=''
+    try:
+        response_videoCat = requests.get(url=url_videoCat)
+        videoCat_json = response_videoCat.json()
+        print(videoCat_json)
+    except Exception as e:
+        print(e)
+    return render_template('campaign/add_campaignForm.html',regionCodes=regionCodes_json,videoCategories = videoCat_json)
+
 
 
 @connecsiApp.route('/viewCampaigns',methods=['GET','POST'])
 @is_logged_in
 def viewCampaigns():
-    viewCampaigns.counter+=1
-    print('view campaigns function',viewCampaigns.counter)
-    if viewCampaigns.counter==1:
-        user_id=session['user_id']
-        view_campaign_data = ''
-        url_view_campaigns = base_url + 'Campaign/'+ str(user_id)
-        try:
-            view_campaigns_response = requests.get(url=url_view_campaigns)
-            view_campaign_data = view_campaigns_response.json()
-            # print(view_campaign_data)
-            for item in view_campaign_data['data']:
-                # print(item)
-                region_id_list = item['regions'].split(',')
-                region_name_list=[]
-                for region_id in region_id_list:
-                    try:
-                        region_name_response=requests.get(url=base_url+'Youtube/regionCode/'+str(region_id))
-                        region_data = region_name_response.json()
-                        region_name=region_data['data'][0][1]
-                        region_name_list.append(region_name)
-                    except:pass
-                cat_response=requests.get(url=base_url+'Youtube/videoCategories/'+str(item['video_cat_id']))
-                # print(cat_response.json())
-                cat_json_data=cat_response.json()
-                video_cat_name=cat_json_data['data'][0]['video_cat_name']
-                item.update({'video_cat_name':video_cat_name})
-                item.update({'region_name_list': region_name_list})
-                try:
-                    string_from_date= datetime.datetime.strptime(item['from_date'], '%Y-%m-%d')
-                    string_from_date=string_from_date.strftime('%d-%b-%y')
-                    string_to_date = datetime.datetime.strptime(item['to_date'], '%Y-%m-%d')
-                    string_to_date = string_to_date.strftime('%d-%b-%y')
-                    item.update({'from_date':string_from_date})
-                    item.update({'to_date': string_to_date})
-                except Exception as e:
-                    print(e)
-
-            print('campaign data',view_campaign_data)
-            viewCampaigns.counter = 0
-            return render_template('campaign/viewCampaigns.html',view_campaign_data=view_campaign_data),view_campaign_data
-        except Exception as e:
-            flash('Data loaded','success')
-        viewCampaigns.counter = 0
-        return render_template('campaign/viewCampaigns.html',view_campaign_data=view_campaign_data),view_campaign_data
-    else:
-         viewCampaigns.counter=0
-         return ''
-viewCampaigns.counter=0
+    user_id=session['user_id']
+    from templates.campaign.campaign import Campaign
+    campaignObj = Campaign(user_id=user_id)
+    view_campaign_data = campaignObj.get_all_campaigns()
+    viewCampaigns.counter = 0
+    return render_template('campaign/viewCampaigns.html',view_campaign_data=view_campaign_data)
 
 
 @connecsiApp.route('/viewCampaignDetails/<string:campaign_id>',methods=['GET'])
@@ -1107,27 +1079,18 @@ def test():
 @connecsiApp.route('/addToFavInfList/<string:channel_id>',methods=['GET'])
 @is_logged_in
 def addToFavInfList(channel_id):
-    addToFavInfList.counter += 1
-    # print(addToFavInfList.counter)
-    if addToFavInfList.counter==1:
-        try:
-            print(channel_id)
-            user_id = session['user_id']
-            # print('user_id=',user_id)
-            url = base_url+'/Brand/addToFavList/'+channel_id+'/'+str(user_id)
-            response = requests.post(url=url)
-            # data = response.json()
-            flash("Added to Favorites List", 'success')
-            return searchInfluencers()
-            # return ''
-        except:
-            pass
-            flash("Could not be added to Favorites List", 'danger')
-            return influencerFavoritesList()
-    else:
-        addToFavInfList.counter = 0
+    try:
+        print(channel_id)
+        user_id = session['user_id']
+        url = base_url+'/Brand/addToFavList/'+channel_id+'/'+str(user_id)
+        response = requests.post(url=url)
+        print(response)
+        flash("Added to Favorites List", 'success')
+        return searchInfluencers()
+    except:
+        flash("Could not be added to Favorites List", 'danger')
         return influencerFavoritesList()
-addToFavInfList.counter=0
+
 
 
 @connecsiApp.route('/influencerFavoritesList')
@@ -1142,17 +1105,18 @@ def influencerFavoritesList():
         for item in data['data']:
             item.update({'linechart_id': linechart_id})
             linechart_id += 1
-
         return render_template('partnerships/influencerFavoritesList.html',data=data)
     except:
         pass
         return render_template('partnerships/influencerFavoritesList.html')
 
-@connecsiApp.route('/createAlerts', methods=['POST'])
+
+@connecsiApp.route('/createAlerts', methods=['POST','GET'])
 @is_logged_in
 def createAlerts():
     user_id=session['user_id']
     if request.method == 'POST':
+        print("i m in post")
         payload = request.form.to_dict()
         print(payload)
         # exit()
@@ -1160,38 +1124,38 @@ def createAlerts():
             url = base_url + '/Brand/createInfluencerAlerts/'+str(user_id)
             response = requests.put(url=url,json=payload)
             # data = response.json()
+            # if 'createAlertsOnly' in request.form:
             flash("Created Alerts for Favorite Influencer", 'success')
-            return searchInfluencers()
-        except:
-            pass
+            return influencerFavoritesList()
+
+        except Exception as e:
+            print('i m in exception')
+            print(e)
             flash("Error in Creating Alerts", 'danger')
             return searchInfluencers()
+
+
 
 @connecsiApp.route('/addClassified')
 @is_logged_in
 def addClassified():
-    addClassified.counter+=1
-    if addClassified.counter==1:
-        url_regionCodes = base_url + 'Youtube/regionCodes'
-        regionCodes_json = ''
-        try:
-            regionCodes_response = requests.get(url=url_regionCodes)
-            regionCodes_json = regionCodes_response.json()
-            print(regionCodes_json)
-        except:pass
-        url_videoCat = base_url + 'Youtube/videoCategories'
-        videoCat_json=''
-        try:
-            response_videoCat = requests.get(url=url_videoCat)
-            videoCat_json = response_videoCat.json()
-            print(videoCat_json)
-        except Exception as e:
-            print(e)
-        return render_template('classifiedAds/add_classifiedForm.html',regionCodes=regionCodes_json,videoCategories = videoCat_json)
-    else:
-        addClassified.counter=0
-        return ''
-addClassified.counter=0
+    url_regionCodes = base_url + 'Youtube/regionCodes'
+    regionCodes_json = ''
+    try:
+        regionCodes_response = requests.get(url=url_regionCodes)
+        regionCodes_json = regionCodes_response.json()
+        print(regionCodes_json)
+    except:pass
+    url_videoCat = base_url + 'Youtube/videoCategories'
+    videoCat_json=''
+    try:
+        response_videoCat = requests.get(url=url_videoCat)
+        videoCat_json = response_videoCat.json()
+        print(videoCat_json)
+    except Exception as e:
+        print(e)
+    return render_template('classifiedAds/add_classifiedForm.html',regionCodes=regionCodes_json,videoCategories = videoCat_json)
+
 
 
 @connecsiApp.route('/saveClassified',methods=['POST'])
@@ -1249,21 +1213,14 @@ def saveClassified():
 @connecsiApp.route('/viewAllClassifiedAds',methods=['GET','POST'])
 @is_logged_in
 def viewAllClassifiedAds():
-    viewAllClassifiedAds.counter+=1
     all_classified_data=''
-    print('view classified function',viewAllClassifiedAds.counter)
-    if viewAllClassifiedAds.counter==1:
-        user_id=session['user_id']
-        from templates.classifiedAds.classified import Classified
-        classifiedObj = Classified(user_id=user_id)
-        all_classified_data = classifiedObj.get_all_classifieds()
-        # exit()
-        viewAllClassifiedAds.counter = 0
-        return render_template('classifiedAds/view_all_classifiedAds.html',all_classified_data=all_classified_data)
-    else:
-        viewAllClassifiedAds.counter=0
-        return render_template('classifiedAds/view_all_classifiedAds.html',all_classified_data=all_classified_data)
-viewAllClassifiedAds.counter=0
+    user_id=session['user_id']
+    from templates.classifiedAds.classified import Classified
+    classifiedObj = Classified(user_id=user_id)
+    all_classified_data = classifiedObj.get_all_classifieds()
+    # exit()
+    viewAllClassifiedAds.counter = 0
+    return render_template('classifiedAds/view_all_classifiedAds.html',all_classified_data=all_classified_data)
 
 
 @connecsiApp.route('/viewClassifiedDetails')
