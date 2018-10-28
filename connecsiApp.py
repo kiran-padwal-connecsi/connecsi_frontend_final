@@ -613,15 +613,9 @@ def viewCampaigns():
 @is_logged_in
 def viewCampaignDetails(campaign_id):
     user_id = session['user_id']
-    view_campaign_details_data = ''
-    url_view_campaign_details = base_url + 'Campaign/'+str(campaign_id)+'/' + str(user_id)
-    try:
-        view_campaigns_response = requests.get(url=url_view_campaign_details)
-        view_campaign_details_data = view_campaigns_response.json()
-        print(view_campaign_details_data)
-        return render_template('campaign/viewCampaignDetails.html',view_campaign_details_data=view_campaign_details_data)
-    except Exception as e:
-        flash('Error is Getting Data From Backend Please try again Later')
+    from templates.campaign.campaign import Campaign
+    campaignObj = Campaign(user_id=user_id,campaign_id=campaign_id)
+    view_campaign_details_data = campaignObj.get_campaign_details()
     return render_template('campaign/viewCampaignDetails.html',view_campaign_details_data=view_campaign_details_data)
 
 

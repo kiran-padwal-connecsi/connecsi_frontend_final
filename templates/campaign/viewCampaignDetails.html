@@ -10,7 +10,8 @@
                 <div class="card-block">
                     <div>
                         <a href="/viewCampaigns"><b style="color: #9C27B0; font-weight:400; letter-spacing: 1px; font-size:15px; ">Back to List</b></a>
-                        <span><p style="text-align: center;"><b style="font-size:20px; letter-spacing: 2px; font-weight: 500">X'Mas Special Sale</b>
+                        {% for item in view_campaign_details_data['data'] %}
+                        <span><p style="text-align: center;"><b style="font-size:20px; letter-spacing: 2px; font-weight: 500">{{ item['campaign_name'] }}</b>
                             <br />Active
                         </p>
                         </span>
@@ -21,27 +22,49 @@
                             <div class="col-sm-9 col-md-6" style="border-right: 2px solid #A7A3A2;">
                                 <div class="row">
                                     <div class="col-sm-6 col-md-4"><b style="font-weight: 500;">Period</b>
-                                        <br />1<br />1Mar18-31Mar18
+                                        <br />{{ item['from_date'] }} - {{ item['to_date'] }}
                                     </div>
                                     <div class="col-sm-4 col-md-4"><b style="font-weight: 500">Channels</b>
                                         <br />
-                                        <a href="#" class="fa fa-facebook"></a>
-                                        <a href="#" class="fa fa-youtube"></a></div>
+                                        {% set channels = item['channels'].split(',') %}
+                                        {% for channel in channels %}
+                                        {% if channel == 'youtube' %}
+                                        <a href="#" class="fa fa-youtube fa-lg red"></a>
+                                        {% elif channel == 'facebook' %}
+                                        <a href="#" class="fa fa-facebook fa-lg blue"></a>
+                                        {% elif channel == 'twitter' %}
+                                        <a href="#" class="fa fa-twitter fa-lg"></a>
+                                        {% elif channel == 'instagram' %}
+                                        <a href="#" class="fa fa-instagram fa-lg pink"></a>
+                                        {% endif %}
+                                        {% endfor %}
+                                    </div>
                                     <div class="col-sm-4 col-md-4"><b style="font-weight: 500;">Budget</b>
                                         <br />
-                                        <b style="font-weight: 400; font-size:15px;">$ 20 000</b> </div>
+                                        <b style="font-weight: 400; font-size:15px;">{{ item['currency'] }} {{ item['budget'] }}</b> </div>
                                 </div>
                                 <div class="row">
                                     <div class="col-sm-6 col-md-4"><b style="font-weight: 500">Countries</b><br />
-                                        <b style="font-weight: 400; font-size:15px;">USA, GBR, AUS</b> </div>
+                                        <b style="font-weight: 400; font-size:15px;">
+                                            {% for region_name in item['region_name_list'] %}
+                                                {{ region_name }},
+                                            {% endfor %}
+                                        </b> </div>
                                     <div class="col-sm-4 col-md-4"><b style="font-weight: 500">Files</b></div>
-                                    <div class="col-sm-4 col-md-4"><b style="font-weight: 500">Target URL</b></div>
+                                    <div class="col-sm-4 col-md-4"><b style="font-weight: 500">Target URL</b><br>
+                                        <i class="fa fa-link"></i><a href="{{ item['target_url'] }}" target="_blank">Target Url</a>
+                                    </div>
                                 </div>
                                 <div class="row">
-                                    <div class="col-sm-6 col-md-4"><b style="font-weight: 500">Content Type</b></div>
+                                    <div class="col-sm-6 col-md-4"><b style="font-weight: 500">Content Type</b><br>
+                                        {% set arrangements = item['arrangements'].split(',') %}
+                                        {% for content_type in arrangements %}
+                                    <button type="button" style="font-size:10px;">{{ content_type }}</button>
+                                        {% endfor %}
+                                    </div>
                                     <div class="col-sm-4 col-md-4"><b style="font-weight: 500">KPIs</b>
                                         <br />
-                                        <b style="font-weight: 400; font-size:15px;"></b>Revenue </div>
+                                        <b style="font-weight: 400; font-size:15px;"></b>{{ item['kpis'] }} </div>
                                     <div class="col-sm-4 col-md-4"><b style="font-weight: 500">Influencers</b>
                                         <br />10</div>
                                 </div>
@@ -49,10 +72,11 @@
                             <div class="col-sm-3 col-md-6">
                                 <p><b style="font-weight: 500">Description:</b></p>
                                 <br>
-                                AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+                                {{ item['campaign_description'] }}
                             </div>
                         </div>
                     </div>
+                    {% endfor %}
                     <hr>
                     <div style="background-color: white;" class="table-responsive">
                         <table class="table table-bordered" style="background-color: white;">
