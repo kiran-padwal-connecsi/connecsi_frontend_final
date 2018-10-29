@@ -1224,6 +1224,19 @@ def viewClassifiedDetails(classified_id):
     print(classified_details)
     return render_template('classifiedAds/viewClassifiedDetails.html',classified_details=classified_details)
 
+@connecsiApp.route('/addYoutubeInfToCampaignList',methods=['POST'])
+@is_logged_in
+def addYoutubeInfToCampaignList():
+    if request.method == 'POST':
+        campaign_ids = request.form.getlist('campaign_id')
+        channel_id = request.form.get('channel_id')
+        for campaign_id in campaign_ids:
+            url = base_url+'Brand/addYotubeInfToCampaignList/'+ str(channel_id) + '/' + str(campaign_id)
+            response = requests.post(url=url)
+            response = response.json()
+            flash('Youtube Influencer Added to Campaign','success')
+        return viewCampaigns()
+
 
 @connecsiApp.route('/reports')
 @is_logged_in
