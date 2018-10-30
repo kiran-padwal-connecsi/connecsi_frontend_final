@@ -558,7 +558,9 @@ $( document ).ready(function() {
               <tbody>
               {% for item in view_campaign_data['data'] %}
               <tr>
-                <td><input class="form-control" type="checkbox"  multiple id="campaign_id" value="{{ item['campaign_id'] }}" name="campaign_id"></td>
+                <td>
+                  <input class="form-control campaign_id{{ item['campaign_id'] }}" type="checkbox"  multiple id="campaign_id" value="{{ item['campaign_id'] }}" name="campaign_id">
+                </td>
                 <td><a href="/viewCampaignDetails/{{ item['campaign_id'] }}">{{ item['campaign_name'] }}</a></td>
                 <td>Cell</td>
                 <td>{{ item['from_date'] }}- {{ item['to_date'] }}</td>
@@ -615,8 +617,26 @@ function createAlert(channel_id,followers,views,likes,comments) {
 <script>
 function campaignList(channel_id) {
     <!--alert(channel_id);-->
+    $( "input#campaign_id" ).prop('checked', false);
+    $( "input#campaign_id" ).prop('disabled', false)
     $("#youtube_channel_id").val(channel_id);
-
+    {% for item in view_campaign_data['data'] %}
+        {% for item1 in item['youtube_inf_data'] %}
+            var campaign_channel_id = "{{ item1['channel_id'] }}";
+            var campaign_id = "{{ item['campaign_id'] }}";
+            <!--alert("campaign_id =" + campaign_id);-->
+            <!--alert(channel_id);-->
+            <!--alert("campaign_channel_id ="+campaign_channel_id);-->
+            if (channel_id == campaign_channel_id){
+                <!--alert("equal");-->
+                $('.campaign_id'+campaign_id).attr('disabled', true);
+             }
+             else{
+                 <!--alert("not equal");-->
+                  <!--$('.campaign_id'+campaign_id).attr('disabled', false);-->
+             }
+        {% endfor %}
+    {% endfor %}
 }
 </script>
 <script>

@@ -9,6 +9,7 @@ class Campaign:
         self.campaign_id=campaign_id
         self.url_view_campaigns = base_url + 'Campaign/' + str(self.user_id)
         self.url_view_campaign_details = base_url + 'Campaign/' + str(self.campaign_id) + '/' + str(self.user_id)
+        self.url_getYoutubeInfList = base_url + 'Brand/getYoutubeInfList/'
 
     def get_all_campaigns(self):
         view_campaign_data = ''
@@ -40,6 +41,14 @@ class Campaign:
                     string_to_date = string_to_date.strftime('%d-%b-%y')
                     item.update({'from_date': string_from_date})
                     item.update({'to_date': string_to_date})
+                except Exception as e:
+                    print(e)
+                try:
+                    youtubeInfListResponse = requests.get(url=self.url_getYoutubeInfList+str(item['campaign_id']))
+                    youtubeInfList_data = youtubeInfListResponse.json()
+                    no_of_youtube_influencers = len(youtubeInfList_data['data'])
+                    item.update({'no_of_influencers':no_of_youtube_influencers})
+                    item.update({'youtube_inf_data': youtubeInfList_data['data']})
                 except Exception as e:
                     print(e)
             print('campaign data', view_campaign_data)
@@ -81,6 +90,15 @@ class Campaign:
                     string_to_date = string_to_date.strftime('%d-%b-%y')
                     item.update({'from_date': string_from_date})
                     item.update({'to_date': string_to_date})
+                except Exception as e:
+                    print(e)
+
+                try:
+                    youtubeInfListResponse = requests.get(url=self.url_getYoutubeInfList+str(item['campaign_id']))
+                    youtubeInfList_data = youtubeInfListResponse.json()
+                    no_of_youtube_influencers = len(youtubeInfList_data['data'])
+                    item.update({'no_of_influencers':no_of_youtube_influencers})
+                    item.update({'youtube_inf_data':youtubeInfList_data['data']})
                 except Exception as e:
                     print(e)
             print('campaign details data', view_campaign_details)
