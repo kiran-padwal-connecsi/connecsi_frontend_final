@@ -11,7 +11,7 @@
                     <div class="row" style="margin:2%;">
                         <div class="col-xl-2 col-lg-2 col-md-2 mb-1">
                             {% if data['data']['profile_pic'] %}
-                            <img id="profile_pic" src="static/img/{{ data['data']['profile_pic'] }}" class="rounded-circle img-border gradient-summer width-150" alt="Card image">
+                            <img id="profile_pic" src="{{ url_for('static', filename='img/4.jpg') }}" class="rounded-circle img-border gradient-summer width-150" alt="Card image">
                             {% else %}
                             <img id="profile_pic" src="static/app-assets/img/portrait/avatars/avatar-08.png" class="rounded-circle img-border gradient-summer width-150" alt="Card image">
                             {% endif %}
