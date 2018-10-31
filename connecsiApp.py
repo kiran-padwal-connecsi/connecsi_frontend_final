@@ -49,8 +49,10 @@ connecsiApp.register_blueprint(twitter_blueprint, url_prefix="/login")
 photos = UploadSet('photos', IMAGES)
 campaign_files = UploadSet('campaignfiles')
 
-connecsiApp.config['UPLOADED_PHOTOS_DEST'] = 'static/img'
+connecsiApp.config['UPLOADED_PHOTOS_DEST'] = url_for('static/img')
 connecsiApp.config['UPLOADED_CAMPAIGNFILES_DEST'] = 'static/campaign_files'
+
+
 
 configure_uploads(connecsiApp, photos)
 configure_uploads(connecsiApp, campaign_files)
