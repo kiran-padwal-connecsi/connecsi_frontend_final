@@ -54,7 +54,7 @@ campaign_files = UploadSet('campaignfiles')
 
 # print(os.getcwd()+'\\brands_profile_img')
 
-connecsiApp.config['UPLOADED_PHOTOS_DEST'] = os.getcwd()+'\\brands_profile_img'
+connecsiApp.config['UPLOADED_PHOTOS_DEST'] = os.getcwd()
 connecsiApp.config['UPLOADED_CAMPAIGNFILES_DEST'] = 'static/campaign_files'
 
 
