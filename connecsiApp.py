@@ -49,7 +49,12 @@ connecsiApp.register_blueprint(twitter_blueprint, url_prefix="/login")
 photos = UploadSet('photos', IMAGES)
 campaign_files = UploadSet('campaignfiles')
 
-connecsiApp.config['UPLOADED_PHOTOS_DEST'] = url_for('static/img')
+# ROOT_DIR = os.path.dirname(os.path.abspath(__file__)) # This is your Project Root
+# print(ROOT_DIR+'\\static\\img')
+
+# print(os.getcwd()+'\\brands_profile_img')
+
+connecsiApp.config['UPLOADED_PHOTOS_DEST'] = os.getcwd()+'\\brands_profile_img'
 connecsiApp.config['UPLOADED_CAMPAIGNFILES_DEST'] = 'static/campaign_files'
 
 
