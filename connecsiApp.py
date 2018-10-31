@@ -47,8 +47,13 @@ connecsiApp.register_blueprint(google_blueprint, url_prefix="/login")
 connecsiApp.register_blueprint(twitter_blueprint, url_prefix="/login")
 
 photos = UploadSet('photos', IMAGES)
+campaign_files = UploadSet('campaignfiles')
+
 connecsiApp.config['UPLOADED_PHOTOS_DEST'] = 'static/img'
+connecsiApp.config['UPLOADED_CAMPAIGNFILES_DEST'] = 'static/campaign_files'
+
 configure_uploads(connecsiApp, photos)
+configure_uploads(connecsiApp, campaign_files)
 
 @connecsiApp.route("/google_login")
 def google_login():
@@ -638,6 +643,10 @@ def saveCampaign():
         arrangements_string = ','.join(arrangements)
         payload.update({'arrangements': arrangements_string})
 
+        kpis = request.form.getlist('kpis')
+        kpis_string = ','.join(kpis)
+        payload.update({'kpis': kpis_string})
+
         is_classified_post = request.form.get('is_classified_post')
         print('is classified = ',is_classified_post)
         try:
@@ -648,12 +657,15 @@ def saveCampaign():
             payload.update({'is_classified_post':'TRUE'})
         else:
             payload.update({'is_classified_post':'FALSE'})
+        files = request.files.getlist("campaign_files")
+        filenames=[]
+        for file in files:
+            filename = campaign_files.save(file)
+            filenames.append(filename)
+        filenames_string = ','.join(filenames)
+        payload.update({'files': filenames_string})
         print(payload)
         # exit()
-#
-#         files = request.form.getlist('files')
-#         # files = request.files.getlist("files")
-#         print(files)
 #
         user_id = session['user_id']
         url = base_url + 'Campaign/' + str(user_id)
