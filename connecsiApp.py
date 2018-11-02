@@ -48,6 +48,7 @@ connecsiApp.register_blueprint(twitter_blueprint, url_prefix="/login")
 
 photos = UploadSet('photos', IMAGES)
 campaign_files = UploadSet('campaignfiles')
+brands_classified_files = UploadSet('brandsclassifiedfiles', IMAGES)
 
 # ROOT_DIR = os.path.dirname(os.path.abspath(__file__)) # This is your Project Root
 # print(ROOT_DIR+'\\static\\img')
@@ -56,11 +57,13 @@ campaign_files = UploadSet('campaignfiles')
 
 connecsiApp.config['UPLOADED_PHOTOS_DEST'] = 'static/img'
 connecsiApp.config['UPLOADED_CAMPAIGNFILES_DEST'] = 'static/campaign_files'
+connecsiApp.config['UPLOADED_BRANDSCLASSIFIEDFILES_DEST'] = 'static/brands_classified_files'
 
 
 
 configure_uploads(connecsiApp, photos)
 configure_uploads(connecsiApp, campaign_files)
+configure_uploads(connecsiApp, brands_classified_files)
 
 @connecsiApp.route("/google_login")
 def google_login():
@@ -1176,35 +1179,37 @@ def addClassified():
 def saveClassified():
     if request.method == 'POST':
         payload = request.form.to_dict()
-        print(payload)
-        # exit()
+
         channels = request.form.getlist('channels')
         channels_string = ','.join(channels)
         payload.update({'channels':channels_string})
+
         regions = request.form.getlist('country')
         regions_string = ','.join(regions)
         payload.update({'regions':regions_string})
+
         arrangements = request.form.getlist('arrangements')
         arrangements_string = ','.join(arrangements)
         payload.update({'arrangements': arrangements_string})
 
-        # is_classified_post = request.form.get('is_classified_post')
-        # print('is classified = ',is_classified_post)
+        kpis = request.form.getlist('kpis')
+        kpis_string = ','.join(kpis)
+        payload.update({'kpis': kpis_string})
+
         try:
             del payload['country']
-            # del payload['is_classified_post']
         except:pass
-        # if is_classified_post == 'on':
-        #     payload.update({'is_classified_post':'TRUE'})
-        # else:
-        #     payload.update({'is_classified_post':'FALSE'})
         print(payload)
-        # exit()
-#
-#         files = request.form.getlist('files')
-#         # files = request.files.getlist("files")
-#         print(files)
-#
+
+        files = request.files.getlist("brands_classified_files")
+        filenames = []
+        for file in files:
+            filename = brands_classified_files.save(file)
+            filenames.append(filename)
+        filenames_string = ','.join(filenames)
+        payload.update({'files': filenames_string})
+        print(payload)
+
         user_id = session['user_id']
         url = base_url + 'Classified/' + str(user_id)
         print(url)

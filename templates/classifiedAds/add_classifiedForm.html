@@ -52,22 +52,6 @@
                                             </span>
                                         </div>
                                         <br>
-                                        <div class="row">
-                                            <Div class="col-sm-6">
-                                                <div class="container">
-                                                    <div class="form-group">
-                                                        <input  type="file" id="filecount" multiple="multiple" max="10">
-                                                    </div>
-                                                </div>
-                                                <script>
-                                                    $('#filecount').filestyle({
-                                                        input : false,
-                                                        buttonName : 'btn-danger',
-                                                        iconName : 'glyphicon glyphicon-folder-close'
-                                                    });
-                                                </script>
-                                            </Div>
-                                        </div>
                                     </div>
                                     <div class="row">
                                         <div class="col-sm-4">
@@ -111,7 +95,10 @@
                                             </select>
                                         </div>
                                     </span>
-                                    <span class="text-bold-500 primary"> <input type="url" class="form-control" name="target_url" placeholder="Target URL" required></span>
+                                    <span class="text-bold-500 primary"> <input type="url" class="form-control" name="target_url" placeholder="Target URL" required></span><br>
+                                    <span>
+                                        <input  type="file" name="brands_classified_files" id="brands_classified_files" class="brands_classified_files" multiple required>
+                                    </span><br class="displayFiles">
                                 </div>
                                 <div class="col-sm-6 col-md-6">
                                     <label for="campaign_name">Description:</label><textarea class="form-control" rows="9" id="descritpion" name="classified_description" required></textarea>
@@ -133,8 +120,7 @@
                                     <br>
                                     <span class="text-bold-500 primary">
                                         <label for="kpis">Kpis:</label>
-                                        <select name="kpis" id="kpis" class="form-control" required>
-                                            <option value=""></option>
+                                        <select name="kpis" id="kpis" class="form-control" multiple required>
                                             <option value="No of Clicks">No of Clicks</option>
                                             <option value="New Users">New Users</option>
                                             <option value="Revenue Generated">Revenue Generated</option>
@@ -207,6 +193,28 @@ $( document ).ready(function() {
              $("#max_upper").val(max_upper);
          });
          // search button click event ends
+
+          //brands_classified_files preview start
+
+        $(document).on('change', 'input:file',function(){
+            <!--alert('i m here');-->
+            readURL(this);
+            $(this).hide();
+            $(".displayFiles").before('<input type = "file" name="brands_classified_files"  multiple>');
+
+        });
+        //brands_classified_files preview end
+         function readURL(input) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+                reader.onload = function(e) {
+                $(".displayFiles").after('<img id="filePreview" src="static/app-assets/img/portrait/avatars/avatar-08.png" class=" img-border gradient-summer width-50" alt="Card image">');
+                $('#filePreview').attr('src', e.target.result);
+                }
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+
 
 });
 </script>
