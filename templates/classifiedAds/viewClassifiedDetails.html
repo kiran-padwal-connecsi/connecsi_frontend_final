@@ -29,9 +29,11 @@
                              src="static/app-assets/img/portrait/avatars/avatar-08.png" height="300px" width="340x"/>
                         <br />
                         <div id="divId" onclick="changeImageOnClick(event)">
-                            <img class="imgStyle" src="static/app-assets/img/portrait/avatars/avatar-08.png" />
-                            <img class="imgStyle" src="static/app-assets/img/portrait/avatars/avatar-08.png" />
-                            <img class="imgStyle" src="static/app-assets/img/portrait/avatars/avatar-08.png "/>
+                            {% set images = item['files'].split(',') %}
+                            {% for img in images %}
+                            {{img}}
+                            <img class="imgStyle" src="{{ url_for('static', filename='brands_classified_files/{{ img }}') }}" />
+                            {% endfor %}
                         </div>
                         <button type="button" style="font-size:12px; margin-left:35%; margin-top:2%; background-color:#7CE85F; color:white;"><a href="#">Reply</a></button>
                     </div>
