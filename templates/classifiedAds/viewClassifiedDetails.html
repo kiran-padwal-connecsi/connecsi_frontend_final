@@ -32,7 +32,8 @@
                             {% set images = item['files'].split(',') %}
                             {% for img in images %}
                             {{img}}
-                            <img class="imgStyle" src="{{ url_for('static', filename='brands_classified_files/{{ img }}') }}" />
+                            <!--<img class="imgStyle" src="{{ url_for('static', filename='brands_classified_files/{{ img }}') }}" />-->
+                            <img class="imgStyle" src="static/brands_classified_files/{{ img }}" />
                             {% endfor %}
                         </div>
                         <button type="button" style="font-size:12px; margin-left:35%; margin-top:2%; background-color:#7CE85F; color:white;"><a href="#">Reply</a></button>
