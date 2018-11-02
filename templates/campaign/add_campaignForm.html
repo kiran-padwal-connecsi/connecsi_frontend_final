@@ -97,7 +97,7 @@
                                     </span>
                                     <span class="text-bold-500 primary"> <input type="url" class="form-control" name="target_url" placeholder="Target URL" required></span><br>
                                     <span>
-                                        <input  type="file" name="campaign_files" id="campaign_files1" class="campaign_files" multiple required>
+                                        <input  type="file" name="campaign_files" id="campaign_files1" class="campaign_files" required>
                                     </span><br class="displayFiles">
                                 </div>
                                 <div class="col-sm-6 col-md-6">
@@ -199,7 +199,7 @@ $( document ).ready(function() {
             <!--alert('i m here');-->
             readURL(this);
             $(this).hide();
-            $(".displayFiles").before('<input type = "file" name="campaign_files"  multiple>');
+            $(".displayFiles").before('<input type = "file" name="campaign_files">');
 
         });
         //campaign_files preview end

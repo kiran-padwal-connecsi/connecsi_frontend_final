@@ -668,6 +668,8 @@ def saveCampaign():
         else:
             payload.update({'is_classified_post':'FALSE'})
         files = request.files.getlist("campaign_files")
+        print(files)
+        # exit()
         filenames=[]
         for file in files:
             filename = campaign_files.save(file)
@@ -1202,9 +1204,12 @@ def saveClassified():
         print(payload)
 
         files = request.files.getlist("brands_classified_files")
+        print(files)
+        # exit()
         filenames = []
         for file in files:
             filename = brands_classified_files.save(file)
+            print(filename)
             filenames.append(filename)
         filenames_string = ','.join(filenames)
         payload.update({'files': filenames_string})

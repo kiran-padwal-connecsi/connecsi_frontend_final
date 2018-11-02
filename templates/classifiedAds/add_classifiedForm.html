@@ -14,7 +14,7 @@
             </div>
             <div class="card-body">
                 <div class="card-block">
-                    <form class="form" name="classified_form" id="classified_form" method="POST" action="saveClassified">
+                    <form class="form" name="classified_form" id="classified_form" method="POST" action="saveClassified" enctype="multipart/form-data">
                         <div class="container-fluid">
                             <div class="row">
                                 <div class="col-sm-6 col-md-6" >
@@ -97,7 +97,7 @@
                                     </span>
                                     <span class="text-bold-500 primary"> <input type="url" class="form-control" name="target_url" placeholder="Target URL" required></span><br>
                                     <span>
-                                        <input  type="file" name="brands_classified_files" id="brands_classified_files" class="brands_classified_files" multiple required>
+                                        <input  type="file" name="brands_classified_files" class="brands_classified_files" required>
                                     </span><br class="displayFiles">
                                 </div>
                                 <div class="col-sm-6 col-md-6">
@@ -200,7 +200,7 @@ $( document ).ready(function() {
             <!--alert('i m here');-->
             readURL(this);
             $(this).hide();
-            $(".displayFiles").before('<input type = "file" name="brands_classified_files"  multiple>');
+            $(".displayFiles").before('<input type = "file" name="brands_classified_files">');
 
         });
         //brands_classified_files preview end
