@@ -25,11 +25,12 @@
                 </div>
                 <div class="row" style="margin:1%;">
                     <div class="col-xl-5 col-lg-5 col-md-5 mb-1">
+                        {% set images = item['files'].split(',') %}
                         <img id="mainImage" style="border:3px solid grey"
-                             src="static/app-assets/img/portrait/avatars/avatar-08.png" height="300px" width="340x"/>
+                             src="../static/brands_classified_files/{{ images[0] }}" height="300px" width="340x"/>
                         <br />
                         <div id="divId" onclick="changeImageOnClick(event)">
-                            {% set images = item['files'].split(',') %}
+
                             {% for img in images %}
                             {{img}}
                             <!--<img class="imgStyle" src="{{ url_for('static', filename='brands_classified_files/{{ img }}') }}" />-->
