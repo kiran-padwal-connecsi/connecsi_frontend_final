@@ -50,7 +50,21 @@
                                             {{ region_name }},
                                             {% endfor %}
                                         </b> </div>
-                                    <div class="col-sm-4 col-md-4"><b style="font-weight: 500">Files</b></div>
+                                    <div class="col-sm-4 col-md-4"><b style="font-weight: 500">Files</b><br>
+                                        {% set files = item['files'].split(',') %}
+                                        {% for file in files %}
+                                        {% set ext = file[-3:] %}
+                                        <a href="../static/campaign_files/{{ file }}" download>
+                                            {% if ext == "jpg" %}
+                                            <i class="fa fa-file-image-o"></i>
+                                            {% elif ext == "doc" %}
+                                            <i class="fa fa-file-word-o"></i>
+                                            {% else %}
+                                            <i class="fa fa-file"></i>
+                                            {% endif %}
+                                        </a>
+                                        {% endfor %}
+                                    </div>
                                     <div class="col-sm-4 col-md-4"><b style="font-weight: 500">Target URL</b><br>
                                         <i class="fa fa-link"></i><a href="{{ item['target_url'] }}" target="_blank">Target Url</a>
                                     </div>
