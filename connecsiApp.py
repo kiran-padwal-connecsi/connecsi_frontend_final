@@ -65,59 +65,6 @@ configure_uploads(connecsiApp, photos)
 configure_uploads(connecsiApp, campaign_files)
 configure_uploads(connecsiApp, brands_classified_files)
 
-@connecsiApp.route("/google_login")
-def google_login():
-    if not google.authorized:
-        print('i m here always')
-        return redirect(url_for("google.login"))
-    resp = google.get("/oauth2/v2/userinfo")
-    print(resp.json())
-    resp_json = resp.json()
-    # assert resp.ok, resp.text
-    if resp.ok:
-        user_id = resp_json['id']
-        print(user_id)
-        # exit()
-        if user_id:
-            flash("logged in", 'success')
-            session['logged_in'] = True
-            session['email_id'] = resp_json['email']
-            session['type'] = 'influencer'
-            session['user_id'] = user_id
-            print(session['user_id'])
-            return redirect(url_for('admin'))
-    else:return redirect(url_for('login'))
-
-@connecsiApp.route("/twitter_login")
-def twitter_login():
-    if not twitter.authorized:
-        return redirect(url_for("twitter.login"))
-    resp = twitter.get("account/verify_credentials.json?include_email=true")
-
-    print(resp.json())
-    # exit()
-    resp_json = resp.json()
-    # screen_name = resp_json['screen_name']
-    # user_data = twitter.get('users/show.json?screen_name=' +screen_name)
-    # assert resp.ok, resp.text
-    # print(user_data.json())
-    if resp.ok:
-        user_id = resp_json['id']
-        print(user_id)
-        # exit()
-        if user_id:
-            flash("logged in", 'success')
-            session['logged_in'] = True
-            session['email_id'] = resp_json['email']
-            session['type'] = 'influencer'
-            session['user_id'] = user_id
-            # print(session['user_id'])
-            return redirect(url_for('admin'))
-    else:return redirect(url_for('login'))
-
-
-
-
 
 # oauth = OAuth(connecsiApp)
 
@@ -633,6 +580,14 @@ def viewCampaignDetails(campaign_id):
     view_campaign_details_data = campaignObj.get_campaign_details()
     return render_template('campaign/viewCampaignDetails.html',view_campaign_details_data=view_campaign_details_data)
 
+@connecsiApp.route('/getCampaignDetails/<string:campaign_id>',methods=['GET'])
+@is_logged_in
+def getCampaignDetails(campaign_id):
+    user_id = session['user_id']
+    from templates.campaign.campaign import Campaign
+    campaignObj = Campaign(user_id=user_id,campaign_id=campaign_id)
+    view_campaign_details_data = campaignObj.get_campaign_details()
+    return jsonify(results=view_campaign_details_data['data'])
 
 @connecsiApp.route('/saveCampaign',methods=['POST'])
 @is_logged_in
@@ -841,11 +796,54 @@ def inbox(message_id):
         try:
             conv_title = full_conv['data'][0]['subject']
         except:pass
-        return render_template('email/inbox.html', inbox = inbox, full_conv = full_conv, conv_title=conv_title)
+
+        from templates.campaign.campaign import Campaign
+        campaignObj = Campaign(user_id=user_id)
+        view_campaign_data = campaignObj.get_all_campaigns()
+
+        print('final conv = ',full_conv)
+        for item in full_conv['data']:
+            print(item)
+        return render_template('email/inbox.html', inbox = inbox, full_conv = full_conv, conv_title=conv_title,view_campaign_data=view_campaign_data)
     except:
         pass
-    return render_template('email/inbox.html',inbox=inbox, full_conv = full_conv,conv_title=conv_title)
 
+    from templates.campaign.campaign import Campaign
+    campaignObj = Campaign(user_id=user_id)
+    view_campaign_data = campaignObj.get_all_campaigns()
+
+    print('final conv default = ', full_conv)
+    return render_template('email/inbox.html',inbox=inbox, full_conv = full_conv,conv_title=conv_title,view_campaign_data=view_campaign_data)
+
+
+@connecsiApp.route('/addCampaignsToMessage',methods=['POST','GET'])
+@is_logged_in
+def addCampaignsToMessage():
+    if request.method=='POST':
+        message_id=request.form.get('message_id')
+        campaign_ids= request.form.getlist('campaign_id')
+        print(message_id)
+        print(campaign_ids)
+        for campaign_id in campaign_ids:
+            url = base_url + 'Messages/addCampaignIdToMessageId/' + message_id + '/' + campaign_id
+            print(url)
+            response = requests.post(url=url)
+            response_json = response.json()
+            print(response_json)
+        # flash('campaigns added to Conversation')
+        return 'Campaigns Added To Conversation'
+
+@connecsiApp.route('/getCampaignsAddedToMessage/<string:message_id>',methods=['GET','POST'])
+@is_logged_in
+def getCampaignsAddedToMessage(message_id):
+    print(message_id)
+    url = base_url + 'Messages/getCampaignsAddedToMessage/' +message_id
+    print(url)
+    response = requests.get(url=url)
+    response_json = response.json()
+    for item in response_json['data']:
+        print(item)
+    return jsonify(results=response_json['data'])
 
 
 @connecsiApp.route('/deleted',methods = ['GET'])
@@ -1267,6 +1265,8 @@ def addYoutubeInfToCampaignList():
         return viewCampaigns()
 
 
+
+
 @connecsiApp.route('/reports')
 @is_logged_in
 def reports():
@@ -1274,6 +1274,63 @@ def reports():
 
 
 ############################################## influencer Section###########################################################
+@connecsiApp.route("/google_login")
+def google_login():
+    if not google.authorized:
+        print('i m here always')
+        return redirect(url_for("google.login"))
+    resp = google.get("/oauth2/v2/userinfo")
+    print(resp.json())
+    resp_json = resp.json()
+    # assert resp.ok, resp.text
+    if resp.ok:
+        user_id = resp_json['id']
+        print(user_id)
+        # exit()
+        if user_id:
+            flash("logged in", 'success')
+            session['logged_in'] = True
+            session['email_id'] = resp_json['email']
+            session['type'] = 'influencer'
+            session['user_id'] = user_id
+            print(session['user_id'])
+            return redirect(url_for('admin_inf'))
+    else:return redirect(url_for('login'))
+
+@connecsiApp.route("/twitter_login")
+def twitter_login():
+    if not twitter.authorized:
+        return redirect(url_for("twitter.login"))
+    resp = twitter.get("account/verify_credentials.json?include_email=true")
+
+    print(resp.json())
+    # exit()
+    resp_json = resp.json()
+    # screen_name = resp_json['screen_name']
+    # user_data = twitter.get('users/show.json?screen_name=' +screen_name)
+    # assert resp.ok, resp.text
+    # print(user_data.json())
+    if resp.ok:
+        user_id = resp_json['id']
+        print(user_id)
+        # exit()
+        if user_id:
+            flash("logged in", 'success')
+            session['logged_in'] = True
+            session['email_id'] = resp_json['email']
+            session['type'] = 'influencer'
+            session['user_id'] = user_id
+            # print(session['user_id'])
+            return redirect(url_for('admin_inf'))
+    else:return redirect(url_for('login'))
+
+
+
+@connecsiApp.route('/admin_inf')
+@is_logged_in
+def admin_inf():
+    title='Influencer Dashboard'
+    return render_template('index_inf.html',title=title)
 
 @connecsiApp.route('/inf_profile')
 @is_logged_in

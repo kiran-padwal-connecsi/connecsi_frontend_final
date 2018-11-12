@@ -1,6 +1,8 @@
 {% extends 'dashboard_layout_new.html' %}
 {{ super() }}
 {% block body %}
+{% set glob={} %}
+
 <div class="email-application">
     <div class="content-overlay"></div>
     <div class="row">
@@ -12,13 +14,14 @@
                 </div>
             </div>
         </div>
-        <div class="email-app-content-area w-100">
+        <div class="email-app-content-area w-70">
             <div class="email-app-list-mails">
                 <div class="email-app-list">
                     <div id="users-list">
                         <div class="list-group">
                             <div class="users-list-padding">
                                 {% for item in inbox['data'] %}
+
                                 <a id="message{{ item['message_id'] }}" class="list-group-item list-group-item-action no-border" href="/inbox/{{ item['message_id'] }}" >
                                     <span class="media">
                                         <span class="avatar avatar-md mr-2">
@@ -47,7 +50,7 @@
                     </div>
                 </div>
             </div>
-            <div class="email-app-mail-content">
+            <div class="email-app-mail-content-area w-80">
                 <div class="email-app-mail-content-detail">
                     <div class="email-app-options card-block">
                         <div class="row d-md-none">
@@ -63,6 +66,7 @@
                     </div>
                     <h3 class="list-group-item-heading">{{ conv_title }}</h3>
                     {% for item in full_conv['data'] %}
+                    {% set _ = glob.update({'message_id' : item['message_id']}) %}
                     <div class="media-list">
                         <div id="heading{{ item['collapse_id'] }}" class="card-header p-0">
                             <a data-toggle="collapse" href="#{{ item['collapse_id'] }}" aria-expanded="true" aria-controls="{{ item['collapse_id'] }}" class="collapsed email-app-sender list-group-item list-group-item-action no-border bg-blue-grey bg-lighten-5">
@@ -98,10 +102,263 @@
                     </div>
                     {% endfor %}
                 </div>
+
             </div>
+        </div>
+        <div style="padding-top:1%;">
+            <div class="">
+                <div><h6>Topics</h6></div>
+                <table class="table-striped table-bordered" id="campaignNameList">
+                </table>
+            </div>
+        </div>
+        <div>
+            {% if glob.message_id %}
+            <a class="btn-info btn-sm"  data-toggle="modal" data-target="#campaignList">Add campaign</a>
+            <!--<a class="btn-info btn-sm"  id="getCampaignsAddedToMessage">View campaign</a>-->
+            {% endif %}
+        </div>
+        <!--<div id="campaignNameList"></div>-->
+        <ul class="nav nav-tabs">
+            <li class="nav-item">
+                <a class="nav-link" data-toggle="tab" href="#proposals">Proposals</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" data-toggle="tab" href="#agreements">Agreements</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" data-toggle="tab" href="#files">Files</a>
+            </li>
+        </ul>
+        <div class="tab-content">
+            <div class="tab-pane container fade" id="proposals">
+                <div><h6>Proposal List</h6></div>
+                <table class="table-striped table-bordered" id="proposalList">
+                </table>
+                {% if glob.message_id %}
+                <a class="btn-info btn-sm"  data-toggle="modal" data-target="#proposal">New Proposal</a>
+                <!--<a class="btn-info btn-sm"  id="getCampaignsAddedToMessage">View campaign</a>-->
+                {% endif %}
+            </div>
+            <div class="tab-pane container fade" id="agreements">
+                <div>hello agreements</div>
+            </div>
+            <div class="tab-pane container fade" id="files">
+                <div>hello files</div>
+            </div>
+        </div>
+
+        <div style="padding-top:1%;">
+
         </div>
     </div>
 </div>
 
+<!-- Campaign List Modal-->
+<div class="modal fade" id="campaignList" role="dialog" data-backdrop="false">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header alert-primary">
+        <b class="modal-title">Campaign List</b>
+        <button  type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+      <form name="add_campaign_to_message" id="add_campaign_to_message" action="/addCampaignsToMessage" method="POST">
+        <div class="modal-body">
+          <input type="hidden" name="message_id" id="message_id" value="{{ glob.message_id }}">
+            <div>message id = {{ glob.message_id }}</div>
+          <div class="table-responsive" style="background-color: white;">
+            <table class="table table-striped">
+              <thead>
+              <tr>
+                <th scope="col"><b style="font-weight: 500; font-size:16px;">Select</b></th>
+                <th scope="col"><b style="font-weight: 500; font-size:16px;">Campaign</b></th>
+                <th scope="col"><b style="font-weight: 500; font-size:16px;">Status</b></th>
+                <th scope="col"><b style="font-weight: 500; font-size:16px;">Period</b></th>
+                <th scope="col"><b style="font-weight: 500; font-size:16px;">Channels</b></th>
+                <!--<th scope="col"><b style="font-weight: 500; font-size:16px;">Countries</b></th>-->
+                <th scope="col"><b style="font-weight: 500; font-size:16px;">Influencers</b></th>
+                <!--<th scope="col"><b style="font-weight: 500; font-size:16px;">Budget</b></th>-->
+                <!--<th scope="col"><b style="font-weight: 500; font-size:16px;">ROI</b></th>-->
+              </tr>
+              </thead>
+              <tbody>
+              {% for item in view_campaign_data['data'] %}
+              <tr>
+                <td>
+                  <input class="form-control campaign_id{{ item['campaign_id'] }}" type="checkbox"  multiple id="campaign_id" value="{{ item['campaign_id'] }}" name="campaign_id">
+                </td>
+                <td><a href="/viewCampaignDetails/{{ item['campaign_id'] }}">{{ item['campaign_name'] }}</a></td>
+                <td>Cell</td>
+                <td>{{ item['from_date'] }}- {{ item['to_date'] }}</td>
+                <td>
+                  {% set channels = item['channels'].split(',') %}
+                  {% for channel in channels %}
+                  {% if channel == 'youtube' %}
+                  <a href="#" class="fa fa-youtube red"></a>
+                  {% elif channel == 'facebook' %}
+                  <a href="#" class="fa fa-facebook blue"></a>
+                  {% elif channel == 'twitter' %}
+                  <a href="#" class="fa fa-twitter"></a>
+                  {% elif channel == 'instagram' %}
+                  <a href="#" class="fa fa-instagram pink"></a>
+                  {% endif %}
+                  {% endfor %}
+                </td>
+                <!--<td>-->
+                  <!--{% for region_name in item['region_name_list'] %}-->
+                  <!--{{ region_name }},-->
+                  <!--{% endfor %}-->
+                <!--</td>-->
+                <td>{{ item['no_of_influencers'] }}
+                  <span class="float-right text muted">
+                                <!--<a onclick="searchInfluencers('{{ item['campaign_name'] }}','{{ item['campaign_id'] }}','{{ item['channels'] }}','{{ item['video_cat_name'] }}','{{ item['min_lower_followers'] }}','{{ item['max_upper_followers'] }}','{{ item['regions'] }}')" class="fa fa-user-plus black" data-toggle="modal" data-target="#create_alert_modal" data-tooltip="true" title="Add Influencer" style="font-size:20px;"></a>-->
+                    <!--<button class="btn btn-sm btn-outline-secondary fa fa-user-plus"></button>-->
+                        </span>
+                </td>
+                <!--<td>{{ item['budget'] }} {{ item['currency'] }}</td>-->
+                <!--<td>Coming Soon</td>-->
+              </tr>
+              {% endfor %}
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="submit" id="addcampaigntomessage" class="btn btn-default">Save</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+<!-- Campaign List Modal-->
+<div class="modal fade" id="proposal" role="dialog" data-backdrop="false">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header alert-primary">
+        <b class="modal-title">Proposal</b>
+        <button  type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+      <form name="sent_proposal" id="sent_proposal" action="/sentProposal" method="POST">
+        <div class="modal-body">
+          <input type="hidden" name="message_id" value="{{ glob.message_id }}">
+            <div>message id = {{ glob.message_id }}</div>
+          <label for="campaign_name">Select Campaign</label>
+            <select id="proposal_campaign_name" name="proposal_campaign_name">
+                <option value="" disabled></option>
+            </select><br>
+            <label for="proposal_description">Description</label>
+            <div id="proposal_description"></div>
+            <br>
+            <label for="proposal_from_date">From Date :</label>
+            <div id="proposal_from_date"></div>
+            <br>
+            <label for="proposal_to_date">To Date :</label>
+            <div id="proposal_to_date"></div>
+            <br>
+            <label for="proposal_channels">Channels :</label>
+            <div id="proposal_channels">
+                <input type="checkbox" value="youtube">
+                <a href="#" class="fa fa-youtube red"></a>
+                <input type="checkbox" value="twitter">
+                <a href="#" class="fa fa-twitter"></a>
+                <input type="checkbox" value="facebook" disabled>
+                <a href="#" class="fa fa-facebook blue"></a>
+                <input type="checkbox" value="instagram" disabled>
+                <a href="#" class="fa fa-instagram pink"></a>
+            </div>
+
+        </div>
+        <div class="modal-footer">
+          <button type="submit" id="saveProposal" class="btn btn-default">Save</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+<script>
+    $( document ).ready(function() {
+
+    $("#add_campaign_to_message").submit(function(e) {
+        var form = $(this);
+        var url = form.attr('action');
+        $.ajax({
+               type: "POST",
+               url: url,
+               data: form.serialize(), // serializes the form's elements.
+               success: function(data)
+               {
+                   alert(data); // show response from the python script.
+                   $('#campaignList').modal('toggle');
+                   getCampaignsAddedToMessage();
+               }
+             });
+        e.preventDefault(); // avoid to execute the actual submit of the form.
+    });
+
+    function getCampaignsAddedToMessage(){
+        var message_id = $("#message_id").val();
+        <!--alert(message_id);-->
+        $.ajax({
+               type: "GET",
+               url: '/getCampaignsAddedToMessage/'+message_id,
+               <!--data: form.serialize(), // serializes the form's elements.-->
+
+               contentType: 'application/json;charset=UTF-8',
+
+               success: function(data)
+               {
+                   var myjson =  JSON.stringify(data);
+                   <!--alert(myjson); // show response from the python script.-->
+                   <!--var value = $("#campaignNameList").text();-->
+                   $( "#campaignNameList" ).empty();
+                   $( "#proposal_campaign_name" ).empty();
+                   jQuery.each(data.results, function(i, val) {
+                        <!--alert(val.campaign_name);-->
+
+                        <!--var campaignname_buttons= $('<input/>').attr({ type: 'button', name:'btn1', value:val.campaign_name,class:'btn-info btn-sm'});-->
+                        $('#campaignNameList').append('<tr><td><a href="#" class="btn-info btn-sm">'+val.campaign_name+'<a/></td><td>more data</td></tr>');
+
+                        $('#proposal_campaign_name').append('<option value="'+val.campaign_id+'">'+val.campaign_name+'</option>');
+                    });
+
+               }
+             });
+
+    }
+
+    $("#getCampaignsAddedToMessage").on("click",function(){
+        getCampaignsAddedToMessage();
+    });
+
+    getCampaignsAddedToMessage();
+
+
+    $("#proposal_campaign_name").on("change",function(){
+        $("#proposal_description").empty();
+        var campaign_id = $("#proposal_campaign_name").val();
+        alert(campaign_id);
+        $.ajax({
+               type: "GET",
+               url: '/getCampaignDetails/'+campaign_id,
+               success: function(data)
+               {
+                   alert(data); // show response from the python script.
+                   jQuery.each(data.results, function(i, val) {
+                       var description= $('<input/>').attr({ type: 'textarea', name:'proposal_description', value:val.campaign_description,class:'form-control'});
+                       $("#proposal_description").append(description);
+                       var from_date= $('<input/>').attr({  type: 'textbox', name:'proposal_from_date', value:val.from_date,class:'form-control', readonly:'true'});
+                       $("#proposal_from_date").append(from_date);
+                       var to_date= $('<input/>').attr({ type: 'textbox', name:'proposal_to_date', value:val.to_date,class:'form-control', readonly:'true'});
+                       $("#proposal_to_date").append(to_date);
+                       var to_date= $('<input/>').attr({ type: 'textbox', name:'proposal_to_date', value:val.to_date,class:'form-control', readonly:'true'});
+                   });
+
+               }
+             });
+    });
+
+
+});
+</script>
 {% endblock %}
 

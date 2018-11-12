@@ -93,21 +93,22 @@
                     {% endfor %}
                     <hr>
                     <div style="background-color: white;" class="table-responsive">
-                        <ul class="nav nav-tabs">
-                            {% set channels = view_campaign_details_data['data'][0]['channels'].split(',') %}
-                            {% for channel in channels %}
-                            <li class="nav-item">
-                                <a class="nav-link" data-toggle="tab" href="#{{ channel }}">{{ channel }}</a>
-                            </li>
-                            {% endfor %}
-                        </ul>
-                        <div class="tab-content">
+                        <!--<ul class="nav nav-tabs">-->
+                            <!--{% set channels = view_campaign_details_data['data'][0]['channels'].split(',') %}-->
+                            <!--{% for channel in channels %}-->
+                            <!--<li class="nav-item">-->
+                                <!--<a class="nav-link" data-toggle="tab" href="#{{ channel }}">{{ channel }}</a>-->
+                            <!--</li>-->
+                            <!--{% endfor %}-->
+                        <!--</ul>-->
+                        <!--<div class="tab-content">-->
 
-                            <div class="tab-pane container fade" id="youtube">
+                            <!--<div class="tab-pane container fade" id="youtube">-->
                                 <table class="table table-bordered table-striped table-hover" style="background-color: white;">
                                     <tr>
                                         <th><b style="font-weight: 500; font-size:15px;">Influencers</b></th>
                                         <th><b style="font-weight: 500; font-size:15px;">Status</b></th>
+                                        <th><b style="font-weight: 500; font-size:15px;">Channels</b></th>
                                         <th><b style="font-weight: 500; font-size:15px;">Cost</b></th>
                                         <th><b style="font-weight: 500; font-size:15px;">Revenue</b></th>
                                         <th><b style="font-weight: 500; font-size:15px;">Posts</b></th>
@@ -132,6 +133,7 @@
                                             </div>
                                         </td>
                                         <td></td>
+                                        <td></td>
                                         <td ><b style="font-size:14px; font-weight:400;">$1500</b></td>
                                         <td ><b style="font-size:14px; font-weight:400;">$10000</b></td>
                                         <td ><b style="font-size:14px; font-weight:400;">10</b></td>
@@ -145,31 +147,30 @@
                                     {% endfor %}
                                 </table>
                             </div>
-                            <div class="tab-pane container fade" id="twitter">
-                                <table class="table table-bordered table-striped table-hover" style="background-color: white;">
-                                    <tr>
-                                        <th><b style="font-weight: 500; font-size:15px;">Influencers</b></th>
-                                        <th><b style="font-weight: 500; font-size:15px;">Status</b></th>
-                                        <th><b style="font-weight: 500; font-size:15px;">Cost</b></th>
-                                        <th><b style="font-weight: 500; font-size:15px;">Revenue</b></th>
-                                        <th><b style="font-weight: 500; font-size:15px;">Posts</b></th>
-                                        <th><b style="font-weight: 500; font-size:15px;">Views</b></th>
-                                        <th><b style="font-weight: 500; font-size:15px;">Clicks</b></th>
-                                        <th><b style="font-weight: 500; font-size:15px;">New<br /> Users</b></th>
-                                        <th><b style="font-weight: 500; font-size:15px;">Engagement %</b></th>
-                                        <th><b style="font-weight: 500; font-size:15px;">CPA</b></th>
-                                        <th><b style="font-weight: 500; font-size:15px;">ROI</b></th>
-                                    </tr>
+                            <!--<div class="tab-pane container fade" id="twitter">-->
+                                <!--<table class="table table-bordered table-striped table-hover" style="background-color: white;">-->
+                                    <!--<tr>-->
+                                        <!--<th><b style="font-weight: 500; font-size:15px;">Influencers</b></th>-->
+                                        <!--<th><b style="font-weight: 500; font-size:15px;">Status</b></th>-->
+                                        <!--<th><b style="font-weight: 500; font-size:15px;">Cost</b></th>-->
+                                        <!--<th><b style="font-weight: 500; font-size:15px;">Revenue</b></th>-->
+                                        <!--<th><b style="font-weight: 500; font-size:15px;">Posts</b></th>-->
+                                        <!--<th><b style="font-weight: 500; font-size:15px;">Views</b></th>-->
+                                        <!--<th><b style="font-weight: 500; font-size:15px;">Clicks</b></th>-->
+                                        <!--<th><b style="font-weight: 500; font-size:15px;">New<br /> Users</b></th>-->
+                                        <!--<th><b style="font-weight: 500; font-size:15px;">Engagement %</b></th>-->
+                                        <!--<th><b style="font-weight: 500; font-size:15px;">CPA</b></th>-->
+                                        <!--<th><b style="font-weight: 500; font-size:15px;">ROI</b></th>-->
+                                    <!--</tr>-->
 
-                                    {% for twitter_inf_data in view_campaign_details_data['data'][0]['twitter_inf_data'] %}
-                                    <tr>
-                                        {{ twitter_inf_data['twitter_id'] }}
-                                    </tr>
+                                    <!--{% for twitter_inf_data in view_campaign_details_data['data'][0]['twitter_inf_data'] %}-->
+                                    <!--<tr>-->
+                                        <!--{{ twitter_inf_data['twitter_id'] }}-->
+                                    <!--</tr>-->
 
-                                    {% endfor %}
-                                </table>
-                            </div>
-
+                                    <!--{% endfor %}-->
+                                <!--</table>-->
+                            <!--</div>-->
                         </div>
                     </div>
                 </div>
