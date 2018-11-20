@@ -49,6 +49,8 @@ connecsiApp.register_blueprint(twitter_blueprint, url_prefix="/login")
 photos = UploadSet('photos', IMAGES)
 campaign_files = UploadSet('campaignfiles')
 brands_classified_files = UploadSet('brandsclassifiedfiles', IMAGES)
+message_files = UploadSet('messagefiles', IMAGES)
+message_agreements = UploadSet('messageagreements')
 
 # ROOT_DIR = os.path.dirname(os.path.abspath(__file__)) # This is your Project Root
 # print(ROOT_DIR+'\\static\\img')
@@ -58,12 +60,16 @@ brands_classified_files = UploadSet('brandsclassifiedfiles', IMAGES)
 connecsiApp.config['UPLOADED_PHOTOS_DEST'] = 'static/img'
 connecsiApp.config['UPLOADED_CAMPAIGNFILES_DEST'] = 'static/campaign_files'
 connecsiApp.config['UPLOADED_BRANDSCLASSIFIEDFILES_DEST'] = 'static/brands_classified_files'
+connecsiApp.config['UPLOADED_MESSAGEFILES_DEST'] = 'static/message_files'
+connecsiApp.config['UPLOADED_MESSAGEAGREEMENTS_DEST'] = 'static/message_agreements'
 
 
 
 configure_uploads(connecsiApp, photos)
 configure_uploads(connecsiApp, campaign_files)
 configure_uploads(connecsiApp, brands_classified_files)
+configure_uploads(connecsiApp, message_files)
+configure_uploads(connecsiApp, message_agreements)
 
 
 # oauth = OAuth(connecsiApp)
@@ -430,10 +436,10 @@ def searchInfluencers():
             print('i m disguise')
             try:
                 payload = {
-                    "category_id": "20",
+                    "category_id": "",
                     "country": "PL",
                     "min_lower": 0,
-                    "max_upper": 30000,
+                    "max_upper": 21200,
                     "sort_order": "High To Low"
                 }
                 url = base_url + 'Youtube/searchChannels/Youtube'
@@ -445,8 +451,8 @@ def searchInfluencers():
                     item.update({'linechart_id': linechart_id})
                     # print(item)
                     linechart_id += 1
-                form_filters = {'channel': 'Youtube', 'string_word': 'Gaming', 'country': 'PL', 'min_lower': '0',
-                                'max_upper': '30000', 'search_inf': '', 'sort_order': 'High To Low',
+                form_filters = {'channel': 'Youtube', 'string_word': '', 'country': 'PL', 'min_lower': '0',
+                                'max_upper': '21200', 'search_inf': '', 'sort_order': 'High To Low',
                                 'country_name': 'Poland'}
             except:
                 pass
@@ -460,10 +466,10 @@ def searchInfluencers():
         print('i m here last')
         try:
             payload = {
-                "category_id": "20",
+                "category_id": "",
                 "country": "PL",
                 "min_lower": 0,
-                "max_upper": 30000,
+                "max_upper": 21200,
                 "sort_order": "High To Low"
             }
             url = base_url + 'Youtube/searchChannels/Youtube'
@@ -475,7 +481,7 @@ def searchInfluencers():
                 item.update({'linechart_id': linechart_id})
                 # print(item)
                 linechart_id += 1
-            form_filters = {'channel': 'Youtube', 'string_word': 'Gaming', 'country': 'PL', 'min_lower': '0', 'max_upper': '30000', 'search_inf': '', 'sort_order': 'High To Low', 'country_name': 'Poland'}
+            form_filters = {'channel': 'Youtube', 'string_word': '', 'country': 'PL', 'min_lower': '0', 'max_upper': '21200', 'search_inf': '', 'sort_order': 'High To Low', 'country_name': 'Poland'}
         except:
             pass
 
@@ -567,9 +573,16 @@ def viewCampaigns():
     from templates.campaign.campaign import Campaign
     campaignObj = Campaign(user_id=user_id)
     view_campaign_data = campaignObj.get_all_campaigns()
-    viewCampaigns.counter = 0
     return render_template('campaign/viewCampaigns.html',view_campaign_data=view_campaign_data)
 
+@connecsiApp.route('/getCampaigns',methods=['GET','POST'])
+@is_logged_in
+def getCampaigns():
+    user_id=session['user_id']
+    from templates.campaign.campaign import Campaign
+    campaignObj = Campaign(user_id=user_id)
+    view_campaign_data = campaignObj.get_all_campaigns()
+    return jsonify(results=view_campaign_data['data'])
 
 @connecsiApp.route('/viewCampaignDetails/<string:campaign_id>',methods=['GET'])
 @is_logged_in
@@ -685,8 +698,11 @@ def inbox(message_id):
         for item in conv_data['data']:
             if item['to_email_id'] == email_id:
                inboxList.append(item)
+
+        inboxSorted = sorted(inboxList, key=lambda k: k['message_id'])
+        print('sorted inboxlist = ', inboxSorted)
         inbox = {}
-        inbox.update({'data':inboxList})
+        inbox.update({'data':inboxSorted})
         print('inbox = ',inbox)
 
         for item in inbox['data']:
@@ -712,9 +728,10 @@ def inbox(message_id):
         # #######################################
 
         from_email_id=''
+
         if message_id == "0":
             try:
-                message_id = inbox['data'][0]['message_id']
+                message_id = inbox['data'][-1]['message_id']
                 from_email_id = inbox['data'][0]['from_email_id']
                 print('default message id = ', message_id)
             except:pass
@@ -778,6 +795,8 @@ def inbox(message_id):
         inbox.update({'data': removed_deleted_messages_from_inbox})
         print('removed deleted from inbox', inbox)
 
+        inbox['data'] = inbox['data'][::-1]
+        inbox.update({'data':inbox['data']})
         removed_deleted_messages_from_conv = []
         for item in full_conv['data']:
             try:
@@ -804,6 +823,7 @@ def inbox(message_id):
         print('final conv = ',full_conv)
         for item in full_conv['data']:
             print(item)
+        print('campaign data = ',view_campaign_data)
         return render_template('email/inbox.html', inbox = inbox, full_conv = full_conv, conv_title=conv_title,view_campaign_data=view_campaign_data)
     except:
         pass
@@ -813,6 +833,7 @@ def inbox(message_id):
     view_campaign_data = campaignObj.get_all_campaigns()
 
     print('final conv default = ', full_conv)
+
     return render_template('email/inbox.html',inbox=inbox, full_conv = full_conv,conv_title=conv_title,view_campaign_data=view_campaign_data)
 
 
@@ -824,8 +845,9 @@ def addCampaignsToMessage():
         campaign_ids= request.form.getlist('campaign_id')
         print(message_id)
         print(campaign_ids)
+        channel_id = request.form.get('channel_id')
         for campaign_id in campaign_ids:
-            url = base_url + 'Messages/addCampaignIdToMessageId/' + message_id + '/' + campaign_id
+            url = base_url + 'Messages/addCampaignIdToMessageId/' + message_id + '/' + campaign_id+'/'+str(channel_id)
             print(url)
             response = requests.post(url=url)
             response_json = response.json()
@@ -1029,6 +1051,8 @@ def delete(message_id,conv_id,user_id):
 def compose():
     return render_template('email/compose.html')
 
+
+
 @connecsiApp.route('/reply/<string:message_id>/<string:to_email_id>/<string:subject>',methods = ['GET'])
 @is_logged_in
 def reply(message_id,to_email_id,subject):
@@ -1059,6 +1083,166 @@ def sendEmail():
            pass
        return render_template('email/compose.html')
 
+
+
+@connecsiApp.route('/sendMessage',methods = ['POST'])
+@is_logged_in
+def sendMessage():
+    if request.method == 'POST':
+       payload = request.form.to_dict()
+       # print(payload)
+       payload.update({'from_email_id': session['email_id']})
+       # print(payload)
+       date = datetime.datetime.now().strftime("%A, %d. %B %Y %I:%M%p")
+       payload.update({'date':date})
+       print(payload)
+
+       # exit()
+       user_id= session['user_id']
+       type = session['type']
+       url = base_url + 'Messages/' + str(user_id) +'/' + type
+       try:
+           response = requests.post(url=url, json=payload)
+           data = response.json()
+           print(data)
+           return 'Your email has been sent'
+       except:
+           pass
+           return  'Server Error'
+
+
+
+@connecsiApp.route('/sendProposal',methods = ['POST'])
+@is_logged_in
+def sendProposal():
+    if request.method == 'POST':
+       payload = request.form.to_dict()
+       # payload.update({'from_email_id': session['email_id']})
+       # date = datetime.datetime.now().strftime("%A, %d. %B %Y %I:%M%p")
+       proposal_arrangements = request.form.getlist('proposal_arrangements')
+       proposal_arrangements_string = ','.join(proposal_arrangements)
+       print(proposal_arrangements_string)
+       payload.update({'proposal_arrangements':proposal_arrangements_string})
+
+       proposal_kpis = request.form.getlist('proposal_kpis')
+       proposal_kpis_string = ','.join(proposal_kpis)
+       print(proposal_kpis_string)
+       payload.update({'proposal_kpis': proposal_kpis_string})
+
+       proposal_channels = request.form.getlist('proposal_channels')
+       proposal_channels_string = ','.join(proposal_channels)
+       print(proposal_channels_string)
+       payload.update({'proposal_channels': proposal_channels_string})
+
+       print(payload)
+
+       user_id= session['user_id']
+       # type = session['type']
+       url = base_url + 'Brand/Proposal/' + str(user_id)
+       try:
+           response = requests.post(url=url, json=payload)
+           data = response.json()
+           print(data)
+           return 'Proposal Sent'
+       except:
+           pass
+           return  'Server Error'
+
+@connecsiApp.route('/getProposal/<string:message_id>/<string:campaign_id>',methods=['GET'])
+@is_logged_in
+def getProposal(message_id,campaign_id):
+    url = base_url + 'Brand/Proposal/get/' + str(message_id)+'/'+str(campaign_id)
+    try:
+        response = requests.get(url=url)
+        data = response.json()
+        print(data)
+        return jsonify(results=data['data'])
+    except:
+        pass
+        return 'Server Error'
+
+
+
+@connecsiApp.route('/accept_decline_proposal/<string:message_id>/<string:campaign_id>/<string:status>',methods=['GET'])
+@is_logged_in
+def accept_decline_proposal(message_id,campaign_id,status):
+    new_status=''
+    if status == 'Accept':
+        new_status = 'Current Partner'
+    if status == 'Reject':
+        new_status = 'Proposal Rejected'
+    print(new_status)
+
+    url = base_url + 'Campaign/update_channel_status_for_campaign/' + str(message_id)+'/'+str(campaign_id)+'/'+new_status
+    try:
+        response = requests.put(url=url)
+        data = response.json()
+        print(data)
+        return 'Succesfully updated Status'
+    except:
+        pass
+        return 'Server Error'
+
+@connecsiApp.route('/uploadMessageFiles',methods=['POST'])
+@is_logged_in
+def uploadMessageFiles():
+    if request.method == 'POST':
+        payload = request.form.to_dict()
+        user_id=session['user_id']
+        payload.update({'user_id':user_id})
+        files = request.files.getlist("message_files")
+        print(files)
+        # exit()
+
+        filenames = []
+        for file in files:
+            filename = message_files.save(file)
+            filenames.append(filename)
+        filenames_string = ','.join(filenames)
+        payload.update({'message_files': filenames_string})
+        print(payload)
+        # return 'uploaded'
+        message_id = request.form.get('message_id')
+        url = base_url + 'Messages/uploadMessageFiles/'+message_id
+        try:
+            response = requests.post(url=url,json=payload)
+            data = response.json()
+            print(data)
+            return 'Succesfully Uploaded Files'
+        except:
+            pass
+            return 'Server Error'
+
+@connecsiApp.route('/uploadMessageAgreements',methods=['POST'])
+@is_logged_in
+def uploadMessageAgreements():
+    if request.method == 'POST':
+        payload = request.form.to_dict()
+        user_id=session['user_id']
+        payload.update({'user_id':user_id})
+        files = request.files.getlist("message_agreements")
+        print(files)
+        # exit()
+
+        filenames = []
+        for file in files:
+            filename = message_agreements.save(file)
+            filenames.append(filename)
+        filenames_string = ','.join(filenames)
+        payload.update({'message_agreements': filenames_string})
+        print(payload)
+        # return 'uploaded'
+        message_id = request.form.get('message_id')
+        url = base_url + 'Messages/uploadMessageAgreements/'+message_id
+        try:
+            response = requests.post(url=url,json=payload)
+            data = response.json()
+            print(data)
+            return 'Succesfully Uploaded Agreement'
+        except:
+            pass
+            return 'Server Error'
+
 @connecsiApp.route('/replyEmail/<string:message_id>', methods=['POST'])
 @is_logged_in
 def replyEmail(message_id):
@@ -1086,10 +1270,40 @@ def replyEmail(message_id):
         return render_template('email/compose.html')
 
 
-@connecsiApp.route('/test')
+
+@connecsiApp.route('/replyMessage', methods=['POST'])
 @is_logged_in
-def test():
-    return render_template('testRequest.html')
+def replyMessage():
+    if request.method == 'POST':
+        payload = request.form.to_dict()
+        print('payload',payload)
+
+        message_id = request.form.get('message_id')
+        print('message id = ',message_id)
+        payload.update({'conv_from_email_id': session['email_id']})
+        # print(payload)
+        date = datetime.datetime.now().strftime("%A, %d. %B %Y %I:%M%p")
+        print(date,type(date))
+        payload.update({'conv_date': date})
+        print(payload)
+        # exit()
+        user_id = session['user_id']
+        user_type = session['type']
+        url = base_url + 'Messages/conversations/' + str(message_id)+'/'+ str(user_id) + '/' + str(user_type)
+        print(url)
+
+        # exit()
+        try:
+            response = requests.post(url=url, json=payload)
+            data = response.json()
+            print(data)
+
+            return 'You Replied Successfully'
+        except Exception as e:
+            print(e)
+            return 'Error in Reply!!!!!! Try Agin Later'
+
+
 
 
 @connecsiApp.route('/addToFavInfList/<string:channel_id>',methods=['GET'])
@@ -1261,10 +1475,23 @@ def addYoutubeInfToCampaignList():
             url = base_url+'Brand/addYotubeInfToCampaignList/'+ str(channel_id) + '/' + str(campaign_id)
             response = requests.post(url=url)
             response = response.json()
-            flash('Youtube Influencer Added to Campaign','success')
-        return viewCampaigns()
+            # flash('Youtube Influencer Added to Campaign','success')
+        # return viewCampaigns()
+        return 'Youtube Influencer Added to Campaign'
 
-
+@connecsiApp.route('/getChannelStatusForCampaign/<string:channel_id>',methods=['GET'])
+@is_logged_in
+def getChannelStatusForCampaign(channel_id):
+    print(channel_id)
+    url=base_url+'Campaign/channel_status_for_campaign/'+str(channel_id)
+    print(url)
+    try:
+        channel_status_for_campaign = requests.get(url=url)
+        response_json = channel_status_for_campaign.json()
+        print(response_json)
+        return jsonify(results=response_json['data'])
+    except Exception as e:
+        print(e)
 
 
 @connecsiApp.route('/reports')
@@ -1386,4 +1613,4 @@ def inf_editProfile():
 
 if __name__ == '__main__':
     # connecsiApp.secret_key = 'connecsiSecretKey'
-    connecsiApp.run(debug=True,host='localhost')
+    connecsiApp.run(debug=True,host='127.0.0.1')

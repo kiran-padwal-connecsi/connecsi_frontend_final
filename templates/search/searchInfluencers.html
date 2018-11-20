@@ -178,8 +178,10 @@
                   <table cellspacing="1" border="solid 1px #E1DEDD;">
                     <tr>
                       <td rowspan="3" style="border-left:solid 1px white;">
-                        <a href="/compose" class="fa fa-envelope" data-toggle="tooltip" title="Message" style="position: relative; z-index: 1; font-size:25px;"></a>
-                        <br>
+                        <span data-toggle="modal" data-target="#sendMessage">
+                        <a  onclick="sendMessage('{{ item['channel_id'] }}','{{ item['business_email'] }}')" class="fa fa-envelope" data-toggle="tooltip"  title="Message" style="position: relative; z-index: 1; font-size:25px;"></a>
+                        </span>
+                          <br>
                         {% if form_filters['campaign_id'] %}
                         <!--<a href="/addToCampaign/{{  form_filters['campaign_id'] }}" class="fa fa-bullseye red" data-toggle="tooltip" title="Add To Campaign" style="font-size:25px;"><i class="fa fa-plus-circle green" style="font-size:10px; position:relative; top:5px; left:-8px;"></i></a>-->
                         <a href="#" class="fa fa-bullseye red" data-toggle="tooltip" title="Under Construction" style="font-size:25px;"><i class="fa fa-plus-circle green" style="font-size:10px; position:relative; top:5px; left:-8px;"></i></a>
@@ -253,20 +255,13 @@
                         <div class="scroll">
                           <ul class="nav nav-tabs" style="background-color:#DFDEDE  ;">
                             <li style="margin-left:3%; font-size:15px; font-weight:bold; "><a data-toggle="tab" href="#status{{ item['channel_id'] }}" style="color:black;">Status<i class="fa fa-bullseye red"></i></a></li>&nbsp;&ensp;
+                            <!--<li style="margin-left:3%; font-size:15px; font-weight:bold; "><a onclick="updateChannelStatusForCampaign('{{ item['channel_id'] }}')" href="#" style="color:black;">Status<i class="fa fa-bullseye red"></i></a></li>&nbsp;&ensp;-->
                             <li style="font-size:15px; font-weight:bold; "><a data-toggle="tab" href="#alert{{ item['channel_id'] }}" style="color:black;">Alert<i class="fa fa-bell black"></i></a></li>
                           </ul>
 
                           <div class="tab-content">
                             <div id="status{{ item['channel_id'] }}" class="tab-pane fade show active">
-                              <b style="font-weight:450; font-size:15px;">Campaign 1<br/></b>
-                              <b style="font-weight:400; color:orange; font-size:15px;">Contacted</b>
-                              <hr style="height:0px; margin:auto;">
-                              <b style="font-weight:450; font-size:15px;">Campaign 2<br/></b>
-                              <b style="font-weight: 400; color:green; font-size:15px;">Accepted
-                              </b>
-                              <hr style="height:0px; margin:auto;">
-                              <b style="font-weight:450; font-size:15px;">Campaign 3<br/></b>
-                              <b style="font-weight: 400; color:orange; font-size:15px;">Contacted</b>
+                              <!--<input type="hidden" id="campaign_id[]" name="campaign_id[]">-->
                             </div>
 
                             <div id="alert{{ item['channel_id'] }}" class="tab-pane fade">
@@ -540,6 +535,7 @@ $( document ).ready(function() {
       <form name="add_youtube_inf_to_campaign_list_form" id="add_influencer_to_campaign" action="/addYoutubeInfToCampaignList" method="POST">
         <div class="modal-body">
           <input type="hidden" name="channel_id" id="youtube_channel_id">
+
           <div id="channel_name"></div>
           <div>channels</div>
           <div class="table-responsive" style="background-color: white;">
@@ -581,9 +577,9 @@ $( document ).ready(function() {
                   {% endfor %}
                 </td>
                 <!--<td>-->
-                  <!--{% for region_name in item['region_name_list'] %}-->
-                  <!--{{ region_name }},-->
-                  <!--{% endfor %}-->
+                <!--{% for region_name in item['region_name_list'] %}-->
+                <!--{{ region_name }},-->
+                <!--{% endfor %}-->
                 <!--</td>-->
                 <td>{{ item['no_of_influencers'] }}
                   <span class="float-right text muted">
@@ -606,6 +602,44 @@ $( document ).ready(function() {
     </div>
   </div>
 </div>
+
+<!-- Send message Modal form-->
+<div class="modal fade" id="sendMessage" role="dialog"  data-backdrop="static">
+  <div class="modal-dialog modal-sm">
+    <div class="modal-content">
+      <div class="modal-header alert-primary">
+        <b class="modal-title">Send Message</b>
+        <button  type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+      <form name="create_alert_form" id="send_message_form" action="/sendMessage" method="POST">
+        <div class="modal-body">
+          <input  class="form-control" type="hidden" value="" name="channel_id" id="message_channel_id">
+          <div class="row">
+            <div class="col-12">
+              <ul class="no-list-style">
+                <li class="mb-2">
+                  <span class="text-bold-500 primary"><a><i class=" font-small-3"></i>*To :</a></span>
+                  <span class="display-block"><input type="text" class="form-control" name="to_email_id" id="to_email_id" readonly> </span>
+                </li>
+                <li class="mb-2">
+                  <span class="text-bold-500 primary"><a><i class=" font-small-3"></i>*Subject :</a></span>
+                  <span class="display-block"><input required type="text" class="form-control" name="subject" > </span>
+                </li>
+                <li class="mb-2">
+                  <span class="text-bold-500 primary"><a><i class=" font-small-3"></i>Message:</a></span>
+                  <span class="display-block"><textarea class="form-control" name="message"></textarea> </span>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="submit"  class="btn btn-default">Save</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
 <script>
 function createAlert(channel_id,followers,views,likes,comments) {
     <!--alert(channel_id);-->
@@ -615,20 +649,47 @@ function createAlert(channel_id,followers,views,likes,comments) {
     $("#total_likes").val(likes);
     $("#total_comments").val(comments);
 }
+function sendMessage(channel_id,to_email_id) {
+    <!--alert(channel_id);-->
+    $("#message_channel_id").val(channel_id);
+    $("#to_email_id").val(to_email_id);
+}
 </script>
 <script>
+function getCampaign_ids(channel_id){
+
+  $.ajax({
+               type: "GET",
+               url: '/getChannelStatusForCampaign/'+channel_id,
+               contentType: 'application/json;charset=UTF-8',
+               success: function(data)
+               {
+
+                   if (data.results.length != 0){
+                   jQuery.each(data.results, function(i, val) {
+                        <!--alert(val.campaign_id);-->
+                        $('.campaign_id'+val.campaign_id).attr('disabled', true);
+
+                    });
+                    }
+
+               }
+  });
+
+}
+
 function campaignList(channel_id) {
-    <!--alert(channel_id);-->
+
     $( "input#campaign_id" ).prop('checked', false);
     $( "input#campaign_id" ).prop('disabled', false)
     $("#youtube_channel_id").val(channel_id);
+    var campaign_ids = getCampaign_ids(channel_id);
+    <!--alert(campaign_ids);-->
     {% for item in view_campaign_data['data'] %}
         {% for item1 in item['youtube_inf_data'] %}
             var campaign_channel_id = "{{ item1['channel_id'] }}";
             var campaign_id = "{{ item['campaign_id'] }}";
-            <!--alert("campaign_id =" + campaign_id);-->
-            <!--alert(channel_id);-->
-            <!--alert("campaign_channel_id ="+campaign_channel_id);-->
+
             if (channel_id == campaign_channel_id){
                 <!--alert("equal");-->
                 $('.campaign_id'+campaign_id).attr('disabled', true);
@@ -640,37 +701,80 @@ function campaignList(channel_id) {
         {% endfor %}
     {% endfor %}
 }
-</script>
-<script>
-<!--window.onscroll = function() {myFunction()};-->
 
-<!--var header = document.getElementById("myHeader");-->
-<!--var sticky = header.offsetTop;-->
+function updateChannelStatusForCampaign(channel_id){
+    <!--alert(channel_id);-->
+    $.ajax({
+               type: "GET",
+               url: '/getChannelStatusForCampaign/'+channel_id,
+               contentType: 'application/json;charset=UTF-8',
+               success: function(data)
+               {
+                   $( '#status'+channel_id).empty();
+                   if (data.results.length != 0){
+                   jQuery.each(data.results, function(i, val) {
+                        <!--alert(val.campaign_name);-->
+                        <!--alert(val.status);-->
 
-<!--function myFunction() {-->
-  <!--if (window.pageYOffset > sticky) {-->
-    <!--header.classList.add("sticky");-->
-  <!--} else {-->
-    <!--header.classList.remove("sticky");-->
-  <!--}-->
-<!--}-->
+                            $('#status'+channel_id).append('<b style="font-weight:450; font-size:15px;">'+val.campaign_name+'<br/></b>');
+                            $('#status'+channel_id).append('<b style="font-weight:400; color:orange; font-size:15px;">'+val.status+'</b>');
+                            $('#status'+channel_id).append('<hr style="height:0px; margin:auto;">');
+                    });
+                    }
+                    else{
+                        $('#status'+channel_id).append('<b>No Campaigns</b>');
+                    }
+               }
+             });
+
+}
 </script>
-<!--<script>-->
-<!--$(document).ready(function(){-->
-<!--var clicked;-->
-<!--$(".favorite").click(function(){-->
-<!--clicked = $(this).attr("name");-->
-<!--$.ajax({-->
-<!--type : 'POST',-->
-<!--url : "{{url_for('test')}}",-->
-<!--contentType: 'application/json;charset=UTF-8',-->
-<!--data : {'data':clicked}-->
-<!--});-->
-<!--});-->
-<!--});-->
-<!--</script>-->
+
 <script>
   $(document).ready(function () {
+        $("#add_influencer_to_campaign").submit(function(e) {
+        var form = $(this);
+        var url = form.attr('action');
+        var channel_id = $('#youtube_channel_id').val();
+        $.ajax({
+               type: "POST",
+               url: url,
+               data: form.serialize(), // serializes the form's elements.
+               success: function(data)
+               {
+                   alert(data); // show response from the python script.
+                   $('#campaignList').modal('toggle');
+                   updateChannelStatusForCampaign(channel_id);
+               }
+             });
+        e.preventDefault(); // avoid to execute the actual submit of the form.
+    });
+
+$("#send_message_form").submit(function(e) {
+        var form = $(this);
+        var url = form.attr('action');
+        var channel_id = $('#message_channel_id').val();
+        $.ajax({
+               type: "POST",
+               url: url,
+               data: form.serialize(), // serializes the form's elements.
+               success: function(data)
+               {
+                   alert(data); // show response from the python script.
+                   $('#sendMessage').modal('toggle');
+                   updateChannelStatusForCampaign(channel_id);
+               }
+             });
+        e.preventDefault(); // avoid to execute the actual submit of the form.
+    });
+
+
+{% for item in data['data'] %}
+  updateChannelStatusForCampaign('{{ item['channel_id'] }}');
+{% endfor %}
+
+
+
         <!--alert('lazy');-->
         <!--$(".lazy").hide();-->
         <!--$(".lazy").addClass("loader");-->
@@ -680,14 +784,6 @@ function campaignList(channel_id) {
         threshold: 0,
         scrollInterval: 500
         });
-
-
-<!--$('#create_alert_modal').on('shown', function () {-->
-    <!--$('body').on('wheel.modal mousewheel.modal', function () {return false;});-->
-<!--}).on('hidden', function () {-->
-    <!--$('body').off('wheel.modal mousewheel.modal');-->
-<!--});-->
-
    });
 
 

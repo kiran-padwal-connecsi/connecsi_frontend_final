@@ -107,3 +107,6 @@ class Campaign:
             print(e)
             pass
             return view_campaign_details
+
+
+

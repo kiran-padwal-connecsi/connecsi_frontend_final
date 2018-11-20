@@ -22,7 +22,7 @@
                             <div class="users-list-padding">
                                 {% for item in inbox['data'] %}
 
-                                <a id="message{{ item['message_id'] }}" class="list-group-item list-group-item-action no-border" href="/inbox/{{ item['message_id'] }}" >
+                                <a id="message{{ item['message_id'] }}" class="list-group-item list-group-item-action " href="/inbox/{{ item['message_id'] }}" >
                                     <span class="media">
                                         <span class="avatar avatar-md mr-2">
                                             {% if item['img'] %}
@@ -65,8 +65,12 @@
                         </div>
                     </div>
                     <h3 class="list-group-item-heading">{{ conv_title }}</h3>
+                    {{ full_conv['data'][0]['from_email_id'] }}
+                    {{ full_conv['data'][0]['channel_id'] }}
+                    {% set _ = glob.update({'from_email_id' : full_conv['data'][0]['from_email_id']}) %}
+                    {% set _ = glob.update({'channel_id' : full_conv['data'][0]['channel_id']}) %}
+                    {% set _ = glob.update({'message_id' : full_conv['data'][0]['message_id']}) %}
                     {% for item in full_conv['data'] %}
-                    {% set _ = glob.update({'message_id' : item['message_id']}) %}
                     <div class="media-list">
                         <div id="heading{{ item['collapse_id'] }}" class="card-header p-0">
                             <a data-toggle="collapse" href="#{{ item['collapse_id'] }}" aria-expanded="true" aria-controls="{{ item['collapse_id'] }}" class="collapsed email-app-sender list-group-item list-group-item-action no-border bg-blue-grey bg-lighten-5">
@@ -81,7 +85,10 @@
                                     <div class="media-body">
                                         <h6 class="list-group-item-heading">{{ item['first_name'] }}
                                          {% if item['to_email_id'] == session['email_id'] %}
-                                        <span class="float-right text muted"><button onclick="location.href='/reply/{{ item['message_id'] }}/{{ item['from_email_id'] }}/{{ item['subject'] }}'" class="btn btn-sm btn-outline-secondary"><i class="fa fa-reply"></i></button></span>
+                                        <!--<span class="float-right text muted"><button onclick="location.href='/reply/{{ item['message_id'] }}/{{ item['from_email_id'] }}/{{ item['subject'] }}'" class="btn btn-sm btn-outline-secondary"><i class="fa fa-reply"></i></button></span>-->
+                                        <span data-toggle="modal" data-target="#replyMessage">
+                                            <button onclick="replyMessage('{{ item['from_email_id'] }}','{{ item['subject'] }}')" class="btn btn-sm btn-outline-secondary float-right"><i class="fa fa-reply"></i></button>
+                                        </span>
                                          {% endif %}
                                         <span class="float-right text muted"><button onclick="location.href='/delete/{{ item['message_id'] }}/{% if item['conv_id'] %}{{ item['conv_id'] }}{% else %}{% set number = 0 | int %}{{ number }}{% endif %}/{{ session['user_id'] }}'" class="btn btn-sm btn-outline-secondary"><i class="ft-trash-2"></i></button></span>
                                         </h6>
@@ -102,55 +109,102 @@
                     </div>
                     {% endfor %}
                 </div>
+            </div>
 
-            </div>
         </div>
-        <div style="padding-top:1%;">
-            <div class="">
-                <div><h6>Topics</h6></div>
-                <table class="table-striped table-bordered" id="campaignNameList">
-                </table>
+        {% if  glob.from_email_id != 'business@connecsi.com'  %}
+        <div class="email-app-mail-content-area w-80">
+            <div class="email-app-mail-content-detail">
+                <div class="container width-400">
+                    <h3>Topics</h3>
+                    <div class="row">
+
+                        <div class="col-sm-12 bg-blue-grey bg-lighten-5">
+                            <table class="table-striped table-bordered" id="campaignNameList">
+
+                            </table>
+                        </div>
+                        <div class="col-sm-12 bg-blue-grey bg-lighten-5" >
+                            {% if glob.message_id %}
+                            {% if  glob.from_email_id == session['email_id']  %}
+                            <span data-toggle="modal" data-target="#campaignList">
+                                <a class=" btn btn-outline-primary btn-sm" onclick="campaignList('{{ glob.channel_id }}')">Add campaign</a>
+                            </span>
+                            <!--<a class="btn-info btn-sm"  id="getCampaignsAddedToMessage">View campaign</a>-->
+                            {% endif %}
+                            {% endif %}
+                        </div>
+                        <div class="col-sm-12 bg-blue-grey bg-lighten-5">
+                            <ul class="nav nav-tabs">
+                                <li class="nav-item">
+                                    <a class="nav-link" data-toggle="tab" href="#proposals">Proposals</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" data-toggle="tab" href="#agreements">Agreements</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" data-toggle="tab" href="#files">Files</a>
+                                </li>
+                            </ul>
+                            <div class="tab-content">
+                                <div class="tab-pane container fade" id="proposals">
+
+
+
+                                    <table class="table-striped table-bordered">
+                                        <tr>
+                                            <td>Proposal List</td>
+                                            <td>
+                                                {% if glob.message_id %}
+                                    {% if  glob.from_email_id == session['email_id']  %}
+                                    <a class="btn btn-outline-primary btn-sm"  data-toggle="modal" data-target="#proposal">New Proposal</a>
+                                    <!--<a class="btn-info btn-sm"  id="getCampaignsAddedToMessage">View campaign</a>-->
+                                    {% endif %}
+                                            </td>
+                                        </tr>
+                                    </table>
+                                    <table class="table-striped table-bordered">
+                                        <div id="proposalList">
+
+                                        </div>
+                                    </table>
+                                    {% endif %}
+                                </div>
+                                <div class="tab-pane container fade" id="agreements">
+                                    <form method="POST" action="/uploadMessageAgreements" name="message_agreements_form" id="message_agreements_form" enctype="multipart/form-data">
+                                    <div>
+                                        <input type="hidden" name="message_id" value="{{ glob.message_id }}">
+                                        <input type="hidden" name="channel_id" value="{{ glob.channel_id }}">
+
+                                        <span>
+                                        <input  type="file" name="message_agreements" id="message_agreements1" class="message_agreements" required>
+                                    </span><br class="displayMessageAgreements">
+                                    </div>
+                                        <button type="submit" class="btn-info btn btn-sm">Upload Agreement</button>
+                                    </form>
+                                </div>
+                                <div class="tab-pane container fade" id="files">
+                                    <form method="POST" action="/uploadMessageFiles" name="message_files_form" id="message_files_form" enctype="multipart/form-data">
+                                    <div>
+                                        <input type="hidden" name="message_id" value="{{ glob.message_id }}">
+                                        <input type="hidden" name="channel_id" value="{{ glob.channel_id }}">
+
+                                        <span>
+                                        <input  type="file" name="message_files" id="message_files1" class="message_files" required>
+                                    </span><br class="displayMessageFiles">
+                                    </div>
+                                        <button type="submit" class="btn-info btn btn-sm">Upload Files</button>
+                                    </form>
+                                    <!--<progress></progress>-->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-        </div>
-        <div>
-            {% if glob.message_id %}
-            <a class="btn-info btn-sm"  data-toggle="modal" data-target="#campaignList">Add campaign</a>
-            <!--<a class="btn-info btn-sm"  id="getCampaignsAddedToMessage">View campaign</a>-->
-            {% endif %}
         </div>
         <!--<div id="campaignNameList"></div>-->
-        <ul class="nav nav-tabs">
-            <li class="nav-item">
-                <a class="nav-link" data-toggle="tab" href="#proposals">Proposals</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" data-toggle="tab" href="#agreements">Agreements</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" data-toggle="tab" href="#files">Files</a>
-            </li>
-        </ul>
-        <div class="tab-content">
-            <div class="tab-pane container fade" id="proposals">
-                <div><h6>Proposal List</h6></div>
-                <table class="table-striped table-bordered" id="proposalList">
-                </table>
-                {% if glob.message_id %}
-                <a class="btn-info btn-sm"  data-toggle="modal" data-target="#proposal">New Proposal</a>
-                <!--<a class="btn-info btn-sm"  id="getCampaignsAddedToMessage">View campaign</a>-->
-                {% endif %}
-            </div>
-            <div class="tab-pane container fade" id="agreements">
-                <div>hello agreements</div>
-            </div>
-            <div class="tab-pane container fade" id="files">
-                <div>hello files</div>
-            </div>
-        </div>
-
-        <div style="padding-top:1%;">
-
-        </div>
+        {% endif %}
     </div>
 </div>
 
@@ -165,6 +219,7 @@
       <form name="add_campaign_to_message" id="add_campaign_to_message" action="/addCampaignsToMessage" method="POST">
         <div class="modal-body">
           <input type="hidden" name="message_id" id="message_id" value="{{ glob.message_id }}">
+            <input   type="text" value="" name="channel_id" id="campaign_channel_id">
             <div>message id = {{ glob.message_id }}</div>
           <div class="table-responsive" style="background-color: white;">
             <table class="table table-striped">
@@ -183,8 +238,10 @@
               </thead>
               <tbody>
               {% for item in view_campaign_data['data'] %}
+
               <tr>
                 <td>
+
                   <input class="form-control campaign_id{{ item['campaign_id'] }}" type="checkbox"  multiple id="campaign_id" value="{{ item['campaign_id'] }}" name="campaign_id">
                 </td>
                 <td><a href="/viewCampaignDetails/{{ item['campaign_id'] }}">{{ item['campaign_name'] }}</a></td>
@@ -230,7 +287,47 @@
     </div>
   </div>
 </div>
-<!-- Campaign List Modal-->
+
+<!-- Send message Modal form-->
+<div class="modal fade" id="replyMessage" role="dialog"  data-backdrop="static">
+  <div class="modal-dialog modal-sm">
+    <div class="modal-content">
+      <div class="modal-header alert-primary">
+        <b class="modal-title">Reply</b>
+        <button  type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+      <form name="create_alert_form" id="reply_message_form" action="/replyMessage" method="POST">
+        <div class="modal-body">
+          <input  class="form-control" type="text" value="{{ glob.channel_id }}" name="channel_id" id="reply_channel_id">
+            <input  class="form-control" type="text" value="{{ glob.message_id }}" name="message_id" id="reply_message_id">
+          <div class="row">
+            <div class="col-12">
+              <ul class="no-list-style">
+                <li class="mb-2">
+                  <span class="text-bold-500 primary"><a><i class=" font-small-3"></i>*To :</a></span>
+                  <span class="display-block"><input type="text" class="form-control" name="to_email_id" id="to_email_id" readonly> </span>
+                </li>
+                <li class="mb-2">
+                  <span class="text-bold-500 primary"><a><i class=" font-small-3"></i>*Subject :</a></span>
+                  <span class="display-block"><input required type="text" class="form-control" name="subject" id="subject"> </span>
+                </li>
+                <li class="mb-2">
+                  <span class="text-bold-500 primary"><a><i class=" font-small-3"></i>Message:</a></span>
+                  <span class="display-block"><textarea class="form-control" name="message"></textarea> </span>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="submit"  class="btn btn-default">Save</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- Campaign Proposal Modal-->
 <div class="modal fade" id="proposal" role="dialog" data-backdrop="false">
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
@@ -238,35 +335,51 @@
         <b class="modal-title">Proposal</b>
         <button  type="button" class="close" data-dismiss="modal">&times;</button>
       </div>
-      <form name="sent_proposal" id="sent_proposal" action="/sentProposal" method="POST">
+      <form name="sent_proposal_form" id="sent_proposal_form" action="/sendProposal" method="POST">
         <div class="modal-body">
           <input type="hidden" name="message_id" value="{{ glob.message_id }}">
-            <div>message id = {{ glob.message_id }}</div>
-          <label for="campaign_name">Select Campaign</label>
-            <select id="proposal_campaign_name" name="proposal_campaign_name">
-                <option value="" disabled></option>
-            </select><br>
+            <input type="hidden" name="channel_id" value="{{ glob.channel_id }}">
+            <input type="hidden" name="influencer_id" value="">
+            <!--<div>message id = {{ glob.message_id }} Channel id = {{ glob.channel_id }}</div>-->
+            <label for="campaign_name">Select Campaign</label>
+            <select class="form-control" id="proposal_campaign_name" name="campaign_id" required>
+
+            </select>
             <label for="proposal_description">Description</label>
-            <div id="proposal_description"></div>
-            <br>
+            <input class="form-control" type="text"  name="proposal_description" id="proposal_description" required>
+
             <label for="proposal_from_date">From Date :</label>
-            <div id="proposal_from_date"></div>
-            <br>
+            <input  type="text"  name="proposal_from_date" id="proposal_from_date" readonly>
+
             <label for="proposal_to_date">To Date :</label>
-            <div id="proposal_to_date"></div>
+            <input type="text"  name="proposal_to_date" id="proposal_to_date" readonly>
             <br>
+
             <label for="proposal_channels">Channels :</label>
             <div id="proposal_channels">
-                <input type="checkbox" value="youtube">
+                <input multiple type="checkbox" value="youtube" name="proposal_channels" required>
                 <a href="#" class="fa fa-youtube red"></a>
-                <input type="checkbox" value="twitter">
+                <input multiple type="checkbox" value="twitter" name="proposal_channels">
                 <a href="#" class="fa fa-twitter"></a>
                 <input type="checkbox" value="facebook" disabled>
                 <a href="#" class="fa fa-facebook blue"></a>
                 <input type="checkbox" value="instagram" disabled>
                 <a href="#" class="fa fa-instagram pink"></a>
             </div>
+            <input type="text"  name="target_url" id="proposal_target_url" readonly>
+            <div id="proposal_arrangements">
 
+            </div>
+            <div id="proposal_kpis">
+
+            </div>
+            <select name="currency" class="float-left">
+                <option value="USD">USD</option>
+                <option value="EUR">EUR</option>
+                <option value="PLN">PLN</option>
+                <option value="INR">INR</option>
+            </select>
+            <input class="form-control" style="clear:both;" type="number" name="proposal_price" id="price" required placeholder="amount">
         </div>
         <div class="modal-footer">
           <button type="submit" id="saveProposal" class="btn btn-default">Save</button>
@@ -275,8 +388,272 @@
     </div>
   </div>
 </div>
+
+<div class="modal fade" id="viewProposal" role="dialog" data-backdrop="false">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header alert-primary">
+        <b class="modal-title">View Proposal</b>
+        <button  type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+      <!--<form name="sent_proposal_form" id="sent_proposal_form" action="/sendProposal" method="POST">-->
+        <div class="modal-body">
+          <input type="hidden" name="message_id" value="{{ glob.message_id }}">
+            <input type="hidden" name="channel_id" value="{{ glob.channel_id }}">
+            <input type="hidden" name="influencer_id" value="">
+            <!--<div>message id = {{ glob.message_id }} Channel id = {{ glob.channel_id }}</div>-->
+
+            <div id="view_proposal_campaign_name"></div>
+
+
+            <div id="view_proposal_description"></div>
+
+
+            <div id="view_proposal_from_date"></div>
+
+
+            <div id="view_proposal_to_date"></div>
+
+
+            <div id="view_proposal_channels"></div>
+
+
+            <div id="view_proposal_target_url">Target URL : </div>
+
+            <div id="view_proposal_arrangements">Arrangements : </div>
+
+            <div id="view_proposal_kpis">Kpis : </div>
+
+            <div id="view_proposal_price">Price : </div>
+
+
+        </div>
+        <!--<div class="modal-footer">-->
+          <!--<button type="submit" id="saveProposal" class="btn btn-default">Save</button>-->
+        <!--</div>-->
+      <!--</form>-->
+    </div>
+  </div>
+</div>
+
 <script>
+
+//message_files preview start
+
+        $('#message_files_form').on('change', 'input:file',function(){
+            alert('i m here in message files');
+            readURL_files(this);
+            $(this).hide();
+            $(".displayMessageFiles").before('<input type = "file" name="message_files">');
+
+        });
+        //message_files preview end
+         function readURL_files(input) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+                reader.onload = function(e) {
+                $(".displayMessageFiles").after('<img id="messagefilesPreview" src="static/app-assets/img/portrait/avatars/avatar-08.png" class=" img-border gradient-summer width-50" alt="Card image">');
+                $('#messagefilesPreview').attr('src', e.target.result);
+                }
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+
+
+//message_agreements preview start
+
+        $('#message_agreements_form').on('change', 'input:file',function(){
+            alert('i m here in agreements');
+            readURL_agreements(this);
+            $(this).hide();
+            $(".displayMessageAgreements").before('<input type = "file" name="message_agreements">');
+
+        });
+        //message_agreements preview end
+         function readURL_agreements(input) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+                reader.onload = function(e) {
+                $(".displayMessageAgreements").after('<img id="messageagreementsPreview" src="static/app-assets/img/portrait/avatars/avatar-08.png" class=" img-border gradient-summer width-50" alt="Card image">');
+                $('#messageagreementsPreview').attr('src', e.target.result);
+                }
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+
+
+
+function accept_decline(message_id,campaign_id,status){
+
+    if(confirm("Are you sure you want to "+status+" this Proposal?")){
+        $.ajax({
+               type: "GET",
+               url: '/accept_decline_proposal/'+message_id+'/'+campaign_id+'/'+status,
+               success: function(data)
+               {
+                   alert(data); // show response from the python script.
+                   window.location.reload();
+
+               }
+             });
+    }
+    else{
+        return false;
+    }
+
+
+}
+
+function getProposal(message_id,campaign_id){
+
+    <!--alert(campaign_id);-->
+    <!--alert(message_id);-->
+
+        $.ajax({
+               type: "GET",
+               url: '/getProposal/'+message_id+'/'+campaign_id,
+               success: function(data)
+               {
+                   <!--alert(data); // show response from the python script.-->
+                   jQuery.each(data.results, function(i, val) {
+                        alert(val.campaign_name);
+                        $('#view_proposal_campaign_name').empty();
+                        $('#view_proposal_campaign_name').append('Campaign Name : '+val.campaign_name);
+                        $('#view_proposal_description').empty();
+                        $('#view_proposal_description').append('Description : '+val.proposal_description);
+                        $('#view_proposal_from_date').empty();
+                        $('#view_proposal_from_date').append('From Date : '+val.proposal_from_date);
+                        $('#view_proposal_to_date').empty();
+                        $('#view_proposal_to_date').append('To Date : '+val.proposal_to_date);
+                        $('#view_proposal_channels').empty();
+                        $('#view_proposal_channels').append('Channels : '+val.proposal_channels);
+                        $('#view_proposal_arrangements').empty();
+                        $('#view_proposal_arrangements').append('Arrangements : '+val.proposal_arrangements);
+                        $('#view_proposal_kpis').empty();
+                        $('#view_proposal_kpis').append('Kpis : '+val.proposal_kpis);
+                        $('#view_proposal_price').empty();
+                        $('#view_proposal_price').append('Price : '+val.proposal_price+' '+val.currency);
+                        $('#view_proposal_target_url').empty();
+                        $('#view_proposal_target_url').append('Target Url : '+val.proposal_price+' '+val.currency);
+
+                        $('#viewProposal').modal('show');
+
+                   });
+
+               }
+             });
+
+    }
+
+function replyMessage(from_email_id,subject) {
+    <!--alert(channel_id);-->
+    $("#to_email_id").val(from_email_id);
+    $("#subject").val(subject);
+}
+
+function campaignList(channel_id) {
+    <!--alert('i m in campaignList');-->
+    <!--alert(channel_id);-->
+    $( "input#campaign_id" ).prop('checked', false);
+    $( "input#campaign_id" ).prop('disabled', false)
+    $("#campaign_channel_id").val(channel_id);
+    <!--var campaign_ids = getCampaign_ids(channel_id);-->
+    <!--alert(campaign_ids);-->
+    {% for item in view_campaign_data['data'] %}
+        {% for item1 in item['youtube_inf_data'] %}
+            var campaign_channel_id = "{{ item1['channel_id'] }}";
+            var campaign_id = "{{ item['campaign_id'] }}";
+
+            if (channel_id == campaign_channel_id){
+                <!--alert("equal");-->
+                $('.campaign_id'+campaign_id).attr('disabled', true);
+             }
+             else{
+                 <!--alert("not equal");-->
+                  <!--$('.campaign_id'+campaign_id).attr('disabled', false);-->
+             }
+        {% endfor %}
+    {% endfor %}
+}
+
+
+function updateChannelStatusForCampaign(channel_id){
+    <!--alert(channel_id);-->
+    $.ajax({
+               type: "GET",
+               url: '/getChannelStatusForCampaign/'+channel_id,
+               contentType: 'application/json;charset=UTF-8',
+               success: function(data)
+               {
+                   $( '#status'+channel_id).empty();
+                   if (data.results.length != 0){
+                   jQuery.each(data.results, function(i, val) {
+                        <!--alert(val.campaign_name);-->
+                        <!--alert(val.status);-->
+
+                            $('#status'+channel_id).append('<b style="font-weight:450; font-size:15px;">'+val.campaign_name+'<br/></b>');
+                            $('#status'+channel_id).append('<b style="font-weight:400; color:orange; font-size:15px;">'+val.status+'</b>');
+                            $('#status'+channel_id).append('<hr style="height:0px; margin:auto;">');
+                    });
+                    }
+                    else{
+                        $('#status'+channel_id).append('<b>No Campaigns</b>');
+                    }
+               }
+             });
+
+}
+
+
     $( document ).ready(function() {
+
+    $("#message_agreements_form").submit(function(e) {
+        alert('message agreements form');
+        var form = $(this);
+        var url = form.attr('action');
+        $.ajax({
+               type: "POST",
+               url: url,
+               data: new FormData($('form')[0]),
+               cache: false,
+               contentType: false,
+               processData: false,
+
+               success: function(data)
+               {
+                   alert(data); // show response from the python script.
+                   window.location.reload();
+               }
+        });
+        e.preventDefault(); // avoid to execute the actual submit of the form.
+    });
+
+
+
+
+    $("#message_files_form").submit(function(e) {
+        alert('message file form');
+        var form = $(this);
+        var url = form.attr('action');
+        $.ajax({
+               type: "POST",
+               url: url,
+               data: new FormData($('form')[0]),
+               cache: false,
+               contentType: false,
+               processData: false,
+
+               success: function(data)
+               {
+                   alert(data); // show response from the python script.
+                   <!--window.location.reload();-->
+               }
+        });
+        e.preventDefault(); // avoid to execute the actual submit of the form.
+    });
+
+
+
 
     $("#add_campaign_to_message").submit(function(e) {
         var form = $(this);
@@ -289,20 +666,64 @@
                {
                    alert(data); // show response from the python script.
                    $('#campaignList').modal('toggle');
-                   getCampaignsAddedToMessage();
+                   <!--getCampaignsAddedToMessage();-->
+                   window.location.reload();
                }
              });
         e.preventDefault(); // avoid to execute the actual submit of the form.
     });
 
+    $("#reply_message_form").submit(function(e) {
+        var form = $(this);
+        var url = form.attr('action');
+        var channel_id = $('#reply_channel_id').val();
+        $.ajax({
+               type: "POST",
+               url: url,
+               <!--contentType: 'application/json;charset=UTF-8',-->
+               data: form.serialize(), // serializes the form's elements.
+               success: function(data)
+               {
+                   alert(data); // show response from the python script.
+                   $('#replyMessage').modal('toggle');
+                   window.location.reload();
+                   <!--updateChannelStatusForCampaign(channel_id);-->
+               }
+             });
+        e.preventDefault(); // avoid to execute the actual submit of the form.
+    });
+
+
+    $("#sent_proposal_form").submit(function(e) {
+        alert('i m here');
+        var form = $(this);
+        var url = form.attr('action');
+        $.ajax({
+               type: "POST",
+               url: url,
+               data: form.serialize(), // serializes the form's elements.
+               success: function(data)
+               {
+                   alert(data); // show response from the python script.
+                   $('#proposal').modal('toggle');
+                   <!--getCampaignsAddedToMessage();-->
+                   window.location.reload();
+               }
+             });
+        e.preventDefault(); // avoid to execute the actual submit of the form.
+    });
+
+
+
+
+
     function getCampaignsAddedToMessage(){
         var message_id = $("#message_id").val();
-        <!--alert(message_id);-->
+
         $.ajax({
                type: "GET",
                url: '/getCampaignsAddedToMessage/'+message_id,
                <!--data: form.serialize(), // serializes the form's elements.-->
-
                contentType: 'application/json;charset=UTF-8',
 
                success: function(data)
@@ -312,12 +733,35 @@
                    <!--var value = $("#campaignNameList").text();-->
                    $( "#campaignNameList" ).empty();
                    $( "#proposal_campaign_name" ).empty();
+                   $("#proposalList").empty();
+                   $('#proposal_campaign_name').append('<option value=""></option>');
                    jQuery.each(data.results, function(i, val) {
                         <!--alert(val.campaign_name);-->
+                        {% if  glob.from_email_id != session['email_id']  %}
+                            if(val.status == 'Proposal Sent'){
+                                var status = 'Proposal Received';
+                                var accepted = 'Accept';
+                                var rejected = 'Reject';
+                                $('#campaignNameList').append('<tr><td><a href="#" class="btn-info btn-sm">'+val.campaign_name+'<a/></td><td>'+status+'</td></tr>');
+                                $('#proposalList').append('<tr><td><a href="#" onclick="getProposal('+val.message_id+','+val.campaign_id+')" class="btn-info btn-sm">'+val.campaign_name+'<a/></td><td><a href="#" onclick="accept_decline('+val.message_id+','+val.campaign_id+',\'' + accepted + '\')" data-toggle = "tooltip" title="Accept" class="fa fa-thumbs-up green"></a></td><td><a href="#" onclick ="accept_decline('+val.message_id+','+val.campaign_id+',\'' + rejected + '\')" data-toggle = "tooltip" title="Decline" class="fa fa-thumbs-down red"></a></td></tr>');
+                            }
+                            if(val.status == 'Current Partner'){
+                                $('#campaignNameList').append('<tr><td><a href="#" class="btn-info btn-sm">'+val.campaign_name+'<a/></td><td>'+val.status+'</td></tr>');
+                                $('#proposalList').append('<tr><td><a href="#" onclick="getProposal('+val.message_id+','+val.campaign_id+')" class="btn-info btn-sm">'+val.campaign_name+'<a/></td></tr>');
+                            }
+                            else{
+                                $('#campaignNameList').append('<tr><td><a href="#" class="btn-info btn-sm">'+val.campaign_name+'<a/></td><td>'+val.status+'</td></tr>');
+                            }
+                        {% else %}
+                            $('#campaignNameList').append('<tr><td><a href="#" class="btn-info btn-sm">'+val.campaign_name+'<a/></td><td>'+val.status+'</td></tr>');
+                            if(val.status == 'Proposal Sent'){
+                                $('#proposalList').append('<tr><td><a href="#" onclick="getProposal('+val.message_id+','+val.campaign_id+')" class="btn-info btn-sm">'+val.campaign_name+'<a/></td></tr>');
+                            }
+                            if(val.status == 'Current Partner'){
 
-                        <!--var campaignname_buttons= $('<input/>').attr({ type: 'button', name:'btn1', value:val.campaign_name,class:'btn-info btn-sm'});-->
-                        $('#campaignNameList').append('<tr><td><a href="#" class="btn-info btn-sm">'+val.campaign_name+'<a/></td><td>more data</td></tr>');
-
+                                $('#proposalList').append('<tr><td><a href="#" onclick="getProposal('+val.message_id+','+val.campaign_id+')" class="btn-info btn-sm">'+val.campaign_name+'<a/></td></tr>');
+                            }
+                        {% endif %}
                         $('#proposal_campaign_name').append('<option value="'+val.campaign_id+'">'+val.campaign_name+'</option>');
                     });
 
@@ -331,10 +775,15 @@
     });
 
     getCampaignsAddedToMessage();
-
+    <!--getAllProposals();-->
 
     $("#proposal_campaign_name").on("change",function(){
         $("#proposal_description").empty();
+        $("#proposal_from_date").empty();
+        $("#proposal_to_date").empty();
+        $("#proposal_target_url").empty();
+        $("#proposal_arrangements").empty();
+        $("#proposal_kpis").empty();
         var campaign_id = $("#proposal_campaign_name").val();
         alert(campaign_id);
         $.ajax({
@@ -342,15 +791,24 @@
                url: '/getCampaignDetails/'+campaign_id,
                success: function(data)
                {
-                   alert(data); // show response from the python script.
+                   <!--alert(data); // show response from the python script.-->
                    jQuery.each(data.results, function(i, val) {
-                       var description= $('<input/>').attr({ type: 'textarea', name:'proposal_description', value:val.campaign_description,class:'form-control'});
-                       $("#proposal_description").append(description);
-                       var from_date= $('<input/>').attr({  type: 'textbox', name:'proposal_from_date', value:val.from_date,class:'form-control', readonly:'true'});
-                       $("#proposal_from_date").append(from_date);
-                       var to_date= $('<input/>').attr({ type: 'textbox', name:'proposal_to_date', value:val.to_date,class:'form-control', readonly:'true'});
-                       $("#proposal_to_date").append(to_date);
-                       var to_date= $('<input/>').attr({ type: 'textbox', name:'proposal_to_date', value:val.to_date,class:'form-control', readonly:'true'});
+
+                       $("#proposal_description").val(val.campaign_description);
+
+                       $("#proposal_from_date").val(val.from_date);
+
+                       $("#proposal_to_date").val(val.to_date);
+                       $("#proposal_target_url").val(val.target_url);
+                       var arrangements = val.arrangements.split(",");
+                       for(i=0;i<arrangements.length;i++){
+                           $("#proposal_arrangements").append('<input multiple type ="checkbox" name="proposal_arrangements" value="'+arrangements[i]+'">'+arrangements[i]);
+                       }
+                       var kpis = val.kpis.split(",");
+                       for(i=0;i<kpis.length;i++){
+                           $("#proposal_kpis").append('<input multiple type ="checkbox" name="proposal_kpis" value="'+kpis[i]+'">'+kpis[i]);
+                       }
+
                    });
 
                }
