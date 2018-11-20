@@ -9,9 +9,10 @@
         <div class="card">
             <div class="row">
                 <div class="col-12">
-                    <div class="card-header">Create New Classified Ad</div>
+                    <div class="card-header">Create New Classified Ads  </div>
                 </div>
             </div>
+
             <div class="card-body">
                 <div class="card-block">
                     <form class="form" name="classified_form" id="classified_form" method="POST" action="saveClassified" enctype="multipart/form-data">
@@ -19,35 +20,43 @@
                             <div class="row">
                                 <div class="col-sm-6 col-md-6" >
                                     <div class="row">
-                                        <div class="col-sm-4"><label for="campaign_name">Ad Name:</label><input  id="classified_name" type="text" class="form-control" name="classified_name" required></div>
-                                        <div class="col-sm-4"><label for="from_date">From:</label><input  id="from_date" type="date" class="form-control" name="from_date" required></div>
-                                        <div class="col-sm-4"><label for="to_date">To:</label><input  id="to_date" type="date" class="form-control" name="to_date" required></div>
+                                        <div class="col-sm-4"><label for="classified_name">Ad Name</label><input  id="classified_name" type="text" class="form-control" name="classified_name" required></div>
+                                        <div class="col-sm-4"><label for="from_date">From</label><input  id="from_date" type="date" class="form-control" name="from_date" required></div>
+                                        <div class="col-sm-4"><label for="to_date">To</label><input  id="to_date" type="date" class="form-control" name="to_date" required></div>
                                     </div>
                                     <br>
                                     <div class="row">
+
                                         <div class="col-sm-3">
+                                                <label for="currency">Currency</label>
                                             <select class="form-control" name="currency" id="currency">
-                                                <option value="USD">USD</option>
-                                                <option value="EUR">EUR</option>
-                                                <option value="GBP">GBP</option>
-                                                <option value="INR">INR</option>
+                                                <option value="USD">&#36; USD </option>
+                                                <option value="EUR">&#8364; EUR </option>
+                                                <option value="GBP">&#163; GBP </option>
+                                                <option value="INR">&#8377; INR </option>
                                             </select>
                                         </div>
-                                        <div class="col-sm-5">
-                                            <span class="text-bold-500 primary"><input type="number" class="form-control" name="budget" placeholder="Budget" required>
+                                        <div class="col-sm-5"><label for="budget">Budget</label>
+                                            <span class="text-bold-500 primary"><input type="number" class="form-control" name="budget" required>
                                             </span>
                                         </div>
                                         <div class="col-sm-4">
                                             <span class="text-bold-500 primary">
                                                 <div class="form-group">
-                                                    <!--<label for="channels">Channels</label>-->
-                                                    <select class="form-control" id="channels" name="channels" multiple="multiple" required>
-                                                        <option value="" disabled>Channels</option>
-                                                        <option value="youtube">Youtube</option>
-                                                        <option value="twitter">Twitter</option>
-                                                        <option value="instagram">Instagram</option>
-                                                        <option value="facebook">Facebook</option>
-                                                    </select>
+                                                    <label for="channels">Channels</label>
+
+                                                        <input class="form-control" type="text" placeholder="Select" class="button-size" data-toggle="dropdown" >
+                                                        <div class="dropdown-menu" >
+                                                            <input type="checkbox" name="channels" value="facebook"> Facebook
+                                                            <div class="dropdown-divider"></div>
+                                                            <input type="checkbox" name="channels" value="youtube"> Youtube
+                                                            <div class="dropdown-divider"></div>
+                                                            <input type="checkbox" name="channels" value="instagram"> Instagram
+                                                            <div class="dropdown-divider"></div>
+                                                            <input type="checkbox" name="channels" value="twitter"> Twitter
+                                                        </div>
+
+
                                                 </div>
                                             </span>
                                         </div>
@@ -71,7 +80,7 @@
                                                 <div class="form-field col s7">
                                                     <div class="form-group">
                                                       <p>
-                                                        <label>Followers range:</label>
+                                                        <label>Followers Range</label>
                                                       </p>
                                                       <div id="add_campaign_followers_slider" style="height:10px; width: 190px; border-radius: 55px;" ></div>
                                                     </div>
@@ -87,7 +96,7 @@
                                     </div>
                                     <span class="text-bold-500 primary">
                                         <div class="form-group">
-                                            <label for="videoCategories">Categories</label>
+                                            <label for="video_cat">Categories</label>
                                             <select class="form-control" name="video_cat" required>
                                                 {% for item in videoCategories['data'] %}
                                                 <option value="{{ item['video_cat_id'] }}">{{ item['video_cat_name'] }}</option>
@@ -95,17 +104,16 @@
                                             </select>
                                         </div>
                                     </span>
+                                     <input type="checkbox" name="post_as_campaign" value="" style="height: auto; width: auto">Post as Campaign
                                     <span class="text-bold-500 primary"> <input type="url" class="form-control" name="target_url" placeholder="Target URL" required></span><br>
-                                    <span>
-                                        <input  type="file" name="brands_classified_files" class="brands_classified_files" required>
-                                    </span><br class="displayFiles">
+                                    <br class="displayFiles">
                                 </div>
                                 <div class="col-sm-6 col-md-6">
-                                    <label for="campaign_name">Description:</label><textarea class="form-control" rows="9" id="descritpion" name="classified_description" required></textarea>
+                                    <label for="classified_description">Description</label><textarea class="form-control" rows="9" id="description" name="classified_description" required></textarea>
                                     <br>
-                                    <span class="text-bold-500 primary">
+                                    <span class="text-bold-500 primary"><label for="arrangements">Arrangements / Content Type</label>
                                         <select multiple id="arrangements" name="arrangements" class="form-control" required>
-                                            <option value="" disabled>Arrangements / Content Type</option>
+
                                             <option value="Review">Review</option>
                                             <option value="Unboxing / Gameplay">Unboxing / Gameplay</option>
                                             <option value="Shout out/Mention">Shout out/Mention</option>
@@ -119,7 +127,7 @@
                                     </span>
                                     <br>
                                     <span class="text-bold-500 primary">
-                                        <label for="kpis">Kpis:</label>
+                                        <label for="kpis">Kpis</label>
                                         <select name="kpis" id="kpis" class="form-control" multiple required>
                                             <option value="No of Clicks">No of Clicks</option>
                                             <option value="New Users">New Users</option>
@@ -128,12 +136,15 @@
                                     </span>
                                 </div>
                             </div>
-                            <div class="form-check">
-                                <input type="hidden" id="convert_to_campaign" name="convert_to_campaign" value="false">
+                            <div class="upload-btn-wrapper">
+                                    <button class="btn">Upload File</button>
+                                    <input type="file" name="myfile" />
+                               <!-- <input type="file" value="submit" name="Uplaod File">-->
                                 <!--<label class="form-check-label" for="classifiedAds">Post as Classified Ads</label>-->
                             </div>
-                                <br>
+                            <div>
                             <button type="submit" id="saveclassified" class="btn btn-success"  style="margin-left: 45%">Save</button>
+                        </div>
                         </div>
                     </form>
                 </div>
@@ -158,8 +169,8 @@ $( document ).ready(function() {
 		    // Starting at 500, step the value by 500,
 		    // until 4000 is reached. From there, step by 1000.
 		    'min': [ 0 ],
-		    <!--'10%': [ 500, 500 ],-->
-		    <!--'50%': [ 4000, 1000 ],-->
+		    '10%': [ 500, 500 ],
+		    '50%': [ 4000, 1000 ],
 		    'max': [ 1000000 ]
 	        },
 	        format: {
@@ -187,8 +198,8 @@ $( document ).ready(function() {
         $("#saveclassified").click(function(){
              var min_lower = $("#lower-value").text();
              var max_upper = $("#upper-value").text();
-             <!--alert(min_lower);-->
-             <!--alert(max_upper);-->
+             //alert(min_lower);
+            //alert(max_upper);
              $("#min_lower").val(min_lower);
              $("#max_upper").val(max_upper);
          });
@@ -196,24 +207,24 @@ $( document ).ready(function() {
 
           //brands_classified_files preview start
 
-        $(document).on('change', 'input:file',function(){
-            <!--alert('i m here');-->
-            readURL(this);
-            $(this).hide();
-            $(".displayFiles").before('<input type = "file" name="brands_classified_files">');
+       // $(document).on('change', 'input:file',function(){
+           // alert('i m here');
+         //   readURL(this);
+         //   $(this).hide();
+         //   $(".displayFiles").before('<input type = "file" name="brands_classified_files">');
 
-        });
-        //brands_classified_files preview end
-         function readURL(input) {
-            if (input.files && input.files[0]) {
-                var reader = new FileReader();
-                reader.onload = function(e) {
-                $(".displayFiles").after('<img id="filePreview" src="static/app-assets/img/portrait/avatars/avatar-08.png" class=" img-border gradient-summer width-50" alt="Card image">');
-                $('#filePreview').attr('src', e.target.result);
-                }
-                reader.readAsDataURL(input.files[0]);
-            }
-        }
+      //  });
+      //  //brands_classified_files preview end
+       //  function readURL(input) {
+         //   if (input.files && input.files[0]) {
+             //   var reader = new FileReader();
+             //   reader.onload = function(e) {
+            //    $(".displayFiles").after('<img id="filePreview" src="static/app-assets/img/portrait/avatars/avatar-08.png" class=" img-border gradient-summer width-50" alt="Card image">');
+            //   $('#filePreview').attr('src', e.target.result);
+               // }
+              //  reader.readAsDataURL(input.files[0]);
+           // }
+      //  }
 
 
 });

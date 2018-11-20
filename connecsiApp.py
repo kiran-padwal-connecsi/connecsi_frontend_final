@@ -1,10 +1,12 @@
 import datetime
 from functools import wraps
 import json
+from io import StringIO
+import csv
 import time
 #
 import requests
-from flask import Flask, render_template, flash, redirect, url_for, session, request, logging,jsonify
+from flask import Flask, render_template, flash, redirect, url_for, session, request, logging, jsonify, make_response
 # from model.ConnecsiModel import ConnecsiModel
 # from passlib.hash import sha256_crypt
 #from flask_oauthlib.client import OAuth
@@ -410,7 +412,7 @@ def searchInfluencers():
                 linechart_id=1
                 for item in data['data']:
                     item.update({'linechart_id':linechart_id})
-                    print(item)
+                   # print(item)
                     linechart_id+=1
                 # print(data)
                 # search = False
@@ -570,8 +572,8 @@ def addCampaign():
 @is_logged_in
 def viewCampaigns():
     user_id=session['user_id']
-    from templates.campaign.campaign import Campaign
-    campaignObj = Campaign(user_id=user_id)
+    import templates
+    campaignObj = templates.campaign.campaign.Campaign(user_id=user_id)
     view_campaign_data = campaignObj.get_all_campaigns()
     return render_template('campaign/viewCampaigns.html',view_campaign_data=view_campaign_data)
 
@@ -1394,6 +1396,7 @@ def saveClassified():
     if request.method == 'POST':
         payload = request.form.to_dict()
 
+        post_as_campaign = 'post_as_campaign' in request.form
         channels = request.form.getlist('channels')
         channels_string = ','.join(channels)
         payload.update({'channels':channels_string})
@@ -1401,6 +1404,7 @@ def saveClassified():
         regions = request.form.getlist('country')
         regions_string = ','.join(regions)
         payload.update({'regions':regions_string})
+        payload.update({"post_as_campaign": post_as_campaign})
 
         arrangements = request.form.getlist('arrangements')
         arrangements_string = ','.join(arrangements)
@@ -1443,6 +1447,47 @@ def saveClassified():
 
     else:
         flash('Unauthorized', 'danger')
+
+
+@connecsiApp.route('/exportCsv')
+def exportCsv():
+    si = StringIO()
+    cw = csv.writer(si)
+    strList = request.args.get('data')
+
+    strList = strList.replace("'", "\"")
+    strList = strList.replace('{"data', '')
+    strList = strList.replace(": [", "{")
+    strList = strList.replace('\'s', '')
+    strList = strList.replace(']}', '"')
+    # strList = re.sub(r"^'", '"', strList)
+    # strList = re.sub(r"'$", '"', strList)
+
+    import ast
+    # a = ast.literal_eval(strList)
+    # a = json.loads(strList)
+    # print("type of ", type(a))
+    s = json.dumps(strList)
+    # s=s.encode("utf-8")
+    # print(s)
+    # cw.writerow(strList[0])  # header row
+    count = 0;
+
+    for emp in s:
+
+        if count == 0:
+            header = emp
+
+            cw.writerow(header)
+
+            count += 1
+
+        cw.writerow(emp)
+
+    output = make_response(si.getvalue())
+    output.headers["Content-Disposition"] = "attachment; filename=export.csv"
+    output.headers["Content-type"] = "text/csv"
+    return output
 
 
 @connecsiApp.route('/viewAllClassifiedAds',methods=['GET','POST'])
