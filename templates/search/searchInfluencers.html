@@ -141,7 +141,7 @@
           <div class="row" style="margin-left: 2%;">
             <div class="col-xl-4 col-lg-4 col-md-4 mb-1">
               {% if data['data'] %}
-              <button type="button" data-toggle="tooltip" title="Feature Comming Soon..." style="background-color: purple; margin-left: 2%; color:white; border-radius: 10px; font-size:15px;">Export CSV</button>
+              <a href={{ url_for('exportCsv', data=data) }}><button type="button" d style="background-color: purple; margin-left: 2%; color:white; border-radius: 10px; font-size:15px;">Export CSV</button></a>
               {% else %}
               <!--<button type="button"  style="background-color: purple; margin-left: 2%; color:white; border-radius: 10px; font-size:15px;">Export CSV</button>-->
               {% endif %}

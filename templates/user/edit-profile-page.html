@@ -14,7 +14,7 @@
                             {{ data['data']['profile_pic'] }}
                             <img id="profile_pic" src="static/img/{{ data['data']['profile_pic'] }}" class="rounded-circle img-border gradient-summer width-150" alt="Card image">
                             {% else %}
-                            <img id="profile_pic" src="static/app-assets/img/portrait/avatars/avatar-08.png" class="rounded-circle img-border gradient-summer width-150" alt="Card image">
+                            <img id="profile_pic2" src="static/app-assets/img/portrait/avatars/avatar-08.png" class="rounded-circle img-border gradient-summer width-150" alt="Card image">
                             {% endif %}
                         </div>
                         <div class="col-xl-6 col-lg-6 col-md-6 mb-1">
@@ -119,12 +119,34 @@
                                     <div class="row" style="margin-bottom: 5px;">
                                         <span class="display-block overflow-hidden">
                                             <label for="business_sector">*Business Sector:</label>
-                                            <input type="text" id="business_sector" required name="business_sector" class="form-control" value="{{data['data']['business_sector']}}" placeholder="Business Sector" style="width:400px;"> </span>
+                                            <!--<input type="text" id="business_sector" required name="business_sector" class="form-control" value="{{data['data']['business_sector']}}" placeholder="Business Sector" style="width:400px;"> </span>-->
+                                            <select id="business_sector" required name="business_sector" class="form-control" value="{{data['data']['business_sector']}}" style="width:400px;">
+                                                <option value="aerospace_industry">Aerospace industry</option>
+                                                <option value="fishing_industry">Fishing industry</option>
+                                                <option value="timber_industry">Timber industry</option>
+                                                <option value="tobacco_industry">Tobacco industry</option>
+                                                <option value="pharmaceutical_industry">Pharmaceutical industry</option>
+                                                <option value="software_industry">Software industry</option>
+                                                <option value="construction_industry">Construction industry</option>
+                                                <option value="defense_industry">Defense industry</option>
+                                                <option value="education_industry">Education industry</option>
+                                                <option value="electrical_power_industry">Electrical power industry</option>
+                                                <option value="petroleum_industry">Petroleum industry</option>
+                                                <option value="entertainment_industry">Entertainment industry</option>
+                                            </select>
+                                            </span>
+
                                     </div>
                                     <div class="row" style="margin-bottom: 5px;">
                                         <span class="display-block overflow-hidden">
                                             <label for="no_of_employees">*No. of Employees:</label>
-                                            <input type="text" id="no_of_employees" required name="no_of_employees" class="form-control" value="{{data['data']['no_of_employees']}}" style="width:400px;"> </span>
+                                            <!--<input type="text" id="no_of_employees" required name="no_of_employees" class="form-control" value="{{data['data']['no_of_employees']}}" style="width:400px;"> </span>-->
+                                            <select id="no_of_employees" required name = "no_of_employees" class="form-control" value="{{data['data']['no_of_employees']}}" style="width:400px;">
+                                                <option value="0-10">0-10</option>
+                                                <option value="10-20">10-20</option>
+                                                <option value="20+">20+</option>
+                                            </select>
+                                        </span>
                                     </div>
                                     <div class="row" style="margin-bottom: 5px;">
                                         <span class="display-block overflow-hidden">
@@ -158,6 +180,18 @@
                                         <span class="display-block overflow-hidden">
                                             <label for="youtube_url">Youtube Url:</label>
                                             <input type="url" id="youtube_url" name="youtube_url" class="form-control"  value="{{data['data']['youtube_url']}}" style="width:400px;">  </span>
+                                    </div>
+                                    <div class="row" style="margin-bottom: 5px;">
+                                        <span class="display-block overflow-hidden">
+                                            <label for="budget_currency">Currency:</label>
+                                            <!--<input type="url" id="budget_currency" name="budget_currency" class="form-control"  value="{{data['data']['youtube_url']}}" style="width:400px;">  </span>-->
+                                            <select id="budget_currency" name="budget_currency" class="form-control" value="{{data['data']['budget_currency']}}" style="width:100px;">
+                                                <option value="USD">&#36; USD </option>
+                                                <option value="EUR">&#8364; EUR </option>
+                                                <option value="GBP">&#163; GBP </option>
+                                                <option value="INR">&#8377; INR </option>
+                                            </select>
+                                        </span>
                                     </div>
                                 </div>
                             </div>
@@ -274,7 +308,7 @@
   <!--position: relative;-->
   <!--top: -120px;-->
   <!--visibility: visible;-->
-<!--}-->
+<!---->}
 </style>
 <script>
     (function(document, history, location) {
