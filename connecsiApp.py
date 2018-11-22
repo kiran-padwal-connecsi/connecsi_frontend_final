@@ -1457,9 +1457,10 @@ def exportCsv():
 
     strList = strList.replace("'", "\"")
     strList = strList.replace('{"data', '')
-    strList = strList.replace(": [", "{")
+   # strList = strList.replace(": [", "{")
     strList = strList.replace('\'s', '')
-    strList = strList.replace(']}', '"')
+   # strList = strList.replace(']', '}')
+    strList = strList.replace('}}}', '}}')
     # strList = re.sub(r"^'", '"', strList)
     # strList = re.sub(r"'$", '"', strList)
 
@@ -1469,7 +1470,7 @@ def exportCsv():
     # print("type of ", type(a))
     s = json.dumps(strList)
     # s=s.encode("utf-8")
-    # print(s)
+    print(s)
     # cw.writerow(strList[0])  # header row
     count = 0;
 

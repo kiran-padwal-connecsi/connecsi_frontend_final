@@ -137,11 +137,13 @@
                                 </div>
                             </div>
                             <div class="upload-btn-wrapper">
-                                    <button class="btn">Upload File</button>
-                                    <input type="file" name="myfile" />
+                                    <button class="btn" style="margin-top: 49px">Upload File
+                                    <input type="file" name="myfile" id="imgInp" /></button>
                                <!-- <input type="file" value="submit" name="Uplaod File">-->
                                 <!--<label class="form-check-label" for="classifiedAds">Post as Classified Ads</label>-->
                             </div>
+                            <img id="blah" src="#" width="15%" height="2%" alt="your image" />
+
                             <div>
                             <button type="submit" id="saveclassified" class="btn btn-success"  style="margin-left: 45%">Save</button>
                         </div>
@@ -154,7 +156,22 @@
 </div>
 <script>
 $( document ).ready(function() {
+function readURL(input) {
 
+  if (input.files && input.files[0]) {
+    var reader = new FileReader();
+
+    reader.onload = function(e) {
+      $('#blah').attr('src', e.target.result);
+    }
+
+    reader.readAsDataURL(input.files[0]);
+  }
+}
+
+$("#imgInp").change(function() {
+  readURL(this);
+});
         // range slider starts
         var nonLinearSlider = document.getElementById('add_campaign_followers_slider');
         noUiSlider.create(nonLinearSlider, {
