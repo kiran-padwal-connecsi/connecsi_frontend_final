@@ -693,14 +693,16 @@ def inbox(message_id):
         print('conv = ',conv_data)
         ###################### get inbox
         inboxList=[]
+        message_id_list=[]
         for item in data['data']:
             if item['to_email_id'] == email_id:
                inboxList.append(item)
+               message_id_list.append(item['message_id'])
         # print(mylist)
         for item in conv_data['data']:
-            if item['to_email_id'] == email_id:
+            if item['to_email_id'] == email_id and item['message_id'] not in message_id_list:
                inboxList.append(item)
-
+        print('inboxList  =',inboxList)
         inboxSorted = sorted(inboxList, key=lambda k: k['message_id'])
         print('sorted inboxlist = ', inboxSorted)
         inbox = {}
@@ -826,6 +828,7 @@ def inbox(message_id):
         for item in full_conv['data']:
             print(item)
         print('campaign data = ',view_campaign_data)
+        print('final inbox =',inbox)
         return render_template('email/inbox.html', inbox = inbox, full_conv = full_conv, conv_title=conv_title,view_campaign_data=view_campaign_data)
     except:
         pass
@@ -1203,7 +1206,8 @@ def uploadMessageFiles():
         filenames_string = ','.join(filenames)
         payload.update({'message_files': filenames_string})
         print(payload)
-        # return 'uploaded'
+        # return 'uploaded files'
+        # exit()
         message_id = request.form.get('message_id')
         url = base_url + 'Messages/uploadMessageFiles/'+message_id
         try:
@@ -1214,6 +1218,22 @@ def uploadMessageFiles():
         except:
             pass
             return 'Server Error'
+
+@connecsiApp.route('/getMessageFiles/<string:message_id>',methods=['GET'])
+@is_logged_in
+def getMessageFiles(message_id):
+    url = base_url + 'Messages/uploadMessageFiles/' + str(message_id)
+    try:
+        response = requests.get(url=url)
+        data = response.json()
+        print(data)
+        return jsonify(results=data['data'])
+    except:
+        pass
+        return 'Server Error'
+
+
+
 
 @connecsiApp.route('/uploadMessageAgreements',methods=['POST'])
 @is_logged_in
@@ -1233,7 +1253,8 @@ def uploadMessageAgreements():
         filenames_string = ','.join(filenames)
         payload.update({'message_agreements': filenames_string})
         print(payload)
-        # return 'uploaded'
+        # return 'uploaded agreement'
+        # exit()
         message_id = request.form.get('message_id')
         url = base_url + 'Messages/uploadMessageAgreements/'+message_id
         try:
@@ -1244,6 +1265,21 @@ def uploadMessageAgreements():
         except:
             pass
             return 'Server Error'
+
+
+@connecsiApp.route('/getMessageAgreements/<string:message_id>',methods=['GET'])
+@is_logged_in
+def getMessageAgreements(message_id):
+    url = base_url + 'Messages/uploadMessageAgreements/' + str(message_id)
+    try:
+        response = requests.get(url=url)
+        data = response.json()
+        print(data)
+        return jsonify(results=data['data'])
+    except:
+        pass
+        return 'Server Error'
+
 
 @connecsiApp.route('/replyEmail/<string:message_id>', methods=['POST'])
 @is_logged_in
@@ -1659,4 +1695,4 @@ def inf_editProfile():
 
 if __name__ == '__main__':
     # connecsiApp.secret_key = 'connecsiSecretKey'
-    connecsiApp.run(debug=True,host='127.0.0.1')
+    connecsiApp.run(debug=True,host='127.0.0.1',port=8090,threaded=True)

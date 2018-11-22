@@ -90,7 +90,9 @@
                                             <button onclick="replyMessage('{{ item['from_email_id'] }}','{{ item['subject'] }}')" class="btn btn-sm btn-outline-secondary float-right"><i class="fa fa-reply"></i></button>
                                         </span>
                                          {% endif %}
+                                        {% if  glob.from_email_id != 'business@connecsi.com'  %}
                                         <span class="float-right text muted"><button onclick="location.href='/delete/{{ item['message_id'] }}/{% if item['conv_id'] %}{{ item['conv_id'] }}{% else %}{% set number = 0 | int %}{{ number }}{% endif %}/{{ session['user_id'] }}'" class="btn btn-sm btn-outline-secondary"><i class="ft-trash-2"></i></button></span>
+                                        {% endif %}
                                         </h6>
                                         <p class="list-group-item-text">{{ item['subject'] }}
                                             <span class="float-right text muted">{{ item['date'] }}</span>
@@ -182,6 +184,9 @@
                                     </div>
                                         <button type="submit" class="btn-info btn btn-sm">Upload Agreement</button>
                                     </form>
+                                    <div id="view_message_agreements">
+
+                                    </div>
                                 </div>
                                 <div class="tab-pane container fade" id="files">
                                     <form method="POST" action="/uploadMessageFiles" name="message_files_form" id="message_files_form" enctype="multipart/form-data">
@@ -195,6 +200,9 @@
                                     </div>
                                         <button type="submit" class="btn-info btn btn-sm">Upload Files</button>
                                     </form>
+                                    <div id="view_message_files">
+
+                                    </div>
                                     <!--<progress></progress>-->
                                 </div>
                             </div>
@@ -438,6 +446,49 @@
 
 <script>
 
+function getMessageFiles(message_id){
+        $.ajax({
+               type: "GET",
+               url: '/getMessageFiles/'+message_id,
+               success: function(data)
+               {
+                   <!--alert(data); // show response from the python script.-->
+                   $('#view_message_files').empty();
+                   $('#view_message_files').append('<tr><td>Files Shared</td></tr>');
+                   jQuery.each(data.results, function(i, val) {
+                        var message_files = val.message_files.split(",");
+                        for(i=0;i<message_files.length;i++){
+                            $('#view_message_files').append('<tr><td>'+message_files[i]+'</td><td><a href="../static/message_files/'+message_files[i]+'" download><i class="fa fa-file"></i></a></td></tr>');
+                        }
+                   });
+               }
+        });
+}
+
+function getMessageAgreements(message_id){
+        $.ajax({
+               type: "GET",
+               url: '/getMessageAgreements/'+message_id,
+               success: function(data)
+               {
+                   <!--alert(data); // show response from the python script.-->
+                   $('#view_message_agreements').empty();
+                   $('#view_message_agreements').append('<tr><td style="color:purple;">Agreements Shared</td><td></td></tr>');
+                   jQuery.each(data.results, function(i, val) {
+                        var message_agreements = val.message_agreements.split(",");
+                        for(i=0;i<message_agreements.length;i++){
+                            $('#view_message_agreements').append('<tr><td>'+message_agreements[i]+'</td><td><a href="../static/message_agreements/'+message_agreements[i]+'" download><i class="fa fa-file"></i></a></td></tr>');
+                        }
+                   });
+               }
+        });
+}
+
+
+
+
+
+
 //message_files preview start
 
         $('#message_files_form').on('change', 'input:file',function(){
@@ -614,7 +665,7 @@ function updateChannelStatusForCampaign(channel_id){
         $.ajax({
                type: "POST",
                url: url,
-               data: new FormData($('form')[0]),
+               data: new FormData(form[0]),
                cache: false,
                contentType: false,
                processData: false,
@@ -638,7 +689,7 @@ function updateChannelStatusForCampaign(channel_id){
         $.ajax({
                type: "POST",
                url: url,
-               data: new FormData($('form')[0]),
+               data: new FormData(form[0]),
                cache: false,
                contentType: false,
                processData: false,
@@ -646,7 +697,7 @@ function updateChannelStatusForCampaign(channel_id){
                success: function(data)
                {
                    alert(data); // show response from the python script.
-                   <!--window.location.reload();-->
+                   window.location.reload();
                }
         });
         e.preventDefault(); // avoid to execute the actual submit of the form.
@@ -745,7 +796,7 @@ function updateChannelStatusForCampaign(channel_id){
                                 $('#campaignNameList').append('<tr><td><a href="#" class="btn-info btn-sm">'+val.campaign_name+'<a/></td><td>'+status+'</td></tr>');
                                 $('#proposalList').append('<tr><td><a href="#" onclick="getProposal('+val.message_id+','+val.campaign_id+')" class="btn-info btn-sm">'+val.campaign_name+'<a/></td><td><a href="#" onclick="accept_decline('+val.message_id+','+val.campaign_id+',\'' + accepted + '\')" data-toggle = "tooltip" title="Accept" class="fa fa-thumbs-up green"></a></td><td><a href="#" onclick ="accept_decline('+val.message_id+','+val.campaign_id+',\'' + rejected + '\')" data-toggle = "tooltip" title="Decline" class="fa fa-thumbs-down red"></a></td></tr>');
                             }
-                            if(val.status == 'Current Partner'){
+                            else if(val.status == 'Current Partner'){
                                 $('#campaignNameList').append('<tr><td><a href="#" class="btn-info btn-sm">'+val.campaign_name+'<a/></td><td>'+val.status+'</td></tr>');
                                 $('#proposalList').append('<tr><td><a href="#" onclick="getProposal('+val.message_id+','+val.campaign_id+')" class="btn-info btn-sm">'+val.campaign_name+'<a/></td></tr>');
                             }
@@ -776,6 +827,8 @@ function updateChannelStatusForCampaign(channel_id){
 
     getCampaignsAddedToMessage();
     <!--getAllProposals();-->
+    getMessageFiles('{{ glob.message_id }}');
+    getMessageAgreements('{{ glob.message_id }}');
 
     $("#proposal_campaign_name").on("change",function(){
         $("#proposal_description").empty();
