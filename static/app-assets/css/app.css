@@ -27827,8 +27827,9 @@ button:hover {
     padding: 0;
     height: auto; }
   .card .card-block {
-    padding: 0.5rem 1.5rem 1.5rem;
-    background-color: rgb(244,244,244); }
+      padding: 0.5rem 1.5rem 1.5rem;
+      /*background-color: rgb(244,244,244);*/
+  }
   .card .card-bordered {
     border: 1px solid rgba(0, 0, 0, 0.06); }
   .card.card-transparent {
@@ -28887,13 +28888,14 @@ ngb-accordion .card {
     max-height: calc(100vh - 212px);
     overflow-y: auto; }
   .email-application .hide-email-content {
-    transition: all 0.5s ease-in-out;
-    -webkit-transition: all 0.5s ease-in-out;
-    -moz-transition: all 0.5s ease-in-out;
-    -o-transition: all 0.5s ease-in-out;
-    -ms-transition: all 0.5s ease-in-out;
-    -webkit-transform: translate3d(-110%, 0, 0);
-    transform: translate3d(-110%, 0, 0); }
+      transition: all 0.5s ease-in-out;
+      -webkit-transition: all 0.5s ease-in-out;
+      -moz-transition: all 0.5s ease-in-out;
+      -o-transition: all 0.5s ease-in-out;
+      -ms-transition: all 0.5s ease-in-out;
+      /*-webkit-transform: translate3d(-110%, 0, 0);*/
+      /*transform: translate3d(-110%, 0, 0);*/
+  }
   .email-application .email-app-menu .form-group-compose {
     border-bottom: 1px solid #E4E7ED; }
   .email-application .email-app-menu .list-group-messages {
@@ -28960,7 +28962,7 @@ ngb-accordion .card {
     border-right: 1px solid #e6ecf5;
     float: left; }
   .email-application .email-app-mail-content {
-    width: 70%; } }
+    width: 100%; } }
 
 @media (min-width: 768px) and (max-width: 1199.98px) {
   .email-app-list-mails {
@@ -28968,7 +28970,7 @@ ngb-accordion .card {
     border-right: 1px solid #e6ecf5;
     float: left; }
   .email-application .email-app-mail-content {
-    width: 65%; } }
+    width: 100%; } }
 
 @media (min-width: 1200px) {
   .email-app-content {
@@ -38705,6 +38707,12 @@ textarea.form-control {
 }
 
 }
+@media (min-width: 992px){
+    .app-sidebar{
+        display: block !important;
+    }
+
+}
 .navbar-toggle .icon-bar {
     display: block;
     position: relative;
@@ -38720,3 +38728,9 @@ textarea.form-control {
     height: 40px;
     float: left !important;
   }
+.email-deleted{
+    padding-left: 50px;
+}
+.email-compose{
+    padding-right: 40px;
+}

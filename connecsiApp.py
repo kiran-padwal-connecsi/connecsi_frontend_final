@@ -240,6 +240,7 @@ def profileView():
             print(e)
     else:
         table_name = 'users_inf'
+        
 
 
 
@@ -261,6 +262,7 @@ def editProfile():
             print(e)
     else:
         table_name = 'users_inf'
+
 
 @connecsiApp.route('/updateProfile',methods=['GET','POST'])
 @is_logged_in
