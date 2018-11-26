@@ -31890,7 +31890,7 @@ datetime .form-group {
   .wrapper.nav-collapsed .app-sidebar {
     width: 60px; }
     .wrapper.nav-collapsed .app-sidebar:hover {
-      width: 250px; }
+      width: 300px; }
       .wrapper.nav-collapsed .app-sidebar:hover .nav li.has-sub > a:after {
         display: inherit; }
       .wrapper.nav-collapsed .app-sidebar:hover .menu-title, .wrapper.nav-collapsed .app-sidebar:hover .badge {
