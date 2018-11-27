@@ -206,6 +206,7 @@
             $sidebar.removeClass('hide-sidebar');
             if( $('.toggle-icon').attr('data-toggle') === 'collapsed' &&  $wrapper.not('.nav-collapsed menu-collapsed')){
                 $wrapper.addClass('nav-collapsed menu-collapsed');
+                $('#logo2').hide();
             }
         }
     });

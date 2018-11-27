@@ -3,6 +3,7 @@ from functools import wraps
 import json
 from io import StringIO
 import csv
+import templates
 import time
 #
 import requests
@@ -123,6 +124,29 @@ def privacy_policy():
 @connecsiApp.route('/registerBrand')
 def registerBrand():
     return render_template('user/registerFormBrand.html')
+
+@connecsiApp.route('/forgotPassword')
+def forgotPassword():
+    return render_template('user/forgotPassword.html')
+
+@connecsiApp.route('/resetemail', methods=['GET','POST'])
+def resetemail():
+    if request.method == 'POST':
+        url = base_url+'User/forgotPassword'
+        payload = request.form.to_dict()
+        # print(payload)
+        try:
+            response = requests.post(url, json=payload)
+            print(response.json())
+            print('email sent')
+        except:
+            pass
+        flash("Email sent successfully", 'success')
+        return render_template("user/login.html")
+
+
+
+
 
 @connecsiApp.route('/saveBrand',methods=['GET','POST'])
 def saveBrand():
@@ -352,8 +376,7 @@ def searchInfluencers():
         lookup_string += ''.join(',' + cat['video_cat_name'])
     lookup_string = lookup_string.replace('&', 'and')
     print('i m n search')
-    from templates.campaign.campaign import Campaign
-    campaignObj = Campaign(user_id=user_id)
+    campaignObj = templates.campaign.campaign.Campaign(user_id=user_id)
     view_campaign_data = campaignObj.get_all_campaigns()
     print('i m n search')
     try:
@@ -574,7 +597,6 @@ def addCampaign():
 @is_logged_in
 def viewCampaigns():
     user_id=session['user_id']
-    import templates
     campaignObj = templates.campaign.campaign.Campaign(user_id=user_id)
     view_campaign_data = campaignObj.get_all_campaigns()
     return render_template('campaign/viewCampaigns.html',view_campaign_data=view_campaign_data)
@@ -583,8 +605,7 @@ def viewCampaigns():
 @is_logged_in
 def getCampaigns():
     user_id=session['user_id']
-    from templates.campaign.campaign import Campaign
-    campaignObj = Campaign(user_id=user_id)
+    campaignObj = templates.campaign.campaign.Campaign(user_id=user_id)
     view_campaign_data = campaignObj.get_all_campaigns()
     return jsonify(results=view_campaign_data['data'])
 
@@ -592,8 +613,7 @@ def getCampaigns():
 @is_logged_in
 def viewCampaignDetails(campaign_id):
     user_id = session['user_id']
-    from templates.campaign.campaign import Campaign
-    campaignObj = Campaign(user_id=user_id,campaign_id=campaign_id)
+    campaignObj = templates.campaign.campaign.Campaign(user_id=user_id,campaign_id=campaign_id)
     view_campaign_details_data = campaignObj.get_campaign_details()
     return render_template('campaign/viewCampaignDetails.html',view_campaign_details_data=view_campaign_details_data)
 
@@ -601,8 +621,7 @@ def viewCampaignDetails(campaign_id):
 @is_logged_in
 def getCampaignDetails(campaign_id):
     user_id = session['user_id']
-    from templates.campaign.campaign import Campaign
-    campaignObj = Campaign(user_id=user_id,campaign_id=campaign_id)
+    campaignObj = templates.campaign.campaign.Campaign(user_id=user_id,campaign_id=campaign_id)
     view_campaign_details_data = campaignObj.get_campaign_details()
     return jsonify(results=view_campaign_details_data['data'])
 
@@ -822,8 +841,8 @@ def inbox(message_id):
             conv_title = full_conv['data'][0]['subject']
         except:pass
 
-        from templates.campaign.campaign import Campaign
-        campaignObj = Campaign(user_id=user_id)
+
+        campaignObj = templates.campaign.campaign.Campaign(user_id=user_id)
         view_campaign_data = campaignObj.get_all_campaigns()
 
         print('final conv = ',full_conv)
@@ -835,8 +854,8 @@ def inbox(message_id):
     except:
         pass
 
-    from templates.campaign.campaign import Campaign
-    campaignObj = Campaign(user_id=user_id)
+
+    campaignObj = templates.campaign.campaign.Campaign(user_id=user_id)
     view_campaign_data = campaignObj.get_all_campaigns()
 
     print('final conv default = ', full_conv)
@@ -1533,8 +1552,7 @@ def exportCsv():
 @is_logged_in
 def viewAllClassifiedAds():
     user_id=session['user_id']
-    from templates.classifiedAds.classified import Classified
-    classifiedObj = Classified(user_id=user_id)
+    classifiedObj = templates.classifiedAds.classified.Classified(user_id=user_id)
     all_classified_data = classifiedObj.get_all_classifieds()
     return render_template('classifiedAds/view_all_classifiedAds.html',all_classified_data=all_classified_data)
 
@@ -1543,8 +1561,7 @@ def viewAllClassifiedAds():
 @is_logged_in
 def viewClassifiedDetails(classified_id):
     user_id=session['user_id']
-    from templates.classifiedAds.classified import Classified
-    classifiedObj = Classified(user_id=user_id,classified_id=classified_id)
+    classifiedObj = templates.classifiedAds.classified.Classified(user_id=user_id,classified_id=classified_id)
     classified_details = classifiedObj.get_classified_details()
     print(classified_details)
     return render_template('classifiedAds/viewClassifiedDetails.html',classified_details=classified_details)
