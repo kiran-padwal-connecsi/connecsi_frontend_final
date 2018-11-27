@@ -1,33 +1,73 @@
 {% extends 'layout.html' %}
 {{ super() }}
 {% block body %}
+<style>
+.rows
+{
+    display: flex;
+
+}
+    .column
+    {
+        flex: 50%;
+
+    }
+    .column1
+    {
+        margin-right: 10px;
+        padding-right: 10px;
+
+    }
+    .column2
+    {
+        margin-left: 10px;
+        padding-left: 10px;
+
+    }
+    .box1
+    {
+
+    }
+
+
+</style>
 <div class="row login">
 
-    <div class="col s6 l4 offset-l4">
+    <div class="col s6 16 offset-l3">
         <div class="card">
             <div class="card-action white white-text">
                 <img src="/static/img/logo.png" class="responsive-img">
             </div>
             <div class="card-content">
+
                 <form id="brand_register" name="brand_register" method="POST" action="/saveBrand">
+                    <div class="rows">
+                <div class="column column1">
                 <div class="form-field">
                     <input type="text" id="first_name" name="first_name" class="validate" placeholder="First Name" required>
                 </div>
-                <div class="form-field">
-                    <input type="text" id="last_name" name="last_name" class="validate"  placeholder="Last Name" required>
-                </div>
-                <div class="form-field">
-                    <input type="text" id="company_name" name="company_name" class="validate"  placeholder="Company Name" required>
-                </div>
-                <div class="form-field">
+                    <div class="form-field">
                     <input type="email" id="email" name="email" class="validate"  placeholder="Email" required>
                 </div>
-                <div class="form-field">
+                    <div class="form-field">
                     <input type="password" id="password" name="password" class="validate"  placeholder="Password" minlength="6" required>
                 </div>
+
+
+                </div>
+                <div class="column column2">
+                    <div class="form-field">
+                    <input type="text" id="last_name" name="last_name" class="validate"  placeholder="Last Name" required>
+                </div>
+                    <div class="form-field">
+                    <input type="text" id="company_name" name="company_name" class="validate"  placeholder="Company Name" required>
+                </div>
+
+
                 <div class="form-field">
                     <input type="password" id="confirm_password" name="confirm_password" class="validate"  placeholder="Confirm Password" required>
                 </div>
+                </div></div>
                 <label>
                     <input type="checkbox" class="filled-in" required/>
                     <span>Terms & Condition</span>
