@@ -68,12 +68,17 @@
                     <input type="password" id="confirm_password" name="confirm_password" class="validate"  placeholder="Confirm Password" required>
                 </div>
                 </div></div>
+                <div class="center-align" style="margin-top: 15px; padding-right: 45px;">
                 <label>
                     <input type="checkbox" class="filled-in" required/>
-                    <span>Terms & Condition</span>
+                    <span>I have read and agreed to the Terms & Conditions</span>
                 </label>
-                <div class="form-field center-align">
+                </div>
+                <div class="form-field" style="padding-left: 30px; display: block !important;">
                     <button class="waves-effect waves-light btn-small purple hoverable" type="submit" style="margin-top: 15px;" onclick="return check('brand_register','password','confirm_password')">Register</button>
+                    <span style="color: white; padding-left: 20px;">OR</span>
+                    <span style="color: white; padding-left: 20px;"><b>login using</b></span>
+                    <span style="color: white; padding-left: 20px;"><img src="{{ url_for('static', filename='img/linkedin.png') }}"></span>
                 </div>
                 </form>
                 <br>

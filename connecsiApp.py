@@ -144,10 +144,6 @@ def resetemail():
         flash("Email sent successfully", 'success')
         return render_template("user/login.html")
 
-
-
-
-
 @connecsiApp.route('/saveBrand',methods=['GET','POST'])
 def saveBrand():
     if request.method == 'POST':
@@ -182,17 +178,16 @@ def saveBrand():
                 except:
                     pass
                 flash("Brand Details Successfully Registered", 'success')
-                title = 'Connesi App Login Panel'
-                return render_template('user/login.html', title=title)
+                return render_template('user/thank_you.html')
             else:
                 flash("Internal error please try later", 'danger')
                 return render_template('user/login.html', title=title)
         except:
             flash("Internal error please try later", 'danger')
             return render_template('user/registerFormBrand.html',title='Register Brand')
-#
-#
-#
+
+
+
 #Logout
 @connecsiApp.route('/logout')
 def logout():
