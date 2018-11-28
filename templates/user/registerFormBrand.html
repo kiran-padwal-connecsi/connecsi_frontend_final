@@ -1,98 +1,169 @@
 {% extends 'layout.html' %}
 {{ super() }}
 {% block body %}
+<title xmlns="http://www.w3.org/1999/html">{{title}}</title>
+<!--
+<div class="row login">
+    <div class="col s12 l4 offset-l4">
+        <div class="card">
+            <div class="card-action red white-text">
+                <h3>Login</h3>
+            </div>
+            <div class="card-content">
+                <div class="form-field">
+                    <label for="username">Username</label>
+                    <input type="text" id="username">
+                </div><br/>
+                <div class="form-field">
+                    <label for="password">Password</label>
+                    <input type="password" id="password">
+                </div><br/>
+                <div class="form-field center-align">
+                    <button class="btn-large red hoverable">Login</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+-->
 <style>
-.rows
-{
-    display: flex;
-
+.cardheight{
+    min-height: 420px !important;
 }
-    .column
-    {
-        flex: 50%;
 
-    }
-    .column1
-    {
-        margin-right: 10px;
-        padding-right: 10px;
+.col-xl-6{
+     position: relative;
+  width: 100%;
+  min-height: 1px;
+  padding-right: 15px;
+  padding-left: 1px;
+}
 
+.col-md-6{
+     position: relative;
+  width: 100%;
+  min-height: 1px;
+  padding-right: 15px;
+  padding-left: 1px;
+}
+
+.col-lg-6{
+     position: relative;
+  width: 100%;
+  min-height: 1px;
+  padding-right: 15px;
+  padding-left: 1px;
+}
+
+@media (min-width: 740px){
+    .registerbrand{
+        width: 500px !important;
     }
-    .column2
-    {
-        margin-left: 10px;
+}
+
+@media (min-width: 740px){
+    .inputfieldsleft{
+        float: left;
         padding-left: 10px;
-
+        width: 180px;
     }
-    .box1
-    {
-
+    .inputfieldsright{
+        float: right;
+        padding-right: 20px;
+        width: 180px
     }
+}
 
+@media only screen and (min-width: 993px){
+    .row .col.offset-l4 {
+            margin-left: 25%
+}
+}
+
+#container, #placeholder1, #placeholder2, #placeholder3, #placeholder4{
+     height: 100%;
+}
+
+#placeholder1{
+    display:inline-block; vertical-align: text-bottom;
+}
+
+#placeholder2{
+    display:inline-block; vertical-align: super;
+}
+
+#placeholder3{
+    display:inline-block; vertical-align: super;
+}
+
+#placeholder4{
+    display:inline-block; vertical-align: sub;
+}
 
 </style>
-<div class="row login">
 
-    <div class="col s6 16 offset-l3">
-        <div class="card">
+
+<div class="row login">
+    <div class="col s12 l4 offset-l4 ">
+        <div class="card registerbrand">
             <div class="card-action white white-text">
                 <img src="/static/img/logo.png" class="responsive-img">
             </div>
-            <div class="card-content">
-
+            <div id="brand" class="card-content cardheight">
                 <form id="brand_register" name="brand_register" method="POST" action="/saveBrand">
-                    <div class="rows">
-                <div class="column column1">
-                <div class="form-field">
-                    <input type="text" id="first_name" name="first_name" class="validate" placeholder="First Name" required>
+                <div class="row" style="margin-left: 0rem; margin-right: 0rem;">
+                            <div class="row" style="margin-left: 0rem; margin-right: 0rem;">
+            <div class="col-xl-6 col-lg-6 col-md-6 mb-1 inputfieldsleft" {#  style="float: left; padding-left: 10px; width: 180px;"#}>
+                <div class="row" style="margin-bottom: 5px;">
+                    <input style="border: 2px solid;color: white;border-radius: 0.25rem;padding-left: 10px;" type="text" id="first_name" name="first_name" class="validate" placeholder="First Name" required>
                 </div>
-                    <div class="form-field">
-                    <input type="email" id="email" name="email" class="validate"  placeholder="Email" required>
+                <div class="row" style="margin-bottom: 5px;">
+                    <input style="border: 2px solid;color: white;border-radius: 0.25rem;padding-left: 10px;"type="email" id="email" name="email" class="validate"  placeholder="Business Email" required>
                 </div>
-                    <div class="form-field">
-                    <input type="password" id="password" name="password" class="validate"  placeholder="Password" minlength="6" required>
+                <div class="row" style="margin-bottom: 5px;">
+                    <input style="border: 2px solid;color: white;border-radius: 0.25rem;padding-left: 10px;"type="password" id="password" name="password" class="validate"  placeholder="Password" minlength="6" required>
                 </div>
-
-
+            </div>
+            <div class="col-xl-6 col-lg-6 col-md-6 mb-1 inputfieldsright" {# style="float: right; padding-right: 20px; width: 180px;"#}>
+            <div class="row" style="margin-bottom: 5px;">
+                <input style="border: 2px solid;color: white;border-radius: 0.25rem;padding-left: 10px;"type="text" id="last_name" name="last_name" class="validate"  placeholder="Last Name" required>
+            </div>
+            <div class="row" style="margin-bottom: 5px;">
+                <input style="border: 2px solid;color: white;border-radius: 0.25rem;padding-left: 10px;"type="text" id="company_name" name="company_name" class="validate"  placeholder="Company Name" required>
+            </div>
+            <div class="row" style="margin-bottom: 5px;">
+                <input style="border: 2px solid;color: white;border-radius: 0.25rem;padding-left: 10px;"type="password" id="confirm_password" name="confirm_password" class="validate"  placeholder="Confirm Password" required>
+            </div>
+            </div>
+            </div>
                 </div>
-                <div class="column column2">
-                    <div class="form-field">
-                    <input type="text" id="last_name" name="last_name" class="validate"  placeholder="Last Name" required>
-                </div>
-                    <div class="form-field">
-                    <input type="text" id="company_name" name="company_name" class="validate"  placeholder="Company Name" required>
-                </div>
-
-
-                <div class="form-field">
-                    <input type="password" id="confirm_password" name="confirm_password" class="validate"  placeholder="Confirm Password" required>
-                </div>
-                </div></div>
-                <div class="center-align" style="margin-top: 15px; padding-right: 45px;">
+            <div class="center-align" style="margin-top: 15px; padding-right: 45px;">
                 <label>
                     <input type="checkbox" class="filled-in" required/>
                     <span>I have read and agreed to the Terms & Conditions</span>
                 </label>
                 </div>
-                <div class="form-field" style="padding-left: 30px; display: block !important;">
-                    <button class="waves-effect waves-light btn-small purple hoverable" type="submit" style="margin-top: 15px;" onclick="return check('brand_register','password','confirm_password')">Register</button>
-                    <span style="color: white; padding-left: 20px;">OR</span>
-                    <span style="color: white; padding-left: 20px;"><b>login using</b></span>
-                    <span style="color: white; padding-left: 20px;"><img src="{{ url_for('static', filename='img/linkedin.png') }}"></span>
+                <div class="form-field" style="padding-left: 50px;" id="container">
+                    <button id="placeholder1"class="waves-effect waves-light btn-small purple hoverable" type="submit" style="margin-top: 15px; border-radius: 0.25rem" onclick="return check('brand_register','password','confirm_password')">Register</button>
+                    <span id="placeholder2"style="color: white; padding-left: 20px;">OR</span>
+                    <span id="placeholder3"style="color: white; padding-left: 20px;"><b>login using</b></span>
+                    <span id="placeholder4"style="color: white; padding-left: 20px;"><img style="height: 2.0rem" src="{{ url_for('static', filename='img/linkedin.png') }}"></span>
+                </div>
+                <hr>
+                <div class="center-align" style="margin-top: 15px; padding-right: 45px;">
+                <span style="color: #fff; padding-left: 30px;">Already have an account?</span>
+                </div>
+                <div class="center-align">
+                <a id="login" class="waves-effect waves-light btn-small purple hoverable" href="/" style="margin-top: 15px; border-radius: 0.25rem" >Log In</a>
                 </div>
                 </form>
-                <br>
-                <div class="divider"></div>
-                <br>
-                <!--<div class="form-field center-align">
+            </div>
 
-                    <a href="/loginLinkedin" class="waves-effect waves-light btn social linkedin blue hoverable">Sign in With LinkedIN</a>
-                </div>-->
             </div>
         </div>
     </div>
-
 </div>
 
 
 {% endblock %}
+

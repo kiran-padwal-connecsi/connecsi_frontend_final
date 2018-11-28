@@ -132,8 +132,9 @@ def forgotPassword():
 @connecsiApp.route('/resetemail', methods=['GET','POST'])
 def resetemail():
     if request.method == 'POST':
-        url = base_url+'User/forgotPassword'
         payload = request.form.to_dict()
+        email_id = payload.get('reset_email')
+        url = base_url + '/Messages/ForgotPassword/' + str(email_id)
         # print(payload)
         try:
             response = requests.post(url, json=payload)
