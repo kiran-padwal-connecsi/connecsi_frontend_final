@@ -1,4 +1,8 @@
+{% if session['type'] == 'brand' %}
 {% extends 'dashboard_layout_new.html' %}
+{% elif session['type'] == 'influencer' %}
+{% extends 'dashboard_layout_inf.html' %}
+{% endif %}
 {{ super() }}
 {% block body %}
 {% set glob={} %}
@@ -28,7 +32,7 @@
                                             {% if item['img'] %}
                                             <img class="media-object rounded-circle" src="static/app-assets/img/portrait/small/avatar-s-7.png" alt="Generic placeholder image">
                                             {% else %}
-                                            <span class="media-object rounded-circle text-circle d-flex mr-2 justify-content-center align-items-center bg-blue">{{ item['first_name'][0] }}</span>
+                                            <span class="media-object rounded-circle text-circle d-flex mr-2 justify-content-center align-items-center bg-blue">{{ item['from_email_id'][0] }}</span>
                                             {% endif %}
                                         </span>
                                         <div class="media-body">
@@ -79,7 +83,7 @@
                                             {% if item['img'] %}
                                             <img class="media-object rounded-circle" src="static/app-assets/img/portrait/small/avatar-s-7.png" alt="Generic placeholder image">
                                             {% else %}
-                                            <span class="media-object rounded-circle text-circle d-flex mr-2 justify-content-center align-items-center bg-purple">{{ item['first_name'][0] }}</span>
+                                            <span class="media-object rounded-circle text-circle d-flex mr-2 justify-content-center align-items-center bg-purple">{{ item['from_email_id'][0] }}</span>
                                             {% endif %}
                                         </span>
                                     <div class="media-body">
@@ -365,9 +369,9 @@
 
             <label for="proposal_channels">Channels :</label>
             <div id="proposal_channels">
-                <input multiple type="checkbox" value="youtube" name="proposal_channels" required>
+                <input multiple type="checkbox" value="" name="proposal_channels" id="youtube_channel_id" required>
                 <a href="#" class="fa fa-youtube red"></a>
-                <input multiple type="checkbox" value="twitter" name="proposal_channels">
+                <input multiple type="checkbox" value="" name="proposal_channels" id="twitter_channel_id">
                 <a href="#" class="fa fa-twitter"></a>
                 <input type="checkbox" value="facebook" disabled>
                 <a href="#" class="fa fa-facebook blue"></a>
@@ -375,6 +379,7 @@
                 <a href="#" class="fa fa-instagram pink"></a>
             </div>
             <input type="text"  name="target_url" id="proposal_target_url" readonly>
+            <input type="text"  name="ref_link" id="proposal_ref_link" placeholder="ref link" required>
             <div id="proposal_arrangements">
 
             </div>
@@ -655,6 +660,38 @@ function updateChannelStatusForCampaign(channel_id){
 
 }
 
+function getAllMappedChannel_ids(channel_id){
+    alert(channel_id);
+    <!--alert('mapped = '+channel_id);-->
+    $.ajax({
+               type: "GET",
+               url: '/getMappedChannels/'+channel_id,
+               contentType: 'application/json;charset=UTF-8',
+               success: function(data)
+               {
+                   $( '#youtube_channel_id').empty();
+                   $( '#twitter_channel_id').empty();
+                   if (data.results.length != 0){
+                   jQuery.each(data.results, function(i, val) {
+                        <!--alert(val.youtube_channel_id);-->
+                        <!--alert(val.twitter_channel_id);-->
+                            $( '#youtube_channel_id').val(val.youtube_channel_id);
+                            $( '#twitter_channel_id').val(val.twitter_channel_id);
+                            <!--$('#status'+channel_id).append('<b style="font-weight:450; font-size:15px;">'+val.campaign_name+'<br/></b>');-->
+                            <!--$('#status'+channel_id).append('<b style="font-weight:400; color:orange; font-size:15px;">'+val.status+'</b>');-->
+                            <!--$('#status'+channel_id).append('<hr style="height:0px; margin:auto;">');-->
+                    });
+                    }
+                    else{
+                        <!--$('#status'+channel_id).append('<b>No Campaigns</b>');-->
+                        alert('no channels mapped');
+                    }
+               }
+             });
+
+}
+
+
 
     $( document ).ready(function() {
 
@@ -831,6 +868,7 @@ function updateChannelStatusForCampaign(channel_id){
     getMessageAgreements('{{ glob.message_id }}');
 
     $("#proposal_campaign_name").on("change",function(){
+        getAllMappedChannel_ids('{{ glob.channel_id }}');
         $("#proposal_description").empty();
         $("#proposal_from_date").empty();
         $("#proposal_to_date").empty();

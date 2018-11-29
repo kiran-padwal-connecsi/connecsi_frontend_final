@@ -11,8 +11,19 @@ from flask import Flask, render_template, flash, redirect, url_for, session, req
 # from passlib.hash import sha256_crypt
 #from flask_oauthlib.client import OAuth
 import os
+from flask_dance.contrib.google import make_google_blueprint, google
+from flask_dance.contrib.twitter import make_twitter_blueprint, twitter
 # from flask_paginate import Pagination, get_page_parameter
 from flask_uploads import UploadSet, configure_uploads, IMAGES
+
+
+
+os.environ['OAUTHLIB_INSECURE_TRANSPORT'] = '1'
+# os.environ['OAUTHLIB_RELAX_TOKEN_SCOPE'] = '1'
+# os.environ['WERKZEUG_RUN_MAIN'] = 'true'
+
+
+
 
 connecsiApp = Flask(__name__)
 connecsiApp.secret_key = 'connecsiSecretKey'
@@ -653,11 +664,8 @@ def inbox(message_id):
     conv_title=''
     length_conv=''
     user_id = session['user_id']
-    print('user id=',user_id)
     type = session['type']
-    print('user type = ',type)
     email_id = session['email_id']
-    print('email id =', email_id)
     url = base_url + 'Messages/' + str(user_id) + '/' + type
     conv_url = base_url + 'Messages/conversations/' + str(email_id)
     try:
@@ -687,9 +695,8 @@ def inbox(message_id):
 
         for item in inbox['data']:
             inbox_user_id = item['user_id']
-            print(inbox_user_id)
+            # print(inbox_user_id)
             inbox_user_type = item['user_type']
-            print('inbox user type',inbox_user_type)
             first_name = ''
             if inbox_user_type == 'brand':
                 brand_details_url = base_url+'/Brand/'+str(inbox_user_id)
@@ -697,18 +704,12 @@ def inbox(message_id):
                 brand_details_json = brand_details_resposne.json()
                 # print(brand_details_json)
                 first_name = brand_details_json['data']['first_name']
-                print(first_name)
             elif inbox_user_type == 'influencer':
-                inbox_email_id = item['from_email_id']
-                influencer_details_url = base_url + '/Influencer/GetDetailsByEmailId/' + str(inbox_email_id)
-                print(influencer_details_url)
-
+                influencer_details_url = base_url + '/Influencer/' + str(inbox_user_id)
                 influencer_details_resposne = requests.get(url=influencer_details_url)
                 influencer_details_json = influencer_details_resposne.json()
-                print(influencer_details_json)
+                # print(influencer_details_json)
                 first_name = influencer_details_json['data']['first_name']
-                if first_name =='':
-                    first_name=inbox_email_id
             item.update({'first_name': first_name})
             # print(item)
 
@@ -758,14 +759,11 @@ def inbox(message_id):
                 # print(brand_details_json)
                 first_name = brand_details_json['data']['first_name']
             elif full_conv_user_type == 'influencer':
-                full_conv_email_id = item['from_email_id']
-                influencer_details_url = base_url + '/Influencer/GetDetailsByEmailId/' + str(full_conv_email_id)
+                influencer_details_url = base_url + '/Influencer/' + str(full_conv_user_id)
                 influencer_details_resposne = requests.get(url=influencer_details_url)
                 influencer_details_json = influencer_details_resposne.json()
                 # print(influencer_details_json)
                 first_name = influencer_details_json['data']['first_name']
-                if first_name =='':
-                    first_name=full_conv_email_id
             item.update({'first_name': first_name})
             item.update({'collapse_id':collapse_id})
             # print(item)
@@ -1569,30 +1567,6 @@ def reports():
 
 
 ############################################## influencer Section###########################################################
-@connecsiApp.route('/getMappedChannels/<string:channel_id>', methods=['get'])
-@is_logged_in
-def getMappedChannels(channel_id):
-    print(channel_id)
-    url = base_url + 'Influencer/' + str(channel_id)
-    print(url)
-    try:
-        mappedChannel_ids = requests.get(url=url)
-        response_json = mappedChannel_ids.json()
-        print(response_json)
-        return jsonify(results=response_json['data'])
-    except Exception as e:
-        print(e)
-
-
-
-
-from flask_dance.contrib.google import make_google_blueprint, google
-from flask_dance.contrib.twitter import make_twitter_blueprint, twitter
-
-os.environ['OAUTHLIB_INSECURE_TRANSPORT'] = '1'
-# os.environ['OAUTHLIB_RELAX_TOKEN_SCOPE'] = '1'
-# os.environ['WERKZEUG_RUN_MAIN'] = 'true'
-
 
 google_blueprint = make_google_blueprint(
     client_id="413672402805-dvv0v7bft07iqhj2du2eqq59itbeqcv1.apps.googleusercontent.com",
@@ -1602,8 +1576,6 @@ google_blueprint = make_google_blueprint(
         "https://www.googleapis.com/auth/userinfo.email",
         "https://www.googleapis.com/auth/youtube.readonly"
     ],
-    offline=True,
-    reprompt_consent=True,
     redirect_to='google_login'
 
 )
@@ -1633,30 +1605,10 @@ def google_login():
     description = channel_data['items'][0]['snippet']['description']
     # print(channel_id)
     payload.update({'channel_id':channel_id,'business_email':resp_json['email']})
-    url = base_url+'Influencer/saveInfluencer'
-    print(url)
+    url = base_url+'influencer/saveInfluencer'
     try:
         response = requests.post(url,json=payload)
         print(response.json())
-        response_json = response.json()
-        if response_json['response'] == 1:
-            payload1 = {
-                "from_email_id": "business@connecsi.com",
-                "to_email_id": resp_json['email'],
-                "date": datetime.datetime.now().strftime("%A, %d. %B %Y %I:%M%p"),
-                "subject": "Youtube Influencer Welcome To Connecsi",
-                "message": "Hello Youtube Influencer "+ title +", your email address is "+ resp_json['email'] +" welcome to Connecsi"
-            }
-            user_id = 1
-            type = 'brand'
-            url = base_url + 'Messages/sentWelcomeEmail/' + str(user_id) + '/' + type
-            try:
-                response = requests.post(url=url, json=payload1)
-                data = response.json()
-                print('email sent')
-            except:
-                pass
-
     except Exception as e:
         print(e)
         pass
@@ -1688,39 +1640,8 @@ def twitter_login():
     # user_data = twitter.get('users/show.json?screen_name=' +screen_name)
     # assert resp.ok, resp.text
     # print(user_data.json())
-    payload = {}
-    channel_id = resp_json['id_str']
-    payload.update({'channel_id': channel_id, 'business_email': resp_json['email']})
-    url = base_url + 'Influencer/saveInfluencer'
-    print(url)
-    try:
-        response = requests.post(url, json=payload)
-        print(response.json())
-        response_json = response.json()
-        if response_json['response'] == 1:
-            payload1 = {
-                "from_email_id": "business@connecsi.com",
-                "to_email_id": resp_json['email'],
-                "date": datetime.datetime.now().strftime("%A, %d. %B %Y %I:%M%p"),
-                "subject": "Twitter Influencer, Welcome To Connecsi",
-                "message": "Hello Twitter Influencer "+ resp_json['name'] +", your email address is "+resp_json['email']+
-                           " Welcome to Connecsi"
-            }
-            user_id = 1
-            type = 'brand'
-            url = base_url + 'Messages/sentWelcomeEmail/' + str(user_id) + '/' + type
-            try:
-                response = requests.post(url=url, json=payload1)
-                data = response.json()
-                print('email sent')
-            except:
-                pass
-    except Exception as e:
-        print(e)
-        pass
-
     if resp.ok:
-        user_id = resp_json['id_str']
+        user_id = resp_json['id']
         print(user_id)
         # exit()
         if user_id:
@@ -1738,10 +1659,6 @@ def twitter_login():
 @is_logged_in
 def admin_inf():
     title='Influencer Dashboard'
-    url = 'https://www.googleapis.com/youtube/v3/channels?part=statistics,id,snippet,contentOwnerDetails,status&mine=true'
-    channel_data = google.get(url).json()
-
-    print('channel details = ', channel_data)
     return render_template('index_inf.html',title=title)
 
 @connecsiApp.route('/inf_profile')
