@@ -19,6 +19,7 @@
 
     // $sidebar_content.perfectScrollbar();
 
+
     if( $sidebar_img_container.length !== 0 && $sidebar_img !== undefined ){
         $sidebar_img_container.css('background-image','url("' + $sidebar_img + '")');
     }
@@ -132,17 +133,35 @@
     //         }
     //     }
     // });
+       var $this = $(this),
+           toggle_icon= $this.find('.toggle-icon');
+           //toggle = toggle_icon.attr('data-toggle');
+       var datatoggle = localStorage.getItem('toggle');
+
+            if (datatoggle == "expanded") {
+                console.log(2);
+                $('.nav-toggle').find('.toggle-icon').addClass('ft-toggle-right').removeClass('ft-toggle-left');
+            toggle_icon.attr('data-toggle', 'expanded');
+            $('#logo2').show();
+            }
+            else {
+            $wrapper.addClass('nav-collapsed menu-collapsed');
+            $('.nav-toggle').find('.toggle-icon').removeClass('ft-toggle-right').addClass('ft-toggle-left');
+            toggle_icon.attr('data-toggle', 'collapsed');
+            $('#logo2').hide();
+
+            }
 
 
     $('.nav-toggle').on('click',function(){
         var $this = $(this),
-        toggle_icon= $this.find('.toggle-icon'),
-        toggle = toggle_icon.attr('data-toggle');
+         toggle_icon= $this.find('.toggle-icon'),
+            toggle = toggle_icon.attr('data-toggle');
         compact_menu_checkbox = $('.cz-compact-menu');
 
         if(toggle === 'expanded'){
             $wrapper.addClass('nav-collapsed');
-
+            // localStorage.setItem('data-toggle', 'expanded');
             $('.nav-toggle').find('.toggle-icon').removeClass('ft-toggle-right').addClass('ft-toggle-left');
             toggle_icon.attr('data-toggle', 'collapsed');
             if(compact_menu_checkbox.length > 0){
@@ -151,13 +170,16 @@
         }
         else{
             $wrapper.removeClass('nav-collapsed menu-collapsed');
-
+            // localStorage.setItem('data-toggle', 'collapsed');
             $('.nav-toggle').find('.toggle-icon').removeClass('ft-toggle-left').addClass('ft-toggle-right');
             toggle_icon.attr('data-toggle', 'expanded');
             if(compact_menu_checkbox.length > 0){
                 compact_menu_checkbox.prop('checked',false);
             }
         }
+        toggle = toggle_icon.attr('data-toggle')
+        localStorage.setItem('toggle', toggle);
+
     });
 
     $sidebar.on('mouseenter', function() {
