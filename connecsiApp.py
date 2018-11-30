@@ -420,6 +420,8 @@ def searchInfluencers():
             payload.update({'category_id': str(category_id)})
             payload.update({'min_lower':payload.get('min_lower')})
             payload.update({'max_upper':payload.get('max_upper')})
+            payload.update({'sort_order': "string"})
+            payload.update({'offset':0})
             print(payload)
 
             try:
@@ -495,7 +497,7 @@ def searchInfluencers():
                 "sort_order": "High To Low"
             }
 
-            url = base_url + '/Influencer/saveInfluencer'
+            url = base_url + '/Youtube/searchChannels/'
             response = requests.post(url, json=payload)
             print(response.json())
             data = response.json()
@@ -841,7 +843,7 @@ def inbox(message_id):
         except:pass
 
         from templates.campaign import campaign
-        campaignObj = campaign.campaign.Campaign(user_id=user_id)
+        campaignObj = campaign.Campaign(user_id=user_id)
         view_campaign_data = campaignObj.get_all_campaigns()
 
         print('final conv = ',full_conv)
