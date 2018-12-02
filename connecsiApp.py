@@ -97,6 +97,26 @@ def privacy_policy():
 def registerBrand():
     return render_template('user/registerFormBrand.html')
 
+@connecsiApp.route('/forgotPassword')
+def forgotPassword():
+    return render_template('user/forgotPassword.html')
+
+@connecsiApp.route('/resetemail', methods=['GET','POST'])
+def resetemail():
+    if request.method == 'POST':
+        payload = request.form.to_dict()
+        email_id = payload.get('reset_email')
+        url = base_url + '/Messages/ForgotPassword/' + str(email_id)
+        # print(payload)
+        try:
+            response = requests.post(url, json=payload)
+            print(response.json())
+            print('email sent')
+        except:
+            pass
+        flash("Email sent successfully", 'success')
+        return render_template("user/login.html")
+
 @connecsiApp.route('/saveBrand',methods=['GET','POST'])
 def saveBrand():
     if request.method == 'POST':
@@ -131,17 +151,16 @@ def saveBrand():
                 except:
                     pass
                 flash("Brand Details Successfully Registered", 'success')
-                title = 'Connesi App Login Panel'
-                return render_template('user/login.html', title=title)
+                return render_template('user/thank_you.html')
             else:
                 flash("Internal error please try later", 'danger')
                 return render_template('user/login.html', title=title)
         except:
             flash("Internal error please try later", 'danger')
             return render_template('user/registerFormBrand.html',title='Register Brand')
-#
-#
-#
+
+
+
 #Logout
 @connecsiApp.route('/logout')
 def logout():
@@ -213,6 +232,7 @@ def profileView():
             print(e)
     else:
         table_name = 'users_inf'
+        
 
 
 
@@ -234,6 +254,7 @@ def editProfile():
             print(e)
     else:
         table_name = 'users_inf'
+
 
 @connecsiApp.route('/updateProfile',methods=['GET','POST'])
 @is_logged_in
@@ -291,7 +312,6 @@ def changePassword():
         except:pass
 
 
-
 @connecsiApp.route('/searchInfluencers',methods=['POST','GET'])
 @is_logged_in
 def searchInfluencers():
@@ -323,8 +343,8 @@ def searchInfluencers():
         lookup_string += ''.join(',' + cat['video_cat_name'])
     lookup_string = lookup_string.replace('&', 'and')
     print('i m n search')
-    from templates.campaign.campaign import Campaign
-    campaignObj = Campaign(user_id=user_id)
+    from templates.campaign import campaign
+    campaignObj = campaign.Campaign(user_id=user_id)
     view_campaign_data = campaignObj.get_all_campaigns()
     print('i m n search')
     try:
@@ -339,7 +359,7 @@ def searchInfluencers():
         print(e)
         pass
     print('i m n search before post method')
-    if request.method=='POST':
+    if request.method == 'POST':
         print('i m inside post')
         if 'search_inf' in request.form:
             string_word = request.form.get('string_word')
@@ -373,6 +393,8 @@ def searchInfluencers():
             payload.update({'category_id': str(category_id)})
             payload.update({'min_lower':payload.get('min_lower')})
             payload.update({'max_upper':payload.get('max_upper')})
+            payload.update({'sort_order': "string"})
+            payload.update({'offset':0})
             print(payload)
 
             try:
@@ -448,7 +470,8 @@ def searchInfluencers():
                 "sort_order": "High To Low",
                 "offset":0
             }
-            url = base_url + 'Youtube/searchChannels/Youtube'
+
+            url = base_url + '/Youtube/searchChannels/'
             response = requests.post(url, json=payload)
             print(response.json())
             data = response.json()
@@ -466,7 +489,6 @@ def searchInfluencers():
                                favInfList_data=favInfList_data)
 
 
-#
 @connecsiApp.route('/addFundsBrands')
 @is_logged_in
 def addFundsBrands():
@@ -546,8 +568,8 @@ def addCampaign():
 @is_logged_in
 def viewCampaigns():
     user_id=session['user_id']
-    import templates
-    campaignObj = templates.campaign.campaign.Campaign(user_id=user_id)
+    from templates.campaign import campaign
+    campaignObj = campaign.Campaign(user_id=user_id)
     view_campaign_data = campaignObj.get_all_campaigns()
     return render_template('campaign/viewCampaigns.html',view_campaign_data=view_campaign_data)
 
@@ -555,8 +577,8 @@ def viewCampaigns():
 @is_logged_in
 def getCampaigns():
     user_id=session['user_id']
-    from templates.campaign.campaign import Campaign
-    campaignObj = Campaign(user_id=user_id)
+    from templates.campaign import campaign
+    campaignObj = campaign.campaign.Campaign(user_id=user_id)
     view_campaign_data = campaignObj.get_all_campaigns()
     return jsonify(results=view_campaign_data['data'])
 
@@ -564,8 +586,8 @@ def getCampaigns():
 @is_logged_in
 def viewCampaignDetails(campaign_id):
     user_id = session['user_id']
-    from templates.campaign.campaign import Campaign
-    campaignObj = Campaign(user_id=user_id,campaign_id=campaign_id)
+    from templates.campaign import campaign
+    campaignObj = campaign.campaign.Campaign(user_id=user_id,campaign_id=campaign_id)
     view_campaign_details_data = campaignObj.get_campaign_details()
     return render_template('campaign/viewCampaignDetails.html',view_campaign_details_data=view_campaign_details_data)
 
@@ -573,8 +595,8 @@ def viewCampaignDetails(campaign_id):
 @is_logged_in
 def getCampaignDetails(campaign_id):
     user_id = session['user_id']
-    from templates.campaign.campaign import Campaign
-    campaignObj = Campaign(user_id=user_id,campaign_id=campaign_id)
+    from templates.campaign import campaign
+    campaignObj = campaign.campaign.Campaign(user_id=user_id,campaign_id=campaign_id)
     view_campaign_details_data = campaignObj.get_campaign_details()
     return jsonify(results=view_campaign_details_data['data'])
 
@@ -807,8 +829,8 @@ def inbox(message_id):
             conv_title = full_conv['data'][0]['subject']
         except:pass
 
-        from templates.campaign.campaign import Campaign
-        campaignObj = Campaign(user_id=user_id)
+        from templates.campaign import campaign
+        campaignObj = campaign.Campaign(user_id=user_id)
         view_campaign_data = campaignObj.get_all_campaigns()
 
         print('final conv = ',full_conv)
@@ -820,8 +842,8 @@ def inbox(message_id):
     except:
         pass
 
-    from templates.campaign.campaign import Campaign
-    campaignObj = Campaign(user_id=user_id)
+    from templates.campaign import campaign
+    campaignObj = campaign.campaign.Campaign(user_id=user_id)
     view_campaign_data = campaignObj.get_all_campaigns()
 
     print('final conv default = ', full_conv)
@@ -1481,9 +1503,10 @@ def exportCsv():
 
     strList = strList.replace("'", "\"")
     strList = strList.replace('{"data', '')
-    strList = strList.replace(": [", "{")
+   # strList = strList.replace(": [", "{")
     strList = strList.replace('\'s', '')
-    strList = strList.replace(']}', '"')
+   # strList = strList.replace(']', '}')
+    strList = strList.replace('}}}', '}}')
     # strList = re.sub(r"^'", '"', strList)
     # strList = re.sub(r"'$", '"', strList)
 
@@ -1493,7 +1516,7 @@ def exportCsv():
     # print("type of ", type(a))
     s = json.dumps(strList)
     # s=s.encode("utf-8")
-    # print(s)
+    print(s)
     # cw.writerow(strList[0])  # header row
     count = 0;
 
@@ -1518,8 +1541,8 @@ def exportCsv():
 @is_logged_in
 def viewAllClassifiedAds():
     user_id=session['user_id']
-    from templates.classifiedAds.classified import Classified
-    classifiedObj = Classified(user_id=user_id)
+    from templates.classifiedAds import classified
+    classifiedObj = classified.Classified(user_id=user_id)
     all_classified_data = classifiedObj.get_all_classifieds()
     return render_template('classifiedAds/view_all_classifiedAds.html',all_classified_data=all_classified_data)
 
@@ -1528,8 +1551,8 @@ def viewAllClassifiedAds():
 @is_logged_in
 def viewClassifiedDetails(classified_id):
     user_id=session['user_id']
-    from templates.classifiedAds.classified import Classified
-    classifiedObj = Classified(user_id=user_id,classified_id=classified_id)
+    from templates.classifiedAds import classified
+    classifiedObj = classified.Classified(user_id=user_id,classified_id=classified_id)
     classified_details = classifiedObj.get_classified_details()
     print(classified_details)
     return render_template('classifiedAds/viewClassifiedDetails.html',classified_details=classified_details)

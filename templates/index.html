@@ -19,7 +19,7 @@
                                     <div class="form-group" style="text-align:center;">
                                         <!-- Single Button Dropdown -->
                                         <div class="btn-group mr-1 mb-1">
-                                            <button type="button" class="btn btn-min-width dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true" style="background-color:#77C4CD  ">Search</button>
+                                            <button type="button" class="btn btn-min-width dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true" style="background-color:#9370DB">Search</button>
                                             <div class="dropdown-menu">
                                                 <a class="dropdown-item" href="/searchInfluencers">Influencers</a>
                                                 <div class="dropdown-divider"></div>
@@ -27,7 +27,7 @@
                                             </div>
                                         </div>
                                         <div class="btn-group mr-1 mb-1">
-                                            <button type="button" class="btn btn-min-width dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true" style="background-color:#F13C8B  ;">Create</button>
+                                            <button type="button" class="btn btn-min-width dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true" style="background-color:#15acaf">Create</button>
                                             <div class="dropdown-menu">
                                                 <a class="dropdown-item" href="#">Campaigns</a>
                                                 <div class="dropdown-divider"></div>
@@ -42,7 +42,7 @@
                 </div>
                 <div class="row">
                     <div class="col-xl-3 col-lg-6 col-md-6 col-12">
-                        <div class="card shadow" style="background-color:#88EAED  ;padding-top:30px; padding-bottom:50px;">
+                        <div class="card shadow" style="background-color:#9370DB;padding-top:30px; padding-bottom:50px;">
                             <div class="card-body">
                                 <div class="card-block pt-2 pb-0">
                                     <div class="media">
@@ -67,7 +67,7 @@
                         </div>
                     </div>
                     <div class="col-xl-3 col-lg-6 col-md-6 col-12">
-                        <div class="card shadow" style="background-color:#F49347    ;padding-top:30px; padding-bottom:50px;">
+                        <div class="card shadow" style="background-color:#6495ed;padding-top:30px; padding-bottom:50px;">
                             <div class="card-body">
                                 <div class="card-block pt-2 pb-0">
                                     <div class="media">
@@ -87,7 +87,7 @@
                         </div>
                     </div>
                     <div class="col-xl-3 col-lg-6 col-md-6 col-12">
-                        <div class="card shadow" style="background-color:#4CD63B   ;padding-top:30px; padding-bottom:50px;">
+                        <div class="card shadow" style="background-color:#87ceeb;padding-top:30px; padding-bottom:50px;">
                             <div class="card-body">
                                 <div class="card-block pt-2 pb-0">
                                     <div class="media">
@@ -112,7 +112,7 @@
                         </div>
                     </div>
                     <div class="col-xl-3 col-lg-6 col-md-6 col-12">
-                        <div class="card shadow" style="background-color:#F571A5    ;padding-top:30px; padding-bottom:50px;">
+                        <div class="card shadow" style="background-color:#64dbdd    ;padding-top:30px; padding-bottom:50px;">
                             <div class="card-body">
                                 <div class="card-block pt-2 pb-0">
                                     <div class="media">
@@ -144,13 +144,13 @@
                             <table class="table" style="height:500px;" cellspacing="0">
                                 <tbody>
                                 <tr>
-                                    <td colspan="4" style="background-color:#EC8D96 ; color:white; text-align:center;">Top 10 Influencers </td>
+                                    <td colspan="4" style="background-color:white; color:black; text-align:center;">Top 10 Influencers </td>
                                 </tr>
-                                <tr style="background-color:#EC8D96 ; color:white;">
+                                <tr style="background-color:#e3e2e2 ; color:black;">
                                     <td scope="col"></td>
                                     <td scope="col">Influencers</td>
                                     <td scope="col">Channels</td>
-                                    <td scope="col">Engagemnets</td>
+                                    <td scope="col">Engagements</td>
                                 </tr>
                                 <tr>
                                     <th scope="row">1</th>
@@ -215,11 +215,14 @@
                             </table>
                         </div>
                     </div>
-                    <div class="col-xl-6 col-lg-6 col-md-6 mb-1">
-                        <div class="col-md-12 d-flex justify-content-center align-items-center white" style="background-color: #4a90e2;margin-bottom:0%;">
+                    <div class="col-xl-6 col-lg-6 col-md-6 mb-1" style="padding-top: 10px;">
+                        <div class="col-md-12 d-flex justify-content-center align-items-center" style="background-color: white;margin-bottom:0%; color: black;">
                             Campaigns By Channels
                         </div>
                         <div class="card">
+                                 <!--<div class="col-md-12 d-flex justify-content-center align-items-center" style="background-color: white;margin-bottom:0%; color: black;">-->
+                            <!--Campaigns By Channels-->
+                            <!--</div>-->
                             <div id="chart" class="ct-chart shadow ct-major-tenth" style="height:400px;">
                             </div>
                         </div>
@@ -329,5 +332,19 @@ chart.on('draw', function() {
 })();
 
 </script>
+<style>
+.ct-series-a .ct-slice-donut {
+    stroke: #9370DB;
+}
+.ct-series-b .ct-slice-donut {
+    stroke: #6495ed;
+}
+.ct-series-c .ct-slice-donut {
+    stroke: #87ceeb;
+}
+.ct-series-d .ct-slice-donut {
+    stroke: #64dbdd;
+}
+</style>
 <!--Statistics cards Ends-->
 {% endblock %}

@@ -10,7 +10,11 @@
         <div class="card">
             <div class="row">
                 <div class="col-12">
+<<<<<<< HEAD
                     <div class="card-header">Create New Classified Ad</div>
+=======
+                    <div class="card-header">Create New Classified Ads</div>
+>>>>>>> 2c0115f8b296c05aee42547d1ae2cd81895fc30f
                 </div>
             </div>
             <div class="card-body">
@@ -129,11 +133,23 @@
                                     </span>
                                 </div>
                             </div>
+<<<<<<< HEAD
                             <div class="form-check">
                                 <input type="hidden" id="convert_to_campaign" name="convert_to_campaign" value="false">
                                 <!--<label class="form-check-label" for="classifiedAds">Post as Classified Ads</label>-->
                             </div>
                             <br>
+=======
+                            <div class="upload-btn-wrapper">
+                                    <button class="btn" style="margin-top: 49px">Upload File
+                                    <input type="file" name="myfile" id="imgInp" /></button>
+                               <!-- <input type="file" value="submit" name="Uplaod File">-->
+                                <!--<label class="form-check-label" for="classifiedAds">Post as Classified Ads</label>-->
+                            </div>
+                            <img id="blah" src="#" width="15%" height="2%" alt="your image" />
+
+                            <div>
+>>>>>>> 2c0115f8b296c05aee42547d1ae2cd81895fc30f
                             <button type="submit" id="saveclassified" class="btn btn-success"  style="margin-left: 45%">Save</button>
                         </div>
                     </form>
@@ -144,7 +160,22 @@
 </div>
 <script>
 $( document ).ready(function() {
+function readURL(input) {
 
+  if (input.files && input.files[0]) {
+    var reader = new FileReader();
+
+    reader.onload = function(e) {
+      $('#blah').attr('src', e.target.result);
+    }
+
+    reader.readAsDataURL(input.files[0]);
+  }
+}
+
+$("#imgInp").change(function() {
+  readURL(this);
+});
         // range slider starts
         var nonLinearSlider = document.getElementById('add_campaign_followers_slider');
         noUiSlider.create(nonLinearSlider, {
