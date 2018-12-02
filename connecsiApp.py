@@ -445,7 +445,8 @@ def searchInfluencers():
                 "country": "PL",
                 "min_lower": 0,
                 "max_upper": 21200,
-                "sort_order": "High To Low"
+                "sort_order": "High To Low",
+                "offset":0
             }
             url = base_url + 'Youtube/searchChannels/Youtube'
             response = requests.post(url, json=payload)
