@@ -153,6 +153,30 @@
             }
 
 
+    // var x = $('#blah').attr('src');
+    // if(x == '#'){
+    //     $('#blah').show();
+    // }
+    // else
+    // {
+    //     $('#blah').hide();
+    // }
+    //  $('.x').each(function () {
+    // if (this.src.length > 0) {
+    //     $('#blah').show();
+    // }
+    // else{
+    //     $('#blah').hide();
+    // }
+    // });
+    if ($('img.x', this).attr('src') == '#') {
+    $('#blah').hide();
+    }
+    else{
+    $('#blah').show();
+    }
+
+
     $('.nav-toggle').on('click',function(){
         var $this = $(this),
          toggle_icon= $this.find('.toggle-icon'),

@@ -1,0 +1,755 @@
+{% extends 'dashboard_layout_new.html' %}
+{{ super() }}
+{% block body %}
+<head>
+  <style>
+    .text-field {
+    -moz-box-sizing: border-box;
+    border: 1px solid #EEEEEE;
+    font-family: "Source Sans Pro",Arial,sans-serif;
+    font-size: 0.73684em;
+    font-weight: 600;
+    height: 37px;
+    margin: 0;
+    padding: 5px;
+    width: 100%;
+}
+.autocomplete-suggestion {
+    overflow: hidden;
+    padding: 2px 5px;
+    white-space: nowrap;
+    background-color:white;
+    <!--max-width:500px;-->
+    <!--margin: auto;-->
+    <!--border: 3px solid #73AD21;-->
+}
+@media only screen and (max-width: 450px){
+    .autocomplete-suggestion { width: 80%; }
+}
+
+.autocomplete-suggestions strong {
+    color: #3399FF;
+    font-weight: normal;
+
+}
+.autocomplete-selected{
+  background-color:#F0F0F0;
+}
+
+
+    </style>
+
+</head>
+<div class="sticky-bottom" id="accordion">
+  <div class="card" >
+    <div id="influencerSearchPanel"  data-parent="#accordion">
+      <div class="card-body" >
+        <div class="row" style="justify-content: center">
+          <div class="col-xl-12 col-lg-12  col-md-12 col-12">
+            <div class="card">
+              <div class="card-body" style="padding: 1px;">
+                <form class="col s12" action="/offers" method="POST" name="form_search" id="form_search">
+                  <div class="form-body">
+                    <div class="row" style="padding-top: 2%;">
+                      <div class="col-xl-2 col-lg-2 col-md-2 mb-1" style="padding-left: 20px">
+                      <label>Channel</label>
+                        <div class="form-group">
+                          <select class="form-control" name="channel" style="height:35px;">
+                            {% if form_filters['channel'] %}
+                            <option value="{{ form_filters['channel'] }}">{{ form_filters['channel'] }}</option>
+                            {% endif %}
+                            <option value="Youtube">Youtube</option>
+                            <option value="Twitter">Twitter</option>
+                            <option value="Facebook">Facebook</option>
+                            <option value="Instagram">Instagram</option>
+                          </select>
+                        </div>
+                      </div>
+                      <div class="col-xl-3 col-lg-3 col-md-3 mb-1">
+                        <div class="form-group" >
+                        <label>Category</label>
+                          <input class="form-control" id="string_word" name="string_word" type="text" placeholder="Enter Keywords"style="height:35px;"
+                                 {% if form_filters['string_word'] %}
+                          value="{{ form_filters['string_word'] }}"
+                          {% endif %}
+                          >
+                        </div>
+                        <!--{{ form_filters }}-->
+                      </div>
+                      <div class="col-xl-2 col-lg-2 col-md-2 mb-1" >
+                        <div class="form-group" >
+                          <label>Country</label>
+                          <div class="form-group">
+                            <select class="form-control" name="country" style="height:35px;">
+                              {% if form_filters['country'] %}
+                              <option value="{{ form_filters['country'] }}">{{ form_filters['country_name'] }}</option>
+                              <option value=""></option>
+                              {% else %}
+                              <option value=""></option>
+                              {% endif %}
+
+                              {% for item in regionCodes['data'] %}
+                              <option value="{{ item['region_code'] }}">{{ item['country_name'] }}</option>
+                              {% endfor %}
+                            </select>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-xl-5 col-lg-5 col-md-5 mb-1" style="padding-right:10%; padding-left: 6%">
+                        <div class="form-group" >
+                          <p>
+                            <label>Followers:</label>
+                          </p>
+                          <div id="slider1"  style="height:10px;" ></div>
+                        </div>
+                        <div class="row" style="margin-left:3%;">
+                          <div class="col-3.5" id="lower-value1" style="border:1px solid black; padding-left:1px; padding-right:2px;" ></div>
+                          <div class="col-6"></div>
+                          <div class="col-3.5" id="upper-value1" style="border:1px solid black; padding-right:2px; padding-left:2px; margin-left:3%;"></div>
+                        </div>
+                        <input type="hidden" name="min_lower" value="" id="min_lower1">
+                        <input type="hidden" name="max_upper" value="" id="max_upper1">
+                        <!--{{ form_filters }}-->
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-xl-5 col-lg-5 col-md-5 mb-1" style="padding-left: 20px; padding-right: 15%">
+                          <div class="form-group" >
+                          <p>
+                            <label>Budget:</label>
+                          </p>
+                          <div id="slider2"  style="height:10px;" ></div>
+                          </div>
+                          <div class="row" style="margin-left:3%;">
+                          <div class="col-3.5" id="lower-value2" style="border:1px solid black; padding-left:1px; padding-right:2px;" ></div>
+                          <div class="col-6"></div>
+                          <div class="col-3.5" id="upper-value2" style="border:1px solid black; padding-right:2px; padding-left:2px; margin-left:3%;"></div>
+                        </div>
+                          <input type="hidden" name="min_lower" value="" id="min_lower2">
+                          <input type="hidden" name="max_upper" value="" id="max_upper2">
+                        <!--{{ form_filters }}-->
+                        </div>
+                      <div class="col-xl-3 col-lg-3 col-md-3 mb-3">
+                        <div class="form-group spacing" style="margin-left:4%;margin-top: 13%;">
+                          <button id="btn-offers-inf" type="submit" class="btn btn-raised btn-raised btn-primary customButton" name="offers_inf" style="padding-right: 10px; padding-left: 10px; padding-top: 2.5px; padding-bottom: 2.5px;">
+                            Search <i class="fa fa-search"></i>
+                          </button>
+                        </div>
+                      </div>
+                      <div class="col-xl-2 col-lg-2 col-md-2 mb-1">
+                         <div class="form-group" style="margin-top: 13%">
+                          <label>Arrangement</label>
+                          <div class="form-group">
+                            <select class="form-control" name="arrangements" style="height:35px;">
+                              {% if form_filters['arrangements'] %}
+                              <option value="{{ form_filters['arrangements'] }}">{{ form_filters['arrangement_name'] }}</option>
+                              <option value=""></option>
+                              {% else %}
+                              <option value=""></option>
+                              {% endif %}
+                            </select>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-sm-12">
+    <div class="card">
+      <div class="card-body">
+        <div class="card-block">
+          <div class="row" style="margin-left: 2%;">
+            <div class="col-xl-4 col-lg-4 col-md-4 mb-1">
+
+            </div>
+            <div class="col-xl-4 col-lg-4 col-md-4 mb-1"><h4  class="text-center">Offers</h4>
+            </div>
+            <div class="col-xl-4 col-lg-4 col-md-4 mb-1" >
+              <div class="form-group">
+                <div class="form-group" style="margin-left:12%;">
+                  <select class="form-control" name="sort_order" placeholder="Sort" style="width:140px;">
+                    <option value=""></option>
+                    {% if form_filters['sort_order'] %}
+                    <option value="{{ form_filters['sort_order'] }}" disabled>{{ form_filters['sort_order'] }}</option>
+                    {% if form_filters['sort_order'] == "High To Low" %}
+                    <option value="Low To High">Low To High</option>
+                    {% elif form_filters['sort_order'] == "Low To High" %}
+                    <option value="High To Low">High To Low</option>
+                    {% endif %}
+                    {% else %}
+                    <option value="High To Low">High To Low</option>
+                    <option value="Low To High">Low To High</option>
+                    {% endif %}
+                  </select>
+                </div>
+              </div>
+            </div>
+          </div>
+          </form>
+          <div class="container contents" id="wrapper">
+            {% for item in data['data'] %}
+            <div class="lazy">
+              <div class="row">
+                <div class="search-infl-tbl">
+                  <table cellspacing="1" style="border:solid 1px #0c0909" class="search-infl-tbl" >
+                    <tr>
+                    <div>
+                      <td rowspan="4" class="si-image">
+                        <img src="{{ item['channel_img'] }}" height="150px" width="155px">
+                      </td>
+                      <td colspan="2" style="border-right: solid 1px #E1DEDD;">
+                        <table width="400px" cellpadding="1">
+                          <tr>
+                            <td colspan="2">
+                                <b style="font-size:15px;"><a href="" target="_blank">{{ item['offer_name'] }}</a></b>
+                          </tr>
+                          <tr>
+                            <td style="border-right: solid 1px #E1DEDD; border-bottom:solid 1px #E1DEDD; border-top:solid 1px #E1DEDD; font-size:14px;">
+                              <b>{{ item['max_upper_followers'] }}</b>
+                              <br>
+                              Total followers
+                            </td>
+                            <td style="border-right: solid 1px #E1DEDD; border-bottom:solid 1px #E1DEDD; border-top:solid 1px #E1DEDD; font-size:14px;">
+                              <b>{{ item['budget'] }}</b>
+                              <br>
+                              Budget
+                            </td>
+                          </tr>
+                          <tr></tr>
+                          <tr></tr>
+                          </tr>
+                          <tr><td colspan="2">
+                            <b style="font-size:12px">Channels</b> &emsp;
+                            {% if item['channels'] == 'Facebook' %}
+                            <a href="{{ item['facebook_url'] }}" target="_blank" class="fa fa-facebook-official blue" style="font-size:20px;"></a>&emsp;
+                            {% endif %}
+                            {% if item['channels'] == 'Instagram' %}
+                            <a href="{{ item['insta_url'] }}" target="_blank" class="fa fa-instagram pink" style="font-size:20px;"></a>&emsp;
+                            {% endif %}
+                            {% if item['channels'] == 'Twitter'%}
+                            <a href="{{ item['twitter_url'] }}" target="_blank" class="fa fa-twitter cyan" style="font-size:20px;"></a>&emsp;
+                            {% endif %}
+                            {% if item['channels'] == 'youtube'%}
+                            <a href="{{ item['youtube_url'] }}" target="_blank" class="fa fa-youtube red" style="font-size:20px;"></a>&emsp;
+                            {% endif %}
+                          </td></tr>
+                        </table>
+                      </td>
+                    </div>
+                    </tr>
+                  </table>
+                </div>
+              </div>
+            </div>
+            <br>
+            {% endfor %}
+            <!--<div class="h-100 row align-items-center" id="pagination"></div>-->
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<style>
+    div.scroll {
+        height: 150px;
+        width: 150px;
+        overflow-y: auto;
+    }
+    .tabrow {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        line-height: 24px;
+    }
+    .tabrow li {
+        padding: 0 10px;
+        border: 1px solid #AAA;
+        background: #ECECEC;
+        display: inline-block;
+    }
+  @media (max-width: 1023px){
+    div.scroll {
+      width: 100%;
+    }
+  }
+</style>
+<style>
+    /* width */
+    ::-webkit-scrollbar {
+        width: 10px;
+    }
+    /* Track */
+    ::-webkit-scrollbar-track {
+        background: #f1f1f1;
+    }
+    /* Handle */
+    ::-webkit-scrollbar-thumb {
+        background: #888;
+    }
+    /* Handle on hover */
+    ::-webkit-scrollbar-thumb:hover {
+        background: #555;
+    }
+</style>
+{#<script>#}
+{#    {% for item in data['data'] %}#}
+{#    const CHART{{ item['linechart_id'] }} = document.getElementById("lineChart{{ item['linechart_id'] }}");#}
+{#    let lineChart{{ item['linechart_id'] }} = new Chart(CHART{{ item['linechart_id'] }}, {#}
+{#        type: 'line',#}
+{#        data: {#}
+{#            labels: ["May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov"],#}
+{#            datasets:[#}
+{#            {#}
+{#                label: "Youtube",#}
+{#                fill: true,#}
+{#                backgroundColor: "rgb(255, 0, 0,0.1)",#}
+{#                lineTension: 0.1,#}
+{#                borderColor: "rgb(255, 0, 0,0.5)",#}
+{#                borderCapStyle: 'butt',#}
+{#                borderDash: [],#}
+{#                borderWidth:1,#}
+{#                borderDashOffset: 0.0,#}
+{#                borderJoinStyle: 'miter',#}
+{#                pointBorderColor: "rgba(75,192,192,1)",#}
+{#                pointBackgroundColor: "#fff",#}
+{#                pointBorderWidth: 0.3,#}
+{#                pointHoverRadius: 2,#}
+{#                pointHoverBackgroundColor: "rgba(75,192,192,1)",#}
+{#                pointHoverBorderColor: "rgba(220,220,220,1)",#}
+{#                pointHoverBorderWidth: 1,#}
+{#                pointRadius: 1,#}
+{#                pointHitRadius: 10,#}
+{#                data: [65, 59, 80, 81, 56, 55, 40, 50],#}
+{#            },         {#}
+{#                label: "Twitter",#}
+{#                fill: true,#}
+{#                backgroundColor: "rgb(0, 255, 255,0.1)",#}
+{#                borderColor: "rgb(0, 255, 255,0.5)",#}
+{#                borderCapStyle: 'butt',#}
+{#                borderDash: [],#}
+{#                borderDashOffset: 0.0,#}
+{#                borderWidth: 1,#}
+{#                borderJoinStyle: 'miter',#}
+{#                pointBorderColor: "rgba(75,72,192,1)",#}
+{#                pointBackgroundColor: "#fff",#}
+{#                pointBorderWidth: 0.3,#}
+{#                pointHoverRadius: 2,#}
+{#                pointHoverBackgroundColor: "rgba(75,72,192,1)",#}
+{#                pointHoverBorderColor: "rgba(220,220,220,1)",#}
+{#                pointHoverBorderWidth: 1,#}
+{#                pointRadius: 1,#}
+{#                pointHitRadius: 10,#}
+{#                data: [100, 20, 60, 20, 80, 55, 90],#}
+{#            }#}
+{#        ]#}
+{#        },#}
+{#        options: {#}
+{#            scales: {#}
+{#                yAxes: [{#}
+{#                    ticks: {#}
+{#                        beginAtZero: true#}
+{#                    }#}
+{#                }]#}
+{#            }#}
+{#        }#}
+{#    });#}
+{#    {% endfor %}#}
+{#</script>#}
+<script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.devbridge-autocomplete/1.2.24/jquery.autocomplete.min.js"></script>
+<script>
+   a1 = $('#string_word').autocomplete({
+         width: 348,
+         delimiter: /(,|;)\s*/,
+         lookup: '{{ lookup_string }}'.split(',')
+      });
+
+</script>
+<script>
+$( document ).ready(function() {
+
+        // range slider1 starts
+        var nonLinearSlider = document.getElementById('slider1');
+        noUiSlider.create(nonLinearSlider, {
+	        connect: true,
+	        behaviour: 'tap',
+	        {% if form_filters['min_lower1'] and form_filters['max_upper1'] %}
+            start: [{{ form_filters['min_lower1'] }}, {{ form_filters['max_upper1'] }}],
+            {% else %}
+            start: [0,10000000],
+            {% endif %}
+	        behaviour: 'tap-drag',
+	        tooltips: false,
+
+	        range: {
+		    // Starting at 500, step the value by 500,
+		    // until 4000 is reached. From there, step by 1000.
+		    'min': [ 0 ],
+		    <!--'10%': [ 500, 500 ],-->
+		    <!--'50%': [ 4000, 1000 ],-->
+		    'max': [ 1000000 ]
+	        },
+	        format: {
+                from: function(value) {
+                    return parseInt(value);
+                },
+            to: function(value) {
+                return parseInt(value);
+                }
+            }
+
+        });
+        var nodes = [
+	        document.getElementById('lower-value1'), // 0
+	        document.getElementById('upper-value1')  // 1
+        ];
+        // Display the slider value and how far the handle moved
+        // from the left edge of the slider.
+        nonLinearSlider.noUiSlider.on('update', function ( values, handle, unencoded, isTap, positions ) {
+	        nodes[handle].innerHTML = values[handle];
+        });
+        // range slider1 ends
+
+        // range slider2 starts
+        var nonLinearSlider = document.getElementById('slider2');
+        noUiSlider.create(nonLinearSlider, {
+	        connect: true,
+	        behaviour: 'tap',
+	        {% if form_filters['min_lower2'] and form_filters['max_upper2'] %}
+            start: [{{ form_filters['min_lower2'] }}, {{ form_filters['max_upper2'] }}],
+            {% else %}
+            start: [0,10000000],
+            {% endif %}
+	        behaviour: 'tap-drag',
+	        tooltips: false,
+
+	        range: {
+		    // Starting at 500, step the value by 500,
+		    // until 4000 is reached. From there, step by 1000.
+		    'min': [ 0 ],
+		    <!--'10%': [ 500, 500 ],-->
+		    <!--'50%': [ 4000, 1000 ],-->
+		    'max': [ 1000000 ]
+	        },
+	        format: {
+                from: function(value) {
+                    return parseInt(value);
+                },
+            to: function(value) {
+                return parseInt(value);
+                }
+            }
+
+        });
+        var nodes = [
+	        document.getElementById('lower-value2'), // 0
+	        document.getElementById('upper-value2')  // 1
+        ];
+        // Display the slider value and how far the handle moved
+        // from the left edge of the slider.
+        nonLinearSlider.noUiSlider.on('update', function ( values, handle, unencoded, isTap, positions ) {
+	        nodes[handle].innerHTML = values[handle];
+        });
+        // range slider ends
+
+
+
+});
+</script>
+<style>
+    .noUi-handle-custom{
+        border-radius:100px;
+        margin-bottom:15%;
+    }
+    .noUi-target {
+    padding: 0 0px;
+}
+.noUi-handle:before,
+.noUi-handle:after {
+
+    width: 17px;
+    content: none;
+    position: absolute;
+    top: 0;
+    height: 100%;
+    display: block;
+}
+
+
+</style>
+
+<!-- Create alert Modal form-->
+<div class="modal fade" id="create_alert_modal" role="dialog"  data-backdrop="static">
+  <div class="modal-dialog modal-sm">
+    <div class="modal-content">
+      <div class="modal-header alert-primary">
+        <b class="modal-title">Create Alert</b>
+        <button  type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+      <form name="create_alert_form" id="create_alert_form" action="/createAlerts" method="POST">
+        <div class="modal-body">
+                            <span class="display-block overflow-hidden">
+                            <!--<label for="channel_id">Channel ID:</label>-->
+                        <input  class="form-control" type="hidden" value="" name="channel_id" id="channel_id"></span>
+          <span class="display-block overflow-hidden">
+                            <label for="total_followers">Total Followers:</label>
+        <input class="form-control"  type="number" value="" name="alert_followers" id="total_followers" placeholder="Total Followers"></span><br>
+          <span class="display-block overflow-hidden">
+                            <label for="total_views">Avg Views/Videos:</label>
+        <input class="form-control"  type="number" value="" name="alert_views" id="total_views" placeholder="Total Views"></span><br>
+          <span class="display-block overflow-hidden">
+                            <label for="total_likes">Avg Likes/Videos:</label>
+        <input class="form-control"  type="number" value="" name="alert_likes" id="total_likes" placeholder="Total Likes"></span><br>
+          <span class="display-block overflow-hidden">
+                            <label for="total_comments">Avg Comments/Videos:</label>
+        <input class="form-control"  type="number" value="" name="alert_comments" id="total_comments" placeholder="Total Comments"></span><br>
+        </div>
+        <div class="modal-footer">
+          <button type="submit"  class="btn btn-default">Save</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+{#<!-- Campaign List Modal-->#}
+{#<div class="modal fade" id="campaignList" role="dialog" data-backdrop="false">#}
+{#  <div class="modal-dialog modal-lg">#}
+{#    <div class="modal-content">#}
+{#      <div class="modal-header alert-primary">#}
+{#        <b class="modal-title">Campaign List</b>#}
+{#        <button  type="button" class="close" data-dismiss="modal">&times;</button>#}
+{#      </div>#}
+{#      <form name="add_youtube_inf_to_campaign_list_form" id="add_influencer_to_campaign" action="/addYoutubeInfToCampaignList" method="POST">#}
+{#        <div class="modal-body">#}
+{#          <input type="hidden" name="channel_id" id="youtube_channel_id">#}
+{##}
+{#          <div id="channel_name"></div>#}
+{#          <div>channels</div>#}
+{#          <div class="table-responsive" style="background-color: white;">#}
+{#            <table class="table table-striped">#}
+{#              <thead>#}
+{#              <tr>#}
+{#                <th scope="col"><b style="font-weight: 500; font-size:16px;">Select</b></th>#}
+{#                <th scope="col"><b style="font-weight: 500; font-size:16px;">Campaign</b></th>#}
+{#                <th scope="col"><b style="font-weight: 500; font-size:16px;">Status</b></th>#}
+{#                <th scope="col"><b style="font-weight: 500; font-size:16px;">Period</b></th>#}
+{#                <th scope="col"><b style="font-weight: 500; font-size:16px;">Channels</b></th>#}
+{#                <!--<th scope="col"><b style="font-weight: 500; font-size:16px;">Countries</b></th>-->#}
+{#                <th scope="col"><b style="font-weight: 500; font-size:16px;">Influencers</b></th>#}
+{#                <!--<th scope="col"><b style="font-weight: 500; font-size:16px;">Budget</b></th>-->#}
+{#                <!--<th scope="col"><b style="font-weight: 500; font-size:16px;">ROI</b></th>-->#}
+{#              </tr>#}
+{#              </thead>#}
+{#              <tbody>#}
+{##}
+{#                </td>#}
+{#                <!--<td>{{ item['budget'] }} {{ item['currency'] }}</td>-->#}
+{#                <!--<td>Coming Soon</td>-->#}
+{#              </tr>#}
+{#              </tbody>#}
+{#            </table>#}
+{#          </div>#}
+{#        </div>#}
+{#        <div class="modal-footer">#}
+{#          <button type="submit" class="btn btn-default">Save</button>#}
+{#        </div>#}
+{#      </form>#}
+{#    </div>#}
+{#  </div>#}
+{#</div>#}
+
+<!-- Send message Modal form-->
+<div class="modal fade" id="sendMessage" role="dialog"  data-backdrop="static">
+  <div class="modal-dialog modal-sm">
+    <div class="modal-content">
+      <div class="modal-header alert-primary">
+        <b class="modal-title">Send Message</b>
+        <button  type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+      <form name="create_alert_form" id="send_message_form" action="/sendMessage" method="POST">
+        <div class="modal-body">
+          <input  class="form-control" type="hidden" value="" name="channel_id" id="message_channel_id">
+          <div class="row">
+            <div class="col-12">
+              <ul class="no-list-style">
+                <li class="mb-2">
+                  <span class="text-bold-500 primary"><a><i class=" font-small-3"></i>*To :</a></span>
+                  <span class="display-block"><input type="text" class="form-control" name="to_email_id" id="to_email_id" readonly> </span>
+                </li>
+                <li class="mb-2">
+                  <span class="text-bold-500 primary"><a><i class=" font-small-3"></i>*Subject :</a></span>
+                  <span class="display-block"><input required type="text" class="form-control" name="subject" > </span>
+                </li>
+                <li class="mb-2">
+                  <span class="text-bold-500 primary"><a><i class=" font-small-3"></i>Message:</a></span>
+                  <span class="display-block"><textarea class="form-control" name="message"></textarea> </span>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="submit"  class="btn btn-default">Save</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+{#<script>#}
+{#function createAlert(channel_id,followers,views,likes,comments) {#}
+{#    <!--alert(channel_id);-->#}
+{#    $("#channel_id").val(channel_id);#}
+{#    $("#total_followers").val(followers);#}
+{#    $("#total_views").val(views);#}
+{#    $("#total_likes").val(likes);#}
+{#    $("#total_comments").val(comments);#}
+{#}#}
+{#function sendMessage(channel_id,to_email_id) {#}
+{#    <!--alert(channel_id);-->#}
+{#    $("#message_channel_id").val(channel_id);#}
+{#    $("#to_email_id").val(to_email_id);#}
+{#}#}
+{#</script>#}
+<script>
+{#function getCampaign_ids(channel_id){#}
+{##}
+{#  $.ajax({#}
+{#               type: "GET",#}
+{#               url: '/getChannelStatusForCampaign/'+channel_id,#}
+{#               contentType: 'application/json;charset=UTF-8',#}
+{#               success: function(data)#}
+{#               {#}
+{##}
+{#                   if (data.results.length != 0){#}
+{#                   jQuery.each(data.results, function(i, val) {#}
+{#                        <!--alert(val.campaign_id);-->#}
+{#                        $('.campaign_id'+val.campaign_id).attr('disabled', true);#}
+{##}
+{#                    });#}
+{#                    }#}
+{##}
+{#               }#}
+{#  });#}
+{##}
+{##}
+
+{#function campaignList(channel_id) {#}
+{##}
+{#    $( "input#campaign_id" ).prop('checked', false);#}
+{#    $( "input#campaign_id" ).prop('disabled', false)#}
+{#    $("#youtube_channel_id").val(channel_id);#}
+{#    var campaign_ids = getCampaign_ids(channel_id);#}
+{#    <!--alert(campaign_ids);-->#}
+{#    {% for item in view_campaign_data['data'] %}#}
+{#        {% for item1 in item['youtube_inf_data'] %}#}
+{#            var campaign_channel_id = "{{ item1['channel_id'] }}";#}
+{#            var campaign_id = "{{ item['campaign_id'] }}";#}
+{##}
+{#            if (channel_id == campaign_channel_id){#}
+{#                <!--alert("equal");-->#}
+{#                $('.campaign_id'+campaign_id).attr('disabled', true);#}
+{#             }#}
+{#             else{#}
+{#                 <!--alert("not equal");-->#}
+{#                  <!--$('.campaign_id'+campaign_id).attr('disabled', false);-->#}
+{#             }#}
+{#        {% endfor %}#}
+{#    {% endfor %}#}
+{##}
+
+{#function updateChannelStatusForCampaign(channel_id) {#}
+{#    <!--alert(channel_id);-->#}
+{#    $.ajax({#}
+{#        type: "GET",#}
+{#        url: '/getChannelStatusForCampaign/' + channel_id,#}
+{#        contentType: 'application/json;charset=UTF-8',#}
+{#        success: function (data) {#}
+{#            $('#status' + channel_id).empty();#}
+{#            if (data.results.length != 0) {#}
+{#                jQuery.each(data.results, function (i, val) {#}
+{#                    <!--alert(val.campaign_name);-->#}
+{#                    <!--alert(val.status);-->#}
+{##}
+{#                    $('#status' + channel_id).append('<b style="font-weight:450; font-size:15px;">' + val.campaign_name + '<br/></b>');#}
+{#                    $('#status' + channel_id).append('<b style="font-weight:400; color:orange; font-size:15px;">' + val.status + '</b>');#}
+{#                    $('#status' + channel_id).append('<hr style="height:0px; margin:auto;">');#}
+{#                });#}
+{#            }#}
+{#            else {#}
+{#                $('#status' + channel_id).append('<b>No Campaigns</b>');#}
+{#            }#}
+{#        }#}
+{#    });#}
+{##}
+</script>
+
+{#<script>#}
+{#  $(document).ready(function () {#}
+{#        $("#add_influencer_to_campaign").submit(function(e) {#}
+{#        var form = $(this);#}
+{#        var url = form.attr('action');#}
+{#        var channel_id = $('#youtube_channel_id').val();#}
+{#        $.ajax({#}
+{#               type: "POST",#}
+{#               url: url,#}
+{#               data: form.serialize(), // serializes the form's elements.#}
+{#               success: function(data)#}
+{#               {#}
+{#                   alert(data); // show response from the python script.#}
+{#                   $('#campaignList').modal('toggle');#}
+{#                   updateChannelStatusForCampaign(channel_id);#}
+{#               }#}
+{#             });#}
+{#        e.preventDefault(); // avoid to execute the actual submit of the form.#}
+{#    });#}
+{##}
+{#$("#send_message_form").submit(function(e) {#}
+{#        var form = $(this);#}
+{#        var url = form.attr('action');#}
+{#        var channel_id = $('#message_channel_id').val();#}
+{#        $.ajax({#}
+{#               type: "POST",#}
+{#               url: url,#}
+{#               data: form.serialize(), // serializes the form's elements.#}
+{#               success: function(data)#}
+{#               {#}
+{#                   alert(data); // show response from the python script.#}
+{#                   $('#sendMessage').modal('toggle');#}
+{#                   updateChannelStatusForCampaign(channel_id);#}
+{#               }#}
+{#             });#}
+{#        e.preventDefault(); // avoid to execute the actual submit of the form.#}
+{#    });#}
+{##}
+{##}
+{#{% for item in data['data'] %}#}
+{#  updateChannelStatusForCampaign('{{ item['channel_id'] }}');#}
+{#{% endfor %}#}
+{##}
+{##}
+{##}
+{#        <!--alert('lazy');-->#}
+{#        <!--$(".lazy").hide();-->#}
+{#        <!--$(".lazy").addClass("loader");-->#}
+{#        $(window).lazyScript({#}
+{#        selectorClass: 'lazy',#}
+{#        callback: jQuery.noop,#}
+{#        threshold: 0,#}
+{#        scrollInterval: 500#}
+{#        });#}
+{#   });#}
+{##}
+{##}
+{#</script>#}
+{% endblock %}

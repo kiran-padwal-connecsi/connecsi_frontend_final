@@ -339,6 +339,164 @@ def changePassword():
         except:pass
 
 
+@connecsiApp.route('/offers',methods=['POST','GET'])
+@is_logged_in
+def offers():
+    user_id = session['user_id']
+    url_regionCodes = base_url + 'Youtube/regionCodes'
+    regionCodes_json=''
+    videoCat_json=''
+    form_filters=''
+    country_name=''
+    arrangement_name=''
+    view_campaign_data=''
+    data=''
+    favInfList_data=''
+    offer_name = ""
+    from_name = ""
+    to_date = ""
+    budget = ""
+    currency = ""
+    channels = ""
+    regions = ""
+    min_lower = ""
+    max_upper = ""
+    files = ""
+    try:
+        response_regionCodes = requests.get(url=url_regionCodes)
+        regionCodes_json = response_regionCodes.json()
+        # print(regionCodes_json['data'])
+    except Exception as e:
+        print(e)
+
+
+    url_videoCat = base_url + 'Youtube/videoCategories'
+    try:
+        response_videoCat = requests.get(url=url_videoCat)
+        videoCat_json = response_videoCat.json()
+    except Exception as e:
+        print(e)
+
+    lookup_string = ''
+    for cat in videoCat_json['data']:
+        lookup_string += ''.join(',' + cat['video_cat_name'])
+    lookup_string = lookup_string.replace('&', 'and')
+    print('i m n search')
+
+    print('i m n search before post method')
+
+    if request.method == 'POST':
+        print('i m inside post')
+        if 'offers_inf' in request.form:
+            string_word = request.form.get('string_word')
+            print('string word =',string_word)
+            # exit()
+            category = string_word.replace('and','&')
+            print(category)
+            category_id=''
+            for cat in videoCat_json['data']:
+                # print(cat['video_cat_name'])
+                if cat['video_cat_name'] == category:
+                    print("category id = ",cat['video_cat_id'])
+                    category_id = cat['video_cat_id']
+            form_filters = request.form.to_dict()
+            print('post form filters =',form_filters)
+            url_country_name = base_url + 'Youtube/regionCode/'+form_filters['country']
+            try:
+                response_country_name = requests.get(url=url_country_name)
+                country_name_json = response_country_name.json()
+                print(country_name_json['data'][0][1])
+                country_name = country_name_json['data'][0][1]
+            except Exception as e:
+                print(e)
+            form_filters.update({'country_name':country_name})
+            print('last filters = ',form_filters)
+            payload = request.form.to_dict()
+            # form_filters.update({''})
+
+            del payload['string_word']
+            del payload['offers_inf']
+            del payload['channel']
+            print(payload)
+            try:
+                # channel = request.form.get('channel')
+                # url = base_url + 'Offer/' + str(user_id)
+                url = base_url + 'Offer/getAllOffers'
+                print(url)
+                response = requests.get(url)
+                data = response.json()
+                print(data)
+                return render_template('search/offers.html', regionCodes=regionCodes_json,
+                                       lookup_string=lookup_string, form_filters=form_filters, data=data, view_campaign_data=view_campaign_data,
+                                       favInfList_data=favInfList_data)
+            except Exception as e:
+                print(e)
+                print('i m hee')
+                return render_template('search/offers.html', regionCodes=regionCodes_json,
+                                   lookup_string=lookup_string,form_filters=form_filters,data='', view_campaign_data=view_campaign_data
+                                       ,favInfList_data=favInfList_data)
+        else:
+            print('i m disguise')
+            try:
+                payload = {
+                    "category_id": "",
+                    "country": "PL",
+                    "min_lower": 0,
+                    "max_upper": 21200,
+                    "sort_order": "High To Low"
+                }
+                url = base_url + 'Youtube/searchChannels/Youtube'
+                response = requests.post(url, json=payload)
+                print(response.json())
+                data = response.json()
+                form_filters = {'channel': 'Youtube', 'string_word': '', 'country': 'PL', 'min_lower': '0',
+                                'max_upper': '21200', 'offers_inf': '', 'sort_order': 'High To Low',
+                                'country_name': 'Poland'}
+            except:
+                pass
+
+            return render_template('search/offers.html', regionCodes=regionCodes_json,
+                                   lookup_string=lookup_string, form_filters=form_filters, data=data, pagination='',
+                                   view_campaign_data=view_campaign_data,
+                                   favInfList_data=favInfList_data)
+
+    else:
+        print('i m here last')
+        try:
+            payload = {
+                "category_id": "",
+                "country": "PL",
+                "min_lower": 0,
+                "max_upper": 21200,
+                "sort_order": "High To Low"
+            }
+
+            url = base_url + '/Youtube/searchChannels/'
+            response = requests.post(url, json=payload)
+            print(response.json())
+            data = response.json()
+            # linechart_id = 1
+            # for item in data['data']:
+            #     item.update({'linechart_id': linechart_id})
+            #     # print(item)
+            #     linechart_id += 1
+            form_filters = {'channel': 'Youtube', 'string_word': '', 'country': 'PL', 'min_lower': '0', 'max_upper': '21200', 'search_inf': '', 'sort_order': 'High To Low', 'country_name': 'Poland'}
+        except:
+            pass
+
+        # url = base_url + 'Offer/' + str(user_id)
+        url = base_url + 'Offer/getAllOffers'
+        print(url)
+        response = requests.get(url)
+        data = response.json()
+        print(data)
+
+        return render_template('search/offers.html', regionCodes=regionCodes_json,
+                               lookup_string=lookup_string,form_filters=form_filters,data=data,pagination='',view_campaign_data=view_campaign_data,
+                               favInfList_data=favInfList_data)
+
+
+#new function start
 @connecsiApp.route('/searchInfluencers',methods=['POST','GET'])
 @is_logged_in
 def searchInfluencers():
@@ -436,17 +594,6 @@ def searchInfluencers():
                     item.update({'linechart_id':linechart_id})
                    # print(item)
                     linechart_id+=1
-                # print(data)
-                # search = False
-                # q = request.args.get('page')
-                # if q:
-                #     search = True
-                # page = request.args.get(get_page_parameter(), type=int, default=1)
-                # pagination = Pagination(page=page, total=len(data['data']), search=search,
-                #                         record_name='Influencers',per_page=5)
-                # print(data)
-
-                # print(campaignsList)
                 return render_template('search/searchInfluencers.html', regionCodes=regionCodes_json,
                                        lookup_string=lookup_string, form_filters=form_filters,data=data,view_campaign_data=view_campaign_data
                                        ,favInfList_data=favInfList_data)
@@ -464,6 +611,7 @@ def searchInfluencers():
                     "country": "PL",
                     "min_lower": 0,
                     "max_upper": 21200,
+                    "offset": 0,
                     "sort_order": "High To Low"
                 }
                 url = base_url + 'Youtube/searchChannels/Youtube'
@@ -494,12 +642,12 @@ def searchInfluencers():
                 "country": "PL",
                 "min_lower": 0,
                 "max_upper": 21200,
+                "offset": 0,
                 "sort_order": "High To Low"
             }
 
-            url = base_url + '/Youtube/searchChannels/'
+            url = base_url + '/Youtube/searchChannels/Youtube'
             response = requests.post(url, json=payload)
-            print(response.json())
             data = response.json()
             linechart_id = 1
             for item in data['data']:

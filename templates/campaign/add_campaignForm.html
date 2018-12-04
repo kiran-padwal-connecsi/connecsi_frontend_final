@@ -40,14 +40,17 @@
                                         <div class="col-sm-4">
                                             <span class="text-bold-500 primary">
                                                 <div class="form-group">
-                                                    <!--<label for="channels">Channels</label>-->
-                                                    <select class="form-control" id="channels" name="channels" multiple="multiple" required>
-                                                        <option value="" disabled>Channels</option>
-                                                        <option value="youtube">Youtube</option>
-                                                        <option value="twitter">Twitter</option>
-                                                        <option value="instagram">Instagram</option>
-                                                        <option value="facebook">Facebook</option>
-                                                    </select>
+                                                    <label for="channels">Channels</label>
+                                                         <input class="form-control" type="text" placeholder="Select" class="button-size" data-toggle="dropdown" >
+                                                        <div class="dropdown-menu" >
+                                                            <input type="checkbox" name="channels" value="facebook"> Facebook
+                                                            <div class="dropdown-divider"></div>
+                                                            <input type="checkbox" name="channels" value="youtube"> Youtube
+                                                            <div class="dropdown-divider"></div>
+                                                            <input type="checkbox" name="channels" value="instagram"> Instagram
+                                                            <div class="dropdown-divider"></div>
+                                                            <input type="checkbox" name="channels" value="twitter"> Twitter
+                                                        </div>
                                                 </div>
                                             </span>
                                         </div>

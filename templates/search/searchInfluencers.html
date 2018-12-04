@@ -124,6 +124,7 @@
                       </div>
                     </div>
                   </div>
+                </form>
               </div>
             </div>
           </div>
@@ -175,11 +176,11 @@
             <div class="lazy">
               <div class="row">
                 <div class="search-infl-tbl">
-                  <table cellspacing="1" style="border:solid 1px #0c0909" class="search-infl-tbl" >
+                  <table cellspacing="1" style="border:solid 1px #0c0909" class="search-infl-tbl">
                     <tr>
                       <td rowspan="3" style="border-left:solid 1px white; text-align: center">
                         <span data-toggle="modal" data-target="#sendMessage">
-                        <a  onclick="sendMessage('{{ item['channel_id'] }}','{{ item['business_email'] }}')" class="fa fa-envelope" data-toggle="tooltip"  title="Message" style="position: relative; z-index: 1; font-size:25px;"></a>
+                        <a onclick="sendMessage('{{ item['channel_id'] }}','{{ item['business_email'] }}')" class="fa fa-envelope" data-toggle="tooltip"  title="Message" style="position: relative; z-index: 1; font-size:25px;"></a>
                         </span>
                           <br>
                         {% if form_filters['campaign_id'] %}
