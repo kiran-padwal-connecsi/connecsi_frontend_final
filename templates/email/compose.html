@@ -1,4 +1,8 @@
+{% if session['type'] == 'brand' %}
 {% extends 'dashboard_layout_new.html' %}
+{% elif session['type'] == 'influencer' %}
+{% extends 'dashboard_layout_inf.html' %}
+{% endif %}
 {{ super() }}
 {% block body %}
 <head>
