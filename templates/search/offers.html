@@ -62,6 +62,9 @@ function displayOffers(item) {
            $('#periodtodateOfferViewDetail') .text(item.to_date)
            $('#currencyOfferViewDetail').text(item.currency)
            $('#offerdescription').text(item.offer_description)
+            $('#noOfViewsOfferViewDetail').text(item.no_of_views)
+            $('#noOfRepliesOfferViewDetail').text(item.no_of_replies)
+
 
            var str = "";
            if(item.channels === "Facebook") {
@@ -613,6 +616,12 @@ $( document ).ready(function() {
                               <b id="periodtodateOfferViewDetail"></b>
                               <br>
                               Period
+                            </td>
+                              <td style="border-right: solid 1px #E1DEDD; border-bottom:solid 1px #E1DEDD; border-top:solid 1px #E1DEDD; font-size:14px;">
+                              <b id="noOfViewsOfferViewDetail"></b>
+                              <b id="noOfRepliesOfferViewDetail"></b>
+                              <br>
+                              Views and Replies
                             </td>
                           </tr>
                           <tr></tr>
