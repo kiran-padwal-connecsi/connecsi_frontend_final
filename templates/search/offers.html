@@ -40,6 +40,48 @@
     </style>
 
 </head>
+
+    <script>
+
+function displayOffers(item) {
+
+            item=JSON.parse(item)
+        console.log("here")
+            console.log(item)
+            var $this = $(this),
+           {#image= $this.find('#imageOfferViewDetail'),#}
+           offer = $this.find('#titleOfferViewDetail'),
+           followers = $this.find('#followersOfferViewDetail'),
+           budget = $this.find('#budgetOfferViewDetail'),
+           channel = $this.find('#channelOfferViewDetail');
+
+           $('#titleOfferViewDetail').text(item.offer_name);
+           $('#followersOfferViewDetail').text(item.max_upper_followers);
+           $('#budgetOfferViewDetail').text(item.budget);
+           $('#periodfromdateOfferViewDetail').text(item.from_date)
+           $('#periodtodateOfferViewDetail') .text(item.to_date)
+           $('#currencyOfferViewDetail').text(item.currency)
+           $('#offerdescription').text(item.offer_description)
+
+           var str = "";
+           if(item.channels === "Facebook") {
+            str = '<a href="+ item.channels+" target="_blank" class="fa fa-facebook-official blue" style="font-size:20px;"></a>'
+           }
+            else if(item.channels === "youtube") {
+            str = '<a href="+ item.channels+" target="_blank" class="fa fa-youtube red" style="font-size:20px;"></a>'
+           } else if(item.channels === "Twitter") {
+            str = '<a href="+ item.channels+" target="_blank" class="fa fa-twitter cyan" style="font-size:20px;"></a>'
+           } else if(item.channels === "Instagram") {
+            str = '<a href="+ item.channels+" target="_blank" class="fa fa-instagram pink" style="font-size:20px;"></a>'
+           }
+           $('#channelOfferViewDetail').html(str)
+
+
+}
+
+
+
+</script>
 <div class="sticky-bottom" id="accordion">
   <div class="card" >
     <div id="influencerSearchPanel"  data-parent="#accordion">
@@ -107,8 +149,8 @@
                           <div class="col-6"></div>
                           <div class="col-3.5" id="upper-value1" style="border:1px solid black; padding-right:2px; padding-left:2px; margin-left:3%;"></div>
                         </div>
-                        <input type="hidden" name="min_lower" value="" id="min_lower1">
-                        <input type="hidden" name="max_upper" value="" id="max_upper1">
+                        <input type="hidden" name="min_lower1" value="" id="min_lower1">
+                        <input type="hidden" name="max_upper1" value="" id="max_upper1">
                         <!--{{ form_filters }}-->
                       </div>
                     </div>
@@ -125,8 +167,8 @@
                           <div class="col-6"></div>
                           <div class="col-3.5" id="upper-value2" style="border:1px solid black; padding-right:2px; padding-left:2px; margin-left:3%;"></div>
                         </div>
-                          <input type="hidden" name="min_lower" value="" id="min_lower2">
-                          <input type="hidden" name="max_upper" value="" id="max_upper2">
+                          <input type="hidden" name="min_lower2" value="" id="min_lower2">
+                          <input type="hidden" name="max_upper2" value="" id="max_upper2">
                         <!--{{ form_filters }}-->
                         </div>
                       <div class="col-xl-3 col-lg-3 col-md-3 mb-3">
@@ -242,6 +284,9 @@
                             {% if item['channels'] == 'youtube'%}
                             <a href="{{ item['youtube_url'] }}" target="_blank" class="fa fa-youtube red" style="font-size:20px;"></a>&emsp;
                             {% endif %}
+                          <span data-toggle="modal" data-target="#detailslist">
+                            <button onclick="displayOffers('{{ item | to_json}}')" style="margin-top: 10px; background-color: lightgreen; color: white">Details</button>
+                          </span>
                           </td></tr>
                         </table>
                       </td>
@@ -410,14 +455,14 @@ $( document ).ready(function() {
             }
 
         });
-        var nodes = [
+        var nodes1 = [
 	        document.getElementById('lower-value1'), // 0
 	        document.getElementById('upper-value1')  // 1
         ];
         // Display the slider value and how far the handle moved
         // from the left edge of the slider.
         nonLinearSlider.noUiSlider.on('update', function ( values, handle, unencoded, isTap, positions ) {
-	        nodes[handle].innerHTML = values[handle];
+	        nodes1[handle].innerHTML = values[handle];
         });
         // range slider1 ends
 
@@ -452,14 +497,14 @@ $( document ).ready(function() {
             }
 
         });
-        var nodes = [
+        var nodes2 = [
 	        document.getElementById('lower-value2'), // 0
 	        document.getElementById('upper-value2')  // 1
         ];
         // Display the slider value and how far the handle moved
         // from the left edge of the slider.
         nonLinearSlider.noUiSlider.on('update', function ( values, handle, unencoded, isTap, positions ) {
-	        nodes[handle].innerHTML = values[handle];
+	        nodes2[handle].innerHTML = values[handle];
         });
         // range slider ends
 
@@ -522,52 +567,89 @@ $( document ).ready(function() {
     </div>
   </div>
 </div>
-{#<!-- Campaign List Modal-->#}
-{#<div class="modal fade" id="campaignList" role="dialog" data-backdrop="false">#}
-{#  <div class="modal-dialog modal-lg">#}
-{#    <div class="modal-content">#}
-{#      <div class="modal-header alert-primary">#}
-{#        <b class="modal-title">Campaign List</b>#}
-{#        <button  type="button" class="close" data-dismiss="modal">&times;</button>#}
-{#      </div>#}
+
+<!-- Campaign List Modal-->
+<div class="modal fade" id="detailslist" role="dialog" data-backdrop="false">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <p class="modal-title" id="titleOfferViewDetail"></p>
+        <button  type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
 {#      <form name="add_youtube_inf_to_campaign_list_form" id="add_influencer_to_campaign" action="/addYoutubeInfToCampaignList" method="POST">#}
-{#        <div class="modal-body">#}
-{#          <input type="hidden" name="channel_id" id="youtube_channel_id">#}
-{##}
+        <div class="modal-body">
+          <input type="hidden" name="channel_id" id="youtube_channel_id">
+
 {#          <div id="channel_name"></div>#}
 {#          <div>channels</div>#}
-{#          <div class="table-responsive" style="background-color: white;">#}
-{#            <table class="table table-striped">#}
-{#              <thead>#}
-{#              <tr>#}
-{#                <th scope="col"><b style="font-weight: 500; font-size:16px;">Select</b></th>#}
-{#                <th scope="col"><b style="font-weight: 500; font-size:16px;">Campaign</b></th>#}
-{#                <th scope="col"><b style="font-weight: 500; font-size:16px;">Status</b></th>#}
-{#                <th scope="col"><b style="font-weight: 500; font-size:16px;">Period</b></th>#}
-{#                <th scope="col"><b style="font-weight: 500; font-size:16px;">Channels</b></th>#}
-{#                <!--<th scope="col"><b style="font-weight: 500; font-size:16px;">Countries</b></th>-->#}
-{#                <th scope="col"><b style="font-weight: 500; font-size:16px;">Influencers</b></th>#}
-{#                <!--<th scope="col"><b style="font-weight: 500; font-size:16px;">Budget</b></th>-->#}
-{#                <!--<th scope="col"><b style="font-weight: 500; font-size:16px;">ROI</b></th>-->#}
-{#              </tr>#}
-{#              </thead>#}
-{#              <tbody>#}
-{##}
-{#                </td>#}
-{#                <!--<td>{{ item['budget'] }} {{ item['currency'] }}</td>-->#}
-{#                <!--<td>Coming Soon</td>-->#}
-{#              </tr>#}
-{#              </tbody>#}
-{#            </table>#}
-{#          </div>#}
-{#        </div>#}
-{#        <div class="modal-footer">#}
-{#          <button type="submit" class="btn btn-default">Save</button>#}
-{#        </div>#}
+          <div class="container" style="background-color: white;">
+              <div class="row">
+              <div class="col-xl-9">
+              <table cellspacing="1" style="border:solid 1px #0c0909" class="search-infl-tbl" >
+                    <tr>
+                    <div>
+{#                      <td rowspan="4" class="si-image">#}
+{#                              <img src="" id="imageOfferViewDetail" height="150px" width="155px">#}
+{#                      </td>#}
+                      <td rowspan="4" class="si-image">
+                        <img src=" " height="150px" width="155px">
+                      </td>
+                      <td colspan="2" style="border-right: solid 1px #E1DEDD;">
+                        <table width="400px" cellpadding="1">
+                          <tr>
+                            <td style="border-right: solid 1px #E1DEDD; border-bottom:solid 1px #E1DEDD; border-top:solid 1px #E1DEDD; font-size:14px;">
+                              <b id="followersOfferViewDetail"></b>
+                              <br>
+                              Total followers
+                            </td>
+                            <td style="border-right: solid 1px #E1DEDD; border-bottom:solid 1px #E1DEDD; border-top:solid 1px #E1DEDD; font-size:14px;">
+                              <b id="budgetOfferViewDetail"></b>
+                              <b id="currencyOfferViewDetail"></b>
+                              <br>
+                              Budget
+                            </td>
+                             <td style="border-right: solid 1px #E1DEDD; border-bottom:solid 1px #E1DEDD; border-top:solid 1px #E1DEDD; font-size:14px;">
+                              <b id="periodfromdateOfferViewDetail"></b>
+                              <b id="periodtodateOfferViewDetail"></b>
+                              <br>
+                              Period
+                            </td>
+                          </tr>
+                          <tr></tr>
+                          <tr></tr>
+                          </tr>
+                          <tr><td colspan="2">
+                            <b style="font-size:12px">Channels</b> &emsp;
+                              <p id="channelOfferViewDetail"></p>
+                            <a  target="_blank" id="" style="font-size:20px;"></a>&emsp;
+
+{#                              {% endfor %}#}
+{#                          <span data-toggle="modal" data-target="#detailslist">#}
+{#                              {% set detail_offer = item %}#}
+{#                            <button onclick="displayOffers('{{ item }}')" style="margin-top: 10px; background-color: lightgreen; color: white">Save</button>#}
+{#                          </span>#}
+                          </td></tr>
+                        </table>
+                      </div>
+                    </table>
+              </div>
+              <div class="col-xl-3" style="border-right: solid 1px #E1DEDD">
+                  <p style="text-align: center"><b>Offer Description</b></p>
+                  <p id="offerdescription"></p>
+              </div>
+                </div>
+        </div>
+
+        <div class="modal-footer" style="padding-right: 92%">
+             <span>
+                            <button onclick="" style="margin-top: 10px; background-color: lightgreen; color: white">Reply</button>
+                          </span>
+        </div>
+        </div>
 {#      </form>#}
-{#    </div>#}
-{#  </div>#}
-{#</div>#}
+    </div>
+  </div>
+</div>
 
 <!-- Send message Modal form-->
 <div class="modal fade" id="sendMessage" role="dialog"  data-backdrop="static">
@@ -606,93 +688,8 @@ $( document ).ready(function() {
     </div>
   </div>
 </div>
-{#<script>#}
-{#function createAlert(channel_id,followers,views,likes,comments) {#}
-{#    <!--alert(channel_id);-->#}
-{#    $("#channel_id").val(channel_id);#}
-{#    $("#total_followers").val(followers);#}
-{#    $("#total_views").val(views);#}
-{#    $("#total_likes").val(likes);#}
-{#    $("#total_comments").val(comments);#}
-{#}#}
-{#function sendMessage(channel_id,to_email_id) {#}
-{#    <!--alert(channel_id);-->#}
-{#    $("#message_channel_id").val(channel_id);#}
-{#    $("#to_email_id").val(to_email_id);#}
-{#}#}
-{#</script>#}
-<script>
-{#function getCampaign_ids(channel_id){#}
-{##}
-{#  $.ajax({#}
-{#               type: "GET",#}
-{#               url: '/getChannelStatusForCampaign/'+channel_id,#}
-{#               contentType: 'application/json;charset=UTF-8',#}
-{#               success: function(data)#}
-{#               {#}
-{##}
-{#                   if (data.results.length != 0){#}
-{#                   jQuery.each(data.results, function(i, val) {#}
-{#                        <!--alert(val.campaign_id);-->#}
-{#                        $('.campaign_id'+val.campaign_id).attr('disabled', true);#}
-{##}
-{#                    });#}
-{#                    }#}
-{##}
-{#               }#}
-{#  });#}
-{##}
-{##}
 
-{#function campaignList(channel_id) {#}
-{##}
-{#    $( "input#campaign_id" ).prop('checked', false);#}
-{#    $( "input#campaign_id" ).prop('disabled', false)#}
-{#    $("#youtube_channel_id").val(channel_id);#}
-{#    var campaign_ids = getCampaign_ids(channel_id);#}
-{#    <!--alert(campaign_ids);-->#}
-{#    {% for item in view_campaign_data['data'] %}#}
-{#        {% for item1 in item['youtube_inf_data'] %}#}
-{#            var campaign_channel_id = "{{ item1['channel_id'] }}";#}
-{#            var campaign_id = "{{ item['campaign_id'] }}";#}
-{##}
-{#            if (channel_id == campaign_channel_id){#}
-{#                <!--alert("equal");-->#}
-{#                $('.campaign_id'+campaign_id).attr('disabled', true);#}
-{#             }#}
-{#             else{#}
-{#                 <!--alert("not equal");-->#}
-{#                  <!--$('.campaign_id'+campaign_id).attr('disabled', false);-->#}
-{#             }#}
-{#        {% endfor %}#}
-{#    {% endfor %}#}
-{##}
 
-{#function updateChannelStatusForCampaign(channel_id) {#}
-{#    <!--alert(channel_id);-->#}
-{#    $.ajax({#}
-{#        type: "GET",#}
-{#        url: '/getChannelStatusForCampaign/' + channel_id,#}
-{#        contentType: 'application/json;charset=UTF-8',#}
-{#        success: function (data) {#}
-{#            $('#status' + channel_id).empty();#}
-{#            if (data.results.length != 0) {#}
-{#                jQuery.each(data.results, function (i, val) {#}
-{#                    <!--alert(val.campaign_name);-->#}
-{#                    <!--alert(val.status);-->#}
-{##}
-{#                    $('#status' + channel_id).append('<b style="font-weight:450; font-size:15px;">' + val.campaign_name + '<br/></b>');#}
-{#                    $('#status' + channel_id).append('<b style="font-weight:400; color:orange; font-size:15px;">' + val.status + '</b>');#}
-{#                    $('#status' + channel_id).append('<hr style="height:0px; margin:auto;">');#}
-{#                });#}
-{#            }#}
-{#            else {#}
-{#                $('#status' + channel_id).append('<b>No Campaigns</b>');#}
-{#            }#}
-{#        }#}
-{#    });#}
-{##}
-</script>
 
 {#<script>#}
 {#  $(document).ready(function () {#}
@@ -707,49 +704,14 @@ $( document ).ready(function() {
 {#               success: function(data)#}
 {#               {#}
 {#                   alert(data); // show response from the python script.#}
-{#                   $('#campaignList').modal('toggle');#}
+{#                   $('#detailslist').modal('toggle');#}
 {#                   updateChannelStatusForCampaign(channel_id);#}
 {#               }#}
 {#             });#}
 {#        e.preventDefault(); // avoid to execute the actual submit of the form.#}
 {#    });#}
-{##}
-{#$("#send_message_form").submit(function(e) {#}
-{#        var form = $(this);#}
-{#        var url = form.attr('action');#}
-{#        var channel_id = $('#message_channel_id').val();#}
-{#        $.ajax({#}
-{#               type: "POST",#}
-{#               url: url,#}
-{#               data: form.serialize(), // serializes the form's elements.#}
-{#               success: function(data)#}
-{#               {#}
-{#                   alert(data); // show response from the python script.#}
-{#                   $('#sendMessage').modal('toggle');#}
-{#                   updateChannelStatusForCampaign(channel_id);#}
-{#               }#}
-{#             });#}
-{#        e.preventDefault(); // avoid to execute the actual submit of the form.#}
-{#    });#}
-{##}
-{##}
-{#{% for item in data['data'] %}#}
-{#  updateChannelStatusForCampaign('{{ item['channel_id'] }}');#}
-{#{% endfor %}#}
-{##}
-{##}
-{##}
-{#        <!--alert('lazy');-->#}
-{#        <!--$(".lazy").hide();-->#}
-{#        <!--$(".lazy").addClass("loader");-->#}
-{#        $(window).lazyScript({#}
-{#        selectorClass: 'lazy',#}
-{#        callback: jQuery.noop,#}
-{#        threshold: 0,#}
-{#        scrollInterval: 500#}
-{#        });#}
-{#   });#}
-{##}
-{##}
-{#</script>#}
+
+
+
+
 {% endblock %}

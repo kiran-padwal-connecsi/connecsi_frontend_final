@@ -321,7 +321,6 @@ def offers():
     videoCat_json=''
     form_filters=''
     country_name=''
-    arrangement_name=''
     view_campaign_data=''
     data=''
     favInfList_data=''
@@ -366,12 +365,12 @@ def offers():
             # exit()
             category = string_word.replace('and','&')
             print(category)
-            category_id=''
+            # category_id=''
             for cat in videoCat_json['data']:
                 # print(cat['video_cat_name'])
                 if cat['video_cat_name'] == category:
                     print("category id = ",cat['video_cat_id'])
-                    category_id = cat['video_cat_id']
+                    # category_id = cat['video_cat_id']
             form_filters = request.form.to_dict()
             print('post form filters =',form_filters)
             url_country_name = base_url + 'Youtube/regionCode/'+form_filters['country']
@@ -401,13 +400,13 @@ def offers():
                 print(data)
                 return render_template('search/offers.html', regionCodes=regionCodes_json,
                                        lookup_string=lookup_string, form_filters=form_filters, data=data, view_campaign_data=view_campaign_data,
-                                       favInfList_data=favInfList_data)
+                                       favInfList_data=favInfList_data, detail_offer= {})
             except Exception as e:
                 print(e)
                 print('i m hee')
                 return render_template('search/offers.html', regionCodes=regionCodes_json,
                                    lookup_string=lookup_string,form_filters=form_filters,data='', view_campaign_data=view_campaign_data
-                                       ,favInfList_data=favInfList_data)
+                                       ,favInfList_data=favInfList_data, detail_offer= {})
         else:
             print('i m disguise')
             try:
@@ -431,7 +430,7 @@ def offers():
             return render_template('search/offers.html', regionCodes=regionCodes_json,
                                    lookup_string=lookup_string, form_filters=form_filters, data=data, pagination='',
                                    view_campaign_data=view_campaign_data,
-                                   favInfList_data=favInfList_data)
+                                   favInfList_data=favInfList_data, detail_offer= {})
 
     else:
         print('i m here last')
@@ -466,8 +465,12 @@ def offers():
 
         return render_template('search/offers.html', regionCodes=regionCodes_json,
                                lookup_string=lookup_string,form_filters=form_filters,data=data,pagination='',view_campaign_data=view_campaign_data,
-                               favInfList_data=favInfList_data)
+                               favInfList_data=favInfList_data, detail_offer= {})
 
+
+@connecsiApp.template_filter('to_json')
+def to_json(data):
+    return json.dumps(data)
 
 #new function start
 @connecsiApp.route('/searchInfluencers',methods=['POST','GET'])
@@ -1525,14 +1528,27 @@ def influencerFavoritesList():
         url = base_url+'/Brand/getInfluencerFavList/'+str(user_id)
         response = requests.get(url=url)
         data = response.json()
+        print(data)
+        linechart_id = 1
+        from templates.campaign import campaign
+        campaignObj = campaign.Campaign(user_id=user_id)
+        view_campaign_data = campaignObj.get_all_campaigns()
+        for item in data['data']:
+            item.update({'linechart_id': linechart_id})
+            linechart_id += 1
+        return render_template('partnerships/influencerFavoritesList.html',data=data,view_campaign_data=view_campaign_data)
+    except:
+        pass
+        user_id = session['user_id']
+        url = base_url + '/Brand/getInfluencerFavList/' + str(user_id)
+        response = requests.get(url=url)
+        data = response.json()
+        print(data)
         linechart_id = 1
         for item in data['data']:
             item.update({'linechart_id': linechart_id})
             linechart_id += 1
-        return render_template('partnerships/influencerFavoritesList.html',data=data)
-    except:
-        pass
-        return render_template('partnerships/influencerFavoritesList.html')
+        return render_template('partnerships/influencerFavoritesList.html',view_campaign_data=view_campaign_data)
 
 
 @connecsiApp.route('/createAlerts', methods=['POST','GET'])

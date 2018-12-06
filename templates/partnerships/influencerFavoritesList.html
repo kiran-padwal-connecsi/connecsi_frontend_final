@@ -1,21 +1,42 @@
 {% extends 'dashboard_layout_new.html' %}
 {{ super() }}
 {% block body %}
+
+<script>
+$('#myTab a').on('click', function (e) {
+  e.preventDefault()
+  $(this).tab('show')
+})
+
+</script>
+
 <div class="row">
     <div class="col-sm-12">
         <div class="card">
             <div class="card-body">
                 <div class="card-block">
                     <div>
-                        <ul class="tabrow">
-                            <li class="selected">Youtube</li>
-                            <li>Facebook</li>
-                            <li >Instagram</li>
-                            <li>Twitter</li>
+                        <ul class="nav nav-tabs" id="myTab" role="tablist">
+                            <li class="nav-item">
+                                <a class="nav-link active" id="youtube-tab" data-toggle="tab" href="#youtube" role="youtube" aria-controls="youtube" aria-selected="true">Youtube</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" id="facebook-tab" data-toggle="tab" href="#facebook" role="tab" aria-controls="facebook" aria-selected="false">Facebook</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" id="instagram-tab" data-toggle="tab" href="#instagram" role="tab" aria-controls="instagram" aria-selected="false">Instagram</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" id="twitter-tab" data-toggle="tab" href="#twitter" role="tab" aria-controls="twitter" aria-selected="false">Twitter</a>
+                            </li>
                         </ul>
                     </div>
-                    <div class="row" style="padding-top: 2%;">
-                        <button type="button" style="background-color: purple; margin-left: 2%; color:white; border-radius: 10px; font-size:15px;">Export CSV</button>
+                    <div class="row" style="padding-top: 2%; padding-left: 12px">
+                         {% if data['data'] %}
+                             <a href={{ url_for('exportCsv', data=data) }}><button type="button" d style="background-color: purple; color:white; border-radius: 10px; font-size:15px;">Export CSV</button></a>
+                         {% else %}
+              <!--<button type="button"  style="background-color: purple; margin-left: 2%; color:white; border-radius: 10px; font-size:15px;">Export CSV</button>-->
+                         {% endif %}
                         <select style="margin-left: 60%">
                             <option value="sort">Sort</option>
                             <option value="price">Price</option>
@@ -24,6 +45,8 @@
                         </select>
                     </div>
                     <br>
+                    <div class = "tab-contact" id="myTabContent">
+                    <div class="tab-pane fade show active" id="youtube" role="tabpanel" aria-labelledby="youtube-tab">
                     <div class="container">
                         {% for item in data['data'] %}
                         <div class="row">
@@ -33,13 +56,16 @@
                                         <td rowspan="3" style="border-left:solid 1px white;">
                                             <a href="/compose" class="fa fa-envelope" data-toggle="tooltip" title="Message" style="position: relative; z-index: 1; font-size:25px;"></a>
                                             <br>
-                                            <a href="#" class="fa fa-bullseye red" data-toggle="tooltip" title="Add To Campaign" style="font-size:25px;"><i class="fa fa-plus-circle green" style="font-size:10px; position:relative; top:5px; left:-8px;"></i>
-                                            </a>
+                                               <span data-toggle="modal" data-target="#campaignList">
+                                               <a onclick="campaignList('{{ item['channel_id'] }}')"  class="fa fa-bullseye red" data-toggle="tooltip" title="Add To Campaign" style="font-size:25px;"><i class="fa fa-plus-circle green" style="font-size:10px; position:relative; top:5px; left:-8px;"></i></a>
+                                               </span>
                                             <br>
                                             <!--href="/createAlert/{{ item['channel_id'] }}"-->
                                             <!--onclick="createAlert('{{ item['channel_id'] }}')"-->
                                             <!--<button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#change_pass_modal">Change Password</button>-->
-                                            <a onclick="createAlert('{{ item['channel_id'] }}','{{ item['subscriberCount_gained'] }}','{{ (item['total_100video_views']/100)|int }}','{{ (item['total_100video_likes']/100)|int }}','{{ (item['total_100video_comments']/100)|int }}')" class="fa fa-bell black" data-toggle="modal" data-target="#create_alert_modal" data-tooltip="true" title="Create Alerts" style="font-size:25px;"><i class="fa fa-plus-circle green" style="font-size:10px; position:relative; top:1px; left:-10px;"></i></a>
+                                            <span data-toggle="modal" data-target="#createalert">
+                                            <a onclick="createAlert('{{ item['channel_id'] }}','{{ item['subscriberCount_gained'] }}','{{ (item['total_100video_views']/100)|int }}','{{ (item['total_100video_likes']/100)|int }}','{{ (item['total_100video_comments']/100)|int }}')" class="fa fa-bell black" data-toggle="tooltip" title="Create Alerts" style="font-size:25px;"><i class="fa fa-plus-circle green" style="font-size:10px; position:relative; top:1px; left:-10px;"></i></a>
+                                            </span>
                                         </td>
                                         <td rowspan="4">
                                             <img src="{{ item['channel_img'] }}" height="150px" width="155px">
@@ -135,6 +161,15 @@
                         <br>
                         {% endfor %}
                     </div>
+                    </div>
+                    <div class="tab-pane fade" id="facebook" role="tabpanel" aria-labelledby="facebook-tab">
+                    </div>
+                        <div class="tab-pane fade" id="instagram" role="tabpanel" aria-labelledby="instagram-tab">
+
+                        </div>
+                        <div class="tab-pane fade" id="twitter" role="tabpanel" aria-labelledby="twitter-tab">
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -142,7 +177,7 @@
 </div>
 
 <!-- Create alert Modal form-->
-<div class="modal fade" id="create_alert_modal" role="dialog" data-backdrop="false">
+<div class="modal fade" id="createalert" role="dialog" data-backdrop="false">
     <div class="modal-dialog modal-sm">
         <div class="modal-content">
             <div class="modal-header alert-primary">
@@ -175,7 +210,110 @@
     </div>
 </div>
 
+<!-- Campaign List Modal-->
+<div class="modal fade" id="campaignList" role="dialog" data-backdrop="false">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header alert-primary">
+        <b class="modal-title">Campaign List</b>
+        <button  type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+      <form name="add_youtube_inf_to_campaign_list_form" id="add_influencer_to_campaign" action="/addYoutubeInfToCampaignList" method="POST">
+        <div class="modal-body">
+          <input type="hidden" name="channel_id" id="youtube_channel_id">
 
+          <div id="channel_name"></div>
+          <div>channels</div>
+          <div class="table-responsive" style="background-color: white;">
+            <table class="table table-striped">
+              <thead>
+              <tr>
+                <th scope="col"><b style="font-weight: 500; font-size:16px;">Select</b></th>
+                <th scope="col"><b style="font-weight: 500; font-size:16px;">Campaign</b></th>
+                <th scope="col"><b style="font-weight: 500; font-size:16px;">Status</b></th>
+                <th scope="col"><b style="font-weight: 500; font-size:16px;">Period</b></th>
+                <th scope="col"><b style="font-weight: 500; font-size:16px;">Channels</b></th>
+                <!--<th scope="col"><b style="font-weight: 500; font-size:16px;">Countries</b></th>-->
+                <th scope="col"><b style="font-weight: 500; font-size:16px;">Influencers</b></th>
+                <!--<th scope="col"><b style="font-weight: 500; font-size:16px;">Budget</b></th>-->
+                <!--<th scope="col"><b style="font-weight: 500; font-size:16px;">ROI</b></th>-->
+              </tr>
+              </thead>
+              <tbody>
+              {% for item in view_campaign_data['data'] %}
+              <tr>
+                <td>
+                  <input class="form-control campaign_id{{ item['campaign_id'] }}" type="checkbox"  multiple id="campaign_id" value="{{ item['campaign_id'] }}" name="campaign_id">
+                </td>
+                <td><a href="/viewCampaignDetails/{{ item['campaign_id'] }}">{{ item['campaign_name'] }}</a></td>
+                <td>Cell</td>
+                <td>{{ item['from_date'] }}- {{ item['to_date'] }}</td>
+                <td>
+                  {% set channels = item['channels'].split(',') %}
+                  {% for channel in channels %}
+                  {% if channel == 'youtube' %}
+                  <a href="#" class="fa fa-youtube red"></a>
+                  {% elif channel == 'facebook' %}
+                  <a href="#" class="fa fa-facebook blue"></a>
+                  {% elif channel == 'twitter' %}
+                  <a href="#" class="fa fa-twitter"></a>
+                  {% elif channel == 'instagram' %}
+                  <a href="#" class="fa fa-instagram pink"></a>
+                  {% endif %}
+                  {% endfor %}
+                </td>
+                <!--<td>-->
+                <!--{% for region_name in item['region_name_list'] %}-->
+                <!--{{ region_name }},-->
+                <!--{% endfor %}-->
+                <!--</td>-->
+                <td>{{ item['no_of_influencers'] }}
+                  <span class="float-right text muted">
+                                <!--<a onclick="searchInfluencers('{{ item['campaign_name'] }}','{{ item['campaign_id'] }}','{{ item['channels'] }}','{{ item['video_cat_name'] }}','{{ item['min_lower_followers'] }}','{{ item['max_upper_followers'] }}','{{ item['regions'] }}')" class="fa fa-user-plus black" data-toggle="modal" data-target="#create_alert_modal" data-tooltip="true" title="Add Influencer" style="font-size:20px;"></a>-->
+                    <!--<button class="btn btn-sm btn-outline-secondary fa fa-user-plus"></button>-->
+                        </span>
+                </td>
+                <!--<td>{{ item['budget'] }} {{ item['currency'] }}</td>-->
+                <!--<td>Coming Soon</td>-->
+              </tr>
+              {% endfor %}
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-default">Save</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<script>
+    function campaignList(channel_id) {
+
+    $( "input#campaign_id" ).prop('checked', false);
+    $( "input#campaign_id" ).prop('disabled', false)
+    $("#youtube_channel_id").val(channel_id);
+    var campaign_ids = getCampaign_ids(channel_id);
+    <!--alert(campaign_ids);-->
+    {% for item in view_campaign_data['data'] %}
+        {% for item1 in item['youtube_inf_data'] %}
+            var campaign_channel_id = "{{ item1['channel_id'] }}";
+            var campaign_id = "{{ item['campaign_id'] }}";
+
+            if (channel_id == campaign_channel_id){
+                <!--alert("equal");-->
+                $('.campaign_id'+campaign_id).attr('disabled', true);
+             }
+             else{
+                 <!--alert("not equal");-->
+                  <!--$('.campaign_id'+campaign_id).attr('disabled', false);-->
+             }
+        {% endfor %}
+    {% endfor %}
+}
+</script>
 
 <style>
     div.scroll {
