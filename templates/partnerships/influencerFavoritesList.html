@@ -115,7 +115,7 @@ $('#myTab a').on('click', function (e) {
                                         </td>
                                         <td rowspan="4" width="400" style="border-right: solid 1px #E1DEDD;" >
                                             <div>
-                                                <canvas id="lineChart{{ item['linechart_id'] }}" height="150px" width="250px"></canvas>
+                                                <canvas id="lineChart1{{ item['linechart_id'] }}" height="150px" width="250px"></canvas>
                                             </div></td>
                                         <td rowspan="4" style="border-right:solid 2px white;">
                                             <div class="scroll">
@@ -163,12 +163,349 @@ $('#myTab a').on('click', function (e) {
                     </div>
                     </div>
                     <div class="tab-pane fade" id="facebook" role="tabpanel" aria-labelledby="facebook-tab">
+                        <div class="container">
+                        {% for item in facebook %}
+                        <div class="row">
+                            <div class="">
+                                <table cellspacing="1" border="solid 1px #E1DEDD;">
+                                    <tr>
+                                        <td rowspan="3" style="border-left:solid 1px white;">
+                                            <a href="/compose" class="fa fa-envelope" data-toggle="tooltip" title="Message" style="position: relative; z-index: 1; font-size:25px;"></a>
+                                            <br>
+                                               <span data-toggle="modal" data-target="#campaignList">
+                                               <a onclick="campaignList('{{ item['channel_id'] }}')"  class="fa fa-bullseye red" data-toggle="tooltip" title="Add To Campaign" style="font-size:25px;"><i class="fa fa-plus-circle green" style="font-size:10px; position:relative; top:5px; left:-8px;"></i></a>
+                                               </span>
+                                            <br>
+                                            <!--href="/createAlert/{{ item['channel_id'] }}"-->
+                                            <!--onclick="createAlert('{{ item['channel_id'] }}')"-->
+                                            <!--<button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#change_pass_modal">Change Password</button>-->
+                                            <span data-toggle="modal" data-target="#createalert">
+                                            <a onclick="createAlert('{{ item['channel_id'] }}','{{ item['subscriberCount_gained'] }}','{{ (item['total_100video_views']/100)|int }}','{{ (item['total_100video_likes']/100)|int }}','{{ (item['total_100video_comments']/100)|int }}')" class="fa fa-bell black" data-toggle="tooltip" title="Create Alerts" style="font-size:25px;"><i class="fa fa-plus-circle green" style="font-size:10px; position:relative; top:1px; left:-10px;"></i></a>
+                                            </span>
+                                        </td>
+                                        <td rowspan="4">
+                                            <img src="{{ item['channel_img'] }}" height="150px" width="155px">
+                                        </td>
+                                        <td colspan="2" style="border-right: solid 1px #E1DEDD;">
+                                            <table width="400px" cellpadding="1">
+                                                <tr>
+                                                    <td colspan="2"><b style="font-size:15px;"><a href="https://www.youtube.com/channel/{{ item['channel_id'] }}" target="_blank">{{ item['title'] }}</a></b> <i class="fa fa-youtube-play font-medium-3 red"></i></td>
+                                                </tr>
+                                                <tr>
+                                                    <td style="text-align:center;border-right: solid 1px #E1DEDD; border-bottom:solid 1px #E1DEDD; border-top:solid 1px #E1DEDD; font-size:14px;">
+                                                        <b>{{ item['subscriberCount_gained'] }}</b>
+                                                        <br>
+                                                        Total followers
+                                                    </td>
+                                                    <td style="text-align:center;border-bottom:solid 1px #E1DEDD; border-top:solid 1px #E1DEDD;  font-size:14px;">
+                                                        <b>{{ (item['total_100video_likes']/100)|int }}</b>
+                                                        <br>
+                                                        Avg Likes/ video
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td style="text-align:center;border-right: solid 1px #E1DEDD; border-bottom:solid 1px #E1DEDD;  font-size:14px;">
+                                                        <b>{{ (item['total_100video_views']/100)|int }}</b>
+                                                        <br>
+                                                        Avg Views/ video
+                                                    </td>
+                                                    <td style="text-align:center;font-size:14px;">
+                                                        <b>{{ (item['total_100video_comments']/100)|int }}</b>
+                                                        <br>
+                                                        Avg Comments/ video
+                                                    </td>
+                                                </tr>
+                                                <tr><td colspan="2">
+                                                    <b style="font-size:12px">Other Channels</b> &emsp;
+                                                    {% if item['facebook_url'] %}
+                                                    <a href="{{ item['facebook_url'] }}" target="_blank" class="fa fa-facebook-official blue" style="font-size:20px;"></a>&emsp;
+                                                    {% endif %}
+                                                    {% if item['insta_url'] %}
+                                                    <a href="{{ item['insta_url'] }}" target="_blank" class="fa fa-instagram pink" style="font-size:20px;"></a>&emsp;
+                                                    {% endif %}
+                                                    {% if item['twitter_url'] %}
+                                                    <a href="{{ item['twitter_url'] }}" target="_blank" class="fa fa-twitter cyan" style="font-size:20px;"></a>&emsp;
+                                                    {% endif %}
+                                                </td></tr>
+                                            </table>
+                                        </td>
+                                        <td rowspan="4" width="400" style="border-right: solid 1px #E1DEDD;" >
+                                            <div>
+                                                <canvas id="lineChart2{{ item['linechart_id'] }}" height="150px" width="250px"></canvas>
+                                            </div></td>
+                                        <td rowspan="4" style="border-right:solid 2px white;">
+                                            <div class="scroll">
+                                                <ul class="nav nav-tabs" style="background-color:#DFDEDE  ;">
+                                                    <li style="margin-left:3%; font-size:15px; font-weight:bold; "><a data-toggle="tab" href="#status{{ item['channel_id'] }}" style="color:black;">Status<i class="fa fa-bullseye red"></i></a></li>&nbsp;&ensp;
+                                                    <li style="font-size:15px; font-weight:bold; "><a data-toggle="tab" href="#alert{{ item['channel_id'] }}" style="color:black;">Alert<i class="fa fa-bell black"></i></a></li>
+                                                </ul>
+
+                                                <div class="tab-content">
+                                                    <div id="status{{ item['channel_id'] }}" class="tab-pane fade show active">
+                                                        <b style="font-weight:450; font-size:15px;">Campaign 1<br/></b>
+                                                        <b style="font-weight:400; color:orange; font-size:15px;">Contacted</b>
+                                                        <hr style="height:0px; margin:auto;">
+                                                        <b style="font-weight:450; font-size:15px;">Campaign 2<br/></b>
+                                                        <b style="font-weight: 400; color:green; font-size:15px;">Accepted
+                                                        </b>
+                                                        <hr style="height:0px; margin:auto;">
+                                                        <b style="font-weight:450; font-size:15px;">Campaign 3<br/></b>
+                                                        <b style="font-weight: 400; color:orange; font-size:15px;">Contacted</b>
+                                                    </div>
+                                                    <div id="alert{{ item['channel_id'] }}" class="tab-pane fade">
+                                                        <b style="font-weight:450; font-size:15px;">Followers<br/></b>
+                                                        <b style="font-weight:400;font-size:15px; color:red;">{{ item['alert_followers'] }}</b>
+                                                        <hr style="height:0px; margin:auto;">
+                                                        <b style="font-weight:450; font-size:15px;">Avg Views/video<br/></b>
+                                                        <b style="font-weight: 400; color:red; font-size:15px;">{{ item['alert_views'] }}
+                                                        </b>
+                                                        <hr style="height:0px; margin:auto;">
+                                                        <b style="font-weight:450; font-size:15px;">Avg Likes/video<br/></b>
+                                                        <b style="font-weight: 400; color:red; font-size:15px;">{{ item['alert_likes'] }}
+                                                        </b>
+                                                        <hr style="height:0px; margin:auto;">
+                                                        <b style="font-weight:450; font-size:15px;">Avg Comments<br/></b>
+                                                        <b style="font-weight: 400; color:red; font-size:15px;">{{ item['alert_comments'] }}</b>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                        <br>
+                        {% endfor %}
                     </div>
                         <div class="tab-pane fade" id="instagram" role="tabpanel" aria-labelledby="instagram-tab">
+                        <div class="container">
+                        {% for item in instagram %}
+                        <div class="row">
+                            <div class="">
+                                <table cellspacing="1" border="solid 1px #E1DEDD;">
+                                    <tr>
+                                        <td rowspan="3" style="border-left:solid 1px white;">
+                                            <a href="/compose" class="fa fa-envelope" data-toggle="tooltip" title="Message" style="position: relative; z-index: 1; font-size:25px;"></a>
+                                            <br>
+                                               <span data-toggle="modal" data-target="#campaignList">
+                                               <a onclick="campaignList('{{ item['channel_id'] }}')"  class="fa fa-bullseye red" data-toggle="tooltip" title="Add To Campaign" style="font-size:25px;"><i class="fa fa-plus-circle green" style="font-size:10px; position:relative; top:5px; left:-8px;"></i></a>
+                                               </span>
+                                            <br>
+                                            <!--href="/createAlert/{{ item['channel_id'] }}"-->
+                                            <!--onclick="createAlert('{{ item['channel_id'] }}')"-->
+                                            <!--<button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#change_pass_modal">Change Password</button>-->
+                                            <span data-toggle="modal" data-target="#createalert">
+                                            <a onclick="createAlert('{{ item['channel_id'] }}','{{ item['subscriberCount_gained'] }}','{{ (item['total_100video_views']/100)|int }}','{{ (item['total_100video_likes']/100)|int }}','{{ (item['total_100video_comments']/100)|int }}')" class="fa fa-bell black" data-toggle="tooltip" title="Create Alerts" style="font-size:25px;"><i class="fa fa-plus-circle green" style="font-size:10px; position:relative; top:1px; left:-10px;"></i></a>
+                                            </span>
+                                        </td>
+                                        <td rowspan="4">
+                                            <img src="{{ item['channel_img'] }}" height="150px" width="155px">
+                                        </td>
+                                        <td colspan="2" style="border-right: solid 1px #E1DEDD;">
+                                            <table width="400px" cellpadding="1">
+                                                <tr>
+                                                    <td colspan="2"><b style="font-size:15px;"><a href="https://www.youtube.com/channel/{{ item['channel_id'] }}" target="_blank">{{ item['title'] }}</a></b> <i class="fa fa-youtube-play font-medium-3 red"></i></td>
+                                                </tr>
+                                                <tr>
+                                                    <td style="text-align:center;border-right: solid 1px #E1DEDD; border-bottom:solid 1px #E1DEDD; border-top:solid 1px #E1DEDD; font-size:14px;">
+                                                        <b>{{ item['subscriberCount_gained'] }}</b>
+                                                        <br>
+                                                        Total followers
+                                                    </td>
+                                                    <td style="text-align:center;border-bottom:solid 1px #E1DEDD; border-top:solid 1px #E1DEDD;  font-size:14px;">
+                                                        <b>{{ (item['total_100video_likes']/100)|int }}</b>
+                                                        <br>
+                                                        Avg Likes/ video
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td style="text-align:center;border-right: solid 1px #E1DEDD; border-bottom:solid 1px #E1DEDD;  font-size:14px;">
+                                                        <b>{{ (item['total_100video_views']/100)|int }}</b>
+                                                        <br>
+                                                        Avg Views/ video
+                                                    </td>
+                                                    <td style="text-align:center;font-size:14px;">
+                                                        <b>{{ (item['total_100video_comments']/100)|int }}</b>
+                                                        <br>
+                                                        Avg Comments/ video
+                                                    </td>
+                                                </tr>
+                                                <tr><td colspan="2">
+                                                    <b style="font-size:12px">Other Channels</b> &emsp;
+                                                    {% if item['facebook_url'] %}
+                                                    <a href="{{ item['facebook_url'] }}" target="_blank" class="fa fa-facebook-official blue" style="font-size:20px;"></a>&emsp;
+                                                    {% endif %}
+                                                    {% if item['insta_url'] %}
+                                                    <a href="{{ item['insta_url'] }}" target="_blank" class="fa fa-instagram pink" style="font-size:20px;"></a>&emsp;
+                                                    {% endif %}
+                                                    {% if item['twitter_url'] %}
+                                                    <a href="{{ item['twitter_url'] }}" target="_blank" class="fa fa-twitter cyan" style="font-size:20px;"></a>&emsp;
+                                                    {% endif %}
+                                                </td></tr>
+                                            </table>
+                                        </td>
+                                        <td rowspan="4" width="400" style="border-right: solid 1px #E1DEDD;" >
+                                            <div>
+                                                <canvas id="lineChart3{{ item['linechart_id'] }}" height="150px" width="250px"></canvas>
+                                            </div></td>
+                                        <td rowspan="4" style="border-right:solid 2px white;">
+                                            <div class="scroll">
+                                                <ul class="nav nav-tabs" style="background-color:#DFDEDE  ;">
+                                                    <li style="margin-left:3%; font-size:15px; font-weight:bold; "><a data-toggle="tab" href="#status{{ item['channel_id'] }}" style="color:black;">Status<i class="fa fa-bullseye red"></i></a></li>&nbsp;&ensp;
+                                                    <li style="font-size:15px; font-weight:bold; "><a data-toggle="tab" href="#alert{{ item['channel_id'] }}" style="color:black;">Alert<i class="fa fa-bell black"></i></a></li>
+                                                </ul>
 
+                                                <div class="tab-content">
+                                                    <div id="status{{ item['channel_id'] }}" class="tab-pane fade show active">
+                                                        <b style="font-weight:450; font-size:15px;">Campaign 1<br/></b>
+                                                        <b style="font-weight:400; color:orange; font-size:15px;">Contacted</b>
+                                                        <hr style="height:0px; margin:auto;">
+                                                        <b style="font-weight:450; font-size:15px;">Campaign 2<br/></b>
+                                                        <b style="font-weight: 400; color:green; font-size:15px;">Accepted
+                                                        </b>
+                                                        <hr style="height:0px; margin:auto;">
+                                                        <b style="font-weight:450; font-size:15px;">Campaign 3<br/></b>
+                                                        <b style="font-weight: 400; color:orange; font-size:15px;">Contacted</b>
+                                                    </div>
+                                                    <div id="alert{{ item['channel_id'] }}" class="tab-pane fade">
+                                                        <b style="font-weight:450; font-size:15px;">Followers<br/></b>
+                                                        <b style="font-weight:400;font-size:15px; color:red;">{{ item['alert_followers'] }}</b>
+                                                        <hr style="height:0px; margin:auto;">
+                                                        <b style="font-weight:450; font-size:15px;">Avg Views/video<br/></b>
+                                                        <b style="font-weight: 400; color:red; font-size:15px;">{{ item['alert_views'] }}
+                                                        </b>
+                                                        <hr style="height:0px; margin:auto;">
+                                                        <b style="font-weight:450; font-size:15px;">Avg Likes/video<br/></b>
+                                                        <b style="font-weight: 400; color:red; font-size:15px;">{{ item['alert_likes'] }}
+                                                        </b>
+                                                        <hr style="height:0px; margin:auto;">
+                                                        <b style="font-weight:450; font-size:15px;">Avg Comments<br/></b>
+                                                        <b style="font-weight: 400; color:red; font-size:15px;">{{ item['alert_comments'] }}</b>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                        <br>
+                        {% endfor %}
                         </div>
                         <div class="tab-pane fade" id="twitter" role="tabpanel" aria-labelledby="twitter-tab">
+                        <div class="container">
+                        {% for item in twitter %}
+                        <div class="row">
+                            <div class="">
+                                <table cellspacing="1" border="solid 1px #E1DEDD;">
+                                    <tr>
+                                        <td rowspan="3" style="border-left:solid 1px white;">
+                                            <a href="/compose" class="fa fa-envelope" data-toggle="tooltip" title="Message" style="position: relative; z-index: 1; font-size:25px;"></a>
+                                            <br>
+                                               <span data-toggle="modal" data-target="#campaignList">
+                                               <a onclick="campaignList('{{ item['channel_id'] }}')"  class="fa fa-bullseye red" data-toggle="tooltip" title="Add To Campaign" style="font-size:25px;"><i class="fa fa-plus-circle green" style="font-size:10px; position:relative; top:5px; left:-8px;"></i></a>
+                                               </span>
+                                            <br>
+                                            <!--href="/createAlert/{{ item['channel_id'] }}"-->
+                                            <!--onclick="createAlert('{{ item['channel_id'] }}')"-->
+                                            <!--<button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#change_pass_modal">Change Password</button>-->
+                                            <span data-toggle="modal" data-target="#createalert">
+                                            <a onclick="createAlert('{{ item['channel_id'] }}','{{ item['subscriberCount_gained'] }}','{{ (item['total_100video_views']/100)|int }}','{{ (item['total_100video_likes']/100)|int }}','{{ (item['total_100video_comments']/100)|int }}')" class="fa fa-bell black" data-toggle="tooltip" title="Create Alerts" style="font-size:25px;"><i class="fa fa-plus-circle green" style="font-size:10px; position:relative; top:1px; left:-10px;"></i></a>
+                                            </span>
+                                        </td>
+                                        <td rowspan="4">
+                                            <img src="{{ item['channel_img'] }}" height="150px" width="155px">
+                                        </td>
+                                        <td colspan="2" style="border-right: solid 1px #E1DEDD;">
+                                            <table width="400px" cellpadding="1">
+                                                <tr>
+                                                    <td colspan="2"><b style="font-size:15px;"><a href="https://www.youtube.com/channel/{{ item['channel_id'] }}" target="_blank">{{ item['title'] }}</a></b> <i class="fa fa-youtube-play font-medium-3 red"></i></td>
+                                                </tr>
+                                                <tr>
+                                                    <td style="text-align:center;border-right: solid 1px #E1DEDD; border-bottom:solid 1px #E1DEDD; border-top:solid 1px #E1DEDD; font-size:14px;">
+                                                        <b>{{ item['subscriberCount_gained'] }}</b>
+                                                        <br>
+                                                        Total followers
+                                                    </td>
+                                                    <td style="text-align:center;border-bottom:solid 1px #E1DEDD; border-top:solid 1px #E1DEDD;  font-size:14px;">
+                                                        <b>{{ (item['total_100video_likes']/100)|int }}</b>
+                                                        <br>
+                                                        Avg Likes/ video
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td style="text-align:center;border-right: solid 1px #E1DEDD; border-bottom:solid 1px #E1DEDD;  font-size:14px;">
+                                                        <b>{{ (item['total_100video_views']/100)|int }}</b>
+                                                        <br>
+                                                        Avg Views/ video
+                                                    </td>
+                                                    <td style="text-align:center;font-size:14px;">
+                                                        <b>{{ (item['total_100video_comments']/100)|int }}</b>
+                                                        <br>
+                                                        Avg Comments/ video
+                                                    </td>
+                                                </tr>
+                                                <tr><td colspan="2">
+                                                    <b style="font-size:12px">Other Channels</b> &emsp;
+                                                    {% if item['facebook_url'] %}
+                                                    <a href="{{ item['facebook_url'] }}" target="_blank" class="fa fa-facebook-official blue" style="font-size:20px;"></a>&emsp;
+                                                    {% endif %}
+                                                    {% if item['insta_url'] %}
+                                                    <a href="{{ item['insta_url'] }}" target="_blank" class="fa fa-instagram pink" style="font-size:20px;"></a>&emsp;
+                                                    {% endif %}
+                                                    {% if item['twitter_url'] %}
+                                                    <a href="{{ item['twitter_url'] }}" target="_blank" class="fa fa-twitter cyan" style="font-size:20px;"></a>&emsp;
+                                                    {% endif %}
+                                                </td></tr>
+                                            </table>
+                                        </td>
+                                        <td rowspan="4" width="400" style="border-right: solid 1px #E1DEDD;" >
+                                            <div>
+                                                <canvas id="lineChart4{{ item['linechart_id'] }}" height="150px" width="250px"></canvas>
+                                            </div></td>
+                                        <td rowspan="4" style="border-right:solid 2px white;">
+                                            <div class="scroll">
+                                                <ul class="nav nav-tabs" style="background-color:#DFDEDE  ;">
+                                                    <li style="margin-left:3%; font-size:15px; font-weight:bold; "><a data-toggle="tab" href="#status{{ item['channel_id'] }}" style="color:black;">Status<i class="fa fa-bullseye red"></i></a></li>&nbsp;&ensp;
+                                                    <li style="font-size:15px; font-weight:bold; "><a data-toggle="tab" href="#alert{{ item['channel_id'] }}" style="color:black;">Alert<i class="fa fa-bell black"></i></a></li>
+                                                </ul>
 
+                                                <div class="tab-content">
+                                                    <div id="status{{ item['channel_id'] }}" class="tab-pane fade show active">
+                                                        <b style="font-weight:450; font-size:15px;">Campaign 1<br/></b>
+                                                        <b style="font-weight:400; color:orange; font-size:15px;">Contacted</b>
+                                                        <hr style="height:0px; margin:auto;">
+                                                        <b style="font-weight:450; font-size:15px;">Campaign 2<br/></b>
+                                                        <b style="font-weight: 400; color:green; font-size:15px;">Accepted
+                                                        </b>
+                                                        <hr style="height:0px; margin:auto;">
+                                                        <b style="font-weight:450; font-size:15px;">Campaign 3<br/></b>
+                                                        <b style="font-weight: 400; color:orange; font-size:15px;">Contacted</b>
+                                                    </div>
+                                                    <div id="alert{{ item['channel_id'] }}" class="tab-pane fade">
+                                                        <b style="font-weight:450; font-size:15px;">Followers<br/></b>
+                                                        <b style="font-weight:400;font-size:15px; color:red;">{{ item['alert_followers'] }}</b>
+                                                        <hr style="height:0px; margin:auto;">
+                                                        <b style="font-weight:450; font-size:15px;">Avg Views/video<br/></b>
+                                                        <b style="font-weight: 400; color:red; font-size:15px;">{{ item['alert_views'] }}
+                                                        </b>
+                                                        <hr style="height:0px; margin:auto;">
+                                                        <b style="font-weight:450; font-size:15px;">Avg Likes/video<br/></b>
+                                                        <b style="font-weight: 400; color:red; font-size:15px;">{{ item['alert_likes'] }}
+                                                        </b>
+                                                        <hr style="height:0px; margin:auto;">
+                                                        <b style="font-weight:450; font-size:15px;">Avg Comments<br/></b>
+                                                        <b style="font-weight: 400; color:red; font-size:15px;">{{ item['alert_comments'] }}</b>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                        <br>
+                        {% endfor %}
                         </div>
                     </div>
                 </div>
@@ -357,7 +694,7 @@ $('#myTab a').on('click', function (e) {
 <script src="js/main.js"></script>
 <script>
     {% for item in data['data'] %}
-    const CHART{{ item['linechart_id'] }} = document.getElementById("lineChart{{ item['linechart_id'] }}");
+    const CHART{{ item['linechart_id'] }} = document.getElementById("lineChart1{{ item['linechart_id'] }}");
     let lineChart{{ item['linechart_id'] }} = new Chart(CHART{{ item['linechart_id'] }}, {
         type: 'line',
         data: {
@@ -419,6 +756,202 @@ $('#myTab a').on('click', function (e) {
     });
     {% endfor %}
 </script>
+
+<script>
+    {% for item in facebook %}
+    const CHART{{ item['linechart_id'] }} = document.getElementById("lineChart2{{ item['linechart_id'] }}");
+    let lineChart{{ item['linechart_id'] }} = new Chart(CHART{{ item['linechart_id'] }}, {
+        type: 'line',
+        data: {
+            labels: ["May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov"],
+            datasets: [
+            {
+                label: "Youtube",
+                fill: true,
+                backgroundColor: "rgb(255, 0, 0,0.1)",
+                lineTension: 0.1,
+                borderColor: "rgb(255, 0, 0,0.5)",
+                borderCapStyle: 'butt',
+                borderDash: [],
+                borderWidth:1,
+                borderDashOffset: 0.0,
+                borderJoinStyle: 'miter',
+                pointBorderColor: "rgba(75,192,192,1)",
+                pointBackgroundColor: "#fff",
+                pointBorderWidth: 0.3,
+                pointHoverRadius: 2,
+                pointHoverBackgroundColor: "rgba(75,192,192,1)",
+                pointHoverBorderColor: "rgba(220,220,220,1)",
+                pointHoverBorderWidth: 1,
+                pointRadius: 1,
+                pointHitRadius: 10,
+                data: [65, 59, 80, 81, 56, 55, 40, 50],
+            },         {
+                label: "Twitter",
+                fill: true,
+                backgroundColor: "rgb(0, 255, 255,0.1)",
+                borderColor: "rgb(0, 255, 255,0.5)",
+                borderCapStyle: 'butt',
+                borderDash: [],
+                borderDashOffset: 0.0,
+                borderWidth: 1,
+                borderJoinStyle: 'miter',
+                pointBorderColor: "rgba(75,72,192,1)",
+                pointBackgroundColor: "#fff",
+                pointBorderWidth: 0.3,
+                pointHoverRadius: 2,
+                pointHoverBackgroundColor: "rgba(75,72,192,1)",
+                pointHoverBorderColor: "rgba(220,220,220,1)",
+                pointHoverBorderWidth: 1,
+                pointRadius: 1,
+                pointHitRadius: 10,
+                data: [100, 20, 60, 20, 80, 55, 90],
+            }
+        ]
+        },
+        options: {
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        beginAtZero: true
+                    }
+                }]
+            }
+        }
+    });
+    {% endfor %}
+</script>
+
+<script>
+    {% for item in instagram %}
+    const CHART{{ item['linechart_id'] }} = document.getElementById("lineChart3{{ item['linechart_id'] }}");
+    let lineChart{{ item['linechart_id'] }} = new Chart(CHART{{ item['linechart_id'] }}, {
+        type: 'line',
+        data: {
+            labels: ["May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov"],
+            datasets: [
+            {
+                label: "Youtube",
+                fill: true,
+                backgroundColor: "rgb(255, 0, 0,0.1)",
+                lineTension: 0.1,
+                borderColor: "rgb(255, 0, 0,0.5)",
+                borderCapStyle: 'butt',
+                borderDash: [],
+                borderWidth:1,
+                borderDashOffset: 0.0,
+                borderJoinStyle: 'miter',
+                pointBorderColor: "rgba(75,192,192,1)",
+                pointBackgroundColor: "#fff",
+                pointBorderWidth: 0.3,
+                pointHoverRadius: 2,
+                pointHoverBackgroundColor: "rgba(75,192,192,1)",
+                pointHoverBorderColor: "rgba(220,220,220,1)",
+                pointHoverBorderWidth: 1,
+                pointRadius: 1,
+                pointHitRadius: 10,
+                data: [65, 59, 80, 81, 56, 55, 40, 50],
+            },         {
+                label: "Twitter",
+                fill: true,
+                backgroundColor: "rgb(0, 255, 255,0.1)",
+                borderColor: "rgb(0, 255, 255,0.5)",
+                borderCapStyle: 'butt',
+                borderDash: [],
+                borderDashOffset: 0.0,
+                borderWidth: 1,
+                borderJoinStyle: 'miter',
+                pointBorderColor: "rgba(75,72,192,1)",
+                pointBackgroundColor: "#fff",
+                pointBorderWidth: 0.3,
+                pointHoverRadius: 2,
+                pointHoverBackgroundColor: "rgba(75,72,192,1)",
+                pointHoverBorderColor: "rgba(220,220,220,1)",
+                pointHoverBorderWidth: 1,
+                pointRadius: 1,
+                pointHitRadius: 10,
+                data: [100, 20, 60, 20, 80, 55, 90],
+            }
+        ]
+        },
+        options: {
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        beginAtZero: true
+                    }
+                }]
+            }
+        }
+    });
+    {% endfor %}
+</script>
+
+<script>
+    {% for item in twitter %}
+    const CHART{{ item['linechart_id'] }} = document.getElementById("lineChart4{{ item['linechart_id'] }}");
+    let lineChart{{ item['linechart_id'] }} = new Chart(CHART{{ item['linechart_id'] }}, {
+        type: 'line',
+        data: {
+            labels: ["May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov"],
+            datasets: [
+            {
+                label: "Youtube",
+                fill: true,
+                backgroundColor: "rgb(255, 0, 0,0.1)",
+                lineTension: 0.1,
+                borderColor: "rgb(255, 0, 0,0.5)",
+                borderCapStyle: 'butt',
+                borderDash: [],
+                borderWidth:1,
+                borderDashOffset: 0.0,
+                borderJoinStyle: 'miter',
+                pointBorderColor: "rgba(75,192,192,1)",
+                pointBackgroundColor: "#fff",
+                pointBorderWidth: 0.3,
+                pointHoverRadius: 2,
+                pointHoverBackgroundColor: "rgba(75,192,192,1)",
+                pointHoverBorderColor: "rgba(220,220,220,1)",
+                pointHoverBorderWidth: 1,
+                pointRadius: 1,
+                pointHitRadius: 10,
+                data: [65, 59, 80, 81, 56, 55, 40, 50],
+            },         {
+                label: "Twitter",
+                fill: true,
+                backgroundColor: "rgb(0, 255, 255,0.1)",
+                borderColor: "rgb(0, 255, 255,0.5)",
+                borderCapStyle: 'butt',
+                borderDash: [],
+                borderDashOffset: 0.0,
+                borderWidth: 1,
+                borderJoinStyle: 'miter',
+                pointBorderColor: "rgba(75,72,192,1)",
+                pointBackgroundColor: "#fff",
+                pointBorderWidth: 0.3,
+                pointHoverRadius: 2,
+                pointHoverBackgroundColor: "rgba(75,72,192,1)",
+                pointHoverBorderColor: "rgba(220,220,220,1)",
+                pointHoverBorderWidth: 1,
+                pointRadius: 1,
+                pointHitRadius: 10,
+                data: [100, 20, 60, 20, 80, 55, 90],
+            }
+        ]
+        },
+        options: {
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        beginAtZero: true
+                    }
+                }]
+            }
+        }
+    });
+    {% endfor %}
+</script>
+
 
 <script>
 function createAlert(channel_id,followers,views,likes,comments) {

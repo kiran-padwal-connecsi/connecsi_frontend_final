@@ -17,7 +17,7 @@
                     <form class="form" name="campaign_form" id="campaign_form" method="POST" action="saveCampaign" enctype="multipart/form-data">
                         <div class="container-fluid">
                             <div class="row">
-                                <div class="col-sm-6 col-md-6" >
+                                <div class="col-sm-6 col-md-6">
                                     <div class="row">
                                         <div class="col-sm-4"><label for="campaign_name">Campaign Name:</label><input  id="campaign_name" type="text" class="form-control" name="campaign_name" required></div>
                                         <div class="col-sm-4"><label for="from_date">From:</label><input  id="from_date" type="date" class="form-control" name="from_date" required></div>
@@ -41,15 +41,22 @@
                                             <span class="text-bold-500 primary">
                                                 <div class="form-group">
                                                     <label for="channels">Channels</label>
-                                                         <input class="form-control" type="text" placeholder="Select" class="button-size" data-toggle="dropdown" >
-                                                        <div class="dropdown-menu" >
-                                                            <input type="checkbox" name="channels" value="facebook"> Facebook
-                                                            <div class="dropdown-divider"></div>
-                                                            <input type="checkbox" name="channels" value="youtube"> Youtube
-                                                            <div class="dropdown-divider"></div>
-                                                            <input type="checkbox" name="channels" value="instagram"> Instagram
-                                                            <div class="dropdown-divider"></div>
-                                                            <input type="checkbox" name="channels" value="twitter"> Twitter
+                                                    <input class="form-control" type="text" placeholder="Select" class="button-size" data-toggle="dropdown" >
+                                                        <div class="dropdown-menu" style="background-color: gainsboro">
+                                                        <div class = container>
+                                                        <div class="row">
+                                                        <div class="col-xl-6">
+                                                        <input type="checkbox" name="channels" value="youtube"> Youtube
+                                                        <div class="dropdown-divider"></div>
+                                                        <input type="checkbox" name="channels" value="facebook"> Facebook
+                                                        </div>
+                                                        <div class="col-xl-6">
+                                                        <input type="checkbox" name="channels" value="twitter"> Twitter
+                                                        <div class="dropdown-divider"></div>
+                                                        <input type="checkbox" name="channels" value="instagram"> Instagram
+                                                        </div>
+                                                        </div>
+                                                        </div>
                                                         </div>
                                                 </div>
                                             </span>
@@ -100,39 +107,71 @@
                                     </span>
                                     <span class="text-bold-500 primary"> <input type="url" class="form-control" name="target_url" placeholder="Target URL" required></span><br>
                                     <span>
-                                        <input  type="file" name="campaign_files" id="campaign_files1" class="campaign_files" required>
+                                        <input type="file" name="campaign_files" id="campaign_files1" class="campaign_files" required>
                                     </span><br class="displayFiles">
                                 </div>
                                 <div class="col-sm-6 col-md-6">
                                     <label for="campaign_name">Description:</label><textarea class="form-control" rows="9" id="descritpion" name="campaign_description" required></textarea>
                                     <br>
                                     <span class="text-bold-500 primary">
-                                        <select multiple id="arrangements" name="arrangements" class="form-control" required>
-                                            <option value="" disabled>Arrangements / Content Type</option>
-                                            <option value="Review">Review</option>
-                                            <option value="Unboxing / Gameplay">Unboxing / Gameplay</option>
-                                            <option value="Shout out/Mention">Shout out/Mention</option>
-                                            <option value="giveaway">giveaway</option>
-                                            <option value='Video Intro/Outro'>video Intro/Outro</option>
-                                            <option value="Tutorial">Tutorial</option>
-                                            <option value="Banner placement / URL placement">Banner placement / URL placement</option>
-                                            <option value="Sponsorship">Sponsorship</option>
-                                            <option value="Other (Explain in description)">Other (Explain in description)</option>
-                                        </select>
-                                    </span>
+
+                                              <label for="arrangement/content type">Arrangement/Content Type</label>
+                                              <input class="form-control" type="text" placeholder="Select" class="button-size" data-toggle="dropdown">
+                                              <div class="dropdown-menu" style="background-color: gainsboro">
+                                              <div class = container>
+                                              <div class = "row">
+                                              <div class="col-xl-3">
+                                                        <input type="checkbox" value="Review"> Review
+                                                        <div class="dropdown-divider"></div>
+                                                        <input type="checkbox" value="Giveaway"> Giveaway
+                                                        <div class="dropdown-divider"></div>
+                                                        <input type="checkbox" value="Banner placement / URL placement"> Banner placement / URL placement
+                                                        </div>
+                                              <div class="col-xl-3">
+                                                        <input type="checkbox" value="Unboxing / Gameplay"> Unboxing / Gameplay
+                                                        <div class="dropdown-divider"></div>
+                                                        <input type="checkbox" value="Video Intro/Outro"> Video Intro/Outro
+                                                        <div class="dropdown-divider"></div>
+                                                        <input type="checkbox" value="Sponsorship"> Sponsorship
+                                                        </div>
+                                              <div class = "col-xl-6">
+                                                    <input type="checkbox" value="Shoutout/Mention"> Shoutout/Mention
+                                                        <div class="dropdown-divider"></div>
+                                                        <input type="checkbox" value="Tutorial"> Tutorial
+                                                        <div class="dropdown-divider"></div>
+                                                        <input type="checkbox" value="Other(Explain in Description)"> Other(Explain in Description)
+                                              </div>
+                                              </div>
+                                                  </div>
+                                              </div>
+                                        </span>
                                     <br>
-                                    <span class="text-bold-500 primary">
-                                        <select name="kpis" id="kpis" class="form-control" multiple required>
-                                            <option disabled>KPIs</option>
-                                            <option value="No of Clicks">No of Clicks</option>
-                                            <option value="New Users">New Users</option>
-                                            <option value="Revenue Generated">Revenue Generated</option>
-                                        </select>
-                                    </span><br>
+                                       <div class="col-sm-4">
+                                            <span class="text-bold-500 primary">
+                                                    <label for="kpis">KPIs</label>
+                                                    <input class="form-control" type="text" placeholder="Select" class="button-size" data-toggle="dropdown">
+                                                        <div class="dropdown-menu" style="background-color: gainsboro">
+                                                        <div class = container>
+                                                        <div class="row">
+                                                        <div class="col-xl-12">
+                                                        <input type="checkbox" name="No. Of Clicks" value="No. Of Clicks"> No. Of Clicks
+                                                        <div class="dropdown-divider"></div>
+                                                        <input type="checkbox" name="New Users" value="New Users"> New Users
+                                                        <div class="dropdown-divider"></div>
+                                                        <input type="checkbox" name="Revenue" value="Revenue"> Revenue
+                                                        </div>
+                                                        </div>
+                                                        </div>
+                                                        </div>
+
+                                            </span>
+                                        </div>
                                     <span>
                                         <input type="checkbox" class="form-check-input" id="classifiedAds" name="is_classified_post">
                                         <label class="form-check-label" for="classifiedAds">Post as Classified Ads</label>
                                     </span>
+
+                            </div>
                                 </div>
                             </div>
                             <button type="submit" id="savecampaign" class="btn btn-success"  style="margin-left: 45%">Save</button>

@@ -6,7 +6,8 @@ import csv
 import time
 #
 import requests
-from flask import Flask, render_template, flash, redirect, url_for, session, request, logging, jsonify, make_response
+import operator
+from flask import Flask, render_template, flash, redirect, url_for, session, request, logging, jsonify, Response
 # from model.ConnecsiModel import ConnecsiModel
 # from passlib.hash import sha256_crypt
 #from flask_oauthlib.client import OAuth
@@ -207,6 +208,7 @@ def login():
             print(email_id)
             print(password)
 
+
 @connecsiApp.route('/admin')
 @is_logged_in
 def admin():
@@ -214,6 +216,8 @@ def admin():
     return render_template('index.html',title=title)
 #
 #
+
+
 @connecsiApp.route('/profileView')
 @is_logged_in
 def profileView():
@@ -232,7 +236,7 @@ def profileView():
             print(e)
     else:
         table_name = 'users_inf'
-        
+        return 'ok'
 
 
 
@@ -1528,6 +1532,10 @@ def influencerFavoritesList():
         url = base_url+'/Brand/getInfluencerFavList/'+str(user_id)
         response = requests.get(url=url)
         data = response.json()
+        twitter = []
+        instagram = []
+        facebook = []
+        # print("Data bout twiteb", twitter)
         print(data)
         linechart_id = 1
         from templates.campaign import campaign
@@ -1536,7 +1544,24 @@ def influencerFavoritesList():
         for item in data['data']:
             item.update({'linechart_id': linechart_id})
             linechart_id += 1
-        return render_template('partnerships/influencerFavoritesList.html',data=data,view_campaign_data=view_campaign_data)
+        # linechart_id = 1
+        for item in data['data']:
+            if 'twitter' in item['twitter_url']:
+                twitter.append(item)
+                # for item in twitter:
+                #     item.update({'linechart_id': linechart_id})
+                #     linechart_id += 1
+            if 'instagram' in item['insta_url']:
+                instagram.append(item)
+                # for item in instagram:
+                #     item.update({'linechart_id': linechart_id})
+                #     linechart_id += 1
+            if 'facebook' in item['facebook_url']:
+                facebook.append(item)
+                # for item in facebook:
+                #     item.update({'linechart_id': linechart_id})
+                #     linechart_id += 1
+        return render_template('partnerships/influencerFavoritesList.html',data=data,view_campaign_data=view_campaign_data,facebook=facebook,twitter=twitter,instagram=instagram)
     except:
         pass
         user_id = session['user_id']
@@ -1548,7 +1573,7 @@ def influencerFavoritesList():
         for item in data['data']:
             item.update({'linechart_id': linechart_id})
             linechart_id += 1
-        return render_template('partnerships/influencerFavoritesList.html',view_campaign_data=view_campaign_data)
+        return render_template('partnerships/influencerFavoritesList.html',data=data,view_campaign_data=view_campaign_data,facebook=facebook,twitter=twitter,instagram=instagram)
 
 
 @connecsiApp.route('/createAlerts', methods=['POST','GET'])
@@ -1660,44 +1685,61 @@ def saveClassified():
 
 @connecsiApp.route('/exportCsv')
 def exportCsv():
-    si = StringIO()
-    cw = csv.writer(si)
-    strList = request.args.get('data')
-
-    strList = strList.replace("'", "\"")
-    strList = strList.replace('{"data', '')
-   # strList = strList.replace(": [", "{")
-    strList = strList.replace('\'s', '')
-   # strList = strList.replace(']', '}')
-    strList = strList.replace('}}}', '}}')
-    # strList = re.sub(r"^'", '"', strList)
-    # strList = re.sub(r"'$", '"', strList)
-
+    # si = StringIO()
+    # cw = csv.writer(si)
+    # # strList = request.get_json('data')
+    strList = request.args.to_dict('data')
+    # strList = strList.replace("'", "\"")
+    # print(strList)
+   #  strList = strList.replace('{"data', '')
+   # # strList = strList.replace(": [", "{")
+   #  strList = strList.replace('\'s', '')
+   # # strList = strList.replace(']', '}')
+   #  strList = strList.replace('}}}', '}}')
+   #  # strList = re.sub(r"^'", '"', strList)
+   #  # strList = re.sub(r"'$", '"', strList)
     import ast
     # a = ast.literal_eval(strList)
     # a = json.loads(strList)
     # print("type of ", type(a))
-    s = json.dumps(strList)
+    # s = json.dumps(strList)
     # s=s.encode("utf-8")
-    print(s)
+    # print(s)
     # cw.writerow(strList[0])  # header row
-    count = 0;
+    # count = 0;
+    #
+    # for emp in s:
+    #
+    #     if count == 0:
+    #         header = emp
+    #
+    #         cw.writerow(header)
+    #
+    #         count += 1
+    #
+    #     cw.writerow(emp)
+    header = {}
+    for k, v in strList[0].items():
+        header[k] = k
+    strList.insert(0, header)
 
-    for emp in s:
+    def generate():
+        for row in strList:
+            li = []
 
-        if count == 0:
-            header = emp
+            # sort this dict by key
+            sorted_row = sorted(row.iteritems(), key=operator.itemgetter(0))
 
-            cw.writerow(header)
-
-            count += 1
-
-        cw.writerow(emp)
-
-    output = make_response(si.getvalue())
-    output.headers["Content-Disposition"] = "attachment; filename=export.csv"
-    output.headers["Content-type"] = "text/csv"
-    return output
+            # sorted_row is now a 2 dimensional list sorted by first element
+            for r in sorted_row:
+                val = r[1] or ''
+                li.append(str(val.replace(',', '')))
+                yield ','.join(li) + '\n'
+        print(li)
+    # output = make_response(si.getvalue())
+    # output.headers["Content-Disposition"] = "attachment; filename=export.csv"
+    # output.headers["Content-type"] = "text/csv"
+    return Response(generate(), mimetype='text/csv', )
 
 
 @connecsiApp.route('/viewAllClassifiedAds',methods=['GET','POST'])

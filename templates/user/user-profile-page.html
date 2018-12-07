@@ -11,16 +11,16 @@
                     <div class="row" style="margin:2%;">
                         <div class="col-xl-2 col-lg-2 col-md-2 mb-1">
                             {% if data['data']['profile_pic'] %}
-                            <img id="profile_pic" src="static/img/{{ data['data']['profile_pic'] }}" class="rounded-circle img-border gradient-summer width-150" alt="Card image">
+                            <img id="profile_pic" src="static/img/{{ data['data']['profile_pic'] }}" class="img-border gradient-summer width-150" alt="Card image">
                             {% else %}
-                            <img id="profile_pic" src="static/app-assets/img/portrait/avatars/avatar-08.png" class="rounded-circle img-border gradient-summer width-150" alt="Card image">
+                            <img id="profile_pic" src="static/app-assets/img/portrait/avatars/fixed_image.png" class="img-border gradient-summer width-150" alt="Card image">
                             {% endif %}
                         </div>
                         <div class="col-xl-4 col-lg-4 col-md-4 mb-1">
                             <span class="font-medium-2 text-uppercase">{{data['data']['first_name'] }} {{data['data']['last_name'] }}</span>
                             <div class="grey font-small-3" style="font-size:20px;">{{data['data']['role'] }}</div>
                             <div class="grey font-small-3" style="font-size:20px;">Subscription Type : Basic</div>
-                            <button class="btn btn-sm" type="button" data-toggle="tooltip" title="Feature Coming Soon" style="background-color: purple; margin-left: 2%; color:white;font-size:15px;">Upgrade Here</button>
+                            <a class="btn btn-sm" href="{{ url_for('editProfile') }}" style="background-color: purple; margin-left: 2%; color:white;font-size:15px; margin-top: 15px">Update Here</a>
                         </div>
                         <div class="col-xl-6 col-lg-6 col-md-6 mb-1">
                             <p class="grey font-small-3" style="font-size:20px;">Accounts:</p>
@@ -141,13 +141,13 @@
                             </div>
                             <div class="row" style="margin:2%">
                                 <div class="col-xl-2 col-lg-2 col-md-2 mb-1">
-                                    <img src="static/app-assets/img/portrait/avatars/avatar-08.png" data-toggle="tooltip" title="Feature Coming Soon" class="rounded-circle img-border gradient-summer width-100" alt="Card image">
+                                    <img src="static/app-assets/img/portrait/avatars/fixed_image.png" data-toggle="tooltip" title="Feature Coming Soon" class="img-border gradient-summer width-100" alt="Card image">
                                 </div>
                                 <div class="col-xl-2 col-lg-2 col-md-2 mb-1">
-                                    <img src="static/app-assets/img/portrait/avatars/avatar-08.png" data-toggle="tooltip" title="Feature Coming Soon"  class="rounded-circle img-border gradient-summer width-100" alt="Card image">
+                                    <img src="static/app-assets/img/portrait/avatars/fixed_image.png" data-toggle="tooltip" title="Feature Coming Soon"  class="img-border gradient-summer width-100" alt="Card image">
                                 </div>
                                 <div class="col-xl-2 col-lg-2 col-md-2 mb-1">
-                                    <img src="static/app-assets/img/portrait/avatars/avatar-08.png" data-toggle="tooltip" title="Feature Coming Soon" class="rounded-circle img-border gradient-summer width-100" alt="Card image">
+                                    <img src="static/app-assets/img/portrait/avatars/fixed_image.png" data-toggle="tooltip" title="Feature Coming Soon" class=" img-border gradient-summer width-100" alt="Card image">
                                 </div>
                             </div>
                         </div>
