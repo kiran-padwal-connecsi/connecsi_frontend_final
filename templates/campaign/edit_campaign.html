@@ -1,27 +1,23 @@
-
 {% extends 'dashboard_layout_new.html' %}
 {{ super() }}
 {% block body %}
-
-
 
 <div class="row">
     <div class="col-sm-12">
         <div class="card">
             <div class="row">
                 <div class="col-12">
-                    <div class="card-header">Create New Classified Ad</div>
-
+                    <div class="card-header">Create New Campaign</div>
                 </div>
             </div>
             <div class="card-body">
                 <div class="card-block">
-                    <form class="form" name="classified_form" id="classified_form" method="POST" action="saveClassified" enctype="multipart/form-data">
+                    <form class="form" name="campaign_form" id="campaign_form" method="POST" action="saveEditCampaign" enctype="multipart/form-data">
                         <div class="container-fluid">
                             <div class="row">
-                                <div class="col-sm-6 col-md-6" >
+                                <div class="col-sm-6 col-md-6">
                                     <div class="row">
-                                        <div class="col-sm-4"><label for="campaign_name">Ad Name:</label><input  id="classified_name" type="text" class="form-control" name="classified_name" required></div>
+                                        <div class="col-sm-4"><label for="campaign_name">Campaign Name:</label><input  id="campaign_name" type="text" class="form-control" name="campaign_name" required></div>
                                         <div class="col-sm-4"><label for="from_date">From:</label><input  id="from_date" type="date" class="form-control" name="from_date" required></div>
                                         <div class="col-sm-4"><label for="to_date">To:</label><input  id="to_date" type="date" class="form-control" name="to_date" required></div>
                                     </div>
@@ -41,11 +37,11 @@
                                         </div>
                                         <div class="col-sm-4">
                                             <span class="text-bold-500 primary">
-                                            <div class="form-group">
-                                                <label for="channels">Channels</label>
-                                                <input class="form-control" type="text" placeholder="Select" class="button-size" data-toggle="dropdown" >
-                                                <div class="dropdown-menu" style="background-color: gainsboro">
-                                                    <div class = container>
+                                                <div class="form-group">
+                                                    <label for="channels">Channels</label>
+                                                    <input class="form-control" type="text" placeholder="Select" class="button-size" data-toggle="dropdown" >
+                                                        <div class="dropdown-menu" style="background-color: gainsboro">
+                                                        <div class = container>
                                                         <div class="row">
                                                         <div class="col-xl-6">
                                                         <input type="checkbox" name="channels" value="youtube"> Youtube
@@ -59,8 +55,8 @@
                                                         </div>
                                                         </div>
                                                         </div>
+                                                        </div>
                                                 </div>
-                                            </div>
                                             </span>
                                         </div>
                                         <br>
@@ -71,10 +67,13 @@
                                                 <div class="form-group">
                                                     <label for="country" class="text-bold-500 primary">Country</label>
                                                     <select class="form-control" name="country" id="country" multiple required>
+                                                         {% for item in data['data'] %}
+                                                        <option value="{{ item['regions'] }}" disabled selected>{{ item['region_name_list[0]'] }}</option>
+                                                        {% endfor %}
                                                         {% for item in regionCodes['data'] %}
                                                         <option value="{{ item['region_code'] }}">{{ item['country_name'] }}</option>
                                                         {% endfor %}
-                                                     </select>
+                                                    </select>
                                                 </div>
                                             </span>
                                         </div>
@@ -101,6 +100,9 @@
                                         <div class="form-group">
                                             <label for="videoCategories">Categories</label>
                                             <select class="form-control" name="video_cat" required>
+                                                {% for item in data['data'] %}
+                                                <option value="{{ item['video_cat_id'] }}">{{ item['video_cat_name'] }}</option>
+                                                {% endfor %}
                                                 {% for item in videoCategories['data'] %}
                                                 <option value="{{ item['video_cat_id'] }}">{{ item['video_cat_name'] }}</option>
                                                 {% endfor %}
@@ -109,10 +111,10 @@
                                     </span>
                                     <span class="text-bold-500 primary"> <input type="url" class="form-control" name="target_url" placeholder="Target URL" required></span><br>
                                     <span>
-                                        <input  type="file" name="brands_classified_files" class="brands_classified_files" required>
+                                        <input type="file" name="campaign_files" id="campaign_files1" class="campaign_files" required>
                                     </span><br class="displayFiles">
                                 </div>
-                                                                <div class="col-sm-6 col-md-6">
+                                <div class="col-sm-6 col-md-6">
                                     <label for="campaign_name">Description:</label><textarea class="form-control" rows="9" id="descritpion" name="campaign_description" required></textarea>
                                     <br>
                                     <span class="text-bold-500 primary">
@@ -168,21 +170,16 @@
 
                                             </span>
                                         </div>
+                                    <span>
+                                        <input type="checkbox" class="form-check-input" id="classifiedAds" name="is_classified_post">
+                                        <label class="form-check-label" for="classifiedAds">Post as Classified Ads</label>
+                                    </span>
 
                             </div>
-
+                                </div>
                             </div>
-                            <div class="upload-btn-wrapper">
-                                    <button class="btn" style="margin-top: 49px">Upload File
-                                    <input type="file" name="myfile" id="imgInp" /></button>
-                               <!-- <input type="file" value="submit" name="Uplaod File">-->
-                                <!--<label class="form-check-label" for="classifiedAds">Post as Classified Ads</label>-->
-                            </div>
-                            <img class="x" id="blah" src="#" width="15%" height="2%" alt="your image" />
-
-                            <div>
-                            <button type="submit" id="saveclassified" class="btn btn-success"  style="margin-left: 45%">Save</button>
-                        </div>
+                            <button type="submit" id="savecampaign" class="btn btn-success"  style="margin-left: 45%">Save</button>
+                            </form>
                         </div>
                     </form>
                 </div>
@@ -192,22 +189,7 @@
 </div>
 <script>
 $( document ).ready(function() {
-function readURL(input) {
 
-  if (input.files && input.files[0]) {
-    var reader = new FileReader();
-
-    reader.onload = function(e) {
-      $('#blah').attr('src', e.target.result);
-    }
-
-    reader.readAsDataURL(input.files[0]);
-  }
-}
-
-$("#imgInp").change(function() {
-  readURL(this);
-});
         // range slider starts
         var nonLinearSlider = document.getElementById('add_campaign_followers_slider');
         noUiSlider.create(nonLinearSlider, {
@@ -248,7 +230,7 @@ $("#imgInp").change(function() {
         // range slider ends
 
         //campaign save button click event
-        $("#saveclassified").click(function(){
+        $("#savecampaign").click(function(){
              var min_lower = $("#lower-value").text();
              var max_upper = $("#upper-value").text();
              <!--alert(min_lower);-->
@@ -258,16 +240,16 @@ $("#imgInp").change(function() {
          });
          // search button click event ends
 
-          //brands_classified_files preview start
+         //campaign_files preview start
 
         $(document).on('change', 'input:file',function(){
             <!--alert('i m here');-->
             readURL(this);
             $(this).hide();
-            $(".displayFiles").before('<input type = "file" name="brands_classified_files">');
+            $(".displayFiles").before('<input type = "file" name="campaign_files">');
 
         });
-        //brands_classified_files preview end
+        //campaign_files preview end
          function readURL(input) {
             if (input.files && input.files[0]) {
                 var reader = new FileReader();
@@ -278,7 +260,6 @@ $("#imgInp").change(function() {
                 reader.readAsDataURL(input.files[0]);
             }
         }
-
 
 });
 </script>

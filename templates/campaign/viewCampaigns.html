@@ -2,6 +2,23 @@
 {{ super() }}
 {% block body %}
 
+<script>
+
+function editCampaign(item){
+    console.log(item)
+    var url = '/editCampaign';
+    $.ajax({
+        type: "POST",
+        url: url,
+        data: item,
+        success: function(response) {
+            console.log(response);
+        }}
+    )
+}
+
+</script>
+
 <div class="card">
     <div class="card-body">
         <div class="table-responsive" style="background-color: white;">
@@ -26,7 +43,11 @@
                 <tbody>
                 {% for item in view_campaign_data['data'] %}
                 <tr>
-                    <td><a href="/viewCampaignDetails/{{ item['campaign_id'] }}">{{ item['campaign_name'] }}</a></td>
+                    <td>
+                        <a href="/viewCampaignDetails/{{ item['campaign_id'] }}">{{ item['campaign_name'] }}</a>
+                        <a onclick="editCampaign({{ item }})"  }}>Edit</a>
+                        <a href="">Delete</a>
+                    </td>
                     <td>Cell</td>
                     <td>{{ item['from_date'] }}</td>
                     <td>{{ item['to_date'] }}</td>

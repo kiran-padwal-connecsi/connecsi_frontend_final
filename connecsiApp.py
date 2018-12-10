@@ -7,7 +7,7 @@ import time
 #
 import requests
 import operator
-from flask import Flask, render_template, flash, redirect, url_for, session, request, logging, jsonify, Response
+from flask import Flask, render_template, flash, redirect, url_for, session, request, logging, jsonify, make_response
 # from model.ConnecsiModel import ConnecsiModel
 # from passlib.hash import sha256_crypt
 #from flask_oauthlib.client import OAuth
@@ -696,6 +696,89 @@ def viewMyPayments():
     return render_template('user/view_my_payments.html',data=data)
 
 
+@connecsiApp.route('/saveEditCampaign', methods=['PUT'])
+@is_logged_in
+def saveEditCampaign():
+    payload = request.form.to_dict()
+    print(payload)
+    # exit()
+    channels = request.form.getlist('channels')
+    channels_string = ','.join(channels)
+    payload.update({'channels': channels_string})
+    regions = request.form.getlist('country')
+    regions_string = ','.join(regions)
+    payload.update({'regions': regions_string})
+
+    arrangements = request.form.getlist('arrangements')
+    arrangements_string = ','.join(arrangements)
+    payload.update({'arrangements': arrangements_string})
+
+    kpis = request.form.getlist('kpis')
+    kpis_string = ','.join(kpis)
+    payload.update({'kpis': kpis_string})
+
+    is_classified_post = request.form.get('is_classified_post')
+    print('is classified = ', is_classified_post)
+    try:
+        del payload['country']
+        del payload['is_classified_post']
+    except:
+        pass
+    if is_classified_post == 'on':
+        payload.update({'is_classified_post': 'TRUE'})
+    else:
+        payload.update({'is_classified_post': 'FALSE'})
+    files = request.files.getlist("campaign_files")
+    print(files)
+    # exit()
+    filenames = []
+    for file in files:
+        filename = campaign_files.save(file)
+        filenames.append(filename)
+    filenames_string = ','.join(filenames)
+    payload.update({'files': filenames_string})
+    print(payload)
+    # exit()
+    #
+    user_id = session['user_id']
+    url = base_url + 'Campaign/' + str(user_id)
+    print(url)
+    try:
+        response = requests.post(url=url, json=payload)
+        result_json = response.json()
+        print(result_json)
+        flash('edited Campaign', 'success')
+        return viewCampaigns()
+    except Exception as e:
+        print(e)
+        flash('campaign didnt saved Please try again later', 'danger')
+        pass
+
+
+@connecsiApp.route('/editCampaign', methods=['POST'])
+@is_logged_in
+def editCampaign():
+    url_regionCodes = base_url + 'Youtube/regionCodes'
+    regionCodes_json = ''
+    videoCat_json = ''
+    try:
+        response_regionCodes = requests.get(url=url_regionCodes)
+        regionCodes_json = response_regionCodes.json()
+        # print(regionCodes_json['data'])
+    except Exception as e:
+        print(e)
+    url_videoCat = base_url + 'Youtube/videoCategories'
+    try:
+        response_videoCat = requests.get(url=url_videoCat)
+        videoCat_json = response_videoCat.json()
+    except Exception as e:
+        print(e)
+
+    print(request)
+    data = request.form.to_dict()
+    print(data)
+    return render_template('campaign/edit_campaign.html', data=data, regionCodes=regionCodes_json, videoCategories = videoCat_json)
+
 @connecsiApp.route('/addCampaign')
 @is_logged_in
 def addCampaign():
@@ -717,7 +800,6 @@ def addCampaign():
     return render_template('campaign/add_campaignForm.html',regionCodes=regionCodes_json,videoCategories = videoCat_json)
 
 
-
 @connecsiApp.route('/viewCampaigns',methods=['GET','POST'])
 @is_logged_in
 def viewCampaigns():
@@ -726,6 +808,7 @@ def viewCampaigns():
     campaignObj = campaign.Campaign(user_id=user_id)
     view_campaign_data = campaignObj.get_all_campaigns()
     return render_template('campaign/viewCampaigns.html',view_campaign_data=view_campaign_data)
+
 
 @connecsiApp.route('/getCampaigns',methods=['GET','POST'])
 @is_logged_in
@@ -736,6 +819,7 @@ def getCampaigns():
     view_campaign_data = campaignObj.get_all_campaigns()
     return jsonify(results=view_campaign_data['data'])
 
+
 @connecsiApp.route('/viewCampaignDetails/<string:campaign_id>',methods=['GET'])
 @is_logged_in
 def viewCampaignDetails(campaign_id):
@@ -745,6 +829,7 @@ def viewCampaignDetails(campaign_id):
     view_campaign_details_data = campaignObj.get_campaign_details()
     return render_template('campaign/viewCampaignDetails.html',view_campaign_details_data=view_campaign_details_data)
 
+
 @connecsiApp.route('/getCampaignDetails/<string:campaign_id>',methods=['GET'])
 @is_logged_in
 def getCampaignDetails(campaign_id):
@@ -753,6 +838,7 @@ def getCampaignDetails(campaign_id):
     campaignObj = campaign.campaign.Campaign(user_id=user_id,campaign_id=campaign_id)
     view_campaign_details_data = campaignObj.get_campaign_details()
     return jsonify(results=view_campaign_details_data['data'])
+
 
 @connecsiApp.route('/saveCampaign',methods=['POST'])
 @is_logged_in
@@ -807,7 +893,7 @@ def saveCampaign():
             result_json = response.json()
             print(result_json)
             flash('saved Campaign', 'success')
-            return viewCampaigns()
+            return redirect(url_for('viewCampaigns'))
         except Exception as e:
             print(e)
             flash('campaign didnt saved Please try again later','danger')
@@ -1685,61 +1771,15 @@ def saveClassified():
 
 @connecsiApp.route('/exportCsv')
 def exportCsv():
-    # si = StringIO()
-    # cw = csv.writer(si)
-    # # strList = request.get_json('data')
-    strList = request.args.to_dict('data')
-    # strList = strList.replace("'", "\"")
-    # print(strList)
-   #  strList = strList.replace('{"data', '')
-   # # strList = strList.replace(": [", "{")
-   #  strList = strList.replace('\'s', '')
-   # # strList = strList.replace(']', '}')
-   #  strList = strList.replace('}}}', '}}')
-   #  # strList = re.sub(r"^'", '"', strList)
-   #  # strList = re.sub(r"'$", '"', strList)
-    import ast
-    # a = ast.literal_eval(strList)
-    # a = json.loads(strList)
-    # print("type of ", type(a))
-    # s = json.dumps(strList)
-    # s=s.encode("utf-8")
-    # print(s)
-    # cw.writerow(strList[0])  # header row
-    # count = 0;
-    #
-    # for emp in s:
-    #
-    #     if count == 0:
-    #         header = emp
-    #
-    #         cw.writerow(header)
-    #
-    #         count += 1
-    #
-    #     cw.writerow(emp)
-    header = {}
-    for k, v in strList[0].items():
-        header[k] = k
-    strList.insert(0, header)
+    si = StringIO()
+    cw = csv.writer(si)
 
-    def generate():
-        for row in strList:
-            li = []
 
-            # sort this dict by key
-            sorted_row = sorted(row.iteritems(), key=operator.itemgetter(0))
 
-            # sorted_row is now a 2 dimensional list sorted by first element
-            for r in sorted_row:
-                val = r[1] or ''
-                li.append(str(val.replace(',', '')))
-                yield ','.join(li) + '\n'
-        print(li)
-    # output = make_response(si.getvalue())
-    # output.headers["Content-Disposition"] = "attachment; filename=export.csv"
-    # output.headers["Content-type"] = "text/csv"
-    return Response(generate(), mimetype='text/csv', )
+    output = make_response(si.getvalue())
+    output.headers["Content-Disposition"] = "attachment; filename=export.csv"
+    output.headers["Content-type"] = "text/csv"
+
 
 
 @connecsiApp.route('/viewAllClassifiedAds',methods=['GET','POST'])
@@ -1774,7 +1814,9 @@ def addYoutubeInfToCampaignList():
             response = response.json()
             # flash('Youtube Influencer Added to Campaign','success')
         # return viewCampaigns()
-        return 'Youtube Influencer Added to Campaign'
+        # return 'Youtube Influencer Added to Campaign'
+        flash("Youtube Influencer Added to Campaign", 'success')
+        return redirect(url_for('influencerFavoritesList'))
 
 @connecsiApp.route('/getChannelStatusForCampaign/<string:channel_id>',methods=['GET'])
 @is_logged_in
