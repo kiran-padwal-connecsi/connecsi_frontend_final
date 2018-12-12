@@ -4,28 +4,12 @@
 
 <script>
 
-function editCampaign(item){
-    console.log(item)
-    var url = '/editCampaign';
-    $.ajax({
-        type: "POST",
-        url: url,
-        data: item,
-        success: function(response) {
-            console.log(response);
-        }}
-    )
-}
 
 </script>
 
 <div class="card">
     <div class="card-body">
         <div class="table-responsive" style="background-color: white;">
-            <div>
-                <button type="button">All Campaigns</button>
-                <button type="button">Calendar</button>
-            </div>
             <table class="table table-striped">
                 <thead>
                 <tr>
@@ -45,8 +29,8 @@ function editCampaign(item){
                 <tr>
                     <td>
                         <a href="/viewCampaignDetails/{{ item['campaign_id'] }}">{{ item['campaign_name'] }}</a>
-                        <a onclick="editCampaign({{ item }})"  }}>Edit</a>
-                        <a href="">Delete</a>
+                        <i  data-toggle="tooltip" title="Feature Coming Soon" >Edit</i>
+                        <i data-toggle="tooltip" title="Feature Coming Soon">Delete</i>
                     </td>
                     <td>Cell</td>
                     <td>{{ item['from_date'] }}</td>
@@ -156,19 +140,6 @@ function searchInfluencers(campaign_name,campaign_id,channel,string_word,min_low
 }
 
 </script>
-<style>
-    <!--.modal-body{-->
-    <!--max-height: calc(100vh - 212px);-->
-    <!--overflow-y: auto;-->
-<!--}-->
-.modal {
-  height:auto;
-  overflow:auto;
-  <!--position:relative;-->
-}
-<!--.modal {-->
-  <!--overflow-y:auto;-->
-<!--}-->
-</style>
+
 
 {% endblock %}

@@ -476,6 +476,7 @@ def offers():
 def to_json(data):
     return json.dumps(data)
 
+
 #new function start
 @connecsiApp.route('/searchInfluencers',methods=['POST','GET'])
 @is_logged_in
@@ -696,9 +697,9 @@ def viewMyPayments():
     return render_template('user/view_my_payments.html',data=data)
 
 
-@connecsiApp.route('/saveEditCampaign', methods=['PUT'])
+@connecsiApp.route('/saveEditCampaign/<string:campaign_id>', methods=['PUT', 'GET'])
 @is_logged_in
-def saveEditCampaign():
+def saveEditCampaign(campaign_id):
     payload = request.form.to_dict()
     print(payload)
     # exit()
@@ -741,10 +742,10 @@ def saveEditCampaign():
     # exit()
     #
     user_id = session['user_id']
-    url = base_url + 'Campaign/' + str(user_id)
+    url = base_url + 'Campaign/' + str(campaign_id) + '/' + str(user_id)
     print(url)
     try:
-        response = requests.post(url=url, json=payload)
+        response = requests.put(url=url, json=payload)
         result_json = response.json()
         print(result_json)
         flash('edited Campaign', 'success')
@@ -755,29 +756,38 @@ def saveEditCampaign():
         pass
 
 
-@connecsiApp.route('/editCampaign', methods=['POST'])
+@connecsiApp.route('/deleteCampaign', methods=['DELETE', 'GET'])
+@is_logged_in
+def deleteCampaign():
+    return 'ok'
+
+
+
+@connecsiApp.route('/editCampaign', methods=['POST', 'GET'])
 @is_logged_in
 def editCampaign():
-    url_regionCodes = base_url + 'Youtube/regionCodes'
-    regionCodes_json = ''
-    videoCat_json = ''
-    try:
-        response_regionCodes = requests.get(url=url_regionCodes)
-        regionCodes_json = response_regionCodes.json()
-        # print(regionCodes_json['data'])
-    except Exception as e:
-        print(e)
-    url_videoCat = base_url + 'Youtube/videoCategories'
-    try:
-        response_videoCat = requests.get(url=url_videoCat)
-        videoCat_json = response_videoCat.json()
-    except Exception as e:
-        print(e)
+        url_regionCodes = base_url + 'Youtube/regionCodes'
+        regionCodes_json = ''
+        videoCat_json = ''
+        try:
+            response_regionCodes = requests.get(url=url_regionCodes)
+            regionCodes_json = response_regionCodes.json()
+            # print(regionCodes_json['data'])
+        except Exception as e:
+            print(e)
+        url_videoCat = base_url + 'Youtube/videoCategories'
+        try:
+            response_videoCat = requests.get(url=url_videoCat)
+            videoCat_json = response_videoCat.json()
+        except Exception as e:
+            print(e)
+        print(request)
+        data = request.form.to_dict()
+        print(data)
+        return render_template('campaign/edit_campaign.html', data=data, regionCodes=regionCodes_json,
+                               videoCategories=videoCat_json)
 
-    print(request)
-    data = request.form.to_dict()
-    print(data)
-    return render_template('campaign/edit_campaign.html', data=data, regionCodes=regionCodes_json, videoCategories = videoCat_json)
+
 
 @connecsiApp.route('/addCampaign')
 @is_logged_in
@@ -800,7 +810,7 @@ def addCampaign():
     return render_template('campaign/add_campaignForm.html',regionCodes=regionCodes_json,videoCategories = videoCat_json)
 
 
-@connecsiApp.route('/viewCampaigns',methods=['GET','POST'])
+@connecsiApp.route('/viewCampaigns',methods=['GET'])
 @is_logged_in
 def viewCampaigns():
     user_id=session['user_id']
@@ -815,7 +825,7 @@ def viewCampaigns():
 def getCampaigns():
     user_id=session['user_id']
     from templates.campaign import campaign
-    campaignObj = campaign.campaign.Campaign(user_id=user_id)
+    campaignObj = campaign.Campaign(user_id=user_id)
     view_campaign_data = campaignObj.get_all_campaigns()
     return jsonify(results=view_campaign_data['data'])
 
@@ -825,7 +835,7 @@ def getCampaigns():
 def viewCampaignDetails(campaign_id):
     user_id = session['user_id']
     from templates.campaign import campaign
-    campaignObj = campaign.campaign.Campaign(user_id=user_id,campaign_id=campaign_id)
+    campaignObj = campaign.Campaign(user_id=user_id, campaign_id=campaign_id)
     view_campaign_details_data = campaignObj.get_campaign_details()
     return render_template('campaign/viewCampaignDetails.html',view_campaign_details_data=view_campaign_details_data)
 
@@ -1769,17 +1779,28 @@ def saveClassified():
         flash('Unauthorized', 'danger')
 
 
-@connecsiApp.route('/exportCsv')
+@connecsiApp.route('/exportCsv', methods=['POST','GET'])
 def exportCsv():
+    data = request.form.to_dict()
+    print(data)
     si = StringIO()
     cw = csv.writer(si)
+    data = json.dumps(data)
+    data_parsed = json.loads(data)
+    influencer_data = data_parsed['data']
 
+    count = 0
 
+    for influencer in influencer_data:
+        if count == 0:
+            header = influencer.keys()
+            cw.writerow(header)
+            count += 1
 
     output = make_response(si.getvalue())
     output.headers["Content-Disposition"] = "attachment; filename=export.csv"
     output.headers["Content-type"] = "text/csv"
-
+    return 'ok'
 
 
 @connecsiApp.route('/viewAllClassifiedAds',methods=['GET','POST'])

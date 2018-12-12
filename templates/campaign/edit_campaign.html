@@ -1,18 +1,27 @@
 {% extends 'dashboard_layout_new.html' %}
 {{ super() }}
 {% block body %}
+    <script>
+    $( document ).ready(function() {
+    console.log( "ready!" );
+                var item = JSON.parse(localStorage.getItem('editCampaignDetails'));
+        console.log(item);
+});
+    </script>
+
+
 
 <div class="row">
     <div class="col-sm-12">
         <div class="card">
             <div class="row">
                 <div class="col-12">
-                    <div class="card-header">Create New Campaign</div>
+                    <div class="card-header">Edit Campaign</div>
                 </div>
             </div>
             <div class="card-body">
                 <div class="card-block">
-                    <form class="form" name="campaign_form" id="campaign_form" method="POST" action="saveEditCampaign" enctype="multipart/form-data">
+                    <form class="form" name="campaign_form" id="campaign_form" method="PUT" action="saveEditCampaign" enctype="multipart/form-data">
                         <div class="container-fluid">
                             <div class="row">
                                 <div class="col-sm-6 col-md-6">
@@ -178,8 +187,8 @@
                             </div>
                                 </div>
                             </div>
-                            <button type="submit" id="savecampaign" class="btn btn-success"  style="margin-left: 45%">Save</button>
-                            </form>
+                        <button type="submit" id="savecampaign" class="btn btn-success"  style="margin-left: 45%">Save</button>
+                    </form>
                         </div>
                     </form>
                 </div>
@@ -189,6 +198,8 @@
 </div>
 <script>
 $( document ).ready(function() {
+
+
 
         // range slider starts
         var nonLinearSlider = document.getElementById('add_campaign_followers_slider');

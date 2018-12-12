@@ -8,10 +8,7 @@
         <div class="card">
             <div class="card-body" style="padding: 1%;">
                 <div>
-                    <button class="btn btn-primary" type="button">Search Classified Ads</button>
-                    <button class="btn btn-danger" type="button">My Classified Ads</button>
-                    <a href="#" class="fa fa-bullseye red" data-toggle="tooltip" title="Add To Campaign" style="font-size:35px;"><i class="fa fa-plus-circle green" style="font-size:20px; position:relative; top:5px; left:-8px;"></i>
-                    </a>
+
                 </div>
                 <div class="row" style="padding-top:1%;">
                     {% for item in all_classified_data['data'] %}
@@ -23,7 +20,8 @@
                                 <tr>
                                     <td rowspan="5"><img src="../static/brands_classified_files/{{ images[0] }}" height="150px" width="155px"></td>
                                     <td colspan="3" style="font-size:18px;">{{ item['classified_name'] }}</td>
-                                    <td style="font-size:10px;"><a href="#">Convert to Campaign</a></td>
+                                    <td style="font-size:10px;">                    <a href="#" class="fa fa-bullseye red" data-toggle="tooltip" title="Add To Campaign" style="font-size:35px;"><i class="fa fa-plus-circle green" style="font-size:20px; position:relative; top:5px; left:-8px;"></i>
+                    </a></td>
                                     <td>Views:67 <br/> Replies:25</td>
 
                                 </tr>
