@@ -199,14 +199,9 @@ function  exportCsv(data) {
                         <a onclick="sendMessage('{{ item['channel_id'] }}','{{ item['business_email'] }}')" class="fa fa-envelope" data-toggle="tooltip"  title="Message" style="position: relative; z-index: 1; font-size:25px;"></a>
                         </span>
                           <br>
-                        {% if form_filters['campaign_id'] %}
-                        <!--<a href="/addToCampaign/{{  form_filters['campaign_id'] }}" class="fa fa-bullseye red" data-toggle="tooltip" title="Add To Campaign" style="font-size:25px;"><i class="fa fa-plus-circle green" style="font-size:10px; position:relative; top:5px; left:-8px;"></i></a>-->
-                        <a href="#" class="fa fa-bullseye red" data-toggle="tooltip" title="Under Construction" style="font-size:25px;"><i class="fa fa-plus-circle green" style="font-size:10px; position:relative; top:5px; left:-8px;"></i></a>
-                        {% else %}
                         <span data-toggle="modal" data-target="#campaignList">
                       <a onclick="campaignList('{{ item['channel_id'] }}')"  class="fa fa-bullseye red" data-toggle="tooltip" title="Add To Campaign" style="font-size:25px;"><i class="fa fa-plus-circle green" style="font-size:10px; position:relative; top:5px; left:-8px;"></i></a>
                       </span>
-                        {% endif %}
                         <br>
                         {% if item['channel_id'] in favInfList_data['data']|map(attribute="channel_id") %}
                         <a href="#"  class="fa fa-star yellow"  data-toggle="tooltip" title="Already In Your Favorites List" style="font-size:25px;"></a>

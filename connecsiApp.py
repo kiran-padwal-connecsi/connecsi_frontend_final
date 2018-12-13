@@ -577,7 +577,7 @@ def searchInfluencers():
                     linechart_id+=1
                 return render_template('search/searchInfluencers.html', regionCodes=regionCodes_json,
                                        lookup_string=lookup_string, form_filters=form_filters,data=data,view_campaign_data=view_campaign_data
-                                       ,favInfList_data=favInfList_data)
+                                       ,favInfList_data=favInfList_data, )
             except Exception as e:
                 print(e)
                 print('i m hee')
