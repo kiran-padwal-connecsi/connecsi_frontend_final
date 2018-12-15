@@ -3,10 +3,7 @@
 {% block body %}
 
 <script>
-$('#myTab a').on('click', function (e) {
-  e.preventDefault()
-  $(this).tab('show')
-})
+
 
 </script>
 
@@ -18,16 +15,16 @@ $('#myTab a').on('click', function (e) {
                     <div>
                         <ul class="nav nav-tabs" id="myTab" role="tablist">
                             <li class="nav-item">
-                                <a class="nav-link active" id="youtube-tab" data-toggle="tab" href="#youtube" role="youtube" aria-controls="youtube" aria-selected="true">Youtube</a>
+                                <a class="nav-link active youtube" id="youtube-tab" data-toggle="tab" href="#youtube;" role="tab" aria-controls="youtube" aria-selected="true">Youtube</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" id="facebook-tab" data-toggle="tab" href="#facebook" role="tab" aria-controls="facebook" aria-selected="false">Facebook</a>
+                                <a class="nav-link twitter" id="twitter-tab" data-toggle="tab" href="#twitter;" role="tab" aria-controls="twitter" aria-selected="false">Twitter</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" id="instagram-tab" data-toggle="tab" href="#instagram" role="tab" aria-controls="instagram" aria-selected="false">Instagram</a>
+                                <a class="nav-link facebook" id="facebook-tab" data-toggle="tab" href="#facebook:;" role="tab" aria-controls="facebook" aria-selected="false">Facebook</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" id="twitter-tab" data-toggle="tab" href="#twitter" role="tab" aria-controls="twitter" aria-selected="false">Twitter</a>
+                                <a class="nav-link instagram" id="instagram-tab" data-toggle="tab" href="#instagram;" role="tab" aria-controls="instagram" aria-selected="false">Instagram</a>
                             </li>
                         </ul>
                     </div>
@@ -46,7 +43,7 @@ $('#myTab a').on('click', function (e) {
                     </div>
                     <br>
                     <div class = "tab-contact" id="myTabContent">
-                    <div class="tab-pane fade show active" id="youtube" role="tabpanel" aria-labelledby="youtube-tab">
+                    <div class="" id="youtube" aria-labelledby="youtube-tab">
                     <div class="container">
                         {% for item in data['data'] %}
                         <div class="row">
@@ -162,7 +159,7 @@ $('#myTab a').on('click', function (e) {
                         {% endfor %}
                     </div>
                     </div>
-                    <div class="tab-pane fade" id="facebook" role="tabpanel" aria-labelledby="facebook-tab">
+                    <div class="" id="facebook" aria-labelledby="facebook-tab">
                         <div class="container">
                         {% for item in facebook %}
                         <div class="row">
@@ -277,7 +274,8 @@ $('#myTab a').on('click', function (e) {
                         <br>
                         {% endfor %}
                     </div>
-                        <div class="tab-pane fade" id="instagram" role="tabpanel" aria-labelledby="instagram-tab">
+                        </div>
+                        <div class="e" id="instagram" aria-labelledby="instagram-tab" >
                         <div class="container">
                         {% for item in instagram %}
                         <div class="row">
@@ -392,7 +390,9 @@ $('#myTab a').on('click', function (e) {
                         <br>
                         {% endfor %}
                         </div>
-                        <div class="tab-pane fade" id="twitter" role="tabpanel" aria-labelledby="twitter-tab">
+                        </div>
+                        <div class="" id="twitter" aria-labelledby="twitter-tab">
+
                         <div class="container">
                         {% for item in twitter %}
                         <div class="row">
@@ -508,11 +508,12 @@ $('#myTab a').on('click', function (e) {
                         {% endfor %}
                         </div>
                     </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
+                </div><!--my tab content-->
+            </div><!--card block-->
+        </div><!--card body-->
+    </div><!--card-->
+</div><!--col-->
+</div><!--row-->
 
 <!-- Create alert Modal form-->
 <div class="modal fade" id="createalert" role="dialog" data-backdrop="false">
@@ -971,4 +972,50 @@ function createAlert(channel_id,followers,views,likes,comments) {
     $("#total_comments").val(comments);
 }
 </script>
+
+<script>
+$(document).ready(function(){
+    $('#instagram').hide();
+     $('#facebook').hide();
+     $('#twitter').hide();
+
+    $('.youtube').click(function(){
+       $('#youtube').show();
+         $('#instagram').hide();
+     $('#facebook').hide();
+     $('#twitter').hide();
+
+    });
+
+        $('.facebook').click(function(){
+       $('#youtube').hide();
+         $('#instagram').hide();
+     $('#facebook').show();
+     $('#twitter').hide();
+
+    });
+
+        $('.instagram').click(function(){
+       $('#youtube').hide();
+         $('#instagram').show();
+     $('#facebook').hide();
+     $('#twitter').hide();
+
+    });
+
+        $('.twitter').click(function(){
+       $('#youtube').hide();
+         $('#instagram').hide();
+     $('#facebook').hide();
+     $('#twitter').show();
+
+    });
+
+
+});
+</script>
+
+
+
+
 {% endblock %}

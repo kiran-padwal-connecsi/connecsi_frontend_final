@@ -577,7 +577,7 @@ def searchInfluencers():
                     linechart_id+=1
                 return render_template('search/searchInfluencers.html', regionCodes=regionCodes_json,
                                        lookup_string=lookup_string, form_filters=form_filters,data=data,view_campaign_data=view_campaign_data
-                                       ,favInfList_data=favInfList_data, )
+                                       ,favInfList_data=favInfList_data)
             except Exception as e:
                 print(e)
                 print('i m hee')
@@ -697,9 +697,9 @@ def viewMyPayments():
     return render_template('user/view_my_payments.html',data=data)
 
 
-@connecsiApp.route('/saveEditCampaign/<string:campaign_id>', methods=['PUT', 'GET'])
+@connecsiApp.route('/saveEditCampaign', methods=['PUT', 'GET'])
 @is_logged_in
-def saveEditCampaign(campaign_id):
+def saveEditCampaign():
     payload = request.form.to_dict()
     print(payload)
     # exit()
@@ -1631,7 +1631,6 @@ def influencerFavoritesList():
         twitter = []
         instagram = []
         facebook = []
-        # print("Data bout twiteb", twitter)
         print(data)
         linechart_id = 1
         from templates.campaign import campaign
@@ -1657,6 +1656,7 @@ def influencerFavoritesList():
                 # for item in facebook:
                 #     item.update({'linechart_id': linechart_id})
                 #     linechart_id += 1
+        print(twitter)
         return render_template('partnerships/influencerFavoritesList.html',data=data,view_campaign_data=view_campaign_data,facebook=facebook,twitter=twitter,instagram=instagram)
     except:
         pass
@@ -1665,6 +1665,22 @@ def influencerFavoritesList():
         response = requests.get(url=url)
         data = response.json()
         print(data)
+        for item in data['data']:
+            if 'twitter' in item['twitter_url']:
+                twitter.append(item)
+                # for item in twitter:
+                #     item.update({'linechart_id': linechart_id})
+                #     linechart_id += 1
+            if 'instagram' in item['insta_url']:
+                instagram.append(item)
+                # for item in instagram:
+                #     item.update({'linechart_id': linechart_id})
+                #     linechart_id += 1
+            if 'facebook' in item['facebook_url']:
+                facebook.append(item)
+                # for item in facebook:
+                #     item.update({'linechart_id': linechart_id})
+                #     linechart_id += 1
         linechart_id = 1
         for item in data['data']:
             item.update({'linechart_id': linechart_id})
@@ -1781,21 +1797,11 @@ def saveClassified():
 
 @connecsiApp.route('/exportCsv', methods=['POST','GET'])
 def exportCsv():
-    data = request.form.to_dict()
+    data = request.args.to_dict()
     print(data)
     si = StringIO()
     cw = csv.writer(si)
-    data = json.dumps(data)
-    data_parsed = json.loads(data)
-    influencer_data = data_parsed['data']
 
-    count = 0
-
-    for influencer in influencer_data:
-        if count == 0:
-            header = influencer.keys()
-            cw.writerow(header)
-            count += 1
 
     output = make_response(si.getvalue())
     output.headers["Content-Disposition"] = "attachment; filename=export.csv"
@@ -1810,6 +1816,7 @@ def viewAllClassifiedAds():
     from templates.classifiedAds import classified
     classifiedObj = classified.Classified(user_id=user_id)
     all_classified_data = classifiedObj.get_all_classifieds()
+    # print(all_classified_data)
     return render_template('classifiedAds/view_all_classifiedAds.html',all_classified_data=all_classified_data)
 
 
