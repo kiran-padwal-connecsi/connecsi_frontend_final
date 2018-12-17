@@ -533,18 +533,18 @@
                         <input  class="form-control" type="hidden" value="" name="channel_id" id="channel_id"></span>
                                             <span class="display-block overflow-hidden">
                             <label for="total_followers">Total Followers:</label>
-        <input class="form-control"  type="number" value="" name="alert_followers" id="total_followers" placeholder="Total Followers"></span><br>
+        <input class="form-control"  type="number" value="" name="alert_followers" id="total_followers" placeholder="-"></span><br>
                     <span class="display-block overflow-hidden">
                             <label for="total_views">Avg Views/Videos:</label>
-        <input class="form-control"  type="number" value="" name="alert_views" id="total_views" placeholder="Total Views"></span><br>
+        <input class="form-control"  type="number" value="" name="alert_views" id="total_views" placeholder="-"></span><br>
                     </div>
                     <div class="col-xl-7">
                     <span class="display-block overflow-hidden">
                             <label for="total_likes">Avg Likes/Videos:</label>
-        <input class="form-control"  type="number" value="" name="alert_likes" id="total_likes" placeholder="Total Likes"></span><br>
+        <input class="form-control"  type="number" value="" name="alert_likes" id="total_likes" placeholder="-"></span><br>
                     <span class="display-block overflow-hidden">
                             <label for="total_comments">Avg Comments/Videos:</label>
-        <input class="form-control"  type="number" value="" name="alert_comments" id="total_comments" placeholder="Total Comments"></span><br>
+        <input class="form-control"  type="number" value="" name="alert_comments" id="total_comments" placeholder="-"></span><br>
                     </div>
                     </div>
                 </div>
@@ -964,11 +964,11 @@
 <script>
 function createAlert(channel_id,followers,views,likes,comments) {
     <!--alert(channel_id);-->
-    $("#channel_id").val(channel_id);
-    $("#total_followers").val(followers);
-    $("#total_views").val(views);
-    $("#total_likes").val(likes);
-    $("#total_comments").val(comments);
+    $("#channel_id").val();
+    $("#total_followers").val();
+    $("#total_views").val();
+    $("#total_likes").val();
+    $("#total_comments").val();
 }
 </script>
 
