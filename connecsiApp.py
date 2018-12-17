@@ -1639,23 +1639,13 @@ def influencerFavoritesList():
         for item in data['data']:
             item.update({'linechart_id': linechart_id})
             linechart_id += 1
-        # linechart_id = 1
         for item in data['data']:
             if 'twitter' in item['twitter_url']:
                 twitter.append(item)
-                # for item in twitter:
-                #     item.update({'linechart_id': linechart_id})
-                #     linechart_id += 1
             if 'instagram' in item['insta_url']:
                 instagram.append(item)
-                # for item in instagram:
-                #     item.update({'linechart_id': linechart_id})
-                #     linechart_id += 1
             if 'facebook' in item['facebook_url']:
                 facebook.append(item)
-                # for item in facebook:
-                #     item.update({'linechart_id': linechart_id})
-                #     linechart_id += 1
         print(twitter)
         return render_template('partnerships/influencerFavoritesList.html',data=data,view_campaign_data=view_campaign_data,facebook=facebook,twitter=twitter,instagram=instagram)
     except:
@@ -1701,16 +1691,20 @@ def createAlerts():
             url = base_url + '/Brand/createInfluencerAlerts/'+str(user_id)
             response = requests.put(url=url,json=payload)
             # data = response.json()
-            # if 'createAlertsOnly' in request.form:
-            flash("Created Alerts for Favorite Influencer", 'success')
-            return influencerFavoritesList()
-
+            if 'createAlertsOnly' in request.form:
+                flash("Created Alerts for Favorite Influencer", 'success')
+                return redirect(url_for('influencerFavoritesList'))
+            else:
+                flash("Created Alerts for Favorite Influencer", 'success')
+                return redirect(url_for('searchInfluencers'))
         except Exception as e:
             print('i m in exception')
             print(e)
-            flash("Error in Creating Alerts", 'danger')
-            return searchInfluencers()
-
+            if 'createAlertsOnly' in request.form:
+                flash("Error in Creating Alerts", 'danger')
+                return redirect(url_for('influencerFavoritesList'))
+            else:
+                return redirect(url_for('searchInfluencers'))
 
 
 @connecsiApp.route('/addClassified')
@@ -1795,7 +1789,7 @@ def saveClassified():
         flash('Unauthorized', 'danger')
 
 
-@connecsiApp.route('/exportCsv', methods=['POST','GET'])
+@connecsiApp.route('/exportCsv', methods=['POST'])
 def exportCsv():
     data = request.args.to_dict()
     print(data)
@@ -1803,10 +1797,9 @@ def exportCsv():
     cw = csv.writer(si)
 
 
-    output = make_response(si.getvalue())
-    output.headers["Content-Disposition"] = "attachment; filename=export.csv"
-    output.headers["Content-type"] = "text/csv"
-    return 'ok'
+    # output = make_response(si.getvalue())
+    # output.headers["Content-Disposition"] = "attachment; filename=export.csv"
+    # output.headers["Content-type"] = "text/csv"
 
 
 @connecsiApp.route('/viewAllClassifiedAds',methods=['GET','POST'])

@@ -753,15 +753,15 @@ $(document).ready(function(){
 	});
 
 	// load the list of available timezones, build the <select> options
-	$.getJSON('../../../app-assets/data/fullcalendar/php/get-timezones.php', function(timezones) {
-		$.each(timezones, function(i, timezone) {
-			if (timezone != 'UTC') { // UTC is already in the list
-				$('#timezone-selector').append(
-					$("<option/>").text(timezone).attr('value', timezone)
-				);
-			}
-		});
-	});
+	// $.getJSON('../../../app-assets/data/fullcalendar/php/get-timezones.php', function(timezones) {
+	// 	$.each(timezones, function(i, timezone) {
+	// 		if (timezone != 'UTC') { // UTC is already in the list
+	// 			$('#timezone-selector').append(
+	// 				$("<option/>").text(timezone).attr('value', timezone)
+	// 			);
+	// 		}
+	// 	});
+	// });
 
 	// when the timezone selector changes, dynamically change the calendar option
 	$('#timezone-selector').on('change', function() {

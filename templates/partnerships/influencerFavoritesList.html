@@ -344,7 +344,7 @@
                                         </td>
                                         <td rowspan="4" width="400" style="border-right: solid 1px #E1DEDD;" >
                                             <div>
-                                                <canvas id="lineChart3{{ item['linechart_id'] }}" height="150px" width="250px"></canvas>
+                                                <canvas id="lineChart4{{ item['linechart_id'] }}" height="150px" width="250px"></canvas>
                                             </div></td>
                                         <td rowspan="4" style="border-right:solid 2px white;">
                                             <div class="scroll">
@@ -461,7 +461,7 @@
                                         </td>
                                         <td rowspan="4" width="400" style="border-right: solid 1px #E1DEDD;" >
                                             <div>
-                                                <canvas id="lineChart4{{ item['linechart_id'] }}" height="150px" width="250px"></canvas>
+                                                <canvas id="lineChart2{{ item['linechart_id'] }}" height="150px" width="250px"></canvas>
                                             </div></td>
                                         <td rowspan="4" style="border-right:solid 2px white;">
                                             <div class="scroll">
@@ -550,7 +550,7 @@
                 </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="submit" class="btn btn-default">Save</button>
+                    <button type="submit" class="btn btn-default" name="createAlertsOnly">Save</button>
                 </div>
             </form>
         </div>
@@ -700,11 +700,10 @@
     }
 </style>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.1.3/Chart.min.js"></script>
-<script src="js/main.js"></script>
 <script>
     {% for item in data['data'] %}
-    const CHART{{ item['linechart_id'] }} = document.getElementById("lineChart1{{ item['linechart_id'] }}");
-    let lineChart{{ item['linechart_id'] }} = new Chart(CHART{{ item['linechart_id'] }}, {
+    const CHART1{{ item['linechart_id'] }} = document.getElementById("lineChart1{{ item['linechart_id'] }}");
+    let lineChart1{{ item['linechart_id'] }} = new Chart(CHART1{{ item['linechart_id'] }}, {
         type: 'line',
         data: {
             labels: ["May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov"],
@@ -768,8 +767,8 @@
 
 <script>
     {% for item in facebook %}
-    const CHART{{ item['linechart_id'] }} = document.getElementById("lineChart2{{ item['linechart_id'] }}");
-    let lineChart{{ item['linechart_id'] }} = new Chart(CHART{{ item['linechart_id'] }}, {
+    const CHART2{{ item['linechart_id'] }} = document.getElementById("lineChart2{{ item['linechart_id'] }}");
+    let lineChart2{{ item['linechart_id'] }} = new Chart(CHART2{{ item['linechart_id'] }}, {
         type: 'line',
         data: {
             labels: ["May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov"],
@@ -833,8 +832,8 @@
 
 <script>
     {% for item in instagram %}
-    const CHART{{ item['linechart_id'] }} = document.getElementById("lineChart3{{ item['linechart_id'] }}");
-    let lineChart{{ item['linechart_id'] }} = new Chart(CHART{{ item['linechart_id'] }}, {
+    const CHART3{{ item['linechart_id'] }} = document.getElementById("lineChart4{{ item['linechart_id'] }}");
+    let lineChart3{{ item['linechart_id'] }} = new Chart(CHART3{{ item['linechart_id'] }}, {
         type: 'line',
         data: {
             labels: ["May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov"],
@@ -898,8 +897,8 @@
 
 <script>
     {% for item in twitter %}
-    const CHART{{ item['linechart_id'] }} = document.getElementById("lineChart4{{ item['linechart_id'] }}");
-    let lineChart{{ item['linechart_id'] }} = new Chart(CHART{{ item['linechart_id'] }}, {
+    const CHART4{{ item['linechart_id'] }} = document.getElementById("lineChart2{{ item['linechart_id'] }}");
+    let lineChart4{{ item['linechart_id'] }} = new Chart(CHART4{{ item['linechart_id'] }}, {
         type: 'line',
         data: {
             labels: ["May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov"],
