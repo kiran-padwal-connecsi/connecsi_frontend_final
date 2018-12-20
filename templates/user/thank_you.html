@@ -1,32 +1,40 @@
 {% extends 'layout.html' %}
 {{ super() }}
 {% block body %}
+
+<style>
+
+.custom-color{
+    background-color:#e6e3e3;
+    }
+ ::placeholder{
+        color: black;
+    }
+</style>
 <div class="row login">
 
-    <div class="col s6 l4 offset-l4">
-        <div class="card" style="width: 400px; height: 450px;">
-            <div class="card-action white white-text">
-                <img src="/static/img/logo.png" class="responsive-img">
+    <div class="col s6 l4 offset-l4" style="background-color: white !important; ">
+        <div class="custom-color" style="width: 400px; height: 400px; border:2px solid black;">
+            <div class="custom-color" style="border-bottom:2px solid black; height: 80px !important;">
+                <img src={{ url_for('static', filename='img/logo3.png') }} width="160px" height="160px" class="responsive-img" style="margin-left:110px; margin-top: -20px;">
             </div>
-            <div class="center-align" style="margin-top: 20px">
-                <b style="font-size: 20px;" class="white-text">THANK YOU!</b>
+            <br>
+            <div class="center-align custom-color" style="margin-top: 20px;  margin-top: 3px !important;">
+                <b style="font-size: 20px; color:black !important;" class="white-text" >THANK YOU!</b>
                 <br>
-                <br>
-                <p class="white-text">Your registration has been successful</p>
-                <br>
-                <p class="white-text">Please check your email to activate your account.</p>
-                <br>
-                <div class="form-field center-align">
-                    <button class="waves-effect waves-light btn-small purple hoverable" type="submit" style="margin-top: 15px; border-radius: 7px; font-weight: 500;">Resend Confirmation Link</button>
-                </div>
-                <div class="form-field center-align">
-                    <a class="waves-effect waves-light btn-small purple hoverable" href="/" type="submit" style="margin-top: 15px; border-radius: 7px; font-weight: 500;">CONTINUE</a>
-                </div>
-                </form>
-                <!--<div class="form-field center-align">
 
-                    <a href="/loginLinkedin" class="waves-effect waves-light btn social linkedin blue hoverable">Sign in With LinkedIN</a>
-                </div>-->
+                <p class="white-text" style="color:black !important;">Your registration has been successful</p>
+
+                <p class="white-text" style="color:black !important;">Please check your email to activate your account.</p>
+
+                <div class="form-field center-align">
+                <a  class="waves-effect waves-light btn-small  hoverable login-btn" href="/" style="width:250px; background: linear-gradient(#e6e3e3,#e6e3e3); margin-top: 15px; border-radius: 0.25rem; color:black !important;" >RESEND ACTIVATION E-MAIL</a>
+                </div>
+                <div class="form-field center-align">
+                    <a  class="waves-effect waves-light btn-small  hoverable login-btn" href="/" style="width:250px; background: linear-gradient(#A519F7,#198FF7); margin-top: 15px; border-radius: 0.25rem" >CONTINUE</a>
+                </div>
+
+
             </div>
         </div>
     </div>

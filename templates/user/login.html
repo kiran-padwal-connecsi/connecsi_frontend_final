@@ -30,62 +30,73 @@
 .cardheight{
     min-height: 420px !important;
 }
-
-
+.custom-color{
+    background-color:#e6e3e3;
+    }
+ ::placeholder{
+        color: black;
+    }
 </style>
 
 
 <div class="row login">
     <div class="col s12 l4 offset-l4">
-        <div class="card">
-            <div class="card-action white white-text">
-                <img src="/static/img/logo.png" class="responsive-img">
-            </div>
-            <ul class="tabs">
-                <li class="tab col s6"><a class="active" href="#brand">Brand</a></li>
-                <li class="tab col s6"><a href="#influencer">Influencer</a></li>
+        <div class="card" style="background-color: white;">
+            <div class="custom-color" style="border: 1px solid black;">
+       <table style="border-collapse:inherit; width:0%; text-align: center;">
+                    <tr style="">
+                  <td style="font-size:18px; padding:0px 45px;" class="tdtext"><b>Login to</b></td>
+                      <td style="line-height:0.55; padding:0px; "><img src={{ url_for('static', filename='img/logo3.png') }} width="120px" height="120px" class="responsive-img logoimg" style="    margin-left:-40px;"></td>
+                   </tr>
+
+                   </table>
+
+                </div>
+            <ul class="tabs custom-color" style="border: 1px solid black; margin-top:3px !important;">
+                <li class="tab col s6"><a class="active" href="#brand" style="color: black;"><b>Brand</b></a></li>
+                <li class="tab col s6"><a href="#influencer" style="color: black;"><b>Influencer</b></a></li>
             </ul>
 
-            <div id="brand" class="card-content cardheight">
+            <div id="brand" class="card-content cardheight custom-color" style="border: 1px solid black; margin-top:3px !important;">
                 <form method="POST" action="/login">
                     <div class="form-field">
-                        <input type="email" id="email" name="email" class="validate" required placeholder="Email" style="border-radius:7px; height:35px;">
+                        <input type="email" id="email" name="email" class="validate" required placeholder="Email" style="border-radius:7px solid black; height:35px;">
                     </div>
                     <br/>
                     <div class="form-field">
-                        <input type="password" id="password" name="password" class="validate" required placeholder="Password" style="border-radius:7px; height:35px;">
+                        <input type="password" id="password" name="password" class="validate" required placeholder="Password" style="border-radius:7px solid black; height:35px;">
                     </div>
                     <br>
                     <div class="form-field">
                         <label>
                             <input type="checkbox" class="filled-in"/>
-                            <span>Remember me</span>
+                            <span style="color: black;">Remember me</span>
                         </label>
                     </div>
                     <br>
                     <div class="form-field center-align">
-                        <button class="btn-small purple hoverable" type="submit" name="brand" style="width:250px; border-radius:7px; color:#F7DC6F; background-color: #C39BD3; font-weight: 500; ">Log In</button>
+                        <button class="btn-small purple hoverable" type="submit" name="brand" style="width:200px; background: linear-gradient(#A519F7,#198FF7); font-weight: 500; ">Log In</button>
                     </div>
                 </form>
                 <br/>
                 <div class="divider"></div>
                 <br>
-                <div class="center-align"><a class="white-text" href="/forgotPassword">Forgot Password?</a></div>
+                <div class="center-align" ><a class="white-text" href="/forgotPassword" style="color:black !important;">Forgot Password?</a></div>
                 <br>
-                <div class="white-text center-align">Dont have an Account yet ?</div>
+                <div class="white-text center-align" style="color: black !important;">Dont have an Account yet ?</div>
                 <br>
                 <div class="center-align">
-                    <a class="btn-small green hoverable" href="/registerBrand" style="color:white; font-weight:500; width:250px; border-radius:7px; background-color: #C39BD3; ">Free Registration</a>
+                    <a class="btn-small green hoverable" href="/registerBrand" style="color:white; font-weight:500; width:200px; background: linear-gradient(#A519F7,#198FF7); ">Free Registration</a>
                 </div>
             </div>
-            <div id="influencer" class="card-content">
+            <div id="influencer" class="card-content custom-color" style="border:1px solid black;">
                 <form method="POST" action="/login">
                     <div class="form-field">
-                        <input type="text" id="inf_email_id" class="validate" required placeholder="Username" style="border-radius:7px; height:35px;">
+                        <input type="text" id="inf_email_id" class="validate" required placeholder="Username" style="border-radius:7px solid black;; height:35px;">
                     </div>
                     <br/>
                     <div class="form-field">
-                        <input type="password" id="inf_password" class="validate" required placeholder="Password" style="border-radius:7px; height:35px;">
+                        <input type="password" id="inf_password" class="validate" required placeholder="Password" style="border-radius:7px solid black;; height:35px;">
                     </div>
                     <br/>
                     <div class="form-field center-align">
@@ -96,16 +107,20 @@
 
                 <br/>
                 <div class="center-align">
-                    <button class="btn-small purple hoverable" onclick="login()" id="login" style="color:#F7DC6F; background-color: #C39BD3; width:250px; font-weight: 500; border-radius:7px; ">Log In </button>
+                    <button class="btn-small purple hoverable" onclick="login()" id="login" style="color:#F7DC6F; width:200px; background: linear-gradient(#A519F7,#198FF7); font-weight: 500; border-radius:7px; ">Log In </button>
                     <!--<div class="center-align">-->
                     <!--<a class="btn-small red hoverable" href="/registerInfluencer">Sign up</a>-->
-                    <!--</div>-->
+<!--                    </div>-->
                     <br/>
+
                     <br />
+                      <div class="center-align" ><a class="white-text" href="/forgotPassword" style="color:black !important;">Forgot Password?</a></div>
                     <hr>
                     <br/>
-                    <div class="white-text center-align">Or Sign in via</div>
-                    <br/>
+                    <div class="white-text center-align" style="color:black !important;">Don't have an account yet?</div>
+
+                    <div class="white-text center-align" style="color:black !important;">Join Us, it's Free Using</div>
+
                     <!--<a href="/google_login" class="waves-effect waves-light"><img src="static/img/yt_logo_rgb_light.png" class="responsive-img" height="50" width="70"></a>-->
                     <!--<a href="/twitter_login" class="waves-effect waves-light"><img src="static/img/Twitter_Social_Icon_Square_Color.png" class="responsive-img" height="20" width="30"></a>-->
                     <a href="/google_login" class="waves-effect waves-light"><img src="static/img/youtube2.png" class="responsive-img" height="55" width="45"></a>

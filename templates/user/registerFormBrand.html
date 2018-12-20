@@ -54,14 +54,42 @@
   padding-right: 15px;
   padding-left: 1px;
 }
+     .registerbrand{
+        background-color: white !important;
+         list-style: none !important;
+    }
 
-@media (min-width: 740px){
+
+
+
+
+@media only screen and (min-width: 740px){
     .registerbrand{
         width: 500px !important;
     }
 }
 
-@media (min-width: 740px){
+
+
+    @media only screen and (max-width: 414px){
+
+    .login-btn{ width:150px !important; margin-left: 10px!important;}
+    .reg-btn{ width:150px !important; margin-left: 10px !important; padding: 0px!important; text-align:center;}
+    .tdtext{font-size: 10px !important ;
+    padding:0px 30px !important;}
+        .logoimg{width: 150px !important; height: 80px !important; margin-left: -20px !important;}
+        .regform{ padding: 0px !important; text-align: center;}
+}
+
+
+
+
+
+
+
+
+
+@media  (min-width: 740px){
     .inputfieldsleft{
         float: left;
         padding-left: 10px;
@@ -80,59 +108,59 @@
 }
 }
 
-#container, #placeholder1, #placeholder2, #placeholder3, #placeholder4{
-     height: 100%;
-}
 
-#placeholder1{
-    display:inline-block; vertical-align: text-bottom;
-}
 
-#placeholder2{
-    display:inline-block; vertical-align: super;
-}
+.custom-color{
+    background-color:#e6e3e3;
+    }
+    ::placeholder{
+        color: black;
+    }
 
-#placeholder3{
-    display:inline-block; vertical-align: super;
-}
-
-#placeholder4{
-    display:inline-block; vertical-align: sub;
-}
 
 </style>
 
 
 <div class="row login">
     <div class="col s12 l4 offset-l4 ">
-        <div class="card registerbrand">
-            <div class="card-action white white-text">
-                <img src="/static/img/logo.png" class="responsive-img">
+        <div class="card registerbrand"  style="">
+            <div class="custom-color" style="border: 1px solid black;">
+                 <table style="border-collapse:inherit; width:0%; text-align: center;">
+                    <tr style="">
+                  <td style="font-size:18px; padding:0px 100px;" class="tdtext"><b>Free Registration at</b></td>
+                      <td style="line-height:0.45; padding:0px; "><img src={{ url_for('static', filename='img/logo3.png') }} width="190px" height="190px" class="responsive-img logoimg" style="    margin-left: -80px;"></td>
+                   </tr>
+
+                   </table>
+
+
+
             </div>
-            <div id="brand" class="card-content cardheight">
+
+            <div id="brand" class="card-content cardheight custom-color" style="border: 1px solid black; margin-top:3px !important;">
                 <form id="brand_register" name="brand_register" method="POST" action="/saveBrand">
                 <div class="row" style="margin-left: 0rem; margin-right: 0rem;">
                             <div class="row" style="margin-left: 0rem; margin-right: 0rem;">
             <div class="col-xl-6 col-lg-6 col-md-6 mb-1 inputfieldsleft" {#  style="float: left; padding-left: 10px; width: 180px;"#}>
                 <div class="row" style="margin-bottom: 5px;">
-                    <input style="border: 2px solid;color: white;border-radius: 0.25rem;padding-left: 10px;" type="text" id="first_name" name="first_name" class="validate" placeholder="First Name" required>
+                    <input style="border: 1px solid;color: black;border-radius: 0.25rem;padding-left: 10px;" type="text" id="first_name" name="first_name" class="validate" placeholder="First Name" required>
                 </div>
                 <div class="row" style="margin-bottom: 5px;">
-                    <input style="border: 2px solid;color: white;border-radius: 0.25rem;padding-left: 10px;"type="email" id="email" name="email" class="validate"  placeholder="Business Email" required>
+                    <input style="border: 1px solid;color: black;border-radius: 0.25rem;padding-left: 10px;"type="email" id="email" name="email" class="validate"  placeholder="Business Email" required>
                 </div>
                 <div class="row" style="margin-bottom: 5px;">
-                    <input style="border: 2px solid;color: white;border-radius: 0.25rem;padding-left: 10px;"type="password" id="password" name="password" class="validate"  placeholder="Password" minlength="6" required>
+                    <input style="border: 1px solid;color: black;border-radius: 0.25rem;padding-left: 10px;"type="password" id="password" name="password" class="validate"  placeholder="Password" minlength="6" required>
                 </div>
             </div>
             <div class="col-xl-6 col-lg-6 col-md-6 mb-1 inputfieldsright" {# style="float: right; padding-right: 20px; width: 180px;"#}>
             <div class="row" style="margin-bottom: 5px;">
-                <input style="border: 2px solid;color: white;border-radius: 0.25rem;padding-left: 10px;"type="text" id="last_name" name="last_name" class="validate"  placeholder="Last Name" required>
+                <input style="border: 1px solid;color: black;border-radius: 0.25rem;padding-left: 10px;"type="text" id="last_name" name="last_name" class="validate"  placeholder="Last Name" required>
             </div>
             <div class="row" style="margin-bottom: 5px;">
-                <input style="border: 2px solid;color: white;border-radius: 0.25rem;padding-left: 10px;"type="text" id="company_name" name="company_name" class="validate"  placeholder="Company Name" required>
+                <input style="border: 1px solid;color: black;border-radius: 0.25rem;padding-left: 10px;"type="text" id="company_name" name="company_name" class="validate"  placeholder="Company Name" required>
             </div>
             <div class="row" style="margin-bottom: 5px;">
-                <input style="border: 2px solid;color: white;border-radius: 0.25rem;padding-left: 10px;"type="password" id="confirm_password" name="confirm_password" class="validate"  placeholder="Confirm Password" required>
+                <input style="border: 1px solid;color: black;border-radius: 0.25rem;padding-left: 10px;"type="password" id="confirm_password" name="confirm_password" class="validate"  placeholder="Confirm Password" required>
             </div>
             </div>
             </div>
@@ -140,29 +168,40 @@
             <div class="center-align" style="margin-top: 15px; padding-right: 45px;">
                 <label>
                     <input type="checkbox" class="filled-in" required/>
-                    <span>I have read and agreed to the Terms & Conditions</span>
+                    <span style="color: black;">I have read and agreed to the Terms & Conditions</span>
                 </label>
                 </div>
-                <div class="form-field" style="padding-left: 50px;" id="container">
-                    <button id="placeholder1"class="waves-effect waves-light btn-small purple hoverable" type="submit" style="margin-top: 15px; border-radius: 0.25rem" onclick="return check('brand_register','password','confirm_password')">Register</button>
+                <div class="form-field regform" style="padding-left: 50px;" id="container">
+        <div class="row">
+    <div class="col-md-4 col-lg-2">
+    <button id="placeholder1"class="waves-effect waves-light btn-small  hoverable reg-btn" type="submit"
+    style="margin-top: 15px; width:300px;  margin-left: 35px; background: linear-gradient(#A519F7,#198FF7); color: white;" onclick="return check('brand_register','password','confirm_password')">Register</button>
+         </div>
+  </div>
+<!--
                     <span id="placeholder2"style="color: white; padding-left: 20px;">OR</span>
                     <span id="placeholder3"style="color: white; padding-left: 20px;"><b>login using</b></span>
                     <span id="placeholder4"style="color: white; padding-left: 20px;"><img style="height: 2.0rem" src="{{ url_for('static', filename='img/linkedin.png') }}"></span>
+-->
                 </div>
                 <hr>
                 <div class="center-align" style="margin-top: 15px; padding-right: 45px;">
-                <span style="color: #fff; padding-left: 30px;">Already have an account?</span>
+                <span style="color: #fff; padding-left: 30px; color: black">Already have an account?</span>
                 </div>
+                     <div class="row">
+    <div class="col-md-4 col-lg-2">
                 <div class="center-align">
-                <a id="login" class="waves-effect waves-light btn-small purple hoverable" href="/" style="margin-top: 15px; border-radius: 0.25rem" >Log In</a>
+                <a id="login" class="waves-effect waves-light btn-small  hoverable login-btn" href="/" style="width:300px; background: linear-gradient(#A519F7,#198FF7); margin-top: 15px; border-radius: 0.25rem" >Log In</a>
                 </div>
+                     </div>
+  </div>
                 </form>
             </div>
 
             </div>
         </div>
     </div>
-</div>
+
 
 
 {% endblock %}
