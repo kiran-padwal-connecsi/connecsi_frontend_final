@@ -3,6 +3,7 @@
 {% block body %}
 <head>
   <style>
+
     .text-field {
     -moz-box-sizing: border-box;
     border: 1px solid #EEEEEE;
@@ -89,7 +90,7 @@ function displayOffers(item) {
   <div class="card" >
     <div id="influencerSearchPanel"  data-parent="#accordion">
       <div class="card-body" >
-        <div class="row" style="justify-content: center">
+        <div class="row1" style="justify-content: center">
           <div class="col-xl-12 col-lg-12  col-md-12 col-12">
             <div class="card">
               <div class="card-body" style="padding: 1px;">
@@ -140,49 +141,8 @@ function displayOffers(item) {
                           </div>
                         </div>
                       </div>
-                      <div class="col-xl-5 col-lg-5 col-md-5 mb-1" style="padding-right:10%; padding-left: 6%">
-                        <div class="form-group" >
-                          <p>
-                            <label>Followers:</label>
-                          </p>
-                          <div id="slider1"  style="height:10px;" ></div>
-                        </div>
-                        <div class="row" style="margin-left:3%;">
-                          <div class="col-3.5" id="lower-value1" style="border:1px solid black; padding-left:1px; padding-right:2px;" ></div>
-                          <div class="col-6"></div>
-                          <div class="col-3.5" id="upper-value1" style="border:1px solid black; padding-right:2px; padding-left:2px; margin-left:3%;"></div>
-                        </div>
-                        <input type="hidden" name="min_lower1" value="" id="min_lower1">
-                        <input type="hidden" name="max_upper1" value="" id="max_upper1">
-                        <!--{{ form_filters }}-->
-                      </div>
-                    </div>
-                    <div class="row">
-                      <div class="col-xl-5 col-lg-5 col-md-5 mb-1" style="padding-left: 20px; padding-right: 15%">
-                          <div class="form-group" >
-                          <p>
-                            <label>Budget:</label>
-                          </p>
-                          <div id="slider2"  style="height:10px;" ></div>
-                          </div>
-                          <div class="row" style="margin-left:3%;">
-                          <div class="col-3.5" id="lower-value2" style="border:1px solid black; padding-left:1px; padding-right:2px;" ></div>
-                          <div class="col-6"></div>
-                          <div class="col-3.5" id="upper-value2" style="border:1px solid black; padding-right:2px; padding-left:2px; margin-left:3%;"></div>
-                        </div>
-                          <input type="hidden" name="min_lower2" value="" id="min_lower2">
-                          <input type="hidden" name="max_upper2" value="" id="max_upper2">
-                        <!--{{ form_filters }}-->
-                        </div>
-                      <div class="col-xl-3 col-lg-3 col-md-3 mb-3">
-                        <div class="form-group spacing" style="margin-left:4%;margin-top: 13%;">
-                          <button id="btn-offers-inf" type="submit" class="btn btn-raised btn-raised btn-primary customButton" name="offers_inf" style="padding-right: 10px; padding-left: 10px; padding-top: 2.5px; padding-bottom: 2.5px;">
-                            Search <i class="fa fa-search"></i>
-                          </button>
-                        </div>
-                      </div>
                       <div class="col-xl-2 col-lg-2 col-md-2 mb-1">
-                         <div class="form-group" style="margin-top: 13%">
+                         <div class="form-group" style="margin-top: 1%">
                           <label>Arrangement</label>
                           <div class="form-group">
                             <select class="form-control" name="arrangements" style="height:35px;">
@@ -197,6 +157,47 @@ function displayOffers(item) {
                         </div>
                       </div>
                     </div>
+                    <div class="row">
+                        <div class="col-xl-5 col-lg-5 col-md-5 mb-1" style="padding-right:10%; padding-left: 6%">
+                        <div class="form-group" >
+                          <p>
+                            <label>Followers:</label>
+                          </p>
+                          <div id="slider1"  style="height:10px;" ></div>
+                        </div>
+                        <div class="row" style="margin-left:3%;">
+                          <div class="col-3.5" id="lower-value1" style="border:1px solid black; padding-left:1px; padding-right:2px;" ></div>
+                          <div class="col-6"></div>
+                          <div class="col-3.5" id="upper-value1" style="border:1px solid black; padding-right:2px; padding-left:2px; margin-left:19%;"></div>
+                        </div>
+                        <input type="hidden" name="min_lower1" value="" id="min_lower1">
+                        <input type="hidden" name="max_upper1" value="" id="max_upper1">
+                        <!--{{ form_filters }}-->
+                      </div>
+                      <div class="col-xl-5 col-lg-5 col-md-5 mb-1" style="padding-left: 20px; padding-right: 15%">
+                          <div class="form-group" >
+                          <p>
+                            <label>Price:</label>
+                          </p>
+                          <div id="slider2"  style="height:10px;" ></div>
+                          </div>
+                          <div class="row" style="margin-left:3%;">
+                          <div class="col-3.5" id="lower-value2" style="border:1px solid black; padding-left:1px; padding-right:2px;" ></div>
+                          <div class="col-6"></div>
+                          <div class="col-3.5" id="upper-value2" style="border:1px solid black; padding-right:2px; padding-left:2px; margin-left:19%;"></div>
+                        </div>
+                          <input type="hidden" name="min_lower2" value="" id="min_lower2">
+                          <input type="hidden" name="max_upper2" value="" id="max_upper2">
+                        <!--{{ form_filters }}-->
+                        </div>
+                    </div>
+                      <div class="row">
+                        <div class=" form-group spacing col-xl-3 col-lg-3 col-md-3 mb-3 col-md-offset-6 col-lg-offset-6" style="margin-top: 2%; margin-left: 31%;">
+                          <button id="btn-offers-inf" type="submit" class="btn btn-raised btn-raised btn-primary customButton" name="offers_inf" style="padding-right: 25px; padding-left: 25px; padding-top: 2.5px; padding-bottom: 2.5px;">
+                            Search <i class="fa fa-search"></i>
+                          </button>
+                        </div>
+                      </div>
                   </div>
                 </form>
               </div>
@@ -241,41 +242,34 @@ function displayOffers(item) {
             </div>
           </div>
           </form>
-          <div class="container contents" id="wrapper">
+
             {% for item in data['data'] %}
-            <div class="lazy">
-              <div class="row">
-                <div class="search-infl-tbl">
-                  <table cellspacing="1" style="border:solid 1px #0c0909" class="search-infl-tbl" >
-                    <tr>
-                    <div>
-                      <td rowspan="4" class="si-image">
-                        <img src="{{ item['channel_img'] }}" height="150px" width="155px">
-                      </td>
-                      <td colspan="2" style="border-right: solid 1px #E1DEDD;">
-                        <table width="400px" cellpadding="1">
-                          <tr>
-                            <td colspan="2">
-                                <b style="font-size:15px;"><a href="" target="_blank">{{ item['offer_name'] }}</a></b>
-                          </tr>
-                          <tr>
-                            <td style="border-right: solid 1px #E1DEDD; border-bottom:solid 1px #E1DEDD; border-top:solid 1px #E1DEDD; font-size:14px;">
-                              <b>{{ item['max_upper_followers'] }}</b>
-                              <br>
-                              Total followers
-                            </td>
-                            <td style="border-right: solid 1px #E1DEDD; border-bottom:solid 1px #E1DEDD; border-top:solid 1px #E1DEDD; font-size:14px;">
-                              <b>{{ item['budget'] }}</b>
-                              <br>
-                              Budget
-                            </td>
-                          </tr>
-                          <tr></tr>
-                          <tr></tr>
-                          </tr>
-                          <tr><td colspan="2">
-                            <b style="font-size:12px">Channels</b> &emsp;
-                            {% if item['channels'] == 'Facebook' %}
+                <div class="container" style="border-style: groove">
+                    <div class="row">
+                        <div class="col-md-8">
+                            <h2>{{ item['offer_name'] }}</h2>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="row">
+                                <div class="col-md-8">
+                                    Eye {{ item['no_of_views'] }}
+                                </div>
+                                <div class="col-md-8">
+                                    Posted On {{ item['from_date'] }}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <hr/>
+                    <div class="row" style="border-style: groove; border-width: 0.5px">
+                         <div class="col-md-8">
+                            <img style="max-height: 80%; max-width: 25%" src="{{ item['channel_img'] }}">
+                        </div>
+                        <div class="col-md-4" style="border-style: groove; border-width: 0.5px">
+                            <div class="row">
+                                <div class="col-md-6" style="border-style: groove; border-width: 0.5px">
+                                    <p style="text-align: center;"> <strong> Channels</strong> </p>
+                                    {% if item['channels'] == 'Facebook' %}
                             <a href="{{ item['facebook_url'] }}" target="_blank" class="fa fa-facebook-official blue" style="font-size:20px;"></a>&emsp;
                             {% endif %}
                             {% if item['channels'] == 'Instagram' %}
@@ -287,18 +281,110 @@ function displayOffers(item) {
                             {% if item['channels'] == 'youtube'%}
                             <a href="{{ item['youtube_url'] }}" target="_blank" class="fa fa-youtube red" style="font-size:20px;"></a>&emsp;
                             {% endif %}
-                          <span data-toggle="modal" data-target="#detailslist">
-                            <button onclick="displayOffers('{{ item | to_json}}')" style="margin-top: 10px; background-color: lightgreen; color: white">Details</button>
-                          </span>
-                          </td></tr>
-                        </table>
-                      </td>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="row">
+                                        <div class="col-md-12" style="border-style: groove;border-width: 0.5px; text-align: center;">
+                                            <p><strong>Total Followers</strong></p>
+                                            <p>{{ item['max_upper_followers'] }}</p>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-md-12" style="border-style: groove; border-width: 0.5px; text-align: center;">
+                                            <p> <strong>Price</strong></p>
+                                            <p>{{ item['budget'] }}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12" style="border-style: groove; border-width: 0.5px">
+                                    <p><strong>Categories</strong></p>
+                                    <button class="btn btn-light" style="background-color: cadetblue">{{ item['video_cat_id'] }}</button>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12" style="border-style: groove; border-width: 0.5px">
+                                    <p><strong>Arrangements</strong></p>
+                                    <button class="btn btn-light" style="background-color: cadetblue">{{ item['arrangements'] }}</button>
+                                </div>
+                            </div>
+                        </div>
+
                     </div>
-                    </tr>
-                  </table>
+                    <hr />
+                <div class="row">
+                    <div class="col-md-6">
+                        Influencer Name
+                    </div>
+                    <div class="col-md-3">
+                          <span data-toggle="modal" data-target="#detailslist">
+                        <button class="btn btn-primary" style="background-color: darkblue;" onclick="displayOffers('{{ item | to_json}}')"> Details </button>
+                          </span>
+                    </div>
+                    <div class="col-md-3">
+                        <button class="btn btn-default"> Reply </button>
+                    </div>
                 </div>
-              </div>
-            </div>
+                </div>
+
+{#            <div class="row">#}
+{#              <div class="row">#}
+{#                <div class="search-infl-tbl">#}
+{#                  <table cellspacing="1" style="border:solid 1px #0c0909" class="search-infl-tbl" >#}
+{#                    <tr>#}
+{#                    <div>#}
+{#                      <td rowspan="4" class="si-image">#}
+{#                        <img src="{{ item['channel_img'] }}" height="150px" width="155px">#}
+{#                      </td>#}
+{#                      <td colspan="2" style="border-right: solid 1px #E1DEDD;">#}
+{#                        <table width="400px" cellpadding="1">#}
+{#                          <tr>#}
+{#                            <td colspan="2">#}
+{#                                <b style="font-size:15px;"><a href="" target="_blank">{{ item['offer_name'] }}</a></b>#}
+{#                          </tr>#}
+{#                          <tr>#}
+{#                            <td style="border-right: solid 1px #E1DEDD; border-bottom:solid 1px #E1DEDD; border-top:solid 1px #E1DEDD; font-size:14px;">#}
+{#                              <b>{{ item['max_upper_followers'] }}</b>#}
+{#                              <br>#}
+{#                              Total followers#}
+{#                            </td>#}
+{#                            <td style="border-right: solid 1px #E1DEDD; border-bottom:solid 1px #E1DEDD; border-top:solid 1px #E1DEDD; font-size:14px;">#}
+{#                              <b>{{ item['budget'] }}</b>#}
+{#                              <br>#}
+{#                              Budget#}
+{#                            </td>#}
+{#                          </tr>#}
+{#                          <tr></tr>#}
+{#                          <tr></tr>#}
+{#                          </tr>#}
+{#                          <tr><td colspan="2">#}
+{#                            <b style="font-size:12px">Channels</b> &emsp;#}
+{#                            {% if item['channels'] == 'Facebook' %}#}
+{#                            <a href="{{ item['facebook_url'] }}" target="_blank" class="fa fa-facebook-official blue" style="font-size:20px;"></a>&emsp;#}
+{#                            {% endif %}#}
+{#                            {% if item['channels'] == 'Instagram' %}#}
+{#                            <a href="{{ item['insta_url'] }}" target="_blank" class="fa fa-instagram pink" style="font-size:20px;"></a>&emsp;#}
+{#                            {% endif %}#}
+{#                            {% if item['channels'] == 'Twitter'%}#}
+{#                            <a href="{{ item['twitter_url'] }}" target="_blank" class="fa fa-twitter cyan" style="font-size:20px;"></a>&emsp;#}
+{#                            {% endif %}#}
+{#                            {% if item['channels'] == 'youtube'%}#}
+{#                            <a href="{{ item['youtube_url'] }}" target="_blank" class="fa fa-youtube red" style="font-size:20px;"></a>&emsp;#}
+{#                            {% endif %}#}
+{#                          <span data-toggle="modal" data-target="#detailslist">#}
+{#                            <button onclick="displayOffers('{{ item | to_json}}')" style="margin-top: 10px; background-color: lightgreen; color: white">Details</button>#}
+{#                          </span>#}
+{#                          </td></tr>#}
+{#                        </table>#}
+{#                      </td>#}
+{#                    </div>#}
+{#                    </tr>#}
+{#                  </table>#}
+{#                </div>#}
+{#              </div>#}
+{#            </div>#}
             <br>
             {% endfor %}
             <!--<div class="h-100 row align-items-center" id="pagination"></div>-->
@@ -331,6 +417,30 @@ function displayOffers(item) {
       width: 100%;
     }
   }
+.modal {
+text-align: center;
+padding: 0!important;
+}
+
+.modal:before {
+content: '';
+display: inline-block;
+height: 100%;
+vertical-align: middle;
+margin-right: -4px;
+}
+
+.modal-dialog {
+display: inline-block;
+text-align: left;
+vertical-align: middle;
+}
+@media (min-width: 768px) {
+  .modal-xl {
+    width: 90%;
+   max-width:1200px;
+  }
+}
 </style>
 <style>
     /* width */
@@ -536,6 +646,56 @@ $( document ).ready(function() {
 
 
 </style>
+<!-- Send message Modal form-->
+<div class="modal fade" id="sendMessage" role="dialog"  data-backdrop="static">
+  <div class="modal-dialog modal-sm">
+    <div class="modal-content">
+      <div class="modal-header alert-primary">
+        <b class="modal-title">Send Message</b>
+        <button  type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+      <form name="create_alert_form" id="send_message_form" action="/sendMessage" method="POST">
+        <div class="modal-body">
+          <input  class="form-control" type="hidden" value="" name="channel_id" id="message_channel_id">
+          <div class="row">
+            <div class="col-lg-6">
+              <ul class="no-list-style">
+                <li class="mb-2">
+                  <span class="text-bold-500 primary"><a><i class=" font-small-3"></i>*To :</a></span>
+                  <span class="display-block"><input type="text" class="form-control" name="to_email_id" id="to_email_id" readonly> </span>
+                </li>
+                <li class="mb-2">
+                  <span class="text-bold-500 primary"><a><i class=" font-small-3"></i>*Subject :</a></span>
+                  <span class="display-block"><input required type="text" class="form-control" name="subject" > </span>
+                </li>
+                <li class="mb-2">
+                  <span class="text-bold-500 primary"><a><i class=" font-small-3"></i>Message:</a></span>
+                  <span class="display-block"><textarea class="form-control" name="message"></textarea> </span>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="submit"  class="btn btn-default">Save</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 <!-- Create alert Modal form-->
 <div class="modal fade" id="create_alert_modal" role="dialog"  data-backdrop="static">
@@ -566,90 +726,104 @@ $( document ).ready(function() {
         <div class="modal-footer">
           <button type="submit"  class="btn btn-default">Save</button>
         </div>
-      </form>
+          01
     </div>
   </div>
 </div>
 
+
 <!-- Campaign List Modal-->
 <div class="modal fade" id="detailslist" role="dialog" data-backdrop="false">
-  <div class="modal-dialog modal-lg">
+  <div class="modal-dialog modal-xl">
     <div class="modal-content">
       <div class="modal-header">
-        <p class="modal-title" id="titleOfferViewDetail"></p>
+        <p class="modal-title" >Posted on 12/21/2018<br><i class="fa fa-eye"></i> 1000</p>
+          <strong style="margin-left: 82px; margin-top: 22px;"><b>I will promote your brand on instagram</b></strong>
         <button  type="button" class="close" data-dismiss="modal">&times;</button>
       </div>
+
 {#      <form name="add_youtube_inf_to_campaign_list_form" id="add_influencer_to_campaign" action="/addYoutubeInfToCampaignList" method="POST">#}
         <div class="modal-body">
+            <span style="color:#187DE2; margin-left: 28px; font-size: 22px;">Influencer Name</span>
           <input type="hidden" name="channel_id" id="youtube_channel_id">
 
 {#          <div id="channel_name"></div>#}
 {#          <div>channels</div>#}
-          <div class="container" style="background-color: white;">
-              <div class="row">
-              <div class="col-xl-9">
-              <table cellspacing="1" style="border:solid 1px #0c0909" class="search-infl-tbl" >
-                    <tr>
-                    <div>
-{#                      <td rowspan="4" class="si-image">#}
-{#                              <img src="" id="imageOfferViewDetail" height="150px" width="155px">#}
-{#                      </td>#}
-                      <td rowspan="4" class="si-image">
-                        <img src=" " height="150px" width="155px">
-                      </td>
-                      <td colspan="2" style="border-right: solid 1px #E1DEDD;">
-                        <table width="400px" cellpadding="1">
-                          <tr>
-                            <td style="border-right: solid 1px #E1DEDD; border-bottom:solid 1px #E1DEDD; border-top:solid 1px #E1DEDD; font-size:14px;">
-                              <b id="followersOfferViewDetail"></b>
-                              <br>
-                              Total followers
-                            </td>
-                            <td style="border-right: solid 1px #E1DEDD; border-bottom:solid 1px #E1DEDD; border-top:solid 1px #E1DEDD; font-size:14px;">
-                              <b id="budgetOfferViewDetail"></b>
-                              <b id="currencyOfferViewDetail"></b>
-                              <br>
-                              Budget
-                            </td>
-                             <td style="border-right: solid 1px #E1DEDD; border-bottom:solid 1px #E1DEDD; border-top:solid 1px #E1DEDD; font-size:14px;">
-                              <b id="periodfromdateOfferViewDetail"></b>
-                              <b id="periodtodateOfferViewDetail"></b>
-                              <br>
-                              Period
-                            </td>
-                              <td style="border-right: solid 1px #E1DEDD; border-bottom:solid 1px #E1DEDD; border-top:solid 1px #E1DEDD; font-size:14px;">
-                              <b id="noOfViewsOfferViewDetail"></b>
-                              <b id="noOfRepliesOfferViewDetail"></b>
-                              <br>
-                              Views and Replies
-                            </td>
-                          </tr>
-                          <tr></tr>
-                          <tr></tr>
-                          </tr>
-                          <tr><td colspan="2">
-                            <b style="font-size:12px">Channels</b> &emsp;
-                              <p id="channelOfferViewDetail"></p>
-                            <a  target="_blank" id="" style="font-size:20px;"></a>&emsp;
-
-{#                              {% endfor %}#}
-{#                          <span data-toggle="modal" data-target="#detailslist">#}
-{#                              {% set detail_offer = item %}#}
-{#                            <button onclick="displayOffers('{{ item }}')" style="margin-top: 10px; background-color: lightgreen; color: white">Save</button>#}
-{#                          </span>#}
-                          </td></tr>
-                        </table>
-                      </div>
-                    </table>
-              </div>
-              <div class="col-xl-3" style="border-right: solid 1px #E1DEDD">
-                  <p style="text-align: center"><b>Offer Description</b></p>
-                  <p id="offerdescription"></p>
-              </div>
+          <div class="container" style="background-color: white; ">
+            <div class="row">
+                <div class="col-xl-6">
+                    <img src="static\app-assets\img\elements\01.png">
                 </div>
+                <div class="col-xl-6">
+
+      <div class="container" style="max-width:100%">
+          <div class="row" style="text-align: center;">
+
+              <div class="col-lg-4" style="border:1px solid Gray;"><b style="color: black;">Channles</b><br></div>
+              <div class="col-lg-4" style="border:1px solid Gray;"><b style="color: black;">Followers</b><br>200 000</div>
+              <div class="col-lg-4" style="border:1px solid Gray;"><b style="color: black;">Price</b><br>$25000</div>
+          </div>
+
+           <div class="row">
+              <div class="col-lg-6" style="border:1px solid Gray; padding-bottom: 23px; "><b style="color: black; margin-left: 115px;">Categories</b>
+              <table style="margin-top: 10px;">
+                  <tr>
+                      <td><button type="button" class="btn btn-default" style="background-color: #e4dcdc;color:black;border-radius: 0px;line-height: 19px;font-size: 17px; width:auto; ">Button</button></td>
+                     <td><button type="button" class="btn btn-default"  style="background-color: #e4dcdc;color:black;border-radius: 0px;line-height: 19px;font-size: 17px; width:auto; margin-left:10px; ">Button</button></td>
+                  </tr>
+
+              </table>
+              </div>
+              <div class="col-lg-6" style="border:1px solid Gray; padding-bottom: 23px; "><b style="color: black; margin-left: 115px;">Arrangement</b>
+                    <table style="margin-top: 10px;">
+                  <tr>
+                      <td><button type="button" class="btn btn-default" style="background-color: #e4dcdc;color:black;border-radius: 0px;line-height: 19px;font-size: 17px; width:auto; ">Button</button></td>
+                     <td><button type="button" class="btn btn-default" style="background-color: #e4dcdc;color:black;border-radius: 0px;line-height: 19px;font-size: 17px; width:auto; margin-left:10px; ">Button</button></td>
+                  </tr>
+
+                   <tr style="margin-top:10px;">
+           <td><button type="button" class="btn btn-default" style="background-color: #e4dcdc;color:black;border-radius: 0px;line-height: 19px;font-size: 17px; width:auto; ">Button</button></td>
+                        <td><button type="button" class="btn btn-default" style="background-color: #e4dcdc;color:black;border-radius: 0px;line-height: 19px;font-size: 17px; width:auto; margin-left:10px;  ">Button</button></td>
+                  </tr>
+
+                   <tr style="margin-top:10px;">
+               <td><button type="button" class="btn btn-default" style="background-color: #e4dcdc;color:black;border-radius: 0px;line-height: 19px;font-size: 17px; width:auto; ">Button</button></td>
+
+                  </tr>
+              </table>
+              </div>
+
+          </div>
+
+          <div class="row">
+              <div class="col-sm-12" style="border: 1px solid gray;">
+                  <span style="margin-left: 42%;"><b>Description</b></span><br>
+                  <p>orem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum</p>
+              </div>
+          </div>
+
+
+
+
+      </div>
+
+
+             </div>
+          </div>
         </div>
 
-        <div class="modal-footer" style="padding-right: 92%">
+        <div class="modal-footer" style="">
+          <div class="row">
+              <div class="col-sm-6" style="float: right; margin-right:81px;">
+                   <button type="button" style="background-color: #187DE2;color:white;border-radius: 0px;line-height: 25px;font-size: 17px; width:auto; ">Details</button>
+            </div>
+                  <div class="col-sm-6" style=" float: left; margin-left:139px; margin-top: -30px;">
+                  <button type="button"  style="background-color: #10F3DC;color:white;border-radius: 0px;line-height: 25px;font-size: 17px; width:auto; ">Reply</button>
+
+              </div>
+
+          </div>
+
         </div>
         </div>
 {#      </form>#}
@@ -657,43 +831,7 @@ $( document ).ready(function() {
   </div>
 </div>
 
-<!-- Send message Modal form-->
-<div class="modal fade" id="sendMessage" role="dialog"  data-backdrop="static">
-  <div class="modal-dialog modal-sm">
-    <div class="modal-content">
-      <div class="modal-header alert-primary">
-        <b class="modal-title">Send Message</b>
-        <button  type="button" class="close" data-dismiss="modal">&times;</button>
-      </div>
-      <form name="create_alert_form" id="send_message_form" action="/sendMessage" method="POST">
-        <div class="modal-body">
-          <input  class="form-control" type="hidden" value="" name="channel_id" id="message_channel_id">
-          <div class="row">
-            <div class="col-12">
-              <ul class="no-list-style">
-                <li class="mb-2">
-                  <span class="text-bold-500 primary"><a><i class=" font-small-3"></i>*To :</a></span>
-                  <span class="display-block"><input type="text" class="form-control" name="to_email_id" id="to_email_id" readonly> </span>
-                </li>
-                <li class="mb-2">
-                  <span class="text-bold-500 primary"><a><i class=" font-small-3"></i>*Subject :</a></span>
-                  <span class="display-block"><input required type="text" class="form-control" name="subject" > </span>
-                </li>
-                <li class="mb-2">
-                  <span class="text-bold-500 primary"><a><i class=" font-small-3"></i>Message:</a></span>
-                  <span class="display-block"><textarea class="form-control" name="message"></textarea> </span>
-                </li>
-              </ul>
-            </div>
-          </div>
-        </div>
-        <div class="modal-footer">
-          <button type="submit"  class="btn btn-default">Save</button>
-        </div>
-      </form>
-    </div>
-  </div>
-</div>
+
 
 
 

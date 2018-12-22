@@ -481,7 +481,7 @@ pre {
   display: flex;
   flex-wrap: wrap;
   margin-right: -15px;
-  margin-left: -15px; }
+  margin-left: -15px !important; }
 
 .no-gutters {
   margin-right: 0;
@@ -28256,7 +28256,10 @@ form .form-section {
     margin-right: 5px; }
 
 form .form-body {
-  overflow: hidden; }
+  overflow: hidden;
+  margin-left: 150px;
+
+}
 
 form .form-actions {
   border-top: 1px solid #d3dce9;
