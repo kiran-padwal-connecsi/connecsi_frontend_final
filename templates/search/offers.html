@@ -97,10 +97,10 @@ function displayOffers(item) {
                 <form class="col s12" action="/offers" method="POST" name="form_search" id="form_search">
                   <div class="form-body">
                     <div class="row" style="padding-top: 2%;">
-                      <div class="col-xl-2 col-lg-2 col-md-2 mb-1" style="padding-left: 20px">
+                      <div class="offset-xl-1 col-xl-2 offset-lg-1 col-lg-2 offset-md-1 col-md-2 mb-1" >
                       <label>Channel</label>
                         <div class="form-group">
-                          <select class="form-control" name="channel" style="height:35px;">
+                          <select class="form-control apna-btn" name="channel" style="height:35px;">
                             {% if form_filters['channel'] %}
                             <option value="{{ form_filters['channel'] }}">{{ form_filters['channel'] }}</option>
                             {% endif %}
@@ -111,10 +111,10 @@ function displayOffers(item) {
                           </select>
                         </div>
                       </div>
-                      <div class="col-xl-3 col-lg-3 col-md-3 mb-1">
+                      <div class="col-xl-4 col-lg-4 col-md-4 mb-1">
                         <div class="form-group" >
                         <label>Category</label>
-                          <input class="form-control" id="string_word" name="string_word" type="text" placeholder="Enter Keywords"style="height:35px;"
+                          <input class="form-control apna-btn" id="string_word" name="string_word" type="text" placeholder="Enter Keywords"style="height:35px;"
                                  {% if form_filters['string_word'] %}
                           value="{{ form_filters['string_word'] }}"
                           {% endif %}
@@ -126,7 +126,7 @@ function displayOffers(item) {
                         <div class="form-group" >
                           <label>Country</label>
                           <div class="form-group">
-                            <select class="form-control" name="country" style="height:35px;">
+                            <select class="form-control apna-btn" name="country" style="height:35px; width: 100%">
                               {% if form_filters['country'] %}
                               <option value="{{ form_filters['country'] }}">{{ form_filters['country_name'] }}</option>
                               <option value=""></option>
@@ -145,7 +145,7 @@ function displayOffers(item) {
                          <div class="form-group" style="margin-top: 1%">
                           <label>Arrangement</label>
                           <div class="form-group">
-                            <select class="form-control" name="arrangements" style="height:35px;">
+                            <select class="form-control apna-btn" name="arrangements" style="height:35px;">
                               {% if form_filters['arrangements'] %}
                               <option value="{{ form_filters['arrangements'] }}">{{ form_filters['arrangement_name'] }}</option>
                               <option value=""></option>
@@ -158,7 +158,7 @@ function displayOffers(item) {
                       </div>
                     </div>
                     <div class="row">
-                        <div class="col-xl-5 col-lg-5 col-md-5 mb-1" style="padding-right:10%; padding-left: 6%">
+                        <div class="offset-xl-2  col-xl-5 col-lg-5 col-md-5 mb-1" style="padding-right:10%; padding-left: 6%">
                         <div class="form-group" >
                           <p>
                             <label>Followers:</label>
@@ -166,9 +166,8 @@ function displayOffers(item) {
                           <div id="slider1"  style="height:10px;" ></div>
                         </div>
                         <div class="row" style="margin-left:3%;">
-                          <div class="col-3.5" id="lower-value1" style="border:1px solid black; padding-left:1px; padding-right:2px;" ></div>
-                          <div class="col-6"></div>
-                          <div class="col-3.5" id="upper-value1" style="border:1px solid black; padding-right:2px; padding-left:2px; margin-left:19%;"></div>
+                          <div class="offset-xl-2" id="lower-value1" style="border:1px solid black; padding-left:1px; padding-right:2px;" ></div>
+                          <div class="offset-xl-5 col-3.5" id="upper-value1" style="border:1px solid black; padding-right:2px; padding-left:2px;"></div>
                         </div>
                         <input type="hidden" name="min_lower1" value="" id="min_lower1">
                         <input type="hidden" name="max_upper1" value="" id="max_upper1">
@@ -182,9 +181,9 @@ function displayOffers(item) {
                           <div id="slider2"  style="height:10px;" ></div>
                           </div>
                           <div class="row" style="margin-left:3%;">
-                          <div class="col-3.5" id="lower-value2" style="border:1px solid black; padding-left:1px; padding-right:2px;" ></div>
-                          <div class="col-6"></div>
-                          <div class="col-3.5" id="upper-value2" style="border:1px solid black; padding-right:2px; padding-left:2px; margin-left:19%;"></div>
+                          <div class="offset-xl-2 col-3.5" id="lower-value2" style="border:1px solid black; padding-left:1px; padding-right:2px;" ></div>
+                          <div class="col-5"></div>
+                          <div class="col-3.5" id="upper-value2" style="border:1px solid black; "></div>
                         </div>
                           <input type="hidden" name="min_lower2" value="" id="min_lower2">
                           <input type="hidden" name="max_upper2" value="" id="max_upper2">
@@ -192,7 +191,7 @@ function displayOffers(item) {
                         </div>
                     </div>
                       <div class="row">
-                        <div class=" form-group spacing col-xl-3 col-lg-3 col-md-3 mb-3 col-md-offset-6 col-lg-offset-6" style="margin-top: 2%; margin-left: 31%;">
+                        <div class=" form-group spacing offset-xl-6 col-xl-3 col-lg-3 col-md-3 mb-3 col-md-offset-6 col-lg-offset-6" style="margin-top: 2%;">
                           <button id="btn-offers-inf" type="submit" class="btn btn-raised btn-raised btn-primary customButton" name="offers_inf" style="padding-right: 25px; padding-left: 25px; padding-top: 2.5px; padding-bottom: 2.5px;">
                             Search <i class="fa fa-search"></i>
                           </button>
@@ -218,12 +217,14 @@ function displayOffers(item) {
             <div class="col-xl-4 col-lg-4 col-md-4 mb-1">
 
             </div>
-            <div class="col-xl-4 col-lg-4 col-md-4 mb-1"><h4  class="text-center">Offers</h4>
+            <div class="col-xl-4 col-lg-4 col-md-4 mb-1"><h5 style="color:blue" class="text-center">Available Offers
+            </h5>
             </div>
             <div class="col-xl-4 col-lg-4 col-md-4 mb-1" >
+
               <div class="form-group">
-                <div class="form-group" style="margin-left:12%;">
-                  <select class="form-control" name="sort_order" placeholder="Sort" style="width:140px;">
+                <div class="form-group" style="float: right">
+                  <select class="form-control fontColor" name="sort_order" placeholder="Sort" style="width:140px;">
                     <option value=""></option>
                     {% if form_filters['sort_order'] %}
                     <option value="{{ form_filters['sort_order'] }}" disabled>{{ form_filters['sort_order'] }}</option>
@@ -239,95 +240,100 @@ function displayOffers(item) {
                   </select>
                 </div>
               </div>
+
             </div>
           </div>
           </form>
-
+          <div class="container" >
+              <div class="row">
             {% for item in data['data'] %}
-                <div class="container" style="border-style: groove">
-                    <div class="row">
-                        <div class="col-md-8">
-                            <h2>{{ item['offer_name'] }}</h2>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="row">
-                                <div class="col-md-8">
-                                    Eye {{ item['no_of_views'] }}
-                                </div>
-                                <div class="col-md-8">
-                                    Posted On {{ item['from_date'] }}
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <hr/>
-                    <div class="row" style="border-style: groove; border-width: 0.5px">
-                         <div class="col-md-8">
-                            <img style="max-height: 80%; max-width: 25%" src="{{ item['channel_img'] }}">
-                        </div>
-                        <div class="col-md-4" style="border-style: groove; border-width: 0.5px">
-                            <div class="row">
-                                <div class="col-md-6" style="border-style: groove; border-width: 0.5px">
-                                    <p style="text-align: center;"> <strong> Channels</strong> </p>
-                                    {% if item['channels'] == 'Facebook' %}
-                            <a href="{{ item['facebook_url'] }}" target="_blank" class="fa fa-facebook-official blue" style="font-size:20px;"></a>&emsp;
-                            {% endif %}
-                            {% if item['channels'] == 'Instagram' %}
-                            <a href="{{ item['insta_url'] }}" target="_blank" class="fa fa-instagram pink" style="font-size:20px;"></a>&emsp;
-                            {% endif %}
-                            {% if item['channels'] == 'Twitter'%}
-                            <a href="{{ item['twitter_url'] }}" target="_blank" class="fa fa-twitter cyan" style="font-size:20px;"></a>&emsp;
-                            {% endif %}
-                            {% if item['channels'] == 'youtube'%}
-                            <a href="{{ item['youtube_url'] }}" target="_blank" class="fa fa-youtube red" style="font-size:20px;"></a>&emsp;
-                            {% endif %}
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="row">
-                                        <div class="col-md-12" style="border-style: groove;border-width: 0.5px; text-align: center;">
-                                            <p><strong>Total Followers</strong></p>
-                                            <p>{{ item['max_upper_followers'] }}</p>
-                                        </div>
-                                    </div>
+              
+              <div class="col-md-6">
+                  <div class="row">
+                      
+                      <div class="col" >
+                          <i class="fa fa-eye" style="float:right;color:	#949494">  {{ item['no_of_views'] }}</i> 
+                      </div>
+                     
+                  </div>
+                  <div class="row">
+                      <div class="col" style="margin-top: 5px;" >
+                          <span style="float:left; font-size:larger;font-weight: 500">{{ item['offer_name'] }}</span>
+                          <span style="float:right;color:	#949494 ;font-weight: 100;"> Posted On {{ item['from_date'] }}</span> 
+                      </div>
+                  </div>
+                  <hr/>
+                  <div class="row">
+                       <div class="col-md-7" style="border-style: groove;border-width: 0.5px;margin-left: 20px;">
+                          <img style="max-height: 80%; max-width: 25%" src="{{ item['channel_img'] }}">
+                      </div>
+                      <div class="col-md-4" style="border-style: groove; border-width: 0.5px">
+                          <div class="row">
+                              <div class="col-md-6" style="border-style: groove; border-width: 0.5px">
+                                  <p class="offer-text"> <Channels</p>
+                                  {% if item['channels'] == 'Facebook' %}
+                          <a href="{{ item['facebook_url'] }}" target="_blank" class="fa fa-facebook-official blue" style="font-size:20px;"></a>&emsp;
+                          {% endif %}
+                          {% if item['channels'] == 'Instagram' %}
+                          <a href="{{ item['insta_url'] }}" target="_blank" class="fa fa-instagram pink" style="font-size:20px;"></a>&emsp;
+                          {% endif %}
+                          {% if item['channels'] == 'Twitter'%}
+                          <a href="{{ item['twitter_url'] }}" target="_blank" class="fa fa-twitter cyan" style="font-size:20px;"></a>&emsp;
+                          {% endif %}
+                          {% if item['channels'] == 'youtube'%}
+                          <a href="{{ item['youtube_url'] }}" target="_blank" class="fa fa-youtube red" style="font-size:20px;"></a>&emsp;
+                          {% endif %}
+                              </div>
+                              <div class="col-md-6">
+                                  <div class="row">
+                                      <div class="col-md-12" style="border-style: groove;border-width: 0.5px; text-align: center;">
+                                          <p class="offer-text">Total Followers</p>
+                                          <p>{{ item['max_upper_followers'] }}</p>
+                                      </div>
+                                  </div>
 
-                                    <div class="row">
-                                        <div class="col-md-12" style="border-style: groove; border-width: 0.5px; text-align: center;">
-                                            <p> <strong>Price</strong></p>
-                                            <p>{{ item['budget'] }}</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-12" style="border-style: groove; border-width: 0.5px">
-                                    <p><strong>Categories</strong></p>
-                                    <button class="btn btn-light" style="background-color: cadetblue">{{ item['video_cat_id'] }}</button>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-12" style="border-style: groove; border-width: 0.5px">
-                                    <p><strong>Arrangements</strong></p>
-                                    <button class="btn btn-light" style="background-color: cadetblue">{{ item['arrangements'] }}</button>
-                                </div>
-                            </div>
-                        </div>
+                                  <div class="row">
+                                      <div class="col-md-12" style="border-style: groove; border-width: 0.5px; text-align: center;">
+                                          <p class="offer-text"> Price</p>
+                                          <p>{{ item['budget'] }}</p>
+                                      </div>
+                                  </div>
+                              </div>
+                          </div>
+                          <div class="row">
+                              <div class="col-md-12 btn-categories" style="border-style: groove; border-width: 0.5px">
+                                  <p class="offer-text" >Categories</p>
+                                  <button class="btn-categories apna-btn" >{{ item['video_cat_id'] }}</button>
+                              </div>
+                          </div>
+                          <div class="row">
+                              <div class="col-md-12" style="border-style: groove; border-width: 0.5px">
+                                  <p class="offer-text">Arrangements</p>
+                                  <button class="btn-arrangements apna-btn" >{{ item['arrangements'] }}</button>
+                              </div>
+                          </div>
+                      </div>
 
-                    </div>
-                    <hr />
-                <div class="row">
-                    <div class="col-md-6">
-                        Influencer Name
-                    </div>
-                    <div class="col-md-3">
-                          <span data-toggle="modal" data-target="#detailslist">
-                        <button class="btn btn-primary" style="background-color: darkblue;" onclick="displayOffers('{{ item | to_json}}')"> Details </button>
-                          </span>
-                    </div>
-                    <div class="col-md-3">
-                        <button class="btn btn-default"> Reply </button>
-                    </div>
+                  </div>
+                  <hr />
+              <div class="row">
+                <div class="col-md-2">
+                    <img class="img-circle img-responsive" src="" alt="">
                 </div>
-                </div>
+                  <div class="col-md-4" style="text-align:center">
+                      Influencer Name
+                  </div>
+                  <div class="col">
+                        <span data-toggle="modal" data-target="#detailslist">
+                      <button class="btn btn-primary" style="background-color: #6594EC;" onclick="displayOffers('{{ item | to_json}}')"> Details </button>
+                        </span>
+                        <button class="btn btn-default" style="background-color: #65DBDD"> Reply </button>
+                  </div>
+
+              </div>
+              </div>
+            
+             
 
 {#            <div class="row">#}
 {#              <div class="row">#}
@@ -385,8 +391,11 @@ function displayOffers(item) {
 {#                </div>#}
 {#              </div>#}
 {#            </div>#}
+
             <br>
             {% endfor %}
+            </div>
+          </div>
             <!--<div class="h-100 row align-items-center" id="pagination"></div>-->
           </div>
         </div>
@@ -394,6 +403,8 @@ function displayOffers(item) {
     </div>
   </div>
 </div>
+
+
 <style>
     div.scroll {
         height: 150px;
@@ -435,6 +446,7 @@ display: inline-block;
 text-align: left;
 vertical-align: middle;
 }
+
 @media (min-width: 768px) {
   .modal-xl {
     width: 90%;
@@ -460,6 +472,7 @@ vertical-align: middle;
         background: #555;
     }
 </style>
+
 {#<script>#}
 {#    {% for item in data['data'] %}#}
 {#    const CHART{{ item['linechart_id'] }} = document.getElementById("lineChart{{ item['linechart_id'] }}");#}
@@ -749,14 +762,14 @@ $( document ).ready(function() {
 
 {#          <div id="channel_name"></div>#}
 {#          <div>channels</div>#}
-          <div class="container" style="background-color: white; ">
+          <div class="container-fluid" style="background-color: white; ">
             <div class="row">
                 <div class="col-xl-6">
                     <img src="static\app-assets\img\elements\01.png">
                 </div>
                 <div class="col-xl-6">
 
-      <div class="container" style="max-width:100%">
+      <div class="container-fluid" style="max-width:100%">
           <div class="row" style="text-align: center;">
 
               <div class="col-lg-4" style="border:1px solid Gray;"><b style="color: black;">Channles</b><br></div>
@@ -765,32 +778,20 @@ $( document ).ready(function() {
           </div>
 
            <div class="row">
-              <div class="col-lg-6" style="border:1px solid Gray; padding-bottom: 23px; "><b style="color: black; margin-left: 115px;">Categories</b>
-              <table style="margin-top: 10px;">
-                  <tr>
-                      <td><button type="button" class="btn btn-default" style="background-color: #e4dcdc;color:black;border-radius: 0px;line-height: 19px;font-size: 17px; width:auto; ">Button</button></td>
-                     <td><button type="button" class="btn btn-default"  style="background-color: #e4dcdc;color:black;border-radius: 0px;line-height: 19px;font-size: 17px; width:auto; margin-left:10px; ">Button</button></td>
-                  </tr>
-
-              </table>
+              <div class="col-lg-6" style="border:1px solid Gray; padding-bottom: 23px; ">
+                 <b style="color: black;     text-align: -webkit-center;  display: -webkit-box;">Categories</b>
+                <button type="button" class="btn btn-default" style="background-color: #e4dcdc;color:black;border-radius: 0px;line-height: 19px;font-size: 17px; width:auto; ">Button</button>
+                <button type="button" class="btn btn-default" style="background-color: #e4dcdc;color:black;border-radius: 0px;line-height: 19px;font-size: 17px; width:auto; ">Button</button>
+                <button type="button" class="btn btn-default" style="background-color: #e4dcdc;color:black;border-radius: 0px;line-height: 19px;font-size: 17px; width:auto; ">Button</button>
+                <button type="button" class="btn btn-default" style="background-color: #e4dcdc;color:black;border-radius: 0px;line-height: 19px;font-size: 17px; width:auto; ">Button</button>
+                <button type="button" class="btn btn-default" style="background-color: #e4dcdc;color:black;border-radius: 0px;line-height: 19px;font-size: 17px; width:auto; ">Button</button>
               </div>
-              <div class="col-lg-6" style="border:1px solid Gray; padding-bottom: 23px; "><b style="color: black; margin-left: 115px;">Arrangement</b>
-                    <table style="margin-top: 10px;">
-                  <tr>
-                      <td><button type="button" class="btn btn-default" style="background-color: #e4dcdc;color:black;border-radius: 0px;line-height: 19px;font-size: 17px; width:auto; ">Button</button></td>
-                     <td><button type="button" class="btn btn-default" style="background-color: #e4dcdc;color:black;border-radius: 0px;line-height: 19px;font-size: 17px; width:auto; margin-left:10px; ">Button</button></td>
-                  </tr>
-
-                   <tr style="margin-top:10px;">
-           <td><button type="button" class="btn btn-default" style="background-color: #e4dcdc;color:black;border-radius: 0px;line-height: 19px;font-size: 17px; width:auto; ">Button</button></td>
-                        <td><button type="button" class="btn btn-default" style="background-color: #e4dcdc;color:black;border-radius: 0px;line-height: 19px;font-size: 17px; width:auto; margin-left:10px;  ">Button</button></td>
-                  </tr>
-
-                   <tr style="margin-top:10px;">
-               <td><button type="button" class="btn btn-default" style="background-color: #e4dcdc;color:black;border-radius: 0px;line-height: 19px;font-size: 17px; width:auto; ">Button</button></td>
-
-                  </tr>
-              </table>
+              <div class="col-lg-6" style="border:1px solid Gray; padding-bottom: 23px; "><b style="color: black;     text-align: -webkit-center;    display: -webkit-box;">Arrangement</b>
+                <button type="button" class="btn btn-default" style="background-color: #e4dcdc;color:black;border-radius: 0px;line-height: 19px;font-size: 17px; width:auto; ">Button</button>
+                <button type="button" class="btn btn-default" style="background-color: #e4dcdc;color:black;border-radius: 0px;line-height: 19px;font-size: 17px; width:auto; ">Button</button>
+                <button type="button" class="btn btn-default" style="background-color: #e4dcdc;color:black;border-radius: 0px;line-height: 19px;font-size: 17px; width:auto; ">Button</button>
+                <button type="button" class="btn btn-default" style="background-color: #e4dcdc;color:black;border-radius: 0px;line-height: 19px;font-size: 17px; width:auto; ">Button</button>
+                <button type="button" class="btn btn-default" style="background-color: #e4dcdc;color:black;border-radius: 0px;line-height: 19px;font-size: 17px; width:auto; ">Button</button>
               </div>
 
           </div>
@@ -859,3 +860,7 @@ $( document ).ready(function() {
 
 
 {% endblock %}
+
+<style>
+    .apna2-button { margin: 0 auto; display: inline-block; width: 30%; border-radius: 10px; border: none; padding: 10px 20px; color: aliceblue; background-color: #d6a844; }
+  </style>

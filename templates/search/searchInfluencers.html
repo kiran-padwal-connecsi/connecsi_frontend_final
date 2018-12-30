@@ -67,104 +67,108 @@ function  exportCsv(data) {
 
 </head>
 <div class="sticky-bottom" id="accordion" style="background-color: white;">
-  <div class="card" >
-    <div id="influencerSearchPanel"  data-parent="#accordion">
-      <div class="card-body" >
-        <div class="row" style="justify-content: center">
-          <div class="col-xl-12 col-lg-12  col-md-12 col-12">
-            <div class="card"  >
-              <div class="card-body" style="padding: 1px;">
-                <form class="col s12" action="/searchInfluencers" method="POST" name="form_search" id="form_search">
-                  <div class="form-body">
-                    <div class="row" style="padding-top: 2%;">
-
-                      <div class="col-xl-2 col-lg-2 col-md-2 mb-1" style="margin-top:0px;">
-
-                        <div class="form-group" >
- <label class="lb"><b>Channel</b></label>
-                          <select class="form-control" name="channel" style="height:35px;">
-                            {% if form_filters['channel'] %}
-                            <option value="{{ form_filters['channel'] }}">{{ form_filters['channel'] }}</option>
-                            {% endif %}
-                            <option value="Youtube">Youtube</option>
-                            <option value="Twitter">Twitter</option>
-                            <option value="Facebook">Facebook</option>
-                            <option value="Instagram">Instagram</option>
-                          </select>
+        <div class="card">
+            <div id="influencerSearchPanel" data-parent="#accordion">
+                <div class="card-body">
+                    <div class="row" style="justify-content: center">
+                        <div class="col-xl-12 col-lg-12  col-md-12 col-12">
+                            <div class="card">
+                                <div class="card-body" style="padding: 1px;">
+                                    <form class="col s12" action="/searchInfluencers" method="POST" name="form_search" id="form_search">
+                                        <div class="form-body">
+                                            <div class="row" style="padding-top: 2%;">
+    
+                                                <div class="col-xl-2 col-lg-2 col-md-2 mb-1" style="margin-top:0px;">
+    
+                                                    <div class="form-group">
+                                                        <label class="lb searchLabel">Channel</label>
+                                                        <select class="apna-btn" name="channel" style="height:35px;">
+                                                            {% if form_filters['channel'] %}
+                                                            <option value="{{ form_filters['channel'] }}">{{
+                                                                form_filters['channel'] }}</option>
+                                                            {% endif %}
+                                                            <option value="Youtube">Youtube</option>
+                                                            <option value="Twitter">Twitter</option>
+                                                            <option value="Facebook">Facebook</option>
+                                                            <option value="Instagram">Instagram</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="col-xl-3 col-lg-3 col-md-3 mb-1" style="margin-top:0px;">
+    
+                                                    <div class="form-group">
+                                                        <label class="lb searchLabel">Category</label>
+                                                        <input class="apna-btn" id="string_word" name="string_word"
+                                                            type="text" placeholder="Enter Keywords" style="height:35px;"
+                                                            {% if form_filters['string_word'] %} value="{{ form_filters['string_word'] }}"
+                                                            {% endif %}>
+                                                    </div>
+                                                    <!--{{ form_filters }}-->
+                                                </div>
+                                                <div class="col-xl-2 col-lg-2 col-md-2 mb-1">
+                                                    <div class="form-group">
+                                                        <label class="lb searchLabel">Country</label>
+                                                        <div class="form-group">
+                                                            <select class="apna-btn" name="country" style="height:35px;">
+                                                                {% if form_filters['country'] %}
+                                                                <option value="{{ form_filters['country'] }}">{{
+                                                                    form_filters['country_name'] }}</option>
+                                                                <option value=""></option>
+                                                                {% else %}
+                                                                <option value=""></option>
+                                                                {% endif %}
+    
+                                                                {% for item in regionCodes['data'] %}
+                                                                <option value="{{ item['region_code'] }}">{{
+                                                                    item['country_name'] }}</option>
+                                                                {% endfor %}
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-xl-5 col-lg-5 col-md-5 mb-1" style="padding-right:10%; padding-left: 6%">
+                                                    <div class="form-group">
+                                                      <p>
+                                                        <label class="searchLabel">Followers:</label>
+                                                      </p>
+                                                      <div id="slider" style="height:10px;">
+                                                        </div>
+                                                    </div>
+                                                    <div class="row" style="margin-left:3%;">
+                                                      <div class="offset-xl-2" id="lower-value" style="border:1px solid black; padding-left:1px; padding-right:2px;">0</div>
+                                                      <div class="offset-xl-5 col-3.5" id="upper-value" style="border:1px solid black; padding-right:2px; padding-left:2px;">1000000</div>
+                                                    </div>
+                                                    <input type="hidden" name="min_lower" value="" id="min_lower">
+                                                    <input type="hidden" name="max_upper" value="" id="max_upper">
+                                                    <!---->
+                                                  </div>
+                                              
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-xl-4 col-lg-4 col-md-4 mb-1">
+                                                </div>
+                                                <div class="col-xl-4 col-lg-4 col-md-4 mb-1">
+                                                    <div class="form-group spacing" style="margin-left:20%;">
+                                                        <button id="btn-search-inf" type="submit" class="btn btn-raised btn-raised btn-primary customButton"
+                                                            name="search_inf" style="font-family: Segoe UI; padding: 5px 35px; background-color:#9E57DD !important; ">
+                                                            Search <i class="fa fa-search"></i>
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                                <div class="col-xl-4 col-lg-4 col-md-4 mb-1">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
                         </div>
-                      </div>
-                      <div class="col-xl-3 col-lg-3 col-md-3 mb-1" style="margin-top:0px;">
-
-                        <div class="form-group" >
- <label class="lb"><b>Category</b></label>
-                          <input class="form-control" id="string_word" name="string_word" type="text" placeholder="Enter Keywords"style="height:35px;"
-                                 {% if form_filters['string_word'] %}
-                          value="{{ form_filters['string_word'] }}"
-                          {% endif %}
-                          >
-                        </div>
-                        <!--{{ form_filters }}-->
-                      </div>
-                      <div class="col-xl-2 col-lg-2 col-md-2 mb-1" >
-                        <div class="form-group" >
-                          <label class="lb"><b>Country</b></label>
-                          <div class="form-group">
-                            <select class="form-control" name="country" style="height:35px;">
-                              {% if form_filters['country'] %}
-                              <option value="{{ form_filters['country'] }}">{{ form_filters['country_name'] }}</option>
-                              <option value=""></option>
-                              {% else %}
-                              <option value=""></option>
-                              {% endif %}
-
-                              {% for item in regionCodes['data'] %}
-                              <option value="{{ item['region_code'] }}">{{ item['country_name'] }}</option>
-                              {% endfor %}
-                            </select>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="col-xl-5 col-lg-5 col-md-5 mb-1" style="padding-right:10%; padding-left: 6%">
-                        <div class="form-group" >
-                          <p>
-                            <label>Followers range:</label>
-                          </p>
-                          <div id="slider"  style="height:10px;" ></div>
-                        </div>
-                        <div class="row" style="margin-left:3%;">
-                          <div class="col-3.5" id="lower-value" style="border:1px solid black; padding-left:1px; padding-right:2px;" ></div>
-                          <div class="col-6"></div>
-                          <div class="col-3.5" id="upper-value" style="border:1px solid black; padding-right:2px; padding-left:2px; margin-left:3%;"></div>
-                        </div>
-                        <input type="hidden" name="min_lower" value="" id="min_lower">
-                        <input type="hidden" name="max_upper" value="" id="max_upper">
-                        <!--{{ form_filters }}-->
-                      </div>
                     </div>
-                    <div class="row">
-                      <div class="col-xl-4 col-lg-4 col-md-4 mb-1">
-                      </div>
-                      <div class="col-xl-4 col-lg-4 col-md-4 mb-1">
-                        <div class="form-group spacing" style="margin-left:20%;">
-<button id="btn-search-inf" type="submit" class="btn btn-raised btn-raised btn-primary customButton" name="search_inf"
-        style="background-color:rgb(127, 90, 247) !important;  padding-right: 10px; padding-left: 10px; padding-top: 2.5px; padding-bottom: 2.5px;">
-                            Search <i class="fa fa-search"></i>
-                          </button>
-                        </div>
-                      </div>
-                      <div class="col-xl-4 col-lg-4 col-md-4 mb-1">
-                      </div>
-                    </div>
-                  </div>
-                </form>
-              </div>
+                </div>
             </div>
-          </div>
         </div>
-      </div>
     </div>
-  </div>
-</div>
+
 
 {#<div class="row">#}
 {#  <div class="col-sm-12">#}
@@ -342,41 +346,173 @@ function  exportCsv(data) {
 
 
 
+<div class="container" style="background:white; padding-top: 15px">
+        <div class="row">
 
-
-
-
-<div class="container">
-     <div class="row">
-
-  <div class=" col-sm-4"> {% if data['data'] %}
-              <a onclick="exportCsv({{ data }})"><button type="button" d="" style="background-color: dodgerblue;color:white;border-radius: 0px;line-height: 25px;font-size: 19px; width:160px; margin-left:-12px;">Export CSV</button></a>
-              {% endif %}</div>
-         <div class="col-sm-4"><h5 style="color:dodgerblue; margin-left: 76px;">Influencers on {{ form_filters['channel']}}</h5></div>
-  <div class="col-sm-4"><select class="form-control" name="sort_order" style="width: 135px;margin-left: 228px;">
-                    <option value="">Sort</option>
-                    {% if form_filters['sort_order'] %}
-                    <option value="{{ form_filters['sort_order'] }}" disabled>{{ form_filters['sort_order'] }}</option>
-                    {% if form_filters['sort_order'] == "High To Low" %}
-                    <option value="Low To High">Low To High</option>
-                    {% elif form_filters['sort_order'] == "Low To High" %}
-                    <option value="High To Low">High To Low</option>
-                    {% endif %}
-                    {% else %}
-                    <option value="High To Low">High To Low</option>
-                    <option value="Low To High">Low To High</option>
-                    {% endif %}
-                  </select></div>
-
-
-  </div>
-
-</div>
-
-<div class="container" style="background:white;">
-
+                <div class=" col-sm-4"> {% if data['data'] %}
+                    <a onclick="exportCsv({{ data }})"><button type="button" style="background-color: #4F8AF1;color:white;border-radius: 0px;line-height: 25px;font-size: 19px; width:160px;">Export
+                            CSV</button></a>
+                    {% endif %}</div>
+                <div class="col-sm-4">
+                    <h5 class="topChannelName">Influencers on {{ form_filters['channel']}}</h5>
+                </div>
+                <div class="col-sm-4"><select class="form-control fontColor" name="sort_order" style="width: 135px; float:right;  border: none;">
+                        {% if form_filters['sort_order'] %}
+                        <option value="{{ form_filters['sort_order'] }}" disabled>{{ form_filters['sort_order'] }}</option>
+                        {% if form_filters['sort_order'] == "High To Low" %}
+                        <option value="Low To High">Low To High</option>
+                        {% elif form_filters['sort_order'] == "Low To High" %}
+                        <option value="High To Low">High To Low</option>
+                        {% endif %}
+                        {% else %}
+                        <option value="High To Low">High To Low</option>
+                        <option value="Low To High">Low To High</option>
+                        {% endif %}
+                    </select></div>
+        
+        
+            </div>
     {% for item in data['data'] %}
-   <div class="row">
+
+    <div class="grid-container">
+            <div class="icon-area">
+                <div class="innerIcon" >
+                    <div>
+                        <a href="/compose" class="fa fa-envelope" data-toggle="tooltip" title="" style="position: relative; z-index: 1; font-size:25px;    
+                                                                    "
+                            data-original-title="Message"></a>
+                    </div>
+                    <br>
+                    <div>
+                        <span data-toggle="modal" data-target="#campaignList">
+                            <a onclick="campaignList('UCVlTXYAxU-Ao16-QCKMR42Q')" class="fa fa-bullseye red" data-toggle="tooltip"
+                                title="" style="font-size:25px;     
+                                                                   "
+                                data-original-title="Add To Campaign"><i class="fa fa-plus-circle green" style="font-size:10px; position:relative; top:5px; left:-8px;"></i></a>
+                        </span>
+                    </div>
+    
+                    <br>
+                    <div>
+                        <span data-toggle="modal" data-target="#createalert">
+                            <a class="fa fa-star" data-toggle="tooltip" title="Create Alerts" style="font-size:25px; "><i
+                                    class="fa fa-plus-circle green" style="font-size:10px; position:relative; top:1px; left:-10px;    "></i></a></span>
+                    </div>
+                    <br>
+                    <div>
+                        <span data-toggle="modal" data-target="#createalert">
+                            <a onclick="createAlert('UCVlTXYAxU-Ao16-QCKMR42Q','21119','8107','529','135')" class="fa fa-bell"
+                                data-toggle="tooltip" title="" style="font-size:25px;
+                                                               "
+                                data-original-title="Create Alerts"><i class="fa fa-plus-circle green" style="font-size:10px; position:relative; top:1px; left:-10px; "></i></a>
+                        </span>
+    
+                    </div>
+    
+                </div>
+            </div>
+            <div class="social1">
+    
+                <b ><a href="https://www.youtube.com/channel/{{ item['channel_id'] }}" style=" font-size: 16px;
+                    font-weight: bold;color:#18B0C1 !important;" target="_blank">{{
+                        item['title'] }}</a></b> <i class="fa fa-youtube font-medium-3 purple"></i>
+    
+            </div>
+            <div class="social2">
+                <b style="font-size: 16px;
+                font-weight: bold;">Other Channels</b> &emsp;
+                {% if item['facebook_url'] %}
+                <a href="{{ item['facebook_url'] }}" target="_blank" class="fa fa-facebook-official blue" style="font-size:20px;"></a>&emsp;
+                {% endif %}
+                {% if item['insta_url'] %}
+                <a href="{{ item['insta_url'] }}" target="_blank" class="fa fa-instagram pink" style="font-size:20px;"></a>&emsp;
+                {% endif %}
+                {% if item['twitter_url'] %}
+                <a href="{{ item['twitter_url'] }}" target="_blank" class="fa fa-twitter cyan" style="font-size:20px;"></a>&emsp;
+                {% endif %}
+    
+            </div>
+            <div class="profile-image">
+                <img src="{{ item['channel_img'] }}" height="80%" width="122px" style="margin: 20% 0;">
+            </div>
+            <div class="stat1">
+                <div class="text-align-center">
+                    <span class="statNumbers">{{ item['subscriberCount_gained'] }}</span>
+                    <br>
+                    Total followers
+                </div>
+            </div>
+            <div class="stat2">
+                <div class="text-align-center">
+                        <span class="statNumbers">{{ (item['total_100video_likes']/100)|int }}</span>
+                    <br>
+                    Avg Likes/ video
+                </div>
+            </div>
+            <div class="stat3">
+                <div class="text-align-center">
+                    <span class="statNumbers">{{ (item['total_100video_views']/100)|int }}</span>
+                    <br>
+                    Avg Views/ video
+                </div>
+            </div>
+            <div class="stat4">
+                <div class="text-align-center">
+                        <span class="statNumbers">{{ (item['total_100video_comments']/100)|int }}</span>
+            
+                    <br>
+                    Avg Comments/ video
+                </div>
+            </div>
+            <div class="graph">
+                <div>
+                    <canvas id="lineChart{{ item['linechart_id'] }}" height="150" width="250"></canvas>
+                </div>
+            </div>
+            <div class="tab-content  tabcontent scroll">
+    
+                <div id="status{{ item['channel_id'] }}" class="tab-pane fade show active">
+                    <b style="font-weight:450; font-size:15px;">Campaign 1<br /></b>
+                    <b style="font-weight:400; color:orange; font-size:15px;">Contacted</b>
+                    <hr style="height:0px; margin:auto;">
+                    <b style="font-weight:450; font-size:15px;">Campaign 2<br /></b>
+                    <b style="font-weight: 400; color:green; font-size:15px;">Accepted
+                    </b>
+                    <hr style="height:0px; margin:auto;">
+                    <b style="font-weight:450; font-size:15px;">Campaign 3<br /></b>
+                    <b style="font-weight: 400; color:orange; font-size:15px;">Contacted</b>
+                </div>
+                <div id="alert{{ item['channel_id'] }}" class="tab-pane fade">
+                    <b style="font-weight:450; font-size:15px;">Followers<br /></b>
+                    <b style="font-weight:400;font-size:15px; color:red;">{{ item['alert_followers'] }}</b>
+                    <hr style="height:0px; margin:auto;">
+                    <b style="font-weight:450; font-size:15px;">Avg Views/video<br /></b>
+                    <b style="font-weight: 400; color:red; font-size:15px;">{{ item['alert_views'] }}
+                    </b>
+                    <hr style="height:0px; margin:auto;">
+                    <b style="font-weight:450; font-size:15px;">Avg Likes/video<br /></b>
+                    <b style="font-weight: 400; color:red; font-size:15px;">{{ item['alert_likes'] }}
+                    </b>
+                    <hr style="height:0px; margin:auto;">
+                    <b style="font-weight:450; font-size:15px;">Avg Comments<br /></b>
+                    <b style="font-weight: 400; color:red; font-size:15px;">{{ item['alert_comments'] }}</b>
+                </div>
+            </div>
+            <div class="tab-button">
+                <ul class="nav nav-tabs tabDesign" role="tablist">
+                        <li class="nav-item">
+                                <a class="nav-link active" style="padding: 2px  8px;" data-toggle="tab" href="#status{{ item['channel_id'] }}" role="tab">Status <span class="fa fa-bullseye"></span></a>
+                        </li>
+    
+                    <li class="nav-item">
+                        <a class="nav-link " style="padding: 2px  8px;" data-toggle="tab" href="#alert{{ item['channel_id'] }}" role="tab">Alert <span class="fa fa-bell"></span></a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+
+   <!-- <div class="row">
                             <div class="">
                                 <table cellspacing="1" border="solid 0px #E1DEDD;">
                                     <tr>
@@ -386,11 +522,11 @@ function  exportCsv(data) {
                                                <span data-toggle="modal" data-target="#campaignList">
                                                <a onclick="campaignList('{{ item['channel_id'] }}')"  class="fa fa-bullseye red" data-toggle="tooltip" title="Add To Campaign" style="font-size:25px;"><i class="fa fa-plus-circle green" style="font-size:10px; position:relative; top:5px; left:-8px;"></i></a>
                                                </span>
-                                            <br>
+                                            <br> -->
                                             <!--href="/createAlert/{{ item['channel_id'] }}"-->
                                             <!--onclick="createAlert('{{ item['channel_id'] }}')"-->
                                             <!--<button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#change_pass_modal">Change Password</button>-->
-                                            <span data-toggle="modal" data-target="#createalert">
+                                            <!-- <span data-toggle="modal" data-target="#createalert">
                                             <a onclick="createAlert('{{ item['channel_id'] }}','{{ item['subscriberCount_gained'] }}','{{ (item['total_100video_views']/100)|int }}','{{ (item['total_100video_likes']/100)|int }}','{{ (item['total_100video_comments']/100)|int }}')" class="fa fa-bell black" data-toggle="tooltip" title="Create Alerts" style="font-size:25px;"><i class="fa fa-plus-circle green" style="font-size:10px; position:relative; top:1px; left:-10px;"></i></a>
                                             </span>
                                         </td>
@@ -484,127 +620,13 @@ function  exportCsv(data) {
                                     </tr>
                                 </table>
                             </div>
-                        </div>
+                        </div> -->
   {% endfor %}
 
 
 
     </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-      <div class="card-body">
-
-          <div class="container contents" id="wrapper">
-            {% for item in data['data'] %}
-            <div class="lazy">
-              <div class="row">
-                <div class="search-infl-tbl">
-                  <table cellspacing="1" style="border:solid 1px #0c0909" class="search-infl-tbl">
-                    <tr>
-
-                      <td colspan="2" style="border-right: solid 1px #E1DEDD;">
-                        <table width="400px" cellpadding="1">
-                          <tr>
-                            <td style="text-align: center;border-right: solid 1px #E1DEDD; border-bottom:solid 1px #E1DEDD; border-top:solid 1px #E1DEDD; font-size:14px;">
-                              <b>{{ item['subscriberCount_gained'] }}</b>
-                              <br>
-                              Total followers
-                            </td>
-                            <td style="text-align:center;border-bottom:solid 1px #E1DEDD; border-top:solid 1px #E1DEDD;  font-size:14px;">
-                              <b>{{ (item['total_100video_likes']/100)|int }}</b>
-                              <br>
-                              Avg Likes/ video
-                            </td>
-                          </tr>
-                          <tr>
-                            <td style="text-align:center;border-right: solid 1px #E1DEDD; border-bottom:solid 1px #E1DEDD;  font-size:14px;">
-                              <b>{{ (item['total_100video_views']/100)|int }}</b>
-                              <br>
-                              Avg Views/ video
-                            </td>
-                            <td style="text-align:center;font-size:14px;">
-                              <b>{{ (item['total_100video_comments']/100)|int }}</b>
-                              <br>
-                              Avg Comments/ video
-                            </td>
-                        </table>
-                      </td>
-                      <td rowspan="4" width="400" style="border-right: solid 1px #E1DEDD;" >
-                        <div>
-                          <canvas id="lineChart{{ item['linechart_id'] }}" height="150px" width="250px"></canvas>
-                        </div></td>
-                      <td rowspan="4" style="border-right:solid 2px white;">
-                        <div class="scroll">
-                          <ul class="nav nav-tabs " style="background-color:#DFDEDE  ;">
-                            <li style="margin-left:3%; font-size:15px; font-weight:bold; "><a data-toggle="tab" href="#status{{ item['channel_id'] }}" style="color:black;">Status<i class="fa fa-bullseye red"></i></a></li>&nbsp;&ensp;
-                            <!--<li style="margin-left:3%; font-size:15px; font-weight:bold; "><a onclick="updateChannelStatusForCampaign('{{ item['channel_id'] }}')" href="#" style="color:black;">Status<i class="fa fa-bullseye red"></i></a></li>&nbsp;&ensp;-->
-                            <li style="font-size:15px; font-weight:bold; "><a data-toggle="tab" href="#alert{{ item['channel_id'] }}" style="color:black;">Alert<i class="fa fa-bell black"></i></a></li>
-                          </ul>
-
-                          <div class="tab-content">
-                            <div id="status{{ item['channel_id'] }}" class="tab-pane fade show active">
-                              <!--<input type="hidden" id="campaign_id[]" name="campaign_id[]">-->
-                            </div>
-
-                            <div id="alert{{ item['channel_id'] }}" class="tab-pane fade">
-                              {% if item['channel_id'] in favInfList_data['data']|map(attribute="channel_id") %}
-                              {% for favitem in favInfList_data['data'] %}
-                              {% if item['channel_id'] == favitem['channel_id'] %}
-                              <b style="font-weight:450; font-size:15px;">Followers<br/></b>
-                              <b style="font-weight:400;font-size:15px; color:red;">{{ favitem['alert_followers'] }}</b>
-                              <hr style="height:0px; margin:auto;">
-                              <b style="font-weight:450; font-size:15px;">Avg Views/video<br/></b>
-                              <b style="font-weight: 400; color:red; font-size:15px;">{{ favitem['alert_views'] }}
-                              </b>
-                              <hr style="height:0px; margin:auto;">
-                              <b style="font-weight:450; font-size:15px;">Avg Likes/video<br/></b>
-                              <b style="font-weight: 400; color:red; font-size:15px;">{{ favitem['alert_likes'] }}
-                              </b>
-                              <hr style="height:0px; margin:auto;">
-                              <b style="font-weight:450; font-size:15px;">Avg Comments<br/></b>
-                              <b style="font-weight: 400; color:red; font-size:15px;">{{ favitem['alert_comments'] }}</b>
-                              {% endif %}
-                              {% endfor %}
-                              {% else %}
-                              <b> No Alerts Set</b>
-                              {% endif %}
-
-
-
-                            </div>
-                          </div>
-                        </div>
-                      </td>
-                    </tr>
-                  </table>
-                </div>
-              </div>
-            </div>
-            <br>
-            {% endfor %}
-            <!--<div class="h-100 row align-items-center" id="pagination"></div>-->
-          </div>
-        </div>
+    
       </div>
     </div>
   </div>
@@ -643,9 +665,7 @@ option:not(:first-of-type) {
  <!--mobile section----->
 
 <style>
-    div.scroll {
-        height: 150px;
-        width: 150px;
+ div.scroll {
         overflow-y: auto;
     }
     .tabrow {
@@ -686,7 +706,8 @@ option:not(:first-of-type) {
 </style>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.1.3/Chart.min.js"></script>
 <script>
-    {% for item in data['data'] %}
+    $(document).ready(function(){
+        {% for item in data['data'] %}
     const CHART{{ item['linechart_id'] }} = document.getElementById("lineChart{{ item['linechart_id'] }}");
     let lineChart{{ item['linechart_id'] }} = new Chart(CHART{{ item['linechart_id'] }}, {
         type: 'line',
@@ -748,6 +769,7 @@ option:not(:first-of-type) {
         }
     });
     {% endfor %}
+    })
 </script>
 <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.devbridge-autocomplete/1.2.24/jquery.autocomplete.min.js"></script>

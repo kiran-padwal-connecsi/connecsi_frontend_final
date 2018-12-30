@@ -4,25 +4,30 @@
 
 <!--Basic User Details Starts-->
 <section id="user-profile">
+    <div class="col">
+        <div class="row">
+
+        </div>
+    </div>
     <div class="row">
-        <div class="col-sm-12">
+        <div class="col">
             <div class="card">
                 <div class="card-body">
-                    <div class="row" style="margin:2%;">
-                        <div class="col-xl-2 col-lg-2 col-md-2 mb-1">
+                    <div class="row" style=" margin:8% 0% 8% 8% !important;">
+                        <div class="col-xl-2 col-lg-2 col-md-2">
                             {% if data['data']['profile_pic'] %}
                             <img id="profile_pic" src="static/img/{{ data['data']['profile_pic'] }}" class="img-border gradient-summer width-150" alt="Card image">
                             {% else %}
                             <img id="profile_pic" src="static/app-assets/img/portrait/avatars/fixed_image.png" class="img-border gradient-summer width-150" alt="Card image">
                             {% endif %}
                         </div>
-                        <div class="col-xl-4 col-lg-4 col-md-4 mb-1">
+                        <div class="offset-md-1 offset-xl-1 offset-lg-1 col-xl-3 col-lg-3 col-md-3">
                             <span class="font-medium-2 text-uppercase">{{data['data']['first_name'] }} {{data['data']['last_name'] }}</span>
                             <div class="grey font-small-3" style="font-size:20px;">{{data['data']['role'] }}</div>
                             <div class="grey font-small-3" style="font-size:20px;">Subscription Type : Basic</div>
-                            <a class="btn btn-sm" href="{{ url_for('editProfile') }}" style="background-color: purple; margin-left: 2%; color:white;font-size:15px; margin-top: 15px">Update Here</a>
+                            <a class="btn btn-sm" href="{{ url_for('editProfile') }}" style="background-color: #9B78EA; margin-left: 2%; color:white;font-size:15px;  margin-top: 30px;">Upgrade</a>
                         </div>
-                        <div class="col-xl-6 col-lg-6 col-md-6 mb-1">
+                        <div class="col-xl-5 col-lg-5 col-md-4">
                             <p class="grey font-small-3" style="font-size:20px;">Accounts:</p>
                             {% if data['data']['facebook_url'] %}
                             <a href="{{ data['data']['facebook_url'] }}" target="_blank" class="fa fa-facebook " title="facebook" style="font-size: 40px;color:#3B5998 ;padding: 10px;"></a>
@@ -61,7 +66,7 @@
                 <div class="card-body">
                     <div class="card-block">
                         <div class="row" style="margin:2%;">
-                            <div class="col-xl-6 col-lg-6 col-md-6 mb-6">
+                            <div class="offset-md-1 offset-lg-1 offset-xl-1 col-xl-5 col-lg-5 col-md-5">
                                 <div class="row" style="margin-bottom: 5px;">
                                     <b style="font-weight:450;">Username:</b> &nbsp;
                                     <span class="display-block overflow-hidden">{{data['data']['first_name'] }} {{data['data']['last_name'] }} </span>
@@ -135,7 +140,7 @@
                             </div>
                         </div>
                         <hr>
-                        <div class="team-members" id="team-members" style="pointer-events: visible;opacity: 1;">
+                        <div class="offset-md-1 offset-lg-1 offset-xl-1 team-members" id="team-members" style="pointer-events: visible;opacity: 1;">
                             <div class="row" style="margin:2%;">
                                 <b>Team Members(2) : </b>
                             </div>
