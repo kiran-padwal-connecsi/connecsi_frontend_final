@@ -565,6 +565,7 @@ def searchInfluencers():
 
             try:
                 channel = request.form.get('channel')
+                print(channel)
                 url = base_url+'Youtube/searchChannels/'+channel
                 # print(url)
                 response = requests.post(url, json=payload)
@@ -627,7 +628,7 @@ def searchInfluencers():
                 "sort_order": "High To Low"
             }
 
-            url = base_url + '/Youtube/searchChannels/Youtube'
+            url = base_url + '/Youtube/searchChannels/youtube'
             response = requests.post(url, json=payload)
             data = response.json()
             linechart_id = 1
@@ -845,7 +846,7 @@ def viewCampaignDetails(campaign_id):
 def getCampaignDetails(campaign_id):
     user_id = session['user_id']
     from templates.campaign import campaign
-    campaignObj = campaign.campaign.Campaign(user_id=user_id,campaign_id=campaign_id)
+    campaignObj = campaign.Campaign(user_id=user_id,campaign_id=campaign_id)
     view_campaign_details_data = campaignObj.get_campaign_details()
     return jsonify(results=view_campaign_details_data['data'])
 
@@ -1093,7 +1094,7 @@ def inbox(message_id):
         pass
 
     from templates.campaign import campaign
-    campaignObj = campaign.campaign.Campaign(user_id=user_id)
+    campaignObj = campaign.Campaign(user_id=user_id)
     view_campaign_data = campaignObj.get_all_campaigns()
 
     print('final conv default = ', full_conv)

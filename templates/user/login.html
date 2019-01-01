@@ -2,30 +2,6 @@
 {{ super() }}
 {% block body %}
 <title xmlns="http://www.w3.org/1999/html">{{title}}</title>
-<!--
-<div class="row login">
-    <div class="col s12 l4 offset-l4">
-        <div class="card">
-            <div class="card-action red white-text">
-                <h3>Login</h3>
-            </div>
-            <div class="card-content">
-                <div class="form-field">
-                    <label for="username">Username</label>
-                    <input type="text" id="username">
-                </div><br/>
-                <div class="form-field">
-                    <label for="password">Password</label>
-                    <input type="password" id="password">
-                </div><br/>
-                <div class="form-field center-align">
-                    <button class="btn-large red hoverable">Login</button>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
--->
 <style>
 .cardheight{
     min-height: 420px !important;
@@ -36,98 +12,60 @@
  ::placeholder{
         color: black;
     }
-
-.tabs .indicator{
-    height: 4px;
-    background-color:#B783E5;
-    width: 124px
-}
-
-.tabs .tab a:focus, .tabs .tab a:focus.active {
-    /* background-color: rgba(246,178,181,0.2); */
-    outline: none;
-}
-
-.carousel.carousel-slider{
-    height: 341.2px;
-    width: 320px;
-}
-
-#brand {
-    padding: 28px 32px 31.2px 32px;
-}
-.login {
-    margin-top: 123px;
-    /* margin-top: 50px; */
-    margin-left: 448px;
-    margin-right: 512px;
-}
 </style>
 
 
-
 <div class="row login">
-    <div class="col">
-            <ul class="tabs" style="width: 320px;margin-top:3px !important;">
-                    <li class="tab col "><a class="active" href="#brand" style="color: black;"><b>Brand</b></a></li>
-                    <li class="tab col " style="    float: right;"><a href="#influencer" style="color: black;"><b>Influencer</b></a></li>
-                </ul>
-                <div class="card" style="background-color: white;width: 320px;">
-               
-                        <div class="custom-color" style="width: 320px;height: 48px;margin-bottom: 21px;">
-       <!-- <table style="border-collapse:inherit; width:0%; text-align: center;">
+    <div class="col s12 l4 offset-l4">
+        <div class="card" style="background-color: white;">
+            <div class="custom-color" style="border: 1px solid black;">
+       <table style="border-collapse:inherit; width:0%; text-align: center;">
                     <tr style="">
-                  <td style="font-size:18px; padding:0px 45px;" class="tdtext"></td>
-                      <td style="line-height:0.55; padding:0px; "></td>
+                  <td style="font-size:18px; padding:0px 45px;" class="tdtext"><b>Login to</b></td>
+                      <td style="line-height:0.55; padding:0px; "><img src=/static/img/logo3.png width="120px" height="120px" class="responsive-img logoimg" style="    margin-left:-40px;"></td>
                    </tr>
 
-                   </table> -->
-                   <!-- <div style=" text-align: center;">
-                        <b>Login to</b>
-                   </div>
-                   <div><img src={{ url_for('static', filename='img/Icon_Only_48x48_color.png') }} width="45px" height="45px" class="logoimg" style=""></div><div><img src={{ url_for('static', filename='img/logo3.png') }} width="120px" height="120px" class="logoimg" style=""></div> -->
-                </div>
-       
+                   </table>
 
-                <div id="brand" class="card-content cardheight custom-color active carousel-item" style=" height: 341.2px; width: 320px; margin-top: 3px !important; z-index: 0; opacity: 1; visibility: visible; transform: translateX(0px) translateX(0px) translateX(0px) translateZ(0px);">
-                        <form method="POST" action="/login">
-                            <input type="email" id="email" name="email" class=" " required="" placeholder="Email or Username" style="border-radius:7px solid black;height: 31px;width: 256px;background-color: #EFEFEF;margin-bottom: 24px !important;border: solid 1px #8A8A8A;margin-bottom: 24px;     padding-top: 6px;
-                            padding-left: 16px;">
-                       
-                            <div class="form-field">
-                                    <input type="password" id="password" name="password" class="" required="" placeholder="Password" style="border-radius:7px solid black;height: 31px;width: 256px;background-color: #EFEFEF;border: solid 1px #8A8A8A;margin-bottom: 25px;    padding-top: 6px;
-                                    padding-left: 16px;">
-                            
-                     
-                            <div class="form-field" style="
-            margin-bottom: 26px;
-        ">
-                                <label>
-                                    <input type="checkbox" class="filled-in">
-                                    <span style="color: black;">Remember me</span>
-                                </label>
-                            </div>
-                          
-                            <div class="form-field center-align">
-                                    <button class="btn" type="submit" name="brand" style="margin-bottom: 8px;width: 256px;background: rgba(158, 87, 221, 1);font-weight: unset;height: 28px;/* width: 40px; */font-stretch: 12px;font-size: 14px;">Log In</button>
-                            </div>
-                        
-                     
-                       
-                        <div class="center-align" style="
-            margin-bottom: 13.5px;
-        "><a class="white-text" href="/forgotPassword" style="color:black !important;">Forgot Password?</a></div>
-                        <div class="divider" style="background-color:black;margin-bottom: 18.5px;"></div>
-                        <div class="white-text center-align" style="color: black !important;margin-bottom: 8px;">Dont have an Account yet ?</div>
-                        <br>
-                        <div class="center-align">
-                                <a class="btn-small hoverable" href="/registerBrand" style="width: 256px;background: rgba(34, 83, 216, 0.54);font-weight: unset;height: 28px;/* width: 40px; */font-stretch: 12px;font-size: 14px;">Free Registration</a>
-                           
-                        </div>
-                    </div></form>
-                    
                 </div>
-            <div id="influencer" class="card-content custom-color" style=" height: 341.2px; width: 320px;">
+            <ul class="tabs custom-color" style="border: 1px solid black; margin-top:3px !important;">
+                <li class="tab col s6"><a class="active" href="#brand" style="color: black;"><b>Brand</b></a></li>
+                <li class="tab col s6"><a href="#influencer" style="color: black;"><b>Influencer</b></a></li>
+            </ul>
+
+            <div id="brand" class="card-content cardheight custom-color" style="border: 1px solid black; margin-top:3px !important;">
+                <form method="POST" action="/login">
+                    <div class="form-field">
+                        <input type="email" id="email" name="email" class="validate" required placeholder="Email" style="border-radius:7px solid black; height:35px;">
+                    </div>
+                    <br/>
+                    <div class="form-field">
+                        <input type="password" id="password" name="password" class="validate" required placeholder="Password" style="border-radius:7px solid black; height:35px;">
+                    </div>
+                    <br>
+                    <div class="form-field">
+                        <label>
+                            <input type="checkbox" class="filled-in"/>
+                            <span style="color: black;">Remember me</span>
+                        </label>
+                    </div>
+                    <br>
+                    <div class="form-field center-align">
+                        <button class="btn-small purple hoverable" type="submit" name="brand" style="width:200px; background: linear-gradient(#A519F7,#198FF7); font-weight: 500; ">Log In</button>
+                    </div>
+                </form>
+                <br/>
+                <div class="divider"></div>
+                <br>
+                <div class="center-align" ><a class="white-text" href="/forgotPassword" style="color:black !important;">Forgot Password?</a></div>
+                <br>
+                <div class="white-text center-align" style="color: black !important;">Dont have an Account yet ?</div>
+                <br>
+                <div class="center-align">
+                    <a class="btn-small green hoverable" href="/registerBrand" style="color:white; font-weight:500; width:200px; background: linear-gradient(#A519F7,#198FF7); ">Free Registration</a>
+                </div>
+            </div>
+            <div id="influencer" class="card-content custom-color" style="border:1px solid black;">
                 <form method="POST" action="/login">
                     <div class="form-field">
                         <input type="text" id="inf_email_id" class="validate" required placeholder="Username" style="border-radius:7px solid black;; height:35px;">
@@ -168,6 +106,7 @@
         </div>
     </div>
 </div>
+
 
 
 {% endblock %}

@@ -25,7 +25,6 @@
                         <div class="list-group">
                             <div class="users-list-padding">
                                 {% for item in inbox['data'] %}
-
                                 <a id="message{{ item['message_id'] }}" class="list-group-item list-group-item-action " href="/inbox/{{ item['message_id'] }}" >
                                     <span class="media">
                                         <span class="avatar avatar-md mr-2">
@@ -457,7 +456,7 @@ function getMessageFiles(message_id){
                url: '/getMessageFiles/'+message_id,
                success: function(data)
                {
-                   <!--alert(data); // show response from the python script.-->
+                   alert(data); // show response from the python script.-->
                    $('#view_message_files').empty();
                    $('#view_message_files').append('<tr><td>Files Shared</td></tr>');
                    jQuery.each(data.results, function(i, val) {
@@ -476,7 +475,7 @@ function getMessageAgreements(message_id){
                url: '/getMessageAgreements/'+message_id,
                success: function(data)
                {
-                   <!--alert(data); // show response from the python script.-->
+                   alert(data); // show response from the python script.-->
                    $('#view_message_agreements').empty();
                    $('#view_message_agreements').append('<tr><td style="color:purple;">Agreements Shared</td><td></td></tr>');
                    jQuery.each(data.results, function(i, val) {
@@ -570,7 +569,7 @@ function getProposal(message_id,campaign_id){
                url: '/getProposal/'+message_id+'/'+campaign_id,
                success: function(data)
                {
-                   <!--alert(data); // show response from the python script.-->
+                   alert(data); // show response from the python script
                    jQuery.each(data.results, function(i, val) {
                         alert(val.campaign_name);
                         $('#view_proposal_campaign_name').empty();
@@ -677,13 +676,13 @@ function getAllMappedChannel_ids(channel_id){
                         <!--alert(val.twitter_channel_id);-->
                             $( '#youtube_channel_id').val(val.youtube_channel_id);
                             $( '#twitter_channel_id').val(val.twitter_channel_id);
-                            <!--$('#status'+channel_id).append('<b style="font-weight:450; font-size:15px;">'+val.campaign_name+'<br/></b>');-->
-                            <!--$('#status'+channel_id).append('<b style="font-weight:400; color:orange; font-size:15px;">'+val.status+'</b>');-->
-                            <!--$('#status'+channel_id).append('<hr style="height:0px; margin:auto;">');-->
+                            $('#status'+channel_id).append('<b style="font-weight:400; font-size:15px;">'+val.campaign_name+'<br/></b>');
+                            $('#status'+channel_id).append('<b style="font-weight:400; color:orange; font-size:15px;">'+val.status+'</b>');
+                            $('#status'+channel_id).append('<hr style="height:0px; margin:auto;">');
                     });
                     }
                     else{
-                        <!--$('#status'+channel_id).append('<b>No Campaigns</b>');-->
+                        $('#status'+channel_id).append('<b>No Campaigns</b>');
                         alert('no channels mapped');
                     }
                }
