@@ -472,7 +472,7 @@ pre {
     }
   @media (min-width: 1200px) {
     .container {
-      max-width: 1140px; } }
+      max-width: 100%; } }
 
 .container-fluid {
   width: 100%;
@@ -480,7 +480,10 @@ pre {
   padding-left: 15px;
   margin-right: auto;
   margin-left: auto; }
-
+.innerwidth-search-inf {
+    max-width: 78rem !important;
+    margin-left: 5rem !important;
+}
 .row {
   display: flex;
   flex-wrap: wrap;
