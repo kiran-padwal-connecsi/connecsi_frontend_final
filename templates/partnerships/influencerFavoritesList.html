@@ -13,42 +13,39 @@
             <div class="card-body">
                 <div class="card-block">
                     <div>
-                        <ul class="nav nav-tabs " id="myTab" role="tablist">
+                        <ul class="nav nav-tabs" id="myTab" role="tablist">
                             <li class="nav-item">
-                                <a class="nav-link active youtube" id="youtube-tab" data-toggle="tab" href="#youtube;"
+                                <a class="nav-link active" id="youtube-tab" data-toggle="tab" href="#youtube"
                                     role="tab" aria-controls="youtube" aria-selected="true">Youtube</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link twitter" id="twitter-tab" data-toggle="tab" href="#twitter;" role="tab"
+                                <a class="nav-link" id="twitter-tab" data-toggle="tab" href="#twitter" role="tab"
                                     aria-controls="twitter" aria-selected="false">Twitter</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link facebook" id="facebook-tab" data-toggle="tab" href="#facebook:;"
+                                <a class="nav-link" id="facebook-tab" data-toggle="tab" href="#facebook"
                                     role="tab" aria-controls="facebook" aria-selected="false">Facebook</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link instagram" id="instagram-tab" data-toggle="tab" href="#instagram;"
+                                <a class="nav-link" id="instagram-tab" data-toggle="tab" href="#instagram"
                                     role="tab" aria-controls="instagram" aria-selected="false">Instagram</a>
                             </li>
                         </ul>
                     </div>
-
-                </div>
-                <div class="">
-                    <div>
                         <br>
-                        <div class="tab-contact" id="myTabContent">
-                            <div class="" id="youtube" aria-labelledby="youtube-tab">
-                                <div class="row" style="margin-top: 20px;">
+                        <div class="tab-content" id="myTabContent">
+                            <div class="tab-pane fade show active" role="tabpanel" id="youtube" aria-labelledby="youtube-tab">
+                            <div class="container">
+                                <div class="row">
                                     <div class="col-sm-4 col-md-4 col-lg-4">
                                         {% if data['data'] %}
                                         <a href={{ url_for('exportCsv', data=data) }}><button type="button" style="background-color: #4F8AF1;color:white;border-radius: 0px;line-height: 25px;font-size: 19px; width:160px;">Export
                                                 CSV</button></a>
                                         {% else %}
+                                        {% endif %}
                                     </div>
-
                                     <!--<button type="button"  style="background-color: purple; margin-left: 2%; color:white; border-radius: 10px; font-size:15px;">Export CSV</button>-->
-                                    {% endif %}
+
                                     <div class="col-sm-5 col-md-5 col-lg-5">
                                         <h5 style="color:#83ADF5; font-weight: bold;">Influencers on Youtube</h5>
                                     </div>
@@ -59,8 +56,7 @@
                                             <option value="rel">Relevance</option>
                                         </select></div>
                                 </div>
-                                <div class="container">
-                                    {% for item in data['data'] %}
+                                {% for item in data['data'] %}
                                     <div class="row">
                                     <div class="grid-container">
                                                 <div class="icon-area">
@@ -79,7 +75,7 @@
 
                                                         <br>
                                                         <div>
-                                                        <a class="fa fa-star" data-toggle="tooltip" title="" style="font-size:25px; " data-original-title="Create Alerts"><i class="fa fa-plus-circle green" style="font-size:10px; position:relative; top:1px; left:-10px;"></i></a>
+                                                        <a class="fa fa-star" data-toggle="tooltip" title="" style="font-size:25px; " data-original-title="Add To Favorites"><i class="fa fa-plus-circle green" style="font-size:10px; position:relative; top:1px; left:-10px;"></i></a>
                                                         </div>
                                                         <br>
                                                         <div>
@@ -102,15 +98,15 @@
                                                            {% if item['facebook_url'] %}
                                                                     <a href="{{ item['facebook_url'] }}" target="_blank"
                                                                         class="fa fa-facebook-official blue" style="font-size:20px;"></a>&emsp;
-                                                                    {% endif %}
-                                                                    {% if item['insta_url'] %}
+                                                           {% endif %}
+                                                            {% if item['insta_url'] %}
                                                                     <a href="{{ item['insta_url'] }}" target="_blank"
                                                                         class="fa fa-instagram pink" style="font-size:20px;"></a>&emsp;
-                                                                    {% endif %}
-                                                                    {% if item['twitter_url'] %}
+                                                            {% endif %}
+                                                    {% if item['twitter_url'] %}
                                                                     <a href="{{ item['twitter_url'] }}" target="_blank"
                                                                         class="fa fa-twitter cyan" style="font-size:20px;"></a>&emsp;
-                                                                    {% endif %}
+                                                    {% endif %}
                                                 </div>
                                                 <div class="profile-image">
                                                     <img src="{{ item['channel_img'] }}" height="80%" width="122px" style="margin: 20% 0;">
@@ -196,23 +192,21 @@
                                                         </li>
                                                     </ul>
                                                 </div>
-</div>
+</div></div>{% endfor %}
                                     </div>
                                     <br>
-                                    {% endfor %}
                                 </div>
-                            </div>
-                            <div class="" id="facebook" aria-labelledby="facebook-tab">
+                            <div class="tab-pane fade" id="facebook" role="tabpanel" aria-labelledby="facebook-tab">
+                            <div class="container">
                                 <div class="row" style="margin-top: 20px;">
                                     <div class="col-sm-4 col-md-4 col-lg-4">
                                         {% if facebook['data'] %}
                                         <a href={{ url_for('exportCsv', data=data) }}><button type="button" style="background-color: #4F8AF1;color:white;border-radius: 0px;line-height: 25px;font-size: 19px; width:160px;">Export
                                                 CSV</button></a>
                                         {% else %}
+                                        {% endif %}
                                     </div>
-
                                     <!--<button type="button"  style="background-color: purple; margin-left: 2%; color:white; border-radius: 10px; font-size:15px;">Export CSV</button>-->
-                                    {% endif %}
                                     <div class="col-sm-5 col-md-5 col-lg-5">
                                         <h5 style="color:#83ADF5; font-weight: bold;">Influencers on Facebook</h5>
                                     </div>
@@ -223,7 +217,6 @@
                                             <option value="rel">Relevance</option>
                                         </select></div>
                                 </div>
-                                <div class="container">
                                     {% for item in facebook %}
                                     <div class="row">
                                         <div class="grid-container">
@@ -361,12 +354,12 @@
                                                     </ul>
                                                 </div>
 </div>
-                                    </div>
+                                    </div>{% endfor %}
                                     <br>
-                                    {% endfor %}
                                 </div>
                             </div>
-                            <div class="" id="instagram" aria-labelledby="instagram-tab">
+                            <div class="tab-pane fade" id="instagram" role="tabpanel" aria-labelledby="instagram-tab">
+                            <div class="container">
                                 <div class="row" style="margin-top: 20px;">
                                     <div class="col-sm-4 col-md-4 col-lg-4">
                                         {% if instagram['data'] %}
@@ -387,7 +380,6 @@
                                             <option value="rel">Relevance</option>
                                         </select></div>
                                 </div>
-                                <div class="container">
                                     {% for item in instagram %}
                                     <div class="row">
                                         <div class="grid-container">
@@ -525,22 +517,21 @@
                                                     </ul>
                                                 </div>
 </div>
-                                    </div>
+                                    </div>{% endfor %}
                                     <br>
-                                    {% endfor %}
                                 </div>
                             </div>
-                            <div class="" id="twitter" aria-labelledby="twitter-tab">
+                            <div class="tab-pane fade" id="twitter" role="tabpanel" aria-labelledby="twitter-tab">
+                            <div class="container">
                                 <div class="row" style="margin-top: 20px;">
                                     <div class="col-sm-4 col-md-4 col-lg-4">
                                         {% if twitter['data'] %}
                                         <a href={{ url_for('exportCsv', data=data) }}><button type="button" style="background-color: #4F8AF1;color:white;border-radius: 0px;line-height: 25px;font-size: 19px; width:160px;">Export
                                                 CSV</button></a>
                                         {% else %}
+                                        {% endif %}
                                     </div>
-
                                     <!--<button type="button"  style="background-color: purple; margin-left: 2%; color:white; border-radius: 10px; font-size:15px;">Export CSV</button>-->
-                                    {% endif %}
                                     <div class="col-sm-5 col-md-5 col-lg-5">
                                         <h5 style="color:#83ADF5; font-weight: bold;">Influencers on Twitter</h5>
                                     </div>
@@ -551,10 +542,10 @@
                                             <option value="rel">Relevance</option>
                                         </select></div>
                                 </div>
-                                <div class="container">
-                                    {% for item in twitter %}
-                                    <div class="row">
+                            {% for item in twitter %}
+                                <div class="row">
                                         <div class="grid-container">
+
                                                 <div class="icon-area">
                                                     <div class="innerIcon">
                                                         <div>
@@ -688,10 +679,8 @@
                                                         </li>
                                                     </ul>
                                                 </div>
-</div>
-                                    </div>
+                                        </div></div>{% endfor %}
                                     <br>
-                                    {% endfor %}
                                 </div>
                             </div>
                         </div>
@@ -706,7 +695,6 @@
         <!--col-->
     </div>
     <!--row-->
-
     <!-- Create alert Modal form-->
     <div class="modal fade" id="createalert" role="dialog" data-backdrop="false">
         <div class="modal-dialog">

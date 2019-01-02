@@ -8,26 +8,36 @@
 <div class="row">
     <div class="col-sm-12">
         <div class="card">
-            <div class="row">
-                <div class="col-12">
-                    <div class="card-header">Create New Classified Ad</div>
-
-                </div>
-            </div>
+                    <div class="card-header" style="background-color: white; margin-bottom: -15px;">
+                        <div class="row">
+                        <div class="col-md-2">
+                        <i class="fa fa-arrow-left" style="color: purple;"></i>
+                        </div>
+                        <div class="col-md-5">
+                            <p style="text-align: center; font-size: 20px; color: #50A9E4; padding-left: 50%;">Create New Classfied Ad</p>
+                        </div>
+                        </div>
+                    </div>
             <div class="card-body">
                 <div class="card-block">
                     <form class="form" name="classified_form" id="classified_form" method="POST" action="saveClassified" enctype="multipart/form-data">
                         <div class="container-fluid">
-                            <div class="row">
-                                <div class="col-sm-6 col-md-6" >
+                        <div class="row" style="">
+                                <div class="col-sm-6 col-md-6" style="margin-left: 30px;">
                                     <div class="row">
-                                        <div class="col-sm-4"><label for="campaign_name">Ad Name:</label><input  id="classified_name" type="text" class="form-control" name="classified_name" required></div>
-                                        <div class="col-sm-4"><label for="from_date">From:</label><input  id="from_date" type="date" class="form-control" name="from_date" required></div>
-                                        <div class="col-sm-4"><label for="to_date">To:</label><input  id="to_date" type="date" class="form-control" name="to_date" required></div>
+                                        <div class="col-sm-4"><label for="campaign_name">Ad Name</label><input  id="campaign_name" type="text" class="form-control" name="campaign_name" placeholder="Create New" required></div>
+                                        <div class="col-sm-4"><label for="from_date">Start Date</label><input  id="from_date" type="date" class="form-control" name="from_date" placeholder="Select" required></div>
+                                        <div class="col-sm-4"><label for="to_date">End Date</label><input  id="to_date" type="date" class="form-control" name="to_date" placeholder="Select" required></div>
                                     </div>
                                     <br>
                                     <div class="row">
                                         <div class="col-sm-3">
+                                            <label for="budget">Budget</label>
+                                            <span class="text-bold-500 primary"><input type="number" class="form-control" name="budget" placeholder="Enter" required>
+                                            </span>
+                                        </div>
+                                        <div class="col-sm-3">
+                                            <label for="currency">Currency</label>
                                             <select class="form-control" name="currency" id="currency">
                                                 <option value="USD">USD</option>
                                                 <option value="EUR">EUR</option>
@@ -35,38 +45,41 @@
                                                 <option value="INR">INR</option>
                                             </select>
                                         </div>
-                                        <div class="col-sm-5">
-                                            <span class="text-bold-500 primary"><input type="number" class="form-control" name="budget" placeholder="Budget" required>
-                                            </span>
-                                        </div>
-                                        <div class="col-sm-4">
+                                        <div class="col-sm-3">
                                             <span class="text-bold-500 primary">
-                                            <div class="form-group">
-                                                <label for="channels">Channels</label>
-                                                <input class="form-control" type="text" placeholder="Select" class="button-size" data-toggle="dropdown" >
-                                                <div class="dropdown-menu" style="background-color: gainsboro">
-                                                    <div class = container>
+                                                <div class="form-group">
+                                                    <label for="channels">Channels</label>
+                                                    <input class="form-control" type="text" placeholder="Select" class="button-size" data-toggle="dropdown" >
+                                                        <div class="dropdown-menu" style="background-color: gainsboro">
+                                                        <div class = container>
                                                         <div class="row">
                                                         <div class="col-xl-6">
-                                                        <input type="checkbox" name="channels" value="youtube"> Youtube
-                                                        <div class="dropdown-divider"></div>
-                                                        <input type="checkbox" name="channels" value="facebook"> Facebook
+                                                        <input type="checkbox" name="channels" value="youtube" id="youtube">
+                                                        <label for="youtube">Youtube</label>
                                                         </div>
-                                                        <div class="col-xl-6">
-                                                        <input type="checkbox" name="channels" value="twitter"> Twitter
                                                         <div class="dropdown-divider"></div>
-                                                        <input type="checkbox" name="channels" value="instagram"> Instagram
+                                                        <div class="col-xl-6">
+                                                        <input type="checkbox" name="channels" value="twitter" id="twitter">
+                                                        <label for="twitter">Twitter</label>
+                                                        </div>
+                                                        </div>
+                                                        <div class="row">
+                                                        <div class="col-xl-6">
+                                                        <input type="checkbox" name="channels" value="facebook" id="facebook">
+                                                        <label for="facebook">Facebook</label>
+                                                        </div>
+                                                        <div class="dropdown-divider"></div>
+                                                        <div class="col-xl-6">
+                                                        <input type="checkbox" name="channels" value="instagram" id="instagram">
+                                                        <label for="instagram">Instagram</label>
+                                                         </div>
                                                         </div>
                                                         </div>
                                                         </div>
                                                 </div>
-                                            </div>
                                             </span>
                                         </div>
-                                        <br>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-sm-4">
+                                        <div class="col-sm-3">
                                             <span class="text-bold-500 primary">
                                                 <div class="form-group">
                                                     <label for="country" class="text-bold-500 primary">Country</label>
@@ -78,46 +91,44 @@
                                                 </div>
                                             </span>
                                         </div>
-                                        <div class="col-sm-8">
-                                            <span class="text-bold-500 primary">
-                                                <div class="form-field col s7">
+                                        <br>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-sm-6">
+{#                                                <div class="form-field col s7">#}
                                                     <div class="form-group">
                                                       <p>
-                                                        <label>Followers range:</label>
+                                                        <label>Followers</label>
                                                       </p>
-                                                      <div id="add_campaign_followers_slider" style="height:10px; width: 190px; border-radius: 55px;" ></div>
+                                                      <div id="add_campaign_followers_slider" style="height:10px; width: 260px; border-radius: 55px;" ></div>
+                                                        <div class="row">
+                                                    <div class="offset-xl-2" id="lower-value" style="font-size: 12px;"></div>
+                                                    <div class="offset-xl-5 col-3.5" id="upper-value" style="font-size: 12px;"></div>
                                                     </div>
-                                                    <div class="float-left">Min Followers : </div>
-                                                    <div id="lower-value" ></div>
-                                                    <div class="float-left">Max Followers : </div>
-                                                    <div id="upper-value"></div>
-                                                    <input type="hidden" name="min_lower" value="" id="min_lower">
-                                                    <input type="hidden" name="max_upper" value="" id="max_upper">
-                                                </div>
-                                            </span>
+                                                    </div>
+
+{#                                                    <input type="hidden" name="min_lower" value="" id="min_lower">#}
+{#                                                    <input type="hidden" name="max_upper" value="" id="max_upper">#}
+{#                                                </div>#}
+                                        </div>
+                                        <div class = "col-sm-6">
+                                             <label>Target URL</label>
+                                        <span class="text-bold-500 primary"> <input type="url" class="form-control" name="target_url" placeholder="Target URL" required></span>
                                         </div>
                                     </div>
-                                    <span class="text-bold-500 primary">
-                                        <div class="form-group">
+                                    <div class="row">
+                                        <div class="col-sm-6">
+{#                                        <div class="form-group">#}
                                             <label for="videoCategories">Categories</label>
                                             <select class="form-control" name="video_cat" required>
                                                 {% for item in videoCategories['data'] %}
                                                 <option value="{{ item['video_cat_id'] }}">{{ item['video_cat_name'] }}</option>
                                                 {% endfor %}
                                             </select>
-                                        </div>
-                                    </span>
-                                    <span class="text-bold-500 primary"> <input type="url" class="form-control" name="target_url" placeholder="Target URL" required></span><br>
-                                    <span>
-                                        <input  type="file" name="brands_classified_files" class="brands_classified_files" required>
-                                    </span><br class="displayFiles">
-                                </div>
-                                                                <div class="col-sm-6 col-md-6">
-                                    <label for="campaign_name">Description:</label><textarea class="form-control" rows="9" id="descritpion" name="campaign_description" required></textarea>
-                                    <br>
-                                    <span class="text-bold-500 primary">
-
-                                              <label for="arrangement/content type">Arrangement/Content Type</label>
+{#                                        </div>#}
+                                    </div>
+                                    <div class="col-sm-6">
+                                    <label for="arrangement/content type">Arrangement/Content Type</label>
                                               <input class="form-control" type="text" placeholder="Select" class="button-size" data-toggle="dropdown">
                                               <div class="dropdown-menu" style="background-color: gainsboro">
                                               <div class = container>
@@ -146,16 +157,17 @@
                                               </div>
                                                   </div>
                                               </div>
-                                        </span>
+                                    </div>
+                                    </div>
                                     <br>
-                                       <div class="col-sm-4">
-                                            <span class="text-bold-500 primary">
-                                                    <label for="kpis">KPIs</label>
-                                                    <input class="form-control" type="text" placeholder="Select" class="button-size" data-toggle="dropdown">
-                                                        <div class="dropdown-menu" style="background-color: gainsboro">
-                                                        <div class = container>
-                                                        <div class="row">
-                                                        <div class="col-xl-12">
+                                    <div class="row">
+                                    <div class="col-sm-6">
+                                        <label for="kpis">KPIs</label>
+                                        <input class="form-control" type="text" placeholder="Select" class="button-size" data-toggle="dropdown">
+                                        <div class="dropdown-menu" style="background-color: gainsboro">
+                                            <div class = container>
+                                                <div class="row">
+                                                    <div class="col-xl-12">
                                                         <input type="checkbox" name="No. Of Clicks" value="No. Of Clicks"> No. Of Clicks
                                                         <div class="dropdown-divider"></div>
                                                         <input type="checkbox" name="New Users" value="New Users"> New Users
@@ -165,25 +177,26 @@
                                                         </div>
                                                         </div>
                                                         </div>
-
-                                            </span>
-                                        </div>
-
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <span>
+                                        <label for="add-files">Add Files</label>
+                                        <input type="file" name="campaign_files" id="campaign_files1" class="campaign_files" required>
+                                    </span> <br class="displayFiles">
+                                    </div>
+                                    </div>
+                                    <br>
+                                </div>
+                                <div class="col-sm-5 col-md-5" style="">
+                                    <label for="campaign_name">Description:</label><textarea class="form-control" rows="9" id="descritpion" name="campaign_description" required style="width: 100%"></textarea>
                             </div>
-
-                            </div>
-                            <div class="upload-btn-wrapper">
-{#                                    <button class="btn" style="margin-top: 49px">Upload File#}
-{#                                    <input type="file" name="myfile" id="imgInp" /></button>#}
-                               <!-- <input type="file" value="submit" name="Uplaod File">-->
-                                <!--<label class="form-check-label" for="classifiedAds">Post as Classified Ads</label>-->
+                                </div>
                             </div>
                             <img class="x" id="blah" src="#" width="15%" height="2%" alt="your image" />
+                            <div style="margin-top: 45px;">
+                            <button type="submit" id="saveclassified" class="btn btn-success"  style="margin-left: 41%; padding-left: 50px; padding-right: 50px;">Save</button>
+                        </div>
 
-                            <div>
-                            <button type="submit" id="saveclassified" class="btn btn-success"  style="margin-left: 45%">Save</button>
-                        </div>
-                        </div>
                     </form>
                 </div>
             </div>
