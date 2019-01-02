@@ -482,7 +482,8 @@ pre {
   margin-left: auto; }
 .innerwidth-search-inf {
     max-width: 78rem !important;
-    margin-left: 5rem !important;
+    margin-left: 2rem !important;
+    margin-right: 2rem !important;
 }
 .row {
   display: flex;

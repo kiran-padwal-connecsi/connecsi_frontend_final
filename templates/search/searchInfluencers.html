@@ -42,8 +42,42 @@ option:not(:first-of-type) {
   color: black;
 }
 
-      .lb{color:black;}
+.lb{
+    color: #707070;
+    text-transform: capitalize;
+    font-family: Segoe UI, Bold;
+font-size: 14px;}
 
+
+::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+  color: #6E6E6E;
+  opacity: 1; /* Firefox */
+}
+
+:-ms-input-placeholder { /* Internet Explorer 10-11 */
+  color: #6E6E6E;
+}
+
+::-ms-input-placeholder { /* Microsoft Edge */
+  color: #6E6E6E;
+}
+.icon-med  {  padding-bottom: 65%;}
+select.form-control {
+    height: 35px;
+    background: #EFEFEF;
+    border: 1px solid #C2BABA;
+}
+.noUi-connect {
+    /* background: #009DA0; */
+    background: #B398EB !important;
+    box-shadow: none;}
+
+.noUi-handle {
+    box-shadow: none;
+    border: none;
+    border-radius: 50%;
+    background: #FFF;
+    border: 5px solid #B398EB!important;
   </style>
 
 <script>
@@ -66,108 +100,102 @@ function  exportCsv(data) {
 
 
 </head>
+        <div class="card>
 <div class="sticky-bottom" id="accordion" style="background-color: white;">
-        <div class="card innerwidth-search-inf">
-            <div id="influencerSearchPanel" data-parent="#accordion">
-                <div class="card-body">
-                    <div class="row" style="justify-content: center">
-                        <div class="col-xl-12 col-lg-12  col-md-12 col-12">
-                            <div class="card">
-                                <div class="card-body" style="padding: 1px;">
-                                    <form class="col s12" action="/searchInfluencers" method="POST" name="form_search" id="form_search">
-                                        <div class="form-body">
-                                            <div class="row" style="padding-top: 2%;">
-    
-                                                <div class="col-xl-2 col-lg-2 col-md-2 mb-1" style="margin-top:0px;">
-    
-                                                    <div class="form-group">
-                                                        <label class="lb searchLabel">Channel</label>
-                                                        <select class="apna-btn" name="channel" style="height:35px;">
-                                                            {% if form_filters['channel'] %}
-                                                            <option value="{{ form_filters['channel'] }}">{{
-                                                                form_filters['channel'] }}</option>
-                                                            {% endif %}
-                                                            <option value="Youtube">Youtube</option>
-                                                            <option value="Twitter">Twitter</option>
-                                                            <option value="Facebook">Facebook</option>
-                                                            <option value="Instagram">Instagram</option>
-                                                        </select>
-                                                    </div>
-                                                </div>
-                                                <div class="col-xl-3 col-lg-3 col-md-3 mb-1" style="margin-top:0px;">
-    
-                                                    <div class="form-group">
-                                                        <label class="lb searchLabel">Category</label>
-                                                        <input class="apna-btn" id="string_word" name="string_word"
-                                                            type="text" placeholder="Enter Keywords" style="height:35px;"
-                                                            {% if form_filters['string_word'] %} value="{{ form_filters['string_word'] }}"
-                                                            {% endif %}>
-                                                    </div>
-                                                    <!--{{ form_filters }}-->
-                                                </div>
-                                                <div class="col-xl-2 col-lg-2 col-md-2 mb-1">
-                                                    <div class="form-group">
-                                                        <label class="lb searchLabel">Country</label>
-                                                        <div class="form-group">
-                                                            <select class="apna-btn" name="country" style="height:35px;">
-                                                                {% if form_filters['country'] %}
-                                                                <option value="{{ form_filters['country'] }}">{{
-                                                                    form_filters['country_name'] }}</option>
-                                                                <option value=""></option>
-                                                                {% else %}
-                                                                <option value=""></option>
-                                                                {% endif %}
-    
-                                                                {% for item in regionCodes['data'] %}
-                                                                <option value="{{ item['region_code'] }}">{{
-                                                                    item['country_name'] }}</option>
-                                                                {% endfor %}
-                                                            </select>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-xl-5 col-lg-5 col-md-5 mb-1" style="padding-right:10%; padding-left: 6%">
-                                                    <div class="form-group">
-                                                      <p>
-                                                        <label class="searchLabel">Followers:</label>
-                                                      </p>
-                                                      <div id="slider" style="height:10px;">
-                                                        </div>
-                                                    </div>
-                                                    <div class="row" style="margin-left:3%;">
-                                                      <div class="offset-xl-2" id="lower-value" style="border:1px solid black; padding-left:1px; padding-right:2px;">0</div>
-                                                      <div class="offset-xl-5 col-3.5" id="upper-value" style="border:1px solid black; padding-right:2px; padding-left:2px;">1000000</div>
-                                                    </div>
-                                                    <input type="hidden" name="min_lower" value="" id="min_lower">
-                                                    <input type="hidden" name="max_upper" value="" id="max_upper">
-                                                    <!---->
-                                                  </div>
-                                              
-                                            </div>
-                                            <div class="row">
-                                                <div class="col-xl-4 col-lg-4 col-md-4 mb-1">
-                                                </div>
-                                                <div class="col-xl-4 col-lg-4 col-md-4 mb-1">
-                                                    <div class="form-group spacing" style="margin-left:20%;">
-                                                        <button id="btn-search-inf" type="submit" class="btn btn-raised btn-raised btn-primary customButton"
-                                                            name="search_inf" style="font-family: Segoe UI; padding: 5px 35px; background-color:#9E57DD !important; ">
-                                                            Search <i class="fa fa-search"></i>
-                                                        </button>
-                                                    </div>
-                                                </div>
-                                                <div class="col-xl-4 col-lg-4 col-md-4 mb-1">
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </form>
-                                </div>
-                            </div>
+  <div class="card" style="padding-left: 8%;" >
+    <div id="influencerSearchPanel"  data-parent="#accordion">
+      <div class="card-body" >
+        <div class="row" style="justify-content: center">
+          <div class="col-xl-12 col-lg-12  col-md-12 col-12">
+            <div class="card"  >
+              <div class="card-body" style="padding: 1px;">
+                <form class="col s12" action="/searchInfluencers" method="POST" name="form_search" id="form_search">
+                  <div class="form-body">
+                    <div class="row" style="padding-top: 2%;">
+
+                      <div class="col-xl-2 col-lg-2 col-md-2 mb-1" style="margin-top:0px;">
+
+                        <div class="form-group" >
+                          <label class="lb"><b>Channel</b></label>
+                          <select class="form-control" name="channel" style="height:35px;">
+                            {% if form_filters['channel'] %}
+                            <option value="{{ form_filters['channel'] }}">{{ form_filters['channel'] }}</option>
+                            {% endif %}
+                            <option value="Youtube">Youtube</option>
+                            <option value="Twitter">Twitter</option>
+                            <option value="Facebook">Facebook</option>
+                            <option value="Instagram">Instagram</option>
+                          </select>
                         </div>
+                      </div>
+                      <div class="col-xl-3 col-lg-3 col-md-3 mb-1" style="margin-top:0px;">
+
+                        <div class="form-group" >
+                 <label class="lb"><b>Category</b></label>
+                          <input class="form-control" id="string_word" name="string_word" type="text" placeholder="Enter Keywords"style="height:35px; border: 1px solid #c2baba;  background: #efefef;"
+                                 {% if form_filters['string_word'] %}
+                          value="{{ form_filters['string_word'] }}"
+                          {% endif %}>
+        
+                        </div>
+                        <!--{{ form_filters }}-->
+                      </div>
+                      <div class="col-xl-2 col-lg-2 col-md-2 mb-1" >
+                        <div class="form-group" >
+                          <label class="lb"><b>Country</b></label>
+                          <div class="form-group">
+                            <select class="form-control" name="country" style="height:35px;">
+                              {% if form_filters['country'] %}
+                              <option value="{{ form_filters['country'] }}">{{ form_filters['country_name'] }}</option>
+                              <option value=""></option>
+                              {% else %}
+                              <option value=""></option>
+                              {% endif %}
+
+                              {% for item in regionCodes['data'] %}
+                              <option value="{{ item['region_code'] }}">{{ item['country_name'] }}</option>
+                              {% endfor %}
+                            </select>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-xl-5 col-lg-5 col-md-5 mb-1" style="padding-right:10%; padding-left: 6%">
+                        <div class="form-group" >
+                          <p>
+                            <label class="lb">Followers</label>
+                          </p>
+                          <div id="slider"  style="height:10px;" ></div>
+                        </div>
+                        <input type="hidden" name="min_lower" value="" id="min_lower">
+                        <input type="hidden" name="max_upper" value="" id="max_upper">
+                        <!--{{ form_filters }}-->
+                      </div>
                     </div>
-                </div>
+                    <div class="row">
+                      <!-- <div class="col-xl-4 col-lg-4 col-md-4 mb-1">
+                      </div> -->
+                      <div class="col-xl-12 col-lg-12 col-md-12 mb-1">
+                        <div class="form-group spacing" style="margin-left:34%;">
+                             <button id="btn-search-inf" type="submit" class="btn btn-raised btn-raised btn-primary customButton" name="search_inf"
+                      style="background-color:#9e57dd!important;     padding: 4px 30px;">
+                            Search <i class="fa fa-search"></i>
+                          </button>
+                        </div>
+                      </div>
+                      <!-- <div class="col-xl-4 col-lg-4 col-md-4 mb-1">
+                      </div> -->
+                    </div>
+                  </div>
+                </form>
+              </div>
             </div>
+          </div>
         </div>
+      </div>
     </div>
+  </div>
+</div>
+
 
 
 {#<div class="row">#}
@@ -347,16 +375,14 @@ function  exportCsv(data) {
 
 <div class="container" style="background:white; padding-top: 15px">
 <div class="innerwidth-search-inf">
-        <div class="row">
-
+        <div class="row"  style="padding-top: 1%; padding-bottom: 1%;">
                 <div class=" col-sm-4"> {% if data['data'] %}
-                    <a onclick="exportCsv({{ data }})"><button type="button" style="background-color: #4F8AF1;color:white;border-radius: 0px;line-height: 25px;font-size: 19px; width:160px;">Export
-                            CSV</button></a>
+                    <a onclick="exportCsv({{ data }})"><button type="button"style="background-color: #4F8AF1;color:white;border-radius: 0px;line-height: 25px;font-size: 14px; width:160px;border: 1px solid; padding: 4px;">Export CSV</button></a>
                     {% endif %}</div>
                 <div class="col-sm-4">
-                    <h5 class="topChannelName" style="text-align: center;">Influencers on {{ form_filters['channel']}}</h5>
+                    <h5 class="topChannelName" style="color: #50A9E4;  padding-top: 1%;font-weight: 600; font-size: 20px;">Influencers on {{ form_filters['channel']}}</h5>
                 </div>
-                <div class="col-sm-4"><select class="form-control fontColor" name="sort_order" style="width: 135px; float:right;  border: none;">
+                <div class="col-sm-4"><select class="form-control fontColor" name="sort_order" style="width: 135px; float:right;  border: 1px solid #c7c4c4;">
                         {% if form_filters['sort_order'] %}
                         <option value="{{ form_filters['sort_order'] }}" disabled>{{ form_filters['sort_order'] }}</option>
                         {% if form_filters['sort_order'] == "High To Low" %}
@@ -374,16 +400,16 @@ function  exportCsv(data) {
             </div>
     {% for item in data['data'] %}
 
-    <div class="grid-container">
+    <div class="grid-container" style=" grid-template-columns: 5% 188px 16% 17% 2fr 1fr !important; grid-template-rows: 2em 3em 3em 3em !important;">
             <div class="icon-area">
-                <div class="innerIcon" >
-                    <div>
+                <div style="margin: 6% 24%" >
+                    <div class="icon-med ">
                         <a href="/compose" class="fa fa-envelope" data-toggle="tooltip" title="" style="position: relative; z-index: 1; font-size:25px;    
                                                                     "
                             data-original-title="Message"></a>
                     </div>
-                    <br>
-                    <div>
+              
+                    <div  class="icon-med">
                         <span data-toggle="modal" data-target="#campaignList">
                             <a onclick="campaignList('{{ item['channel_id'] }}')" class="fa fa-bullseye red" data-toggle="tooltip"
                                 title="" style="font-size:25px;     
@@ -392,11 +418,11 @@ function  exportCsv(data) {
                         </span>
                     </div>
     
-                    <br>
-                    <div>
+                  
+                    <div  class="icon-med">
                           <a href="/addToFavInfList/{{ item['channel_id'] }}"  class="fa fa-star"  data-toggle="tooltip" title="Add To Favorites" style="font-size:25px;"><i class="fa fa-plus-circle green" style="font-size:10px; position:relative; top:1px; left:-10px;"></i></a>
                     </div>
-                    <br>
+                    
                     <div>
                         <span data-toggle="modal" data-target="#create_alert_modal">
                             <a onclick="createAlert('{{ item['channel_id'] }}','{{ item['subscriberCount_gained'] }}','{{ (item['total_100video_views']/100)|int }}','{{ (item['total_100video_likes']/100)|int }}','{{ (item['total_100video_comments']/100)|int }}')" class="fa fa-bell"
@@ -431,7 +457,7 @@ function  exportCsv(data) {
     
             </div>
             <div class="profile-image">
-                <img src="{{ item['channel_img'] }}" height="80%" width="122px" style="margin: 20% 0;">
+                <img src="{{ item['channel_img'] }}"  style="height: 100%; width: 100%;">
             </div>
             <div class="stat1">
                 <div class="text-align-center">
@@ -464,7 +490,7 @@ function  exportCsv(data) {
             </div>
             <div class="graph">
                 <div>
-                    <canvas id="lineChart{{ item['linechart_id'] }}" height="150" width="250"></canvas>
+                    <canvas id="lineChart{{ item['linechart_id'] }}" height="170" width="333"></canvas>
                 </div>
             </div>
             <div class="tab-content  tabcontent scroll">

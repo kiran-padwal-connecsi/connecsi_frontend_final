@@ -26,156 +26,174 @@
     </div>
 </div>
 -->
+
 <style>
+.login{
+        margin-top: 1% !important;
+}
+a.active {
+    background-color: transparent;
+    color: #2253D8 !important;
+   
+}
 .cardheight{
     min-height: 420px !important;
 }
-
-.col-xl-6{
-     position: relative;
-  width: 100%;
-  min-height: 1px;
-  padding-right: 15px;
-  padding-left: 1px;
-}
-
-.col-md-6{
-     position: relative;
-  width: 100%;
-  min-height: 1px;
-  padding-right: 15px;
-  padding-left: 1px;
-}
-
-.col-lg-6{
-     position: relative;
-  width: 100%;
-  min-height: 1px;
-  padding-right: 15px;
-  padding-left: 1px;
-}
-     .registerbrand{
-        background-color: white !important;
-         list-style: none !important;
-    }
-
-
-
-
-
-@media only screen and (min-width: 740px){
-    .registerbrand{
-        width: 500px !important;
-    }
-}
-
-
-
-    @media only screen and (max-width: 414px){
-
-    .login-btn{ width:150px !important; margin-left: 10px!important;}
-    .reg-btn{ width:150px !important; margin-left: 10px !important; padding: 0px!important; text-align:center;}
-    .tdtext{font-size: 10px !important ;
-    padding:0px 30px !important;}
-        .logoimg{width: 150px !important; height: 80px !important; margin-left: -20px !important;}
-        .regform{ padding: 0px !important; text-align: center;}
-}
-
-
-
-
-
-
-
-
-
-@media  (min-width: 740px){
-    .inputfieldsleft{
-        float: left;
-        padding-left: 10px;
-        width: 180px;
-    }
-    .inputfieldsright{
-        float: right;
-        padding-right: 20px;
-        width: 180px
-    }
-}
-
-@media only screen and (min-width: 993px){
-    .row .col.offset-l4 {
-            margin-left: 25%
-}
-}
-
-
-
 .custom-color{
     background-color:#e6e3e3;
     }
-    ::placeholder{
+ ::placeholder{
         color: black;
     }
+/*.tabs .tab a:hover, .tabs .tab a.active {
+    background-color: transparent;
+     color: #ee6e73; 
+    border-bottom: 4px solid #B783E5 !important;
+    padding: 1px 16px !important;
+}*/
+li.tab.col.s6 a.active-border.active b {
+    border-bottom: 4px solid #B783E5;
+    padding: 1px 6px;
+}
+.tabs .indicator {
+    position: absolute;
+    bottom: 0;
+    height: 2px;
+    background-color: #ffffff !important;
+    will-change: left, right;
+}
+.tabs .tab a:focus, .tabs .tab a:focus.active {
+    background-color: #ffffff !important;
+    outline: none;
+}
+.card{
+    -webkit-box-shadow: 0 2px 2px 0 rgba(0,0,0,0), 0 3px 1px -2px rgba(0,0,0,0), 0 1px 5px 0 rgba(0,0,0,0) !important;
+    box-shadow: 0 2px 2px 0 rgba(0,0,0,0), 0 3px 1px -2px rgba(0,0,0,0), 0 1px 5px 0 rgba(0,0,0,0.0) !important;
+}
+input#email {
+    height: 35px;
+    border: 1px solid #8A8A8A;
+    background: #EFEFEF;
+    color: #6E6E6E;
+    font-size: 14px !important;
+    border-radius: 2px;
+  }
+input#password {
+    height: 35px;
+    border: 1px solid #8A8A8A;
+    background: #EFEFEF;
+    color: #6E6E6E;
+    font-size: 14px !important;
+    border-radius: 2px;
+  
+}
+.divider {
+    height: 1px;
+    overflow: hidden;
+    background-color: #707070 !important;
+}
+input#confirm_password{
+    height: 35px;
+    border: 1px solid #8A8A8A;
+    background: #EFEFEF;
+    color: #6E6E6E;
+    font-size: 14px !important;
+    border-radius: 2px;
+    
+}
+input#inf_password{
+    height: 35px;
+    border: 1px solid #8A8A8A;
+    background: #EFEFEF;
+    color: #6E6E6E;
+    font-size: 14px !important;
+    border-radius: 2px;
+    
+}
+.bottom-icon{
+    font-family: Arial;
+    font-size: 12px;
+    color: #070707;
+}
+.bottom-icon a {
+    padding: 0px 4px;
+}
+::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+  color: #6E6E6E;
+   padding-left: 6px;
+  opacity: 1; /* Firefox */
+}
 
+:-ms-input-placeholder { /* Internet Explorer 10-11 */
+  color: #6E6E6E;
+  padding-left: 6px;
+}
+
+::-ms-input-placeholder { /* Microsoft Edge */
+  color: #6E6E6E;
+   padding-left: 6px;
+}
 
 </style>
 
 
 <div class="row login">
-    <div class="col s12 l4 offset-l4 ">
-        <div class="card registerbrand"  style="">
-            <div class="custom-color" style="border: 1px solid black;">
-                 <table style="border-collapse:inherit; width:0%; text-align: center;">
-                    <tr style="">
-                  <td style="font-size:18px; padding:0px 100px;" class="tdtext"><b>Free Registration at</b></td>
-                      <td style="line-height:0.45; padding:0px; "><img src={{ url_for('static', filename='img/logo3.png') }} width="190px" height="190px" class="responsive-img logoimg" style="    margin-left: -80px;"></td>
+    <div class="col s12 l4 offset-l4">
+        <div class="card" style="background-color: white;">
+
+
+
+           
+            <ul class="tabs custom-color" style=" margin-bottom:3px !important; background-color: #ffffff;">
+                <li class="tab col s6"><a class="active active-border" href="#brand" style="color: black;"><b>Brand</b></a></li>
+                <li class="tab col s6"><a class=" active-border" href="#influencer" style="color: black;"><b>Influencer</b></a></li>
+            </ul>
+            <div class="custom-color" style="border: 1px solid #70707047; margin-bottom: 22px;  height: 44px;
+    padding-top: 8px;">
+       <table style="border-collapse:inherit; width:0%; text-align: center;">
+                    <tbody><tr style="">
+                  <td style="font-size:14px; padding:0px 49px;" class="tdtext"><b>Free Registration</b></td>
+                      <td style="line-height:0.55; padding:0px; "><img src="/static/img/logo3.png" width="120px" height="120px" class="responsive-img logoimg" style="    margin-left:-40px;"></td>
                    </tr>
 
-                   </table>
+                   </tbody></table>
 
+                </div>
 
-
-            </div>
-
-            <div id="brand" class="card-content cardheight custom-color" style="border: 1px solid black; margin-top:3px !important;">
+           <div id="brand" class="card-content cardheight custom-color" style="border: 1px solid c3c2c2; ">
                 <form id="brand_register" name="brand_register" method="POST" action="/saveBrand">
                 <div class="row" style="margin-left: 0rem; margin-right: 0rem;">
                             <div class="row" style="margin-left: 0rem; margin-right: 0rem;">
             <div class="col-xl-6 col-lg-6 col-md-6 mb-1 inputfieldsleft" {#  style="float: left; padding-left: 10px; width: 180px;"#}>
-                <div class="row" style="margin-bottom: 5px;">
-                    <input style="border: 1px solid;color: black;border-radius: 0.25rem;padding-left: 10px;" type="text" id="first_name" name="first_name" class="validate" placeholder="First Name" required>
+               
+                <div class="form-field" >
+                    <input type="email" id="email" name="email" class="validate"  placeholder="Business Email" required>
                 </div>
-                <div class="row" style="margin-bottom: 5px;">
-                    <input style="border: 1px solid;color: black;border-radius: 0.25rem;padding-left: 10px;"type="email" id="email" name="email" class="validate"  placeholder="Business Email" required>
+
+                 <div class="form-field">
+                        <input type="password" id="password" name="password" class="validate" required placeholder="Password" style="border-radius:7px solid black; height:35px;">
+                    </div>
+                <div class="form-field">
+                    <input type="password" id="confirm_password" name="confirm_password" class="validate"  placeholder="Confirm Password" minlength="6" required>
                 </div>
-                <div class="row" style="margin-bottom: 5px;">
-                    <input style="border: 1px solid;color: black;border-radius: 0.25rem;padding-left: 10px;"type="password" id="password" name="password" class="validate"  placeholder="Password" minlength="6" required>
-                </div>
             </div>
-            <div class="col-xl-6 col-lg-6 col-md-6 mb-1 inputfieldsright" {# style="float: right; padding-right: 20px; width: 180px;"#}>
-            <div class="row" style="margin-bottom: 5px;">
-                <input style="border: 1px solid;color: black;border-radius: 0.25rem;padding-left: 10px;"type="text" id="last_name" name="last_name" class="validate"  placeholder="Last Name" required>
-            </div>
-            <div class="row" style="margin-bottom: 5px;">
-                <input style="border: 1px solid;color: black;border-radius: 0.25rem;padding-left: 10px;"type="text" id="company_name" name="company_name" class="validate"  placeholder="Company Name" required>
-            </div>
-            <div class="row" style="margin-bottom: 5px;">
-                <input style="border: 1px solid;color: black;border-radius: 0.25rem;padding-left: 10px;"type="password" id="confirm_password" name="confirm_password" class="validate"  placeholder="Confirm Password" required>
-            </div>
-            </div>
+            
             </div>
                 </div>
-            <div class="center-align" style="margin-top: 15px; padding-right: 45px;">
+            <div style="    margin-top: -28px;
+    /* padding-right: 45px; */
+    text-align: center;
+    font-size: 10px;">
                 <label>
                     <input type="checkbox" class="filled-in" required/>
-                    <span style="color: black;">I have read and agreed to the Terms & Conditions</span>
+                    <span style="color: black;">I have read and agreed to the <sapn style="color: #3C77C4;">Terms & Conditions</sapn></span>
                 </label>
                 </div>
-                <div class="form-field regform" style="padding-left: 50px;" id="container">
+                <div class="form-field regform"id="container">
         <div class="row">
-    <div class="col-md-4 col-lg-2">
+    <div class="">
     <button id="placeholder1"class="waves-effect waves-light btn-small  hoverable reg-btn" type="submit"
-    style="margin-top: 15px; width:300px;  margin-left: 35px; background: linear-gradient(#A519F7,#198FF7); color: white;" onclick="return check('brand_register','password','confirm_password')">Register</button>
+    style="margin-top: 15px; width:100%;  background: #3C77C4; color: white;" onclick="return check('brand_register','password','confirm_password')">Register</button>
          </div>
   </div>
 <!--
@@ -191,17 +209,61 @@
                      <div class="row">
     <div class="col-md-4 col-lg-2">
                 <div class="center-align">
-                <a id="login" class="waves-effect waves-light btn-small  hoverable login-btn" href="/" style="width:300px; background: linear-gradient(#A519F7,#198FF7); margin-top: 15px; border-radius: 0.25rem" >Log In</a>
+                <a id="login" class="waves-effect waves-light btn-small  hoverable login-btn" href="/"  style="margin-top: 15px; width:100%;  background: #9E57DD; color: white;" >Log In</a>
                 </div>
                      </div>
   </div>
                 </form>
             </div>
+            <div id="influencer" class="card-content custom-color" style="border:1px solid rgba(112, 112, 112, 0.28)">
+                <form method="POST" action="/login">
+                    <div class="form-field">
+                        <input type="text" id="inf_email_id" class="validate" required placeholder="Email or Username" style="border-radius:7px solid black;; height:35px;">
+                    </div>
+                    <br/>
+                    <div class="form-field">
+                        <input type="password" id="inf_password" class="validate" required placeholder="Password" style="border-radius:7px solid black;; height:35px;">
+                    </div>
+                    <br/>
+                    <div class="form-field center-align">
+                        <!--<button class="btn-small purple hoverable" type="submit" name="influencer">Login</button>-->
 
+                    </div>
+                </form>
+
+               
+                 <div class="form-field">
+                        <label>
+                            <input type="checkbox" class="filled-in"/>
+                            <span style="color: black; font-family: Arial, Regular;">Remember me</span>
+                        </label>
+                    </div>
+                     <br/>
+                <div class="center-align">
+                    <button class="btn-small purple hoverable" onclick="login()" id="login" style="color: #fff;width: 100%; background: font-weight: 500;background: #9E57DD; ">Log In </button>
+                    <!--<div class="center-align">-->
+                    <!--<a class="btn-small red hoverable" href="/registerInfluencer">Sign up</a>-->
+<!--                    </div>-->
+                    <br/>
+
+                    <br />
+                      <div class="center-align" ><a class="white-text" href="/forgotPassword" style="color:black !important;   font-family: Arial, Regular;">Forgot Password?</a></div>
+                    <div class="divider"></div>
+                    <br/>
+                    <div class="white-text center-align" style="color:black !important; font-family: Arial, Regular;">Don't have an account yet?</div>
+
+                    <div class="white-text center-align" style=" color: #1CB1C2!important;font-family: Constantia,Bold;line-height: 2.5em;font-size: 18px !important;">Join Us, it's Free!</div>
+
+                    <!--<a href="/google_login" class="waves-effect waves-light"><img src="static/img/yt_logo_rgb_light.png" class="responsive-img" height="50" width="70"></a>-->
+                    <!--<a href="/twitter_login" class="waves-effect waves-light"><img src="static/img/Twitter_Social_Icon_Square_Color.png" class="responsive-img" height="20" width="30"></a>-->
+                    <div class="bottom-icon" >Using: <a href="/google_login" class="waves-effect waves-light"><img src="static/img/youtube-32.png" class="responsive-img"></a>
+                    <a href="/twitter_login" class="waves-effect waves-light"><img src="static/img/twitter-32.png" class="responsive-img"></a>
+                </div>
+                </div>
             </div>
         </div>
     </div>
-
+</div>
 
 
 {% endblock %}
