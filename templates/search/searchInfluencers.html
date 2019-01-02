@@ -458,28 +458,28 @@ function  exportCsv(data) {
                 <img src="{{ item['channel_img'] }}"  style="height: 100%; width: 100%;">
             </div>
             <div class="stat1">
-                <div class="text-align-center" style="font-size: 15px">
+                <div class="text-align-center" style="font-size: 13px">
                     <span class="statNumbers">{{ item['subscriberCount_gained'] }}</span>
                     <br>
                     Total followers
                 </div>
             </div>
             <div class="stat2">
-                <div class="text-align-center" style="font-size: 15px">
+                <div class="text-align-center" style="font-size: 13px">
                         <span class="statNumbers">{{ (item['total_100video_likes']/100)|int }}</span>
                     <br>
                     Avg Likes/ video
                 </div>
             </div>
             <div class="stat3">
-                <div class="text-align-center" style="font-size: 15px">
+                <div class="text-align-center" style="font-size: 13px">
                     <span class="statNumbers">{{ (item['total_100video_views']/100)|int }}</span>
                     <br>
                     Avg Views/ video
                 </div>
             </div>
             <div class="stat4">
-                <div class="text-align-center" style="font-size: 15px">
+                <div class="text-align-center" style="font-size: 13px">
                         <span class="statNumbers">{{ (item['total_100video_comments']/100)|int }}</span>
             
                     <br>
@@ -488,7 +488,7 @@ function  exportCsv(data) {
             </div>
             <div class="graph">
                 <div>
-                    <canvas id="lineChart{{ item['linechart_id'] }}" height="175px" width="450px"></canvas>
+                    <canvas id="lineChart{{ item['linechart_id'] }}" height="140px" width="300px"></canvas>
                 </div>
             </div>
             <div class="tab-content  tabcontent scroll">
