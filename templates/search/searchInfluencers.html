@@ -100,8 +100,7 @@ function  exportCsv(data) {
 
 
 </head>
-        <div class="card>
-<div class="sticky-bottom" id="accordion" style="background-color: white;">
+<div class="sticky-bottoms" id="accordion" style="background-color: white;">
   <div class="card" style="padding-left: 8%;" >
     <div id="influencerSearchPanel"  data-parent="#accordion">
       <div class="card-body" >
@@ -196,184 +195,10 @@ function  exportCsv(data) {
   </div>
 </div>
 
-
-
-{#<div class="row">#}
-{#  <div class="col-sm-12">#}
-{#    <div class="card">#}
-{#      <div class="card-body">#}
-{#        <div class="card-block">#}
-{#          <div class="row" style="margin-left: 2%;">#}
-{#            <div class="col-xl-4 col-lg-4 col-md-4 mb-1">#}
-{#              {% if data['data'] %}#}
-{#              <a onclick="exportCsv({{ data }})"><button type="button" d style="background-color: purple; margin-left: 2%; color:white; border-radius: 10px; font-size:15px;">Export CSV</button></a>#}
-{#              {% endif %}#}
-{#            </div>#}
-{#            <div class="col-xl-4 col-lg-4 col-md-4 mb-1"><h4  class="text-center">Influencers on Youtube</h4>#}
-{#            </div>#}
-{#            <div class="col-xl-4 col-lg-4 col-md-4 mb-1" >#}
-{#              <div class="form-group">#}
-{#                <div class="form-group" style="margin-left:12%;">#}
-{#                  <select class="form-control" name="sort_order" placeholder="Sort" style="width:140px;">#}
-{#                    <option value=""></option>#}
-{#                    {% if form_filters['sort_order'] %}#}
-{#                    <option value="{{ form_filters['sort_order'] }}" disabled>{{ form_filters['sort_order'] }}</option>#}
-{#                    {% if form_filters['sort_order'] == "High To Low" %}#}
-{#                    <option value="Low To High">Low To High</option>#}
-{#                    {% elif form_filters['sort_order'] == "Low To High" %}#}
-{#                    <option value="High To Low">High To Low</option>#}
-{#                    {% endif %}#}
-{#                    {% else %}#}
-{#                    <option value="High To Low">High To Low</option>#}
-{#                    <option value="Low To High">Low To High</option>#}
-{#                    {% endif %}#}
-{#                  </select>#}
-{#                </div>#}
-{#              </div>#}
-{#            </div>#}
-{#          </div>#}
-{#          </form>#}
-{#          <div class="container contents" id="wrapper">#}
-{#            {% for item in data['data'] %}#}
-{#            <div class="lazy">#}
-{#              <div class="row">#}
-{#                <div class="search-infl-tbl">#}
-{#                  <table cellspacing="1" style="border:solid 1px #0c0909" class="search-infl-tbl">#}
-{#                    <tr>#}
-{#                      <td rowspan="3" style="border-left:solid 1px white; text-align: center">#}
-{#                        <span data-toggle="modal" data-target="#sendMessage">#}
-{#                        <a onclick="sendMessage('{{ item['channel_id'] }}','{{ item['business_email'] }}')" class="fa fa-envelope" data-toggle="tooltip"  title="Message" style="position: relative; z-index: 1; font-size:25px;"></a>#}
-{#                        </span>#}
-{#                          <br>#}
-{#                        <span data-toggle="modal" data-target="#campaignList">#}
-{#                      <a onclick="campaignList('{{ item['channel_id'] }}')"  class="fa fa-bullseye red" data-toggle="tooltip" title="Add To Campaign" style="font-size:25px;"><i class="fa fa-plus-circle green" style="font-size:10px; position:relative; top:5px; left:-8px;"></i></a>#}
-{#                      </span>#}
-{#                        <br>#}
-{#                        {% if item['channel_id'] in favInfList_data['data']|map(attribute="channel_id") %}#}
-{#                        <a href="#"  class="fa fa-star yellow"  data-toggle="tooltip" title="Already In Your Favorites List" style="font-size:25px;"></a>#}
-{#                        {% else %}#}
-{#                        <a href="/addToFavInfList/{{ item['channel_id'] }}"  class="fa fa-star-o yellow"  data-toggle="tooltip" title="Add To Favorites" style="font-size:25px;"><i class="fa fa-plus-circle green" style="font-size:10px; position:relative; top:1px; left:-10px;"></i></a>#}
-{#                        {% endif %}#}
-{#                        <br>#}
-{#                        <span data-toggle="modal" data-target="#create_alert_modal">#}
-{#                      <a onclick="createAlert('{{ item['channel_id'] }}','{{ item['subscriberCount_gained'] }}','{{ (item['total_100video_views']/100)|int }}','{{ (item['total_100video_likes']/100)|int }}','{{ (item['total_100video_comments']/100)|int }}')" class="fa fa-bell black"  data-toggle="tooltip" title="Create Alerts" style="font-size:25px;"><i class="fa fa-plus-circle green" style="font-size:10px; position:relative; top:1px; left:-10px;"></i></a>#}
-{#                      </span>#}
-{#                      </td>#}
-{#                      <td rowspan="4" class="si-image">#}
-{#                        <img src="{{ item['channel_img'] }}" height="150px" width="155px">#}
-{#                      </td>#}
-{#                      <td colspan="2" style="border-right: solid 1px #E1DEDD;">#}
-{#                        <table width="400px" cellpadding="1">#}
-{#                          <tr>#}
-{#                            <td colspan="2"><b style="font-size:15px;"><a href="https://www.youtube.com/channel/{{ item['channel_id'] }}" target="_blank">{{ item['title'] }}</a></b> <i class="fa fa-youtube-play font-medium-3 red"></i></td>#}
-{#                          </tr>#}
-{#                          <tr>#}
-{#                            <td style="text-align: center;border-right: solid 1px #E1DEDD; border-bottom:solid 1px #E1DEDD; border-top:solid 1px #E1DEDD; font-size:14px;">#}
-{#                              <b>{{ item['subscriberCount_gained'] }}</b>#}
-{#                              <br>#}
-{#                              Total followers#}
-{#                            </td>#}
-{#                            <td style="text-align:center;border-bottom:solid 1px #E1DEDD; border-top:solid 1px #E1DEDD;  font-size:14px;">#}
-{#                              <b>{{ (item['total_100video_likes']/100)|int }}</b>#}
-{#                              <br>#}
-{#                              Avg Likes/ video#}
-{#                            </td>#}
-{#                          </tr>#}
-{#                          <tr>#}
-{#                            <td style="text-align:center;border-right: solid 1px #E1DEDD; border-bottom:solid 1px #E1DEDD;  font-size:14px;">#}
-{#                              <b>{{ (item['total_100video_views']/100)|int }}</b>#}
-{#                              <br>#}
-{#                              Avg Views/ video#}
-{#                            </td>#}
-{#                            <td style="text-align:center;font-size:14px;">#}
-{#                              <b>{{ (item['total_100video_comments']/100)|int }}</b>#}
-{#                              <br>#}
-{#                              Avg Comments/ video#}
-{#                            </td>#}
-{#                          </tr>#}
-{#                          <tr><td colspan="2">#}
-{#                            <b style="font-size:12px">Other Channels</b> &emsp;#}
-{#                            {% if item['facebook_url'] %}#}
-{#                            <a href="{{ item['facebook_url'] }}" target="_blank" class="fa fa-facebook-official blue" style="font-size:20px;"></a>&emsp;#}
-{#                            {% endif %}#}
-{#                            {% if item['insta_url'] %}#}
-{#                            <a href="{{ item['insta_url'] }}" target="_blank" class="fa fa-instagram pink" style="font-size:20px;"></a>&emsp;#}
-{#                            {% endif %}#}
-{#                            {% if item['twitter_url'] %}#}
-{#                            <a href="{{ item['twitter_url'] }}" target="_blank" class="fa fa-twitter cyan" style="font-size:20px;"></a>&emsp;#}
-{#                            {% endif %}#}
-{#                          </td></tr>#}
-{#                        </table>#}
-{#                      </td>#}
-{#                      <td rowspan="4" width="400" style="border-right: solid 1px #E1DEDD;" >#}
-{#                        <div>#}
-{#                          <canvas id="lineChart{{ item['linechart_id'] }}" height="150px" width="250px"></canvas>#}
-{#                        </div></td>#}
-{#                      <td rowspan="4" style="border-right:solid 2px white;">#}
-{#                        <div class="scroll">#}
-{#                          <ul class="nav nav-tabs " style="background-color:#DFDEDE  ;">#}
-{#                            <li style="margin-left:3%; font-size:15px; font-weight:bold; "><a data-toggle="tab" href="#status{{ item['channel_id'] }}" style="color:black;">Status<i class="fa fa-bullseye red"></i></a></li>&nbsp;&ensp;#}
-{#                            <!--<li style="margin-left:3%; font-size:15px; font-weight:bold; "><a onclick="updateChannelStatusForCampaign('{{ item['channel_id'] }}')" href="#" style="color:black;">Status<i class="fa fa-bullseye red"></i></a></li>&nbsp;&ensp;-->#}
-{#                            <li style="font-size:15px; font-weight:bold; "><a data-toggle="tab" href="#alert{{ item['channel_id'] }}" style="color:black;">Alert<i class="fa fa-bell black"></i></a></li>#}
-{#                          </ul>#}
-{##}
-{#                          <div class="tab-content">#}
-{#                            <div id="status{{ item['channel_id'] }}" class="tab-pane fade show active">#}
-{#                              <!--<input type="hidden" id="campaign_id[]" name="campaign_id[]">-->#}
-{#                            </div>#}
-{##}
-{#                            <div id="alert{{ item['channel_id'] }}" class="tab-pane fade">#}
-{#                              {% if item['channel_id'] in favInfList_data['data']|map(attribute="channel_id") %}#}
-{#                              {% for favitem in favInfList_data['data'] %}#}
-{#                              {% if item['channel_id'] == favitem['channel_id'] %}#}
-{#                              <b style="font-weight:450; font-size:15px;">Followers<br/></b>#}
-{#                              <b style="font-weight:400;font-size:15px; color:red;">{{ favitem['alert_followers'] }}</b>#}
-{#                              <hr style="height:0px; margin:auto;">#}
-{#                              <b style="font-weight:450; font-size:15px;">Avg Views/video<br/></b>#}
-{#                              <b style="font-weight: 400; color:red; font-size:15px;">{{ favitem['alert_views'] }}#}
-{#                              </b>#}
-{#                              <hr style="height:0px; margin:auto;">#}
-{#                              <b style="font-weight:450; font-size:15px;">Avg Likes/video<br/></b>#}
-{#                              <b style="font-weight: 400; color:red; font-size:15px;">{{ favitem['alert_likes'] }}#}
-{#                              </b>#}
-{#                              <hr style="height:0px; margin:auto;">#}
-{#                              <b style="font-weight:450; font-size:15px;">Avg Comments<br/></b>#}
-{#                              <b style="font-weight: 400; color:red; font-size:15px;">{{ favitem['alert_comments'] }}</b>#}
-{#                              {% endif %}#}
-{#                              {% endfor %}#}
-{#                              {% else %}#}
-{#                              <b> No Alerts Set</b>#}
-{#                              {% endif %}#}
-{##}
-{##}
-{##}
-{#                            </div>#}
-{#                          </div>#}
-{#                        </div>#}
-{#                      </td>#}
-{#                    </tr>#}
-{#                  </table>#}
-{#                </div>#}
-{#              </div>#}
-{#            </div>#}
-{#            <br>#}
-{#            {% endfor %}#}
-{#            <!--<div class="h-100 row align-items-center" id="pagination"></div>-->#}
-{#          </div>#}
-{#        </div>#}
-{#      </div>#}
-{#    </div>#}
-{#  </div>#}
-{#</div>#}
-
-
-
-
-
  <!--mobile section-->
 
 
-<div class="container" style="background:white; padding-top: 15px; padding-left: 4.5%;">
+<div class="container" style="background:white; padding-top: 15px; padding-left: 6.5%;">
 <div class="innerwidth-search-inf">
         <div class="row"  style="padding-top: 1%; padding-bottom: 1%;">
                 <div class=" col-sm-4"> {% if data['data'] %}
@@ -402,14 +227,14 @@ function  exportCsv(data) {
 
     <div class="grid-container" style=" grid-template-columns: 5% 188px 16% 12% 2fr 1fr !important; grid-template-rows: 2em 3em 3em 3em !important;">
             <div class="icon-area">
-                <div style="margin: 6% 24%" >
+                <div style="margin: 3% 30%" >
                     <div class="icon-med ">
                         <a href="/compose" class="fa fa-envelope" data-toggle="tooltip" title="" style="position: relative; z-index: 1; font-size:25px;    
                                                                     "
                             data-original-title="Message"></a>
                     </div>
                     <div  class="icon-med">
-                          <a href="/addToFavInfList/{{ item['channel_id'] }}"  class="fa fa-star"  data-toggle="tooltip" title="Add To Favorites" style="font-size:25px;"><i class="fa fa-plus-circle green" style="font-size:10px; position:relative; top:1px; left:-10px;"></i></a>
+                          <a href="/addToFavInfList/{{ item['channel_id'] }}"  class="fa fa-star-o"  data-toggle="tooltip" title="Add To Favorites" style="font-size:25px;"><i class="fa fa-plus-circle green" style="font-size:10px; position:relative; top:1px; left:-10px;"></i></a>
                     </div>
                     <div  class="icon-med">
                         <span data-toggle="modal" data-target="#campaignList">
@@ -488,7 +313,7 @@ function  exportCsv(data) {
             </div>
             <div class="graph">
                 <div>
-                    <canvas id="lineChart{{ item['linechart_id'] }}" height="140px" width="300px"></canvas>
+                    <canvas id="lineChart{{ item['linechart_id'] }}" height="130px" width="300px"></canvas>
                 </div>
             </div>
             <div class="tab-content  tabcontent scroll">
@@ -532,127 +357,12 @@ function  exportCsv(data) {
                 </ul>
             </div>
         </div>
-
-
-{#   <div class="row">#}
-{#                            <div class="">#}
-{#                                <table cellspacing="1" border="solid 0px #E1DEDD;">#}
-{#                                    <tr>#}
-{#                                        <td rowspan="3" style="border-right: solid 1px #E1DEDD; border-left: solid 1px #E1DEDD;" >#}
-{#                                            <a href="/compose" class="fa fa-envelope" data-toggle="tooltip" title="Message" style="position: relative; z-index: 1; font-size:25px;"></a>#}
-{#                                            <br>#}
-{#                                               <span data-toggle="modal" data-target="#campaignList">#}
-{#                                               <a onclick="campaignList('{{ item['channel_id'] }}')"  class="fa fa-bullseye red" data-toggle="tooltip" title="Add To Campaign" style="font-size:25px;"><i class="fa fa-plus-circle green" style="font-size:10px; position:relative; top:5px; left:-8px;"></i></a>#}
-{#                                               </span>#}
-{#                                            <br> -->#}
-{#                                            <!--href="/createAlert/{{ item['channel_id'] }}"-->#}
-{#                                            <!--onclick="createAlert('{{ item['channel_id'] }}')"-->#}
-{#                                            <!--<button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#change_pass_modal">Change Password</button>-->#}
-{#                                            <!-- <span data-toggle="modal" data-target="#createalert">#}
-{#                                            <a onclick="createAlert('{{ item['channel_id'] }}','{{ item['subscriberCount_gained'] }}','{{ (item['total_100video_views']/100)|int }}','{{ (item['total_100video_likes']/100)|int }}','{{ (item['total_100video_comments']/100)|int }}')" class="fa fa-bell black" data-toggle="tooltip" title="Create Alerts" style="font-size:25px;"><i class="fa fa-plus-circle green" style="font-size:10px; position:relative; top:1px; left:-10px;"></i></a>#}
-{#                                            </span>#}
-{#                                        </td>#}
-{#                                        <td rowspan="0" style="border-right: solid 1px #E1DEDD;">#}
-{#                                            <img src="{{ item['channel_img'] }}" height="150px" width="155px">#}
-{#                                        </td>#}
-{#                                        <td colspan="2" style="border-right: solid 1px #E1DEDD;">#}
-{#                                            <table width="400px" cellpadding="1">#}
-{#                                                <tr>#}
-{#                                                    <td colspan="2"><b style="font-size:15px;"><a href="https://www.youtube.com/channel/{{ item['channel_id'] }}" target="_blank">{{ item['title'] }}</a></b> <i class="fa fa-youtube-play font-medium-3 red"></i></td>#}
-{#                                                </tr>#}
-{#                                                <tr>#}
-{#                                                    <td style="text-align:center;border-right: solid 1px #E1DEDD; border-bottom:solid 1px #E1DEDD; border-top:solid 1px #E1DEDD; font-size:14px;">#}
-{#                                                        <b>{{ item['subscriberCount_gained'] }}</b>#}
-{#                                                        <br>#}
-{#                                                        Total followers#}
-{#                                                    </td>#}
-{#                                                    <td style="text-align:center;border-bottom:solid 1px #E1DEDD; border-top:solid 1px #E1DEDD;  font-size:14px;">#}
-{#                                                        <b>{{ (item['total_100video_likes']/100)|int }}</b>#}
-{#                                                        <br>#}
-{#                                                        Avg Likes/ video#}
-{#                                                    </td>#}
-{#                                                </tr>#}
-{#                                                <tr>#}
-{#                                                    <td style="text-align:center;border-right: solid 1px #E1DEDD; border-bottom:solid 1px #E1DEDD;  font-size:14px;">#}
-{#                                                        <b>{{ (item['total_100video_views']/100)|int }}</b>#}
-{#                                                        <br>#}
-{#                                                        Avg Views/ video#}
-{#                                                    </td>#}
-{#                                                    <td style="text-align:center;font-size:14px;">#}
-{#                                                        <b>{{ (item['total_100video_comments']/100)|int }}</b>#}
-{#                                                        <br>#}
-{#                                                        Avg Comments/ video#}
-{#                                                    </td>#}
-{#                                                </tr>#}
-{#                                                <tr><td colspan="2">#}
-{#                                                    <b style="font-size:12px">Other Channels</b> &emsp;#}
-{#                                                    {% if item['facebook_url'] %}#}
-{#                                                    <a href="{{ item['facebook_url'] }}" target="_blank" class="fa fa-facebook-official blue" style="font-size:20px;"></a>&emsp;#}
-{#                                                    {% endif %}#}
-{#                                                    {% if item['insta_url'] %}#}
-{#                                                    <a href="{{ item['insta_url'] }}" target="_blank" class="fa fa-instagram pink" style="font-size:20px;"></a>&emsp;#}
-{#                                                    {% endif %}#}
-{#                                                    {% if item['twitter_url'] %}#}
-{#                                                    <a href="{{ item['twitter_url'] }}" target="_blank" class="fa fa-twitter cyan" style="font-size:20px;"></a>&emsp;#}
-{#                                                    {% endif %}#}
-{#                                                </td></tr>#}
-{#                                            </table>#}
-{#                                        </td>#}
-{#                                        <td rowspan="4" width="400" style="border-right: solid 1px #E1DEDD;" >#}
-{#                                            <div>#}
-{#                                                <canvas id="lineChart1{{ item['linechart_id'] }}" height="150px" width="250px"></canvas>#}
-{#                                            </div></td>#}
-{#                                        <td rowspan="4" style="border-right:solid 1px black; border-left:1px solid  black;">#}
-{#                                            <div class="scroll">#}
-{#                                                <ul class="nav nav-tabs" style="background-color:white  ;">#}
-{#                                <li style="margin-left:3%; background-color:#DFDEDE  ; font-size:15px; font-weight:bold; border:1px solid black; "><a data-toggle="tab" href="#status{{ item['channel_id'] }}" style="color:black;">Status<i class="fa fa-bullseye red"></i></a></li>&nbsp;&ensp;#}
-{#                                                    <li style="font-size:15px; background-color:#DFDEDE  ; font-weight:bold; border:1px solid black; "><a data-toggle="tab" href="#alert{{ item['channel_id'] }}" style="color:black;">Alert<i class="fa fa-bell black"></i></a></li>#}
-{#                                                </ul>#}
-{##}
-{#                                                <div class="tab-content">#}
-{#                                                    <div id="status{{ item['channel_id'] }}" class="tab-pane fade show active">#}
-{#                                                        <b style="font-weight:450; font-size:15px;">Campaign 1<br/></b>#}
-{#                                                        <b style="font-weight:400; color:orange; font-size:15px;">Contacted</b>#}
-{#                                                        <hr style="height:0px; margin:auto;">#}
-{#                                                        <b style="font-weight:450; font-size:15px;">Campaign 2<br/></b>#}
-{#                                                        <b style="font-weight: 400; color:green; font-size:15px;">Accepted#}
-{#                                                        </b>#}
-{#                                                        <hr style="height:0px; margin:auto;">#}
-{#                                                        <b style="font-weight:450; font-size:15px;">Campaign 3<br/></b>#}
-{#                                                        <b style="font-weight: 400; color:orange; font-size:15px;">Contacted</b>#}
-{#                                                    </div>#}
-{#                                                    <div id="alert{{ item['channel_id'] }}" class="tab-pane fade">#}
-{#                                                        <b style="font-weight:450; font-size:15px;">Followers<br/></b>#}
-{#                                                        <b style="font-weight:400;font-size:15px; color:red;">{{ item['alert_followers'] }}</b>#}
-{#                                                        <hr style="height:0px; margin:auto;">#}
-{#                                                        <b style="font-weight:450; font-size:15px;">Avg Views/video<br/></b>#}
-{#                                                        <b style="font-weight: 400; color:red; font-size:15px;">{{ item['alert_views'] }}#}
-{#                                                        </b>#}
-{#                                                        <hr style="height:0px; margin:auto;">#}
-{#                                                        <b style="font-weight:450; font-size:15px;">Avg Likes/video<br/></b>#}
-{#                                                        <b style="font-weight: 400; color:red; font-size:15px;">{{ item['alert_likes'] }}#}
-{#                                                        </b>#}
-{#                                                        <hr style="height:0px; margin:auto;">#}
-{#                                                        <b style="font-weight:450; font-size:15px;">Avg Comments<br/></b>#}
-{#                                                        <b style="font-weight: 400; color:red; font-size:15px;">{{ item['alert_comments'] }}</b>#}
-{#                                                    </div>#}
-{#                                                </div>#}
-{#                                            </div>#}
-{#                                        </td>#}
-{#                                    </tr>#}
-{#                                </table>#}
-{#                            </div>#}
-{#                        </div>#}
   {% endfor %}
 
 
 
     </div>
     </div>
-      </div>
-    </div>
-  </div>
-</div>
 
 
 
